@@ -180,7 +180,7 @@ class Table extends Component {
     return (
       <table className={styles.table}>
         <thead className={styles.tableHeader}>
-        <tr> {headerCheckboxColumn} {headerColumns} </tr>
+          <tr> {headerCheckboxColumn} {headerColumns} </tr>
         </thead>
 
         <tbody className={styles.tableBody}>

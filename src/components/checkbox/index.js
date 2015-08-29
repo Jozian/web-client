@@ -22,11 +22,11 @@ export default class Checkbox extends Component {
     const name = partialChecked ? styles.partChecked : styles.checked;
     return (
       <div className={this.props.className}>
-        <lable>
+        <label>
           <input type="checkbox" checked={isChecked} disabled={isDisabled}/>
 
           <div className={name} onClick={::this.handleClick}></div>
-        </lable>
+        </label>
       </div>
     );
   }

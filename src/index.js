@@ -8,6 +8,7 @@ import LibrariesPage from './containers/LibrariesPage';
 import CommentsPage from './containers/CommentsPage';
 import MotdPage from './containers/MotdPage';
 
+import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 import store from './store/configureStore';
 
 const routes = (
@@ -21,7 +22,12 @@ const routes = (
 );
 
 Router.run(routes, Router.HistoryLocation, (Handler, routerState) => {
-  React.render(<Provider store={store}>
-    { () => <Handler routerState={routerState} />}
-  </Provider>, document.getElementById('root'));
+  React.render(<div>
+      <Provider store={store}>
+        { () => <Handler routerState={routerState} />}
+      </Provider>
+      <DebugPanel top right bottom>
+        <DevTools store={store} monitor={LogMonitor} />
+      </DebugPanel>
+    </div>, document.getElementById('root'));
 });

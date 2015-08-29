@@ -1,16 +1,26 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {compose, createStore, combineReducers, applyMiddleware} from 'redux';
 import apiMiddleware from '../middlewares/api';
+import { devTools, persistState } from 'redux-devtools';
+
 import logger from 'redux-logger';
 import * as reducers from '../reducers';
 
 const reducer = combineReducers(reducers);
 
-const createStoreWithMiddleware = applyMiddleware(
-  apiMiddleware,
-  logger
-)(createStore);
+const createFinalStore = compose(
+  applyMiddleware(
+    apiMiddleware,
+    logger
+  ),
+  devTools(),
+  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
+  createStore
+);
 
-export default createStoreWithMiddleware(reducer, {
+export default createFinalStore(reducer, {
   currentUser: null,
-  libraries: [],
+  libraries: {
+    loading: false,
+    entities: [],
+  },
 });

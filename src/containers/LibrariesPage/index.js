@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loadLibraries } from '../../actions';
-import Table from '../../components/Table/index.js';
+import Table from '../../components/Table';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import {boldTextRender} from '../../components/Table/renders.js';
 
 @connect(
@@ -12,7 +13,7 @@ import {boldTextRender} from '../../components/Table/renders.js';
 )
 export default class LibrariesPage extends Component {
   static propTypes = {
-    libraries: React.PropTypes.array.isRequired,
+    libraries: React.PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -43,13 +44,15 @@ export default class LibrariesPage extends Component {
         text: 'Views',
       },
     ],
-    noCheck: false,
+    noCheck: true,
   }
 
   render() {
     return (<div>
-      Librares
-        <Table ref="table" config={this.config} data={this.props.libraries} onRowClick={::this.onRowClick}/>
+      <span>Librares</span>
+      <LoadingSpinner loading={this.props.libraries.loading}>
+        <Table ref="table" config={this.config} data={this.props.libraries.entities} onRowClick={::this.onRowClick} />
+      </LoadingSpinner>
     </div>);
   }
 }
