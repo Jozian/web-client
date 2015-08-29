@@ -8,6 +8,12 @@ import LibrariesPage from './containers/LibrariesPage';
 
 import store from './store/configureStore';
 
+import * as api from './api/libraries';
+import * as types from './actions/types';
+window.api = api;
+window.store = store;
+window.types = types;
+
 const routes = (
   <Route handler={App} path="/">
     <Route name="users" handler={UsersPage} />

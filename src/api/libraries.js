@@ -3,7 +3,7 @@ import fetch from './helper';
 const apiUrl = '/api/libraries';
 
 export function getLibrariesList() {
-  return fetch(apiUrl, options);
+  return fetch(apiUrl);
 }
 
 export function addLibrary(body) {
@@ -28,4 +28,3 @@ export function deleteLibrary(body) {
     body: JSON.stringify(body),
   });
 }
-

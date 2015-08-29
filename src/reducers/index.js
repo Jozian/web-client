@@ -10,7 +10,7 @@ export function currentUser(state) {
       throw new Error('Missing token in localStorage');
     }
 
-    return {...user, ...{token}};
+    return {...user, token};
   }
 
   return state;
