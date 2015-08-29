@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import fontAwesome from 'font-awesome-webpack'; // eslint-disable-line no-unused-vars
+import 'font-awesome-webpack';
 
+import IconButton from '../IconButton';
 import styles from './index.css';
 import logo from 'file!./assets/logo.png';
-import IconButton from '../IconButton';
 
 export default class NavBar extends Component {
   static propTypes = {
@@ -21,6 +21,7 @@ export default class NavBar extends Component {
     {to: 'libraries', title: 'Libraries'},
     {to: 'comments', title: 'Comments'},
     {to: 'motd', title: 'Message of the Day'},
+    {to: 'statistics', title: 'Statistics'},
   ]
 
   render() {

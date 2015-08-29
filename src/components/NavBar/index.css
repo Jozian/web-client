@@ -33,6 +33,7 @@
   font-size: 16pt;
   padding-left: 16px;
 }
+
 .sidebar :global(a.active) {
   padding-left: 16px;
   color: white;
@@ -40,6 +41,7 @@
   background-color: #287074;
   border-left: solid #6ab01c 4px;
 }
+
 .footer {
   position: absolute;
   background-color: #145054;
@@ -51,4 +53,28 @@
   font-size: 14pt;
   box-sizing: border-box;
   padding: 25px 16px;
+}
+
+h1 {
+  padding-top: 35px;
+  padding-bottom: 35px;
+  padding-left: 5%;
+  font-size: 66px;
+  color: grey;
+  display: inline-block;
+  margin: 0;
+}
+:global(.footerWrapper) {
+  display: table-cell;
+  vertical-align: middle;
+}
+:global(.pageFooter) {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  width: calc(100% - 250px);
+  height: 50px;
+  background-color: #e0e2e2;
+  text-align: center;
+  display: table;
 }

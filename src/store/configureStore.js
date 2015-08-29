@@ -19,6 +19,7 @@ const createFinalStore = compose(
 
 export default createFinalStore(reducer, {
   currentUser: null,
+  statistics: {top5Downloads: [], top5Views: []},
   libraries: {
     loading: false,
     entities: [],

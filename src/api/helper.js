@@ -22,12 +22,21 @@ export default function fetch(url, options = {}) {
     headers: {
       Authorization: getAuthHeader(),
       'Content-Type': 'application/json',
+      'Accept': 'application/json',
     },
   };
-
-  return isomorphicFetch(baseUrl + url, {...options, ...customHeaders})
+  const requestOptions = {...options, ...customHeaders};
+  return isomorphicFetch(baseUrl + url, requestOptions)
     .then(checkStatus)
-    .then((response) => response.status === 204 ? undefined : response.json())
+    .then((response) => {
+      if (response.status === 204) {
+        return undefined;
+      }
+      if (requestOptions.responseType === 'arraybuffer') {
+        return response.arrayBuffer();
+      }
+      return response.json();
+    })
   ;
 }
 

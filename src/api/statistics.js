@@ -1,4 +1,5 @@
 import fetch from './helper';
+import {saveAs} from 'browser-filesaver';
 
 const apiUrl = '/api/stats';
 
@@ -9,7 +10,11 @@ export function getTop5Downloads() {
 export function getTop5Views() {
   return fetch(apiUrl + '/top5Views');
 }
-
-export function addToImport() {
-  return fetch(apiUrl + '/addToImport');
+export function importStatistics() {
+  return fetch(apiUrl + '/addToImport', {
+    responseType: 'arraybuffer',
+  }).then((result) => {
+    const blob = new Blob([result], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    saveAs(blob, 'medStats'  + new Date() + '.xlsx');
+  });
 }
