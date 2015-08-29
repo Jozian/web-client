@@ -1,6 +1,7 @@
 import fetch from './helper';
 
 const apiUrl = '/api/libraries';
+const inviteUsersUrl = '/api/contentActions/inviteUsers';
 
 export function getLibrariesList() {
   return fetch(apiUrl);
@@ -25,6 +26,27 @@ export function deleteLibrary(body) {
 
   return fetch(apiUrl, {
     method: 'delete',
+    body: JSON.stringify(body),
+  });
+}
+
+export function getInvitedUsers(libraryIds) {
+  if (!libraryIds) {
+    return Promise.reject('Invalid libraryIds');
+  }
+
+  const path = (libraryIds instanceof Array) ? libraryIds.join(',') : libraryIds;
+
+  return fetch(inviteUsersUrl + '/' + path);
+}
+
+export function inviteUsers(body) {
+  if (!body || !body.libraries instanceof Array) {
+    return Promise.reject('Invalid body');
+  }
+
+  return fetch(inviteUsersUrl, {
+    method: 'put',
     body: JSON.stringify(body),
   });
 }
