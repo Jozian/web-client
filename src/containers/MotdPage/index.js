@@ -13,8 +13,8 @@ class MotdPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            oldText: this.props.data['text'],
-            textLength: this.props.data['textLength'],
+            oldText: props.text || '',
+            textLength: props.textLength || 230,
             disableButton: true,
             disableError: false
         };
@@ -61,8 +61,8 @@ class MotdPage extends Component {
                 </div>
                 <div className={styles.fieldWrapper}>
                     <label className={styles.label}>New:</label>
-                    <textarea ref="newState" onKeyUp = {::this.handleKeyUp}  placeholder={'max. '+this.props.data['textLength']+' characters'} className={styles.newValue+' '+styles.textarea}></textarea>
-                    <div style={{display:errorMsg}} className={styles.error}>? Error: max length {this.props.data.textLength}</div>
+                    <textarea ref="newState" onKeyUp = {::this.handleKeyUp}  placeholder={'max. '+this.state.textLength+' characters'} className={styles.newValue+' '+styles.textarea}></textarea>
+                    <div style={{display:errorMsg}} className={styles.error}>? Error: max length {this.state.textLength}</div>
                 </div>
                 <div className={styles.fieldWrapper}>
                     <button disabled={this.state.disableButton} onClick = {::this.handleClick} className={styles.button}>UPDATE</button>

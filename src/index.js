@@ -6,6 +6,7 @@ import App from './containers/App';
 import UsersPage from './containers/UsersPage';
 import LibrariesPage from './containers/LibrariesPage';
 import CommentsPage from './containers/CommentsPage';
+import MotdPage from './containers/MotdPage';
 
 import store from './store/configureStore';
 
@@ -14,6 +15,7 @@ const routes = (
     <Route name="users" handler={UsersPage} />
     <Route name="libraries" handler={LibrariesPage} />
     <Route name="comments" handler={CommentsPage} />
+    <Route name="motd" handler={MotdPage} />
     <DefaultRoute handler={UsersPage} />
   </Route>
 );

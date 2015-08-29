@@ -20,6 +20,7 @@ export default class NavBar extends Component {
     {to: 'users', title: 'Users'},
     {to: 'libraries', title: 'Libraries'},
     {to: 'comments', title: 'Comments'},
+    {to: 'motd', title: 'Message of the Day'},
   ]
 
   render() {
