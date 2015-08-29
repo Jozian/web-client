@@ -1,3 +1,5 @@
+import { Component } from 'react';
+
 export default class LibrariesPage extends Component {
   render() {
     return (<div>
