@@ -1,9 +1,10 @@
 import isomorphicFetch from 'isomorphic-fetch';
+import store from '../store/configureStore';
 
 const baseUrl = 'http://www.microsofteducationdelivery.net';
 
 function getAuthHeader() {
-  return 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaXNzdWVUaW1lIjoxNDQwODM4MjA3MjM1LCJpYXQiOjE0NDA4MzgyMDcsImV4cCI6MTQ0NjAyMjIwN30.GwAECbCz_qEEUIBO8ZktNZa540KO27Idk-3FuXN6Bhw';
+  return 'Bearer ' + (store.getState().currentUser ? store.getState().currentUser.token : '');
 }
 
 
