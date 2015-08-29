@@ -1,6 +1,7 @@
 import fetch from './helper';
 
 const apiUrl = '/api/users';
+const isUniqueUrl = '/api/isUnique';
 
 export function getList() {
   return fetch(apiUrl);
@@ -48,6 +49,17 @@ export function remove(body) {
 
   return fetch(apiUrl, {
     method: 'delete',
+    body: JSON.stringify(body),
+  });
+}
+
+export function isUnique(body) {
+  if (!body || !body.key || !body.value ) {
+    return Promise.reject('Invalid body');
+  }
+
+  return fetch(isUniqueUrl, {
+    method: 'post',
     body: JSON.stringify(body),
   });
 }

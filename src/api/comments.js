@@ -1,6 +1,7 @@
 import fetch from './helper';
 
 const apiUrl = '/api/comments';
+const exportUrl = '/api/commentsManagement/commentsExport';
 
 export function getList(mediaId) {
   if (!mediaId || typeof mediaId  !== 'string') {
@@ -8,6 +9,10 @@ export function getList(mediaId) {
   }
 
   return fetch(apiUrl + '/' + mediaId);
+}
+
+export function commentsExport() {
+  return fetch(exportUrl);
 }
 
 export function add(body) {
