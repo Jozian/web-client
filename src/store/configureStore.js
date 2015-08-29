@@ -12,5 +12,6 @@ const createStoreWithMiddleware = applyMiddleware(
 
 export default createStoreWithMiddleware(reducer, {
   currentUser: null,
+  statistics: {top5Downloads: [], top5Views: []},
   libraries: [],
 });

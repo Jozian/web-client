@@ -4,7 +4,6 @@ import fontAwesome from 'font-awesome-webpack'; // eslint-disable-line no-unused
 
 import styles from './index.css';
 import logo from 'file!./assets/logo.png';
-import IconButton from '../IconButton';
 
 export default class NavBar extends Component {
   static propTypes = {
@@ -19,6 +18,7 @@ export default class NavBar extends Component {
   static links = [
     {to: 'users', title: 'Users'},
     {to: 'libraries', title: 'Libraries'},
+    {to: 'statistics', title: 'Statistics'},
     {to: 'comments', title: 'Comments'},
     {to: 'motd', title: 'Message of the Day'},
   ]
