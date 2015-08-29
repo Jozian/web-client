@@ -6,17 +6,19 @@ export default class Checkbox extends Component {
 
     static propTypes = {
         isChecked: PropTypes.bool.isRequired,
+        partialChecked: PropTypes.bool,
         isDisabled: PropTypes.string,
         onChange: PropTypes.func.isRequired,
     }
 
     render () {
-        const { isChecked, isDisabled } = this.props;
+        const { isChecked, isDisabled, partialChecked } = this.props;
+        const name = partialChecked ? styles.partChecked : styles.checked;
         return (
           <div>
             <lable>
                 <input type="checkbox" checked={isChecked} disabled={isDisabled}/>
-                <div className={styles.checkBox} onClick={::this.handleClick}></div>
+                <div className={name} onClick={::this.handleClick}></div>
             </lable>
           </div>
         );
@@ -24,11 +26,14 @@ export default class Checkbox extends Component {
 
     handleClick() {
         this.props.onChange({
-            isChecked: !this.props.isChecked})
+            isChecked: !this.props.isChecked,
+            partialChecked: false,
+        })
     }
 
 }
 
 Checkbox.defaultProps = {
     isDisabled: '',
+    partialChecked: false,
 };

@@ -1,4 +1,4 @@
-.checkBox {
+.checked {
     display: inline-block;
     border: 2px solid #cccccc;
     width: 15px;
@@ -6,6 +6,19 @@
     background-color: white;
 }
 
+.partChecked {
+    display: inline-block;
+    border: 2px solid #cccccc;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+}
+.partChecked:after {
+    content: '\f00c';
+    font-family: 'FontAwesome';
+    font-size: 11pt;
+    color: #ccc;
+}
 input[type="checkbox"] {
     display: none;
 }
