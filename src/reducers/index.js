@@ -1,3 +1,7 @@
+import libraries from "./libraries.js";
+
+export {libraries};
+
 export function currentUser(state) {
   if (!state) {
     const user = JSON.parse(localStorage.getItem('MEDuser'));
