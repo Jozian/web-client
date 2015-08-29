@@ -41,3 +41,14 @@
   background-color: #287074;
   border-left: solid #6ab01c 4px;
 }
+
+.footer {
+  position: absolute;
+  background-color: #145054;
+  bottom: 0;
+  width: 100%;
+  height: 90px;
+  color: #5c7e82;
+  border-top: solid #6ab01c 2px;
+  font-size: 14pt;
+}

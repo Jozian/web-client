@@ -1,8 +1,17 @@
-export function issues(state = [], action) {
-  switch (action.type) {
-  case 'ISSUES_LOADED':
-    return action.data;
-  default:
-    return state;
+export function currentUser(state) {
+  if (!state) {
+    const user = JSON.parse(localStorage.getItem('MEDuser'));
+    if (!user) {
+      throw new Error('Missing user in localStorage');
+    }
+    const token = localStorage.getItem('MEDtoken');
+
+    if (!token) {
+      throw new Error('Missing token in localStorage');
+    }
+
+    return {...user, ...{token}};
   }
+
+  return state;
 }
