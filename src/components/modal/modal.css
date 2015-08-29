@@ -32,6 +32,8 @@
     background-color: #e0e2e2;
     text-align: center;
     display: table;
+    padding: 8px;
+    box-sizing: border-box;
 }
 .title {
     padding-top: 35px;

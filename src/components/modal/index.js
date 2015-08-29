@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import style from './modal.css';
-
-/* import Button from '...'; */
+import Button from '../Button';
 
 class Modal extends Component {
   static propTypes = {
@@ -22,8 +21,12 @@ class Modal extends Component {
           </div>
 
           <footer className={style.footer}>
-            <button onClick={this.props.onOkClick} text="OK"> </button>
-            <button onClick={this.props.onCancelClick} text="Cancel"></button>
+            <Button onClick={this.props.onOkClick}
+                    text="OK"
+                    disabled={this.props.isOkDisabled} />
+
+            <Button onClick={this.props.onCancelClick}
+                    text="Cancel" />
           </footer>
         </div>
       </div>
