@@ -16,7 +16,6 @@ export default class LibrariesPage extends Component {
     super(props);
     props.loadLibraries();
   }
-
     onRowClick(){
 
     }
@@ -42,7 +41,6 @@ export default class LibrariesPage extends Component {
         ],
         noCheck: false,
     }
-
   render() {
     console.log("this.props.libraries",this.props)
     return (<div>
