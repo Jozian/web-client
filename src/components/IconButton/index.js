@@ -4,6 +4,13 @@ import fontAwesome from 'font-awesome-webpack';
 
 class IconButton extends Component {
 
+  static propTypes = {
+    icon: React.PropTypes.string,
+    tooltipText: React.PropTypes.string,
+    handleClick: React.PropTypes.func,
+  }
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +34,7 @@ class IconButton extends Component {
 
     let tooltip;
     if (this.state.isVisible){
-      tooltip = <div className={styles.tooltip}><div className={styles.tooltip-inner}>{this.props.tooltipText}</div>
+      tooltip = <div className={styles.tooltip}><div className={styles.tooltipInner}>{this.props.tooltipText}</div></div>
     }
 
     return (
@@ -40,11 +47,5 @@ class IconButton extends Component {
     );
   }
 }
-
-IconButton.propTypes = {
-  icon: React.PropTypes.string,
-  tooltipText: React.PropTypes.string,
-  handleClick: React.PropTypes.func,
-};
 
 export default IconButton;

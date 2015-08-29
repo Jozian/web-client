@@ -8,9 +8,12 @@
     position: absolute;
     bottom: 100%;
     left: 0;
+    padding: 0 0 2px;
+}
+.iconButton .tooltipInner{
     border: 1px solid #78c623;
     padding: 5px 10px;
-    background: #fff;
+    background: #fff; 
 }
 .iconButton .btn{
     font-family: "FontAwesome";
@@ -21,7 +24,7 @@
     height: 45px;
     line-height:35px;
     padding:5px 8px;
-    border: 2px solid rgba(0, 0, 0, 0.2);
+    border: 2px solid #d6d6d6;
 }
 .iconButton .btn :global .fa{
     line-height: 35px;
