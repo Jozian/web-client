@@ -26,7 +26,6 @@ export default class NavBar extends Component {
 
   render() {
     return (<nav className={styles.sidebar}>
-      <i className="fa fa-facebook"></i>
       <div className={styles.logo}>
         <img src={logo} />
       </div>
