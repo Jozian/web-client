@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import style from './modal.css';
-//import Button from '...';
+
+/* import Button from '...'; */
 
 class Modal extends Component {
   static propTypes = {
@@ -8,6 +9,7 @@ class Modal extends Component {
     onCancelClick: React.PropTypes.func.isRequired,
     isOkDisabled: React.PropTypes.bool,
     title: React.PropTypes.string.isRequired,
+    children: React.PropTypes.element.isRequired,
   }
   render() {
     return (
