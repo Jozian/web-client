@@ -1,6 +1,5 @@
-import libraries from "./libraries.js";
-
-export {libraries};
+import libraries from './libraries.js';
+export { libraries };
 
 export function currentUser(state) {
   if (!state) {

@@ -4,11 +4,11 @@ import {boldTextRender, buttonRender, dateRender} from '../../components/Table/r
 
 export default class CommentsPage extends Component {
   onRowClick(value) {
-    console.log(value);
+    window.console.log(value);
   }
 
   displayChecked() {
-    console.log(this.refs.table.getChecked());
+    window.console.log(this.refs.table.getChecked());
   }
 
   config = {

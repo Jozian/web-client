@@ -5,7 +5,7 @@ export default function(state = [], action) {
   case typeActions.LIBRARIES_LOADED:
     return { ...action.payload };
   case typeActions.LIBRARIES_LOADING:
-  case typeActions.LIBRARIES_LOADED:
+  case typeActions.LIBRARIES_LOAD_ERROR:
   default:
     return state;
   }

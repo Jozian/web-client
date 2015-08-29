@@ -34,7 +34,7 @@ export default class NavBar extends Component {
       }
       <div className={styles.footer}>
         <i className="fa fa-user"></i>{this.props.username}
-        <IconButton icon="fa fa-power-off" handleClick={() => alert('Logout!')} className="btn-logout" />
+        <IconButton icon="fa fa-power-off" className="btn-logout" />
       </div>
     </nav>);
   }

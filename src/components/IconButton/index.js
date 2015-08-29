@@ -6,9 +6,10 @@ import classNames from 'classnames';
 export default class IconButton extends Component {
 
   static propTypes = {
-    icon: React.PropTypes.string,
+    icon: React.PropTypes.string.isRequired,
     tooltipText: React.PropTypes.string,
     handleClick: React.PropTypes.func,
+    className: React.PropTypes.string,
   }
 
 
@@ -34,7 +35,9 @@ export default class IconButton extends Component {
   render() {
     let tooltip;
     if (this.state.isTooltipVisible && this.props.tooltipText) {
-      tooltip = <div className={styles.tooltip}><div className={styles.tooltipInner}>{this.props.tooltipText}</div></div>;
+      tooltip = (<div className={styles.tooltip}>
+        <div className={styles.tooltipInner}>{this.props.tooltipText}</div>
+      </div>);
     }
 
     const cls = classNames(styles.iconButton, this.props.className);
