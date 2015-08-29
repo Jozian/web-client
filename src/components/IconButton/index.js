@@ -30,8 +30,10 @@ class IconButton extends Component {
     }
 
     return (
-      <div onMouseEnter={::this.show} onMouseLeave={::this.hide}>
-        <button onClick={this.props.handleClick}>123</button>
+      <div onMouseEnter={::this.show} onMouseLeave={::this.hide} className={styles.iconButton}>
+        <button onClick={this.props.handleClick} className={styles.btn}>
+          <i className={this.props.icon}></i>
+        </button>
         { tooltip }
       </div>
     );

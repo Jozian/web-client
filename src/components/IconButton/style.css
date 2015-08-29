@@ -1,3 +1,22 @@
-.tooltip{
-    background-color: #000066;
+.iconButton{
+    display: inline-block;
+    position: relative;
+}
+.iconButton .tooltip{
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    border: 1px solid #78c623;
+    padding: 5px 10px;
+}
+.iconButton .btn{
+    font-family: "FontAwesome";
+    color: #fff;
+    background: #78c623;
+    min-width: 45px;
+    margin-left: 8px;
+    width: 45px;
+    height: 45px;
+    padding:4px 8px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
 }
