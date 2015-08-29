@@ -9,3 +9,7 @@ export function getTop5Downloads() {
 export function getTop5Views() {
   return fetch(apiUrl + '/top5Views');
 }
+
+export function addToImport() {
+  return fetch(apiUrl + '/addToImport');
+}
