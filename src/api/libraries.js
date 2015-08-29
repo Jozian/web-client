@@ -19,7 +19,7 @@ export function addLibrary(body) {
 
 export function deleteLibrary(body) {
   // body is an array of ids
-  if (!body || !body.length) {
+  if (!body || !body instanceof Array) {
     return Promise.reject('Invalid body');
   }
 
