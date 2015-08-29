@@ -16,6 +16,7 @@ export default class LibrariesPage extends Component {
   }
 
   render() {
+    console.log("this.props.libraries",this.props)
     return (<div>
       Librares
     </div>);
