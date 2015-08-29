@@ -1,5 +1,5 @@
-import librariesApi from './api/libraries';
-import * as types from './actions/types';
+import * as librariesApi from '../api/libraries';
+import * as types from '../actions/types';
 
 export function loadLibraries() {
   return {
