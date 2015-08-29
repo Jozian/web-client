@@ -9,7 +9,7 @@ class Modal extends Component {
     onCancelClick: React.PropTypes.func.isRequired,
     isOkDisabled: React.PropTypes.bool,
     title: React.PropTypes.string.isRequired,
-    children: React.PropTypes.element.isRequired,
+    children: React.PropTypes.node.isRequired,
   }
   render() {
     return (
