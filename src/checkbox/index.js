@@ -1,10 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import styles from './checkbox.css';
 
-const typeCheckBox  = {
-    def : 'b_body_box',
-    head : 'b_head_box'
-}
 
 export default class Checkbox extends Component {
 
@@ -17,12 +13,12 @@ export default class Checkbox extends Component {
 
 
     render () {
-        const { isChecked, isDisabled,type } = this.props;
+        const { isChecked, isDisabled } = this.props;
         return (
           <div>
             <lable>
                 <input type="checkbox" checked={isChecked} disabled={isDisabled}/>
-                <div className={styles[typeCheckBox[type]]} onClick={::this.handleClick}></div>
+                <div className={styles.checkBox} onClick={::this.handleClick}></div>
             </lable>
           </div>
         );
@@ -37,5 +33,4 @@ export default class Checkbox extends Component {
 
 Checkbox.defaultProps = {
     isDisable: '',
-    type: 'def',
 };
