@@ -1,0 +1,21 @@
+.iconButton {
+    border-style: solid;
+    background-clip: padding-box;
+    margin: 0px;
+    min-height: 32px;
+    min-width: 90px;
+    padding: 4px 8px;
+    border-width: 2px;
+    font-size: 12pt;
+    font-weight: 600;
+    line-height: 1.3636;
+    color: white;
+    background-color: #78c623;
+    text-transform: uppercase;
+}
+
+.iconButton:disabled {
+    background-color: rgba(202, 202, 202, 0.4);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.4);
+}
