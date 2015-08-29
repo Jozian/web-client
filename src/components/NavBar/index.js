@@ -4,6 +4,7 @@ import fontAwesome from 'font-awesome-webpack'; // eslint-disable-line no-unused
 
 import styles from './index.css';
 import logo from 'file!./assets/logo.png';
+import IconButton from '../IconButton';
 
 export default class NavBar extends Component {
   static propTypes = {
@@ -32,6 +33,7 @@ export default class NavBar extends Component {
       }
       <div className={styles.footer}>
         <i className="fa fa-user"></i>{this.props.username}
+        <IconButton icon="fa fa-power-off" handleClick={() => alert('Logout!')} className="btn-logout" />
       </div>
     </nav>);
   }
