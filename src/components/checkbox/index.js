@@ -10,7 +10,6 @@ export default class Checkbox extends Component {
         onChange: PropTypes.func.isRequired,
     }
 
-
     render () {
         const { isChecked, isDisabled } = this.props;
         return (

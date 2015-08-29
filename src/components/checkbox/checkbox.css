@@ -6,11 +6,9 @@
     background-color: white;
 }
 
-
 input[type="checkbox"] {
     display: none;
 }
-
 
 input[type="checkbox"]:checked + div:after {
     content: '\f00c';
