@@ -25,7 +25,22 @@
     line-height:35px;
     padding:5px 8px;
     border: 2px solid #d6d6d6;
+    cursor: pointer;
+    outline: none;
 }
 .iconButton .btn :global .fa{
     line-height: 35px;
+}
+:global(.btn-logout) {
+    float: right;
+}
+.iconButton:global(.btn-logout) button{
+    background-color: #39696d;
+    border: 0;
+}
+.iconButton:global(.btn-logout) button:hover {
+    background-color: #78c623;
+}
+.iconButton:global(.btn-logout) button i {
+    font-size: 16px;
 }

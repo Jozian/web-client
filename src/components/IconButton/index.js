@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './style.css';
 import fontAwesome from 'font-awesome-webpack'; // eslint-disable-line no-unused-vars
+import classNames from 'classnames';
 
 export default class IconButton extends Component {
 
@@ -32,12 +33,14 @@ export default class IconButton extends Component {
 
   render() {
     let tooltip;
-    if (this.state.isTooltipVisible) {
+    if (this.state.isTooltipVisible && this.props.tooltipText) {
       tooltip = <div className={styles.tooltip}><div className={styles.tooltipInner}>{this.props.tooltipText}</div></div>;
     }
 
+    const cls = classNames(styles.iconButton, this.props.className);
+
     return (
-      <div onMouseEnter={::this.showTooltip} onMouseLeave={::this.hideTooltip} className={styles.iconButton}>
+      <div onMouseEnter={::this.showTooltip} onMouseLeave={::this.hideTooltip} className={cls}>
         <button onClick={this.props.handleClick} className={styles.btn}>
           <i className={this.props.icon}></i>
         </button>
