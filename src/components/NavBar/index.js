@@ -18,6 +18,7 @@ export default class NavBar extends Component {
   static links = [
     {to: 'users', title: 'Users'},
     {to: 'libraries', title: 'Libraries'},
+    {to: 'comments', title: 'Comments'},
   ]
 
   render() {

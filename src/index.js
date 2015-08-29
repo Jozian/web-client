@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import App from './containers/App';
 import UsersPage from './containers/UsersPage';
 import LibrariesPage from './containers/LibrariesPage';
+import CommentsPage from './containers/CommentsPage';
 
 import store from './store/configureStore';
 
@@ -12,6 +13,7 @@ const routes = (
   <Route handler={App} path="/">
     <Route name="users" handler={UsersPage} />
     <Route name="libraries" handler={LibrariesPage} />
+    <Route name="comments" handler={CommentsPage} />
     <DefaultRoute handler={UsersPage} />
   </Route>
 );
