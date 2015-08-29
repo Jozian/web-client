@@ -1,0 +1,17 @@
+.checkBox {
+    display: inline-block;
+    border: 2px solid #cccccc;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked + div:after {
+    content: '\f00c';
+    font-family: 'FontAwesome';
+    font-size: 11pt;
+}
