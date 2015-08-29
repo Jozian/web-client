@@ -17,6 +17,13 @@
     width: 30px;
 }
 
+.tableHeader .checkTd :global(.headerCheckbox) div {
+    border: 3px solid #593c56;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+}
+
 .tableBody tr:hover {
     border-left: 3px solid #583c58;
     background-color: #e2dce1 !important;
