@@ -1,8 +1,18 @@
-import 'babel-core/polyfill';
 import React from 'react';
-import App from './containers/App';
+import Router, {Route, DefaultRoute} from 'react-router';
 
-React.render(
-  <App />,
-  document.getElementById('root')
+import App from './containers/App';
+import UsersPage from './containers/UsersPage';
+import LibrariesPage from './containers/LibrariesPage';
+
+const routes = (
+  <Route handler={App} path="/">
+    <Route name="users" handler={UsersPage} />
+    <Route name="libraries" handler={LibrariesPage} />
+    <DefaultRoute handler={UsersPage} />
+  </Route>
 );
+
+Router.run(routes, Router.HistoryLocation, (Handler) => {
+  React.render(<Handler />, document.getElementById('root'));
+});

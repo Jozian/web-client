@@ -20,3 +20,24 @@
   margin: auto;
   display: block;
 }
+
+.sidebar a {
+  cursor: pointer;
+  text-decoration: none;
+  color: grey;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 45px;
+  height: 45px;
+  font-size: 16pt;
+  padding-left: 16px;
+}
+
+.sidebar :global(a.active) {
+  padding-left: 16px;
+  color: white;
+  font-weight: bold;
+  background-color: #287074;
+  border-left: solid #6ab01c 4px;
+}
