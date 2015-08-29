@@ -1,0 +1,22 @@
+.sidebar {
+  position: fixed;
+  float: left;
+  display: inline;
+  width: 240px;
+  height: 100%;
+  background-color: #226266;
+  border-right: solid #eaeaea 10px;
+}
+
+.logo {
+  padding-top: 60px;
+  padding-bottom: 45px;
+  border-bottom: solid #3f824f 1px;
+  width: 100%;
+}
+
+.logo img {
+  width: 200px;
+  margin: auto;
+  display: block;
+}
