@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from './style.css';
+import fontAwesome from 'font-awesome-webpack';
 
 class IconButton extends Component {
 
@@ -26,7 +27,7 @@ class IconButton extends Component {
 
     let tooltip;
     if (this.state.isVisible){
-      tooltip = <div className={styles.tooltip}>text</div>
+      tooltip = <div className={styles.tooltip}><div className={styles.tooltip-inner}>{this.props.tooltipText}</div>
     }
 
     return (
