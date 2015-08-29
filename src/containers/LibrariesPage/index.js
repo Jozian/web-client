@@ -1,5 +1,3 @@
-import React, { Component } from 'react';
-
 export default class LibrariesPage extends Component {
   render() {
     return (<div>
@@ -7,3 +5,4 @@ export default class LibrariesPage extends Component {
     </div>);
   }
 }
+
