@@ -3,7 +3,7 @@ import Checkbox from '../checkbox';
 import 'font-awesome-webpack';
 import styles from './index.css';
 import classNames from 'classnames';
-import {pluck, isNaN, sortByOrder} from 'lodash';
+import {pluck, sortByOrder} from 'lodash';
 
 class Table extends Component {
   static propTypes = {
@@ -16,6 +16,7 @@ class Table extends Component {
     super(props);
     this.state = {
       isAllSelected: false,
+      partialChecked: false,
       selected: [],
       sort: {
         by: 'name',
@@ -43,7 +44,7 @@ class Table extends Component {
   _generateHeaderCheckBoxCol() {
     return (
       <td className={styles.checkTd}>
-        <Checkbox onChange={::this._selectAll} isChecked={this.state.isAllSelected}/>
+        <Checkbox onChange={::this._selectAll} partialChecked={this.state.partialChecked} isChecked={this.state.isAllSelected} className="headerCheckbox"/>
       </td>
     );
   }
@@ -115,6 +116,7 @@ class Table extends Component {
     } else {
       this.setState({
         isAllSelected: true,
+        partialChecked: false,
         selected: pluck(this.props.data, 'id'),
       });
     }
@@ -131,12 +133,15 @@ class Table extends Component {
       selected.splice(index, 1);
     }
 
-    this.setState({selected: selected});
+    this.setState({selected: selected, partialChecked: false});
 
     if (selected.length === this.props.data.length) {
       this.setState({isAllSelected: true});
     } else {
       this.setState({isAllSelected: false});
+      if (selected.length > 0) {
+        this.setState({partialChecked: true});
+      }
     }
   }
 
