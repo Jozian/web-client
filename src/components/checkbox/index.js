@@ -30,5 +30,5 @@ export default class Checkbox extends Component {
 }
 
 Checkbox.defaultProps = {
-    isDisable: '',
+    isDisabled: '',
 };
