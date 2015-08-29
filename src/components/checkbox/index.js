@@ -8,7 +8,6 @@ export default class Checkbox extends Component {
         isChecked: PropTypes.bool.isRequired,
         isDisabled: PropTypes.string,
         onChange: PropTypes.func.isRequired,
-        type: PropTypes.string,
     }
 
 
