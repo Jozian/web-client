@@ -24,12 +24,13 @@ const routes = (
 );
 
 Router.run(routes, Router.HistoryLocation, (Handler, routerState) => {
+  const showDebugTools = window.location.hash.indexOf('debug') !== -1;
   React.render(<div>
       <Provider store={store}>
         { () => <Handler routerState={routerState} />}
       </Provider>
-      <DebugPanel top right bottom>
+      {showDebugTools ? <DebugPanel top right bottom>
         <DevTools store={store} monitor={LogMonitor} />
-      </DebugPanel>
+      </DebugPanel> : null }
     </div>, document.getElementById('root'));
 });

@@ -1,9 +1,14 @@
 import {compose, createStore, combineReducers, applyMiddleware} from 'redux';
-import apiMiddleware from '../middlewares/api';
 import { devTools, persistState } from 'redux-devtools';
-
-import logger from 'redux-logger';
 import * as reducers from '../reducers';
+import createLogger from 'redux-logger';
+
+import apiMiddleware from '../middlewares/api';
+
+const logger = createLogger({
+  level: 'info',
+  collapsed: true,
+});
 
 const reducer = combineReducers(reducers);
 

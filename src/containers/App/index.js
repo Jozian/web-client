@@ -6,16 +6,16 @@ import NavBar from '../../components/NavBar';
 import styles from './index.css';
 
 @connect(
-  (state) => ({name: state.currentUser.name})
+  (state) => ({user: state.currentUser})
 )
 export default class App extends Component {
   static propTypes = {
-    name: React.PropTypes.string.isRequired,
+    user: React.PropTypes.object.isRequired,
   }
 
   render() {
     return (<div>
-      <NavBar username={this.props.name} />
+      <NavBar username={this.props.user.name} />
       <section className={styles.contenthost}>
         <RouteHandler />
       </section>

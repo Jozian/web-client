@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from './index.css';
 
 export default class LoadingSpinner extends Component {
   static propTypes = {
@@ -7,10 +8,14 @@ export default class LoadingSpinner extends Component {
   }
 
   render() {
-    if (this.props.loading) {
-      return <div key="container">Loading</div>;
-    }
-
-    return <div>{this.props.children}</div>;
+    const loading = this.props.loading;
+    return (<div>
+      {loading
+        ? <div className={styles.container}>
+            <div className={styles.dots}></div>
+          </div>
+        : this.props.children
+      }
+    </div>);
   }
 }

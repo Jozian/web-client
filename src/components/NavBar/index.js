@@ -30,7 +30,9 @@ export default class NavBar extends Component {
         <img src={logo} />
       </div>
       {
-        this.getAvailableLinks().map((item) => <Link to={item.to}>{item.title}</Link>)
+        this.getAvailableLinks().map((item) =>
+          <Link key={item.to} to={item.to}>{item.title}</Link>
+        )
       }
       <div className={styles.footer}>
         <i className="fa fa-user"></i>{this.props.username}

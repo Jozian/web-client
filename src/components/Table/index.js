@@ -92,7 +92,7 @@ class Table extends Component {
         td.unshift(this._generateCheckBoxCol(data));
       }
 
-      return (<tr className={styles.tableBodyRow}> {td} </tr>);
+      return (<tr className={styles.tableBodyRow}>{td}</tr>);
     });
   }
 
@@ -169,7 +169,7 @@ class Table extends Component {
   }
 
   render() {
-    let headerCheckboxColumn = '';
+    let headerCheckboxColumn = null;
     if (!this.props.config.noCheck) {
       headerCheckboxColumn = this._generateHeaderCheckBoxCol();
     }
@@ -180,7 +180,7 @@ class Table extends Component {
     return (
       <table className={styles.table}>
         <thead className={styles.tableHeader}>
-          <tr> {headerCheckboxColumn} {headerColumns} </tr>
+          <tr>{[headerCheckboxColumn, ...headerColumns]}</tr>
         </thead>
 
         <tbody className={styles.tableBody}>
