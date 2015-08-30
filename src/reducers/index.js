@@ -1,7 +1,9 @@
 import * as types from '../actions/types.js';
 
 import libraries from './libraries.js';
+import users from './users.js';
 export { libraries };
+export { users };
 
 export function currentUser(state) {
   if (!state) {

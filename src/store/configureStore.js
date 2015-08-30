@@ -24,4 +24,8 @@ export default createFinalStore(reducer, {
     loading: false,
     entities: [],
   },
+  users: {
+    loading: false,
+    entities: [],
+  },
 });
