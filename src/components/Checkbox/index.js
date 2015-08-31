@@ -23,7 +23,7 @@ export default class Checkbox extends Component {
     return (
       <div className={this.props.className}>
         <label>
-          <input type="checkbox" checked={isChecked} disabled={isDisabled}/>
+          <input type="checkbox" defaultChecked={isChecked} disabled={isDisabled}/>
 
           <div className={name} onClick={::this.handleClick}></div>
         </label>

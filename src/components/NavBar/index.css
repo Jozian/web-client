@@ -69,7 +69,7 @@ h1 {
   line-height: 94px;
   vertical-align: middle;
   float: left;
-  margin-right: 2px;
+  margin: 0 2px;
 }
 
 .username {

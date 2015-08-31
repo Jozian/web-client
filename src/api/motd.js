@@ -6,7 +6,7 @@ export function getMotd() {
   return fetch(apiUrl);
 }
 
-export function update(body) {
+export function updateMotd(body) {
   if (!body || !body.text) {
     return Promise.reject('Invalid body');
   }
