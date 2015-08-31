@@ -63,7 +63,7 @@ export default class UsersPage extends Component {
   };
 
   render() {
-    return (<div className={style.usersHolder}>
+    return (<div>
       <h1 className={style.header}>
         Users
         <IconButton
