@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import style from './style.css';
 import * as actions from '../../actions/statistics.js';
 import Button from '../../components/Button';
+import PageFooter from '../../components/PageFooter';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 @connect(
@@ -89,11 +90,9 @@ export default class StatisticsPage extends Component {
               itemTemplate={this.listViewItemRenderer}
               layout={ {type: WinJS.UI.ListLayout} } />
           </div>
-          <footer className="pageFooter">
-            <div className="footerWrapper">
+          <PageFooter>
               <Button onClick={() => {this.props.addToExport(); }} text="Export" />
-            </div>
-          </footer>
+          </PageFooter>
         </LoadingSpinner>
       </div>);
   }

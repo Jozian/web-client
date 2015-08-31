@@ -7,7 +7,9 @@
 }
 
 .contenthost {
+  position: absolute;
+  left: 250px;
   font-size: 14pt;
   height: 100%;
-  padding-left: 250px;
+  width: calc(100% - 250px);
 }

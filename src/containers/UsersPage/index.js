@@ -3,9 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Button from '../../components/Button';
-import style from './index.css';
 import common from '../../common/styles.css';
 import IconButton from '../../components/IconButton';
+import PageFooter from '../../components/PageFooter';
 import Table from '../../components/Table/index.js';
 import { boldTextRender } from '../../components/Table/renders.js';
 import * as actions from '../../actions/users.js';
@@ -64,7 +64,7 @@ export default class UsersPage extends Component {
 
   render() {
     return (<div>
-      <h1 className={style.header}>
+      <h1>
         Users
         <IconButton
           className={common.headerButton}
@@ -81,10 +81,10 @@ export default class UsersPage extends Component {
           data={this.props.users.entities}
           onRowClick={::this.onRowClick}
         />
-        <footer className={style.footer}>
-          <Button icon="fa fa-trash-o" text="DELETE" onClick={this.handleDeleteUserClick}/>
-          <Button text="IMPORT" onClick={this.handleImportUserClick}/>
-        </footer>
+        <PageFooter>
+          <Button icon="fa fa-trash-o" text="Delete" onClick={this.handleDeleteUserClick}/>
+          <Button text="Import" onClick={this.handleImportUserClick}/>
+        </PageFooter>
       </LoadingSpinner>
     </div>);
   }

@@ -63,20 +63,6 @@ h1 {
   display: inline-block;
   margin: 0;
 }
-:global(.footerWrapper) {
-  display: table-cell;
-  vertical-align: middle;
-}
-:global(.pageFooter) {
-  position: absolute;
-  bottom: 0;
-  z-index: 1;
-  width: calc(100% - 250px);
-  height: 50px;
-  background-color: #e0e2e2;
-  text-align: center;
-  display: table;
-}
 
 .logout {
   position: absolute;
