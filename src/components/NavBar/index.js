@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import 'font-awesome-webpack';
+import cx from 'classnames';
 
 import IconButton from '../IconButton';
 import styles from './index.css';
@@ -35,7 +36,8 @@ export default class NavBar extends Component {
         )
       }
       <div className={styles.footer}>
-        <i className="fa fa-user"></i>{this.props.username}
+        <i className={cx('fa', 'fa-user', styles.icon)}></i>
+        <span className={styles.username}>{this.props.username}</span>
         <IconButton icon="fa fa-power-off" className={styles.logout} />
       </div>
     </nav>);

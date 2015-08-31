@@ -25,7 +25,10 @@ export default class UsersPage extends Component {
   constructor(props) {
     super(props);
     props.loadUsers();
-    this.state = { loading: true };
+    this.state = {
+      loading: true,
+      selectedUsers: [],
+    };
   }
 
   componentWillUpdate(props) {
@@ -91,7 +94,7 @@ export default class UsersPage extends Component {
           onRowClick={::this.onRowClick}
         />
         <PageFooter>
-          <Button icon="fa fa-trash-o" text="Delete" onClick={this.handleDeleteUserClick}/>
+          <Button disabled={true} icon="fa fa-trash-o" text="Delete" onClick={this.handleDeleteUserClick}/>
           <Button text="Import" onClick={this.handleImportUserClick}/>
         </PageFooter>
       </LoadingSpinner>
