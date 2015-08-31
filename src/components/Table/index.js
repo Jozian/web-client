@@ -4,7 +4,7 @@ import 'font-awesome-webpack';
 import {pluck, sortByOrder} from 'lodash';
 import cx from 'classnames';
 
-import Checkbox from '../checkbox';
+import Checkbox from '../Checkbox';
 import styles from './index.css';
 
 class Table extends Component {
