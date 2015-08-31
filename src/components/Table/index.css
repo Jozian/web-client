@@ -9,7 +9,6 @@
 .table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 50px;
 }
 
 .tableHeader .checkTd {
@@ -19,8 +18,8 @@
 
 .tableHeader .checkTd :global(.headerCheckbox) div {
     border: 3px solid #593c56;
-    width: 15px;
-    height: 15px;
+    width: 19px;
+    height: 19px;
     background-color: white;
 }
 
@@ -115,7 +114,7 @@
     -webkit-transform: translateX(-46%);
     width: 100px;
     right: -3px;
-    height: 20px;
+    height: 30px;
     display: inline-block;
     padding-top: 10px;
     color: white;

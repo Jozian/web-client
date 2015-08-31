@@ -1,6 +1,5 @@
 .listItem {
     width: 100%;
-    height: 70px;
     background-color: #f6f6f6;
     padding: 5px;
     overflow: hidden;
@@ -24,6 +23,7 @@
 .container :global(.win-itembox) {
     height: 80px;
 }
+
 .listContainer {
     margin-left: 5%;
     display: inline-block;
@@ -45,6 +45,7 @@
     position: relative;
     top: 3px;
 }
+
 .container {
     width: 100%;
     height: calc(100% - 43px);

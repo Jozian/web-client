@@ -1,5 +1,4 @@
 import {compose, createStore, combineReducers, applyMiddleware} from 'redux';
-import { devTools, persistState } from 'redux-devtools';
 import * as reducers from '../reducers';
 import createLogger from 'redux-logger';
 
@@ -17,14 +16,18 @@ const createFinalStore = compose(
     apiMiddleware,
     logger
   ),
-  devTools(),
-  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
   createStore
 );
 
-export default createFinalStore(reducer, {
+const store = createFinalStore(reducer, {
   currentUser: null,
-  statistics: {top5Downloads: [], top5Views: []},
+  statistics: {
+    loading: false,
+    entities: {
+      top5Downloads: [],
+      top5Views: [],
+    },
+  },
   libraries: {
     loading: false,
     entities: [],
@@ -34,3 +37,5 @@ export default createFinalStore(reducer, {
     entities: [],
   },
 });
+
+export default store;

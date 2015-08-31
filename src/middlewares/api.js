@@ -6,7 +6,7 @@ export default store => next => action => {
     return next(action);
   }
 
-  const {promise, types} = action.payload;
+  const {promise, types = [null, null, null]} = action.payload;
   if (typeof promise !== 'object' || typeof promise.then !== 'function') {
     throw new Error('Promise required');
   }
@@ -14,22 +14,23 @@ export default store => next => action => {
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.');
   }
-  if (!types.every(type => (typeof type === 'string' || typeof type === 'Symbol'))) {
-    throw new Error('Expected action types to be strings or symbols');
-  }
 
   const [requestType, successType, failureType] = types;
 
-  next({
-    type: requestType,
-  });
+  const nextIfHaveAction = (fsa) => {
+    if (fsa && fsa.type) {
+      return next(fsa);
+    }
+  };
+
+  nextIfHaveAction({type: requestType});
 
   return promise.then(
-    response => next({
+    response => nextIfHaveAction({
       payload: response,
       type: successType,
     }),
-    error => next({
+    error => nextIfHaveAction({
       type: failureType,
       payload: error,
       error: error.message || 'Something bad happened',

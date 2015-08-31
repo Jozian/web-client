@@ -17,8 +17,8 @@ export default class NavBar extends Component {
   }
 
   static links = [
-    {to: 'users', title: 'Users'},
     {to: 'libraries', title: 'Libraries'},
+    {to: 'users', title: 'Users'},
     {to: 'comments', title: 'Comments'},
     {to: 'motd', title: 'Message of the Day'},
     {to: 'statistics', title: 'Statistics'},
@@ -36,7 +36,7 @@ export default class NavBar extends Component {
       }
       <div className={styles.footer}>
         <i className="fa fa-user"></i>{this.props.username}
-        <IconButton icon="fa fa-power-off" className="btn-logout" />
+        <IconButton icon="fa fa-power-off" className={styles.logout} />
       </div>
     </nav>);
   }

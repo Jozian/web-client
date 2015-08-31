@@ -1,9 +1,24 @@
 import * as types from '../actions/types.js';
+import { handleLoadingChain } from './helpers';
 
-import libraries from './libraries.js';
-import users from './users.js';
-export { libraries };
-export { users };
+export const libraries = handleLoadingChain([
+  types.LIBRARIES_LOADING,
+  types.LIBRARIES_LOADED,
+  types.LIBRARIES_LOAD_ERROR,
+]);
+
+export const statistics = handleLoadingChain([
+  types.STATISTICS_LOADING,
+  types.STATISTICS_LOADED,
+  types.STATISTICS_LOAD_ERROR,
+]);
+
+export const users = handleLoadingChain([
+  types.USERS_LOADING,
+  types.USERS_LOADED,
+  types.USERS_LOAD_ERROR,
+]);
+
 
 export function currentUser(state) {
   if (!state) {
@@ -21,19 +36,4 @@ export function currentUser(state) {
   }
 
   return state;
-}
-export function statistics(state = {top5Downloads: [], top5Views: []}, action) {
-  if (action.type !== types.STATISTICS_LOADED) {
-    return state;
-  }
-  return {
-    top5Downloads: action.payload[0].map((item) => {
-      const prefix = 'http://www.microsofteducationdelivery.net';
-      return {...item, picture: prefix  + item.picture};
-    }),
-    top5Views: action.payload[1].map((item) => {
-      const prefix = 'http://www.microsofteducationdelivery.net';
-      return {...item, picture: prefix  + item.picture};
-    }),
-  };
 }

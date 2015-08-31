@@ -5,6 +5,7 @@
     margin-left: 8px;
 }
 .iconButton .tooltip{
+    font-size: 18px;
     position: absolute;
     bottom: 100%;
     left: 0;
@@ -13,9 +14,10 @@
 .iconButton .tooltipInner{
     border: 1px solid #78c623;
     padding: 5px 10px;
-    background: #fff; 
+    background: #fff;
+    white-space: nowrap;
 }
-.iconButton .btn{
+.iconButton button {
     font-family: "FontAwesome";
     color: #fff;
     background: #78c623;
@@ -28,19 +30,6 @@
     cursor: pointer;
     outline: none;
 }
-.iconButton .btn :global .fa{
+.iconButton button :global .fa{
     line-height: 35px;
-}
-:global(.btn-logout) {
-    float: right;
-}
-.iconButton:global(.btn-logout) button{
-    background-color: #39696d;
-    border: 0;
-}
-.iconButton:global(.btn-logout) button:hover {
-    background-color: #78c623;
-}
-.iconButton:global(.btn-logout) button i {
-    font-size: 16px;
 }

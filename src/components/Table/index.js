@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import Checkbox from '../checkbox';
-import 'font-awesome-webpack';
-import styles from './index.css';
 import classNames from 'classnames';
+import 'font-awesome-webpack';
 import {pluck, sortByOrder} from 'lodash';
+import cx from 'classnames';
+
+import Checkbox from '../checkbox';
+import styles from './index.css';
 
 class Table extends Component {
   static propTypes = {
     config: React.PropTypes.object.isRequired,
+    className: React.PropTypes.string,
     data: React.PropTypes.array.isRequired,
     onRowClick: React.PropTypes.func,
   };
@@ -178,7 +181,7 @@ class Table extends Component {
     const rows = this._generateRows();
 
     return (
-      <table className={styles.table}>
+      <table className={cx(styles.table, this.props.className)}>
         <thead className={styles.tableHeader}>
           <tr>{[headerCheckboxColumn, ...headerColumns]}</tr>
         </thead>
