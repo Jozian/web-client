@@ -21,6 +21,15 @@ export default class LibrariesPage extends Component {
   constructor(props) {
     super(props);
     props.loadLibraries();
+    this.state = { loading: true };
+  }
+
+  componentWillUpdate(props) {
+    if (props === this.props) {
+      return;
+    }
+
+    this.setState({ loading: props.libraries.loading});
   }
 
   onRowClick() {
@@ -59,7 +68,7 @@ export default class LibrariesPage extends Component {
           tooltipText="Add new library"
         />
       </h1>
-      <LoadingSpinner loading={this.props.libraries.loading}>
+      <LoadingSpinner loading={this.state.loading}>
         <Table
           className={common.table}
           ref="table"

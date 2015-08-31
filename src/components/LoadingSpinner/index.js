@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 import styles from './index.css';
 
 export default class LoadingSpinner extends Component {
@@ -9,13 +10,13 @@ export default class LoadingSpinner extends Component {
 
   render() {
     const loading = this.props.loading;
-    return (<div>
+    return (<CSSTransitionGroup transitionName="loader">
       {loading
-        ? <div className={styles.container}>
+        ? <div key="loader" className={styles.container}>
             <div className={styles.dots}></div>
           </div>
-        : this.props.children
+        : <div key="content">{this.props.children}</div>
       }
-    </div>);
+    </CSSTransitionGroup>);
   }
 }

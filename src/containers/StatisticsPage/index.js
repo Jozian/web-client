@@ -22,7 +22,10 @@ export default class StatisticsPage extends Component {
     super(props);
 
     props.loadStatistics();
+    this.state = { loading: true };
   }
+
+
   componentWillMount() {
     const stats = this.props.statistics;
     if (!stats.loading && !stats.error) {
@@ -38,7 +41,7 @@ export default class StatisticsPage extends Component {
     }
 
     const stats = props.statistics;
-
+    this.setState({ loading: stats.loading});
     if (!stats.loading && !stats.error) {
       this.setState({
         topDownloads: new WinJS.Binding.List(stats.entities.top5Downloads),
@@ -66,7 +69,7 @@ export default class StatisticsPage extends Component {
       <div>
         <h1 className={style.pageTittle}>Statistics</h1>
 
-        <LoadingSpinner loading={this.props.statistics.loading}>
+        <LoadingSpinner loading={this.state.loading}>
 
           <div className={style.listContainer}>
             <div className={style.toolbar} id="downloaded">

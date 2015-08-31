@@ -25,6 +25,15 @@ export default class UsersPage extends Component {
   constructor(props) {
     super(props);
     props.loadUsers();
+    this.state = { loading: true };
+  }
+
+  componentWillUpdate(props) {
+    if (props === this.props) {
+      return;
+    }
+
+    this.setState({ loading: props.users.loading});
   }
 
   onRowClick(value) {
@@ -73,7 +82,7 @@ export default class UsersPage extends Component {
           handleClick={this.handleAddUserClick}
         />
       </h1>
-      <LoadingSpinner loading={this.props.users.loading}>
+      <LoadingSpinner loading={this.state.loading}>
         <Table
           ref="table"
           className={common.table}
