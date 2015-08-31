@@ -1,9 +1,9 @@
-.iconButton {
+.button {
     border-style: solid;
     background-clip: padding-box;
     margin: 0;
-    min-height: 32px;
-    min-width: 90px;
+    min-height: 40px;
+    min-width: 100px;
     padding: 4px 8px;
     border-width: 2px;
     font-size: 12pt;
@@ -12,6 +12,10 @@
     color: white;
     background-color: #78c623;
     text-transform: uppercase;
+}
+
+.button i {
+  padding-right: 7px;
 }
 
 .iconButton:disabled {

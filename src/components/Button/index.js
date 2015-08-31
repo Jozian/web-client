@@ -14,8 +14,8 @@ export default class Button extends Component {
     const disabled = this.props.disabled ? 'disabled' : '';
 
     return (
-      <button type="button" className={style.iconButton} onClick={this.props.onClick} disabled={disabled}>
-        <i className={this.props.icon}></i>
+      <button type="button" className={style.button} onClick={this.props.onClick} disabled={disabled}>
+        {this.props.icon ? <i className={this.props.icon}></i> : null }
         {this.props.text}
       </button>
     );
