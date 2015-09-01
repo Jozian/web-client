@@ -2,7 +2,7 @@
   vertical-align: top;
   display: inline-block;
   width: 45%;
-  height: calc(100% - 200px);
+  height: calc(100% - 225px);
   margin: 0 2.5%;
   position: relative;
 }
@@ -35,4 +35,30 @@
     height: 60px;
     line-height: 60px;
     vertical-align: middle;
+}
+
+.breadcrumbs {
+  list-style: none;
+  height: 25px;
+}
+
+.breadcrumbs li {
+  display: inline;
+  color: grey;
+}
+
+.breadcrumbs li a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.breadcrumbs li a:hover {
+  color: #593c56;
+}
+
+
+.breadcrumbs li:not(:first-child):before {
+  content: '>';
+  margin: 0 5px;
+
 }

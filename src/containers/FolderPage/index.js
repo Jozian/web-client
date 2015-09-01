@@ -59,7 +59,7 @@ export default class FolderPage extends Component {
     return (
       <div className={styles.listItem}>
         <PreviewImage
-          className={styles.image}
+          className={styles.image }
           src={'http://www.microsofteducationdelivery.net' + item.data.picture}
         />
         <div className={styles.name}>{item.data.name}</div>
@@ -74,7 +74,7 @@ export default class FolderPage extends Component {
   }
 
   renderBreadcrumbs() {
-    return (<ul>
+    return (<ul className={styles.breadcrumbs}>
       <li><Link to="libraries">Libraries</Link></li>
       {
         (this.props.folder.entity.path || []).map((pathEntry) =>
