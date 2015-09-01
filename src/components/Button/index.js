@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import style from './index.css';
-import fontAwesome from 'font-awesome-webpack'; // eslint-disable-line no-unused-vars
+import 'font-awesome-webpack';
 
 export default class Button extends Component {
   static propTypes = {

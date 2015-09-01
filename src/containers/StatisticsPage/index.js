@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react/addons';
 import ReactWinJS from 'react-winjs';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import style from './style.css';
 import * as actions from '../../actions/statistics.js';
 import Button from '../../components/Button';
+import PreviewImage from '../../components/PreviewImage';
 import PageFooter from '../../components/PageFooter';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
@@ -25,7 +26,6 @@ export default class StatisticsPage extends Component {
     this.state = { loading: true };
   }
 
-
   componentWillMount() {
     const stats = this.props.statistics;
     if (!stats.loading && !stats.error) {
@@ -35,6 +35,7 @@ export default class StatisticsPage extends Component {
       });
     }
   }
+
   componentWillUpdate(props) {
     if (this.props === props) {
       return;
@@ -50,30 +51,44 @@ export default class StatisticsPage extends Component {
     }
   }
 
+  boundCSSTransitionGroup() {
+    return function wrapper(props, ...rest) {
+      return React.createFactory(React.addons.CSSTransitionGroup)(
+        {
+          transitionName: 'loader',
+          component: 'div',
+          ...props,
+        },
+        ...rest
+      );
+    };
+  }
+
   listViewItemRenderer = ReactWinJS.reactRenderer((item) => {
     // FIXME:
     return (
       <div className={style.listItem}>
         <div className={style.number}>
-          <h4> {item.data.number} </h4>
+          {item.data.number}
         </div>
-        <img src={'http://www.microsofteducationdelivery.net' + item.data.picture} className={style.image} />
-        <div className={style.name}>
-          <h6> {item.data.text} </h6>
-        </div>
+        <PreviewImage
+          className={style.image}
+          src={'http://www.microsofteducationdelivery.net' + item.data.picture}
+        />
+        <div className={style.name}>{item.data.text}</div>
       </div>);
   })
 
   render() {
     return (
       <div>
-        <h1 className={style.pageTittle}>Statistics</h1>
+        <h1>Statistics</h1>
 
         <LoadingSpinner loading={this.state.loading}>
 
           <div className={style.listContainer}>
             <div className={style.toolbar} id="downloaded">
-              <span className={style.toolbarTittle}>most downloaded media</span>
+              <span className={style.toolbarTitle}>most downloaded media</span>
             </div>
             <ReactWinJS.ListView
               className={style.container}
@@ -84,7 +99,7 @@ export default class StatisticsPage extends Component {
           </div>
           <div className={style.listContainer}>
             <div className={style.toolbar} id="downloaded">
-              <span className={style.toolbarTittle}>most viewed media</span>
+              <span className={style.toolbarTitle}>most viewed media</span>
             </div>
 
             <ReactWinJS.ListView
