@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './index.css';
 
-export default class PageFooter extends Component {
+export default class Footer extends Component {
   static propTypes = {
     children: React.PropTypes.node,
   }

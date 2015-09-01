@@ -36,6 +36,10 @@ const store = createFinalStore(reducer, {
     loading: false,
     entities: [],
   },
+  activeFolder: {
+    loading: false,
+    entity: {},
+  },
 });
 
 export default store;

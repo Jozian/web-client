@@ -14,8 +14,13 @@ import common from '../../common/styles.css';
   (dispatch) => bindActionCreators({ loadLibraries}, dispatch)
 )
 export default class LibrariesPage extends Component {
+
   static propTypes = {
     libraries: React.PropTypes.object.isRequired,
+  }
+
+  static contextTypes = {
+    router: React.PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -24,16 +29,12 @@ export default class LibrariesPage extends Component {
     this.state = { loading: true };
   }
 
-  componentWillUpdate(props) {
-    if (props === this.props) {
-      return;
-    }
-
+  componentWillReceiveProps(props) {
     this.setState({ loading: props.libraries.loading});
   }
 
-  onRowClick() {
-
+  onRowClick(data) {
+    this.context.router.transitionTo('folder', {id: data.id});
   }
 
   config = {
@@ -61,7 +62,7 @@ export default class LibrariesPage extends Component {
   render() {
     return (<div>
       <h1>
-        Librares
+        Libraries
         <IconButton
           className={common.headerButton}
           icon="fa fa-plus"

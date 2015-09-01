@@ -4,6 +4,7 @@ import 'font-awesome-webpack';
 
 export default class Button extends Component {
   static propTypes = {
+    children: React.PropTypes.node,
     icon: React.PropTypes.string,
     text: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -16,7 +17,7 @@ export default class Button extends Component {
     return (
       <button type="button" className={style.button} onClick={this.props.onClick} disabled={disabled}>
         {this.props.icon ? <i className={this.props.icon}></i> : null }
-        {this.props.text}
+        {this.props.children}
       </button>
     );
   }

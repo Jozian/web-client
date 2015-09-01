@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Button from '../../components/Button';
 import common from '../../common/styles.css';
 import IconButton from '../../components/IconButton';
-import PageFooter from '../../components/PageFooter';
+import Footer from '../../components/Footer';
 import Table from '../../components/Table/index.js';
 import { boldTextRender } from '../../components/Table/renders.js';
 import * as actions from '../../actions/users.js';
@@ -93,10 +93,21 @@ export default class UsersPage extends Component {
           data={this.props.users.entities}
           onRowClick={::this.onRowClick}
         />
-        <PageFooter>
-          <Button disabled={true} icon="fa fa-trash-o" text="Delete" onClick={this.handleDeleteUserClick}/>
-          <Button text="Import" onClick={this.handleImportUserClick}/>
-        </PageFooter>
+        <Footer>
+          <Button
+            disabled={true}
+            icon="fa fa-trash-o"
+            onClick={this.handleDeleteUserClick}
+          >
+            Delete
+          </Button>
+          <Button
+            icon="fa fa-upload"
+            onClick={this.handleImportUserClick}
+          >
+            Import
+          </Button>
+        </Footer>
       </LoadingSpinner>
     </div>);
   }

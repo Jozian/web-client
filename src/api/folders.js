@@ -2,12 +2,12 @@ import fetch from './helper';
 
 const apiUrl = '/api/folders';
 
-export function getFolderList(libraryId) {
-  if (!libraryId || typeof libraryId  !== 'string') {
+export function getFolderList(id) {
+  if (!id || typeof id  !== 'string') {
     return Promise.reject('Invalid libraryId');
   }
 
-  return fetch(apiUrl + '/' + libraryId);
+  return fetch(`${apiUrl}/${id}`);
 }
 
 export function addFolder(body) {
@@ -21,7 +21,7 @@ export function addFolder(body) {
   });
 }
 
-export function editFolder(folderId, body) {
+export function editFolder(id, body) {
   if (!body || !body.name) {
     return Promise.reject('Invalid body');
   }
@@ -30,10 +30,8 @@ export function editFolder(folderId, body) {
     return Promise.reject('Invalid folderId');
   }
 
-  return fetch(apiUrl + '/' + folderId, {
+  return fetch(`${apiUrl}/${id}`, {
     method: 'put',
     body: JSON.stringify(body),
   });
 }
-
-

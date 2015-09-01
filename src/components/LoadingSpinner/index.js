@@ -10,7 +10,7 @@ export default class LoadingSpinner extends Component {
 
   render() {
     const loading = this.props.loading;
-    return (<CSSTransitionGroup transitionName="loader">
+    return (<CSSTransitionGroup component="div" transitionName="loader">
       {loading
         ? <div key="loader" className={styles.container}>
             <div className={styles.dots}></div>

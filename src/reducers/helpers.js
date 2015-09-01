@@ -4,7 +4,7 @@ const initialState = {
   error: null,
 };
 
-const handleLoadingChain = types =>
+const handleLoadingChain = (types, field = 'entities', defaultValue = []) =>
   function handleState(state = initialState, action) {
     if (types.length !== 3) {
       throw new Error('There should be exactly 3 events in series');
@@ -15,9 +15,9 @@ const handleLoadingChain = types =>
     case loading:
       return { ...state, loading: true, error: null };
     case loaded:
-      return { ...state, loading: false, entities: action.payload, error: null };
+      return { ...state, loading: false, [field]: action.payload, error: null };
     case error:
-      return { ...state, loading: false, entities: [], error: action.payload };
+      return { ...state, loading: false, [field]: defaultValue, error: action.payload };
     default:
       return state;
     }
