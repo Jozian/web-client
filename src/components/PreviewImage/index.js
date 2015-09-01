@@ -10,17 +10,15 @@ export default class PreviewImage extends Component {
     imgClassName: React.PropTypes.string,
   }
 
-  generateWrapper() {
-    return function wrapper(props, ...rest) {
-      return React.createFactory(React.addons.CSSTransitionGroup)(
-        {
-          transitionName: 'loader',
-          component: 'div',
-          ...props,
-        },
-        ...rest
-      );
-    };
+  renderWrapper(props, ...rest) {
+    return React.createFactory(React.addons.CSSTransitionGroup)(
+      {
+        transitionName: 'loader',
+        component: 'div',
+        ...props,
+      },
+      ...rest
+    );
   }
 
   render() {
@@ -28,7 +26,7 @@ export default class PreviewImage extends Component {
       <div className={this.props.className}>
         <ImageLoader
           src={this.props.src}
-          wrapper={this.generateWrapper()}
+          wrapper={this.renderWrapper}
           style={{position: 'relative', width: '100%', height: '100%'}}
           preloader={() => (<div key="preload" className={style.imageLoader}>
             <div className={style.throbber} />
