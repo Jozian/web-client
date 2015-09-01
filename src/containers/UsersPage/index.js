@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import Header from 'components/Header';
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
@@ -15,6 +14,7 @@ import loading from 'decorators/loading';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
+import { RouteHandler } from 'react-router';
 
 @connect(
   (state) => ({users: state.users, pendingActions: state.pendingActions}),

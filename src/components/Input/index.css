@@ -1,0 +1,30 @@
+.editRow {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.editLabel {
+    padding-top: 5px;
+    width: 45%;
+    text-align: right;
+    color: grey;
+    margin-right: 2%;
+}
+
+.editInput {
+    border-style: solid;
+    border-width: 2px;
+    margin: 4px 0px;
+    width: 50%;
+    min-width: 64px;
+    min-height: 28px;
+    background-clip: border-box;
+    padding: 0 8px;
+    outline: 0;
+    font-size: 11pt;
+    font-weight: 400;
+    line-height: 1.3636;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 0, 0, 0.27);
+    color: #000000;
+}

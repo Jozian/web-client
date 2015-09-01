@@ -6,6 +6,10 @@
     background-color: white;
 }
 
+.checkbox {
+    color: grey;
+}
+
 .partChecked {
     display: inline-block;
     border: 2px solid #cccccc;
@@ -27,4 +31,25 @@ input[type="checkbox"]:checked + div:after {
     content: '\f00c';
     font-family: 'FontAwesome';
     font-size: 11pt;
+    vertical-align: middle;
+}
+
+input[type=checkbox] {
+    width: 21px;
+    height: 21px;
+    margin-right: 5px;
+}
+
+.title {
+    vertical-align: middle;
+    margin-left: 10px;
+    color: grey;
+    display: inline-block;
+}
+
+.container {
+    display: inline-block;
+    width: 48%;
+    vertical-align: middle;
+    padding-top: 5px;
 }

@@ -14,6 +14,10 @@ import store from 'store/configureStore';
 
 const routes = (
   <Route handler={App} path="/">
+    <Route name="users" handler={UsersPage}>
+        <Route path="edit" handler={EditUserPage} />
+    </Route>
+    <Route name="libraries" handler={LibrariesPage} />
     <Route name="users" handler={UsersPage} />
     <Route name="libraries">
       <DefaultRoute handler={LibrariesPage} />
