@@ -36,6 +36,7 @@ function renderIcon(type) {
   { isLoadingByDefault: true },
 )
 export default class CommentsPage extends Component {
+
   static propTypes = {
     media: React.PropTypes.array.isRequired,
   }
@@ -50,6 +51,7 @@ export default class CommentsPage extends Component {
   }
 
   onRowClick(value) {
+    this.context.router.transitionTo('comment', {id: value.id});
     window.console.log(value);
   }
 

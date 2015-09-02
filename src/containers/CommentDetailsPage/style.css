@@ -1,0 +1,113 @@
+/*.b_media-comments--bottombar*/ .bottombar {
+    position: relative;
+    bottom: -10px;
+    width: 100%;
+    height: 50px;
+    background-color: #e0e2e2;
+    text-align: center;
+
+    display:-ms-flexbox;
+    -ms-flex-pack:center;
+    -ms-flex-align:center;
+
+    /* Firefox */
+    display:-moz-box;
+    -moz-box-pack:center;
+    -moz-box-align:center;
+
+    /* Safari, Opera, and Chrome */
+    display:-webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+
+    /* W3C */
+    display:box;
+    box-pack:center;
+    box-align:center;
+}
+
+/*.b_media-comments-content*/ .commentsContent {
+    display: inline-block;
+    width: 90%;
+    height: calc(100% - 201px);
+    margin: 1.25%;
+    margin-left: 5%;
+    background-color: #f6f6f6;
+}
+
+/*.b_media-comments-content__list*/ .list {
+    height: calc(100% - 90px);
+}
+
+/*.b_media-comments-content--toolbar*/ .toolbar {
+    padding: 5px;
+    height: 36px;
+    background-color: #e0e2e2;
+}
+
+/*.b_media-comments-content--toolbar__title*/ .title {
+    color: #2c6a6c;
+    font-size: 16pt;
+    margin-left: 5px;
+    text-transform: uppercase;
+}
+
+/*.b_media-comments-content--toolbar__btn*/ .toolbarBtn {
+    float: right;
+    margin-right: 5px;
+    min-height: 24px;
+    text-transform: uppercase;
+    color: #f2f2f2;
+    font-size: 12pt;
+}
+/*.b_media-comments-list-tpl--item__checkbox*/ .checkbox {
+    float: left;
+    padding-top: 20px;
+    height: 60px;
+    text-align: center;
+}
+/*.b_media-comments-list-tpl--item__text*/ .itemText {
+    height: auto;
+    padding: 3px;
+    padding-right: 110px;
+    background-color: white;
+}
+
+/*.b_media-comments-list-tpl__replay*/ .replay {
+    position: absolute;
+    background-color: white;
+    border: 0;
+    padding: 0;
+    color: #5d415e;
+    top: 8px;
+    right: 8px;
+}
+/*.b_media-comments-list-tpl__replay:hover*/ .replay:hover {
+    background-color: white !important;
+    color: gray !important;
+}
+/*.b_media-comments-list-tpl--item*/ .tplItem {
+    width: 100%;
+    background-color: #f6f6f6;
+    padding: 5px;
+    overflow: hidden;
+}
+/*.b_body-box*/ .bodyBox {
+    color: black;
+    display: inline-block;
+    border: 2px solid #cccccc;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+}
+/*.b-footer__wrapper*/ .footerWrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+/*.b-footer__wrapper button*/ .footerButton {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+

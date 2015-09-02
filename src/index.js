@@ -3,16 +3,19 @@ import Router, {Route, DefaultRoute, Redirect} from 'react-router';
 import { Provider } from 'react-redux';
 import Modal from 'react-modal';
 
-import App from 'containers/App';
-import UsersPage from 'containers/UsersPage';
-import LibrariesPage from 'containers/LibrariesPage';
-import FolderPage from 'containers/FolderPage';
-import StatisticsPage from 'containers/StatisticsPage';
-import CommentsPage from 'containers/CommentsPage';
-import MotdPage from 'containers/MotdPage';
-import store from 'store/configureStore';
+
+import App from './containers/App';
+import UsersPage from './containers/UsersPage';
+import LibrariesPage from './containers/LibrariesPage';
+import FolderPage from './containers/FolderPage';
+import StatisticsPage from './containers/StatisticsPage';
+import CommentsPage from './containers/CommentsPage';
+import MotdPage from './containers/MotdPage';
+import store from './store/configureStore';
+import CommentDetails from './containers/CommentDetailsPage';
 
 const routes = (
+
   <Route handler={App} path="/">
     <Route name="users" handler={UsersPage} />
     <Route name="libraries">
@@ -24,6 +27,8 @@ const routes = (
     <Route name="comments" handler={CommentsPage} />
     <Route name="motd" handler={MotdPage} />
     <Redirect from="/" to="libraries" />
+    <DefaultRoute handler={LibrariesPage} />
+    <Route name="comment" path="comment/:id" handler={CommentDetails}/>
   </Route>
 );
 
