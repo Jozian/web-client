@@ -1,9 +1,10 @@
 .userLabel {
     padding-top: 5px;
-    width: 48%;
+    width: 43%;
     text-align: right;
     color: grey;
     margin-right: 2%;
+    display: inline-block;
 }
 
 .optionsSelect {

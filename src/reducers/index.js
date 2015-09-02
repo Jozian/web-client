@@ -32,6 +32,17 @@ export const users = handleLoadingChain([
   types.USERS_LOAD_ERROR,
 ]);
 
+export const activeFolder = handleLoadingChain([
+  types.FOLDER_LOADING,
+  types.FOLDER_LOADED,
+  types.FOLDER_LOAD_ERROR,
+], 'entity', {});
+
+export const user = handleLoadingChain([
+  types.USER_LOADING,
+  types.USER_LOADED,
+  types.USER_LOAD_ERROR,
+] , 'entity', {});
 export const motd = handleLoadingChain([
   types.MOTD_LOADING,
   types.MOTD_LOADED,

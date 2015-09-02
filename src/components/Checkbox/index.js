@@ -13,6 +13,8 @@ export default class Checkbox extends Component {
     className: PropTypes.string,
     tabIndex: PropTypes.string,
   }
+    title: PropTypes.string,
+  };
 
   static defaultProps = {
     tabIndex: '-1',
@@ -38,7 +40,7 @@ export default class Checkbox extends Component {
           <input onChange={::this.handleClick} ref="input" type="checkbox" checked={!!checked} disabled={disabled}/>
           <div className={className}></div>
         </label>
-        <label className={styles.title}>{this.props.className}</label>
+        <label className={styles.title}>{this.props.title}</label>
       </div>
     );
   }

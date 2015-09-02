@@ -1,38 +1,113 @@
 import React, { Component } from 'react';
 import Button from '../../components/Button';
-import {USERS_LOADING, USERS_LOADED, USERS_LOAD_ERROR} from '../../actions/types.js';
+import {USER_LOADING, USER_LOADED, USER_LOAD_ERROR} from '../../actions/types.js';
 import { connect } from 'react-redux';
 import style from './index.css';
-import IconButton from '../../components/IconButton';
-import Modal from '../../components/Modal';
-import Input from '../../components/Input';
+//import Input from '../../components/Input';
 import Checkbox from '../../components/Checkbox';
 import Dropdown from '../../components/Dropdown';
 import * as actions from '../../actions/users.js';
 import { bindActionCreators } from 'redux';
 
+@connect(
+  (state) => ({user: state.user}),
+  (dispatch) => bindActionCreators(actions, dispatch)
+)
+
 class EditUserPage extends Component {
+
+    static propTypes = {
+        params: React.PropTypes.shape({
+            id: React.PropTypes.string.isRequired,
+            login: React.PropTypes.string.isRequired,
+            name: React.PropTypes.string.isRequired,
+            type: React.PropTypes.string.isRequired,
+        }),
+    }
+
+    constructor(props) {
+        super(props);
+        props.loadUser(props.params.id);
+        this.state = { loading: true };
+    }
+
     render() {
-        return (<Modal title="Edit User">
-            <div className={style.backgroundGrey}>
-                <Input title="User Name:" placeholder="i.e. John Doe"></Input>
-                <Input title="Login*:" placeholder="i.e. johndoe"></Input>
-                <Dropdown title="Type:"></Dropdown>
-                <Input title="Password:"></Input>
-                <Input title="Confirm Password:"></Input>
-                <div className={style.backgroundGreen}>
-                    <Checkbox className="Send credentials in SMS:"></Checkbox>
-                    <div className={style.editRow}>
-                        <input className={style.editInput} type="text" name="name" placeholder="Your mobile phone"></input>
-                    </div>
-                    <Checkbox className="Send credentials in emails:"></Checkbox>
-                    <div className={style.editRow}>
-                        <input className={style.editInput} type="text" name="name" placeholder="email@email.com"></input>
-                    </div>
+        return (<div className={style.mainContainer}>
+            <h1 className={style.title}>Edit user</h1>
+            <div className={style.wrapper}>
+              <form className={style.backgroundGrey}>
+                <div className={style.editRow}>
+                  <label className={style.editLabel}>User Name:</label>
+                  <input
+                    className={style.editInput}
+                    type="text"
+                    name="name"
+                    placeholder="i.e. John Doe"
+                    value={this.props.user.entity.name}></input>
                 </div>
-                <p className={style.note}>* user will be able to login both to website and mobile client with this credentials.</p>
+                <div className={style.editRow}>
+                  <label className={style.editLabel}>Login*:</label>
+                  <input
+                    className={style.editInput}
+                    type="text"
+                    name="login"
+                    placeholder="i.e. johndoe"
+                    value={this.props.user.entity.login}></input>
+                </div>
+                <Dropdown title="Type:">
+                  <option selected value="type">{this.props.user.entity.type}</option>
+                  <option value="admin">Admin</option>
+                  <option value="operator">Operator</option>
+                  <option value="mobile">Mobile</option>
+                </Dropdown>
+                <div className={style.editRow}>
+                  <label className={style.editLabel}>Password:</label>
+                  <input
+                    className={style.editInput}
+                    type="password"
+                    name="password">
+                  </input>
+                </div>
+                <div className={style.editRow}>
+                  <label className={style.editLabel}>Confirm Password:</label>
+                  <input
+                    className={style.editInput}
+                    type="password"
+                    name="confirm-password">
+                  </input>
+                </div>
+                <div className={style.backgroundGreen}>
+
+                  <div className={style.editRow}>
+                    <Checkbox className={style.editCheckbox} title="Send credentials in SMS:"></Checkbox>
+                    <input
+                      className={style.editInput}
+                      type="text"
+                      name="name"
+                      placeholder="Your mobile phone"
+                      value={this.props.user.entity.phone}>
+                    </input>
+                  </div>
+
+                  <div className={style.editRow}>
+                    <Checkbox className={style.editCheckbox} title="Send credentials in emails:"></Checkbox>
+                    <input
+                      className={style.editInput}
+                      type="text"
+                      name="name"
+                      placeholder="email@email.com"
+                      value={this.props.user.entity.email}>
+                    </input>
+                  </div>
+                </div>
+                <footer>
+                  <p className={style.note}>* user will be able to login both to website and mobile client with this credentials.</p>
+                  <p><input type="submit" value="OK"></input></p>
+                  <p><input type="submit" value="Cancel"></input></p>
+                </footer>
+              </form>
             </div>
-        </Modal>);
+        </div>);
     }
 }
 
@@ -40,7 +115,8 @@ function mapStateToProps() {
     return {};
 }
 
+
 export default connect(
     mapStateToProps,
-    { USERS_LOADING, USERS_LOADED, USERS_LOAD_ERROR }
+    { USER_LOADING, USER_LOADED, USER_LOAD_ERROR }
 )(EditUserPage);

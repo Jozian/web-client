@@ -34,6 +34,10 @@ export default class UsersPage extends Component {
     uploadUsers: React.PropTypes.func.isRequired,
   };
 
+  static contextTypes = {
+    router: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
     props.loadUsers();
@@ -58,6 +62,8 @@ export default class UsersPage extends Component {
 
   onRowClick(value) {
     window.console.log(value);
+    const { router } = this.context;
+    router.transitionTo('editUser', {id: value.id});
   }
 
   onListSelectionChange(selectedUsers) {
