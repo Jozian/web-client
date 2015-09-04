@@ -51,22 +51,52 @@ export default class FolderPage extends Component {
   constructor(props) {
     super(props);
     props.loadFoldersList(props.params.folderId);
+    this.handleKeyDown = ::this._handleKeyDown;
+    this.state = {
+      selection: [],
+      isSelectionSet: false,
+    };
+  }
+
+  componentWillMount() {
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillReceiveProps(props) {
     if (props.params.folderId !== this.props.params.folderId) {
+      this.setState({selection: []});
+      this.setState({isSelectionSet: false});
       props.loadFoldersList(props.params.folderId);
     }
   }
 
   componentDidUpdate() {
-    if (this.props.params.itemId) {
+    if (this.props.params.itemId && !this.state.isSelectionSet) {
       this.props.items.forEach((data, index) => {
         if (data.id.toString() === this.props.params.itemId) {
           this.refs.folder.winControl.selection.set(index);
           setImmediate(() => this.refs.folder.winControl.ensureVisible(index));
+          this.setState({isSelectionSet: true});
         }
       });
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  _handleKeyDown(e) {
+    const key = String.fromCharCode(e.keyCode);
+    if (key === 'A' && e.ctrlKey) {
+      e.preventDefault();
+      this.refs.folder.winControl.selection.selectAll();
+    }
+    if (e.keyCode === 27 ) {
+      this.refs.folder.winControl.selection.clear();
+    }
+    if (e.keyCode === 46) {
+      this.handleDelete();
     }
   }
 
@@ -126,7 +156,17 @@ export default class FolderPage extends Component {
       throw new Error('Unsupported item type');
     }
   }
+  handleDelete() {
+    const selection = this.state.selection;
+    console.log('selection:', selection);
+  }
+  async handleSelectionChange(e) {
+    const items = await e.target.winControl.selection.getItems();
 
+    this.setState({
+      selection: items.map( (item) => (item.data.id)),
+    });
+  }
   renderBreadcrumbs() {
     const path = [...this.props.folder.entity.path];
     path.push({
@@ -157,9 +197,17 @@ export default class FolderPage extends Component {
         itemDataSource={this.props.items.dataSource}
         itemTemplate={this.folderItemRenderer}
         onItemInvoked={::this.handleItemSelected}
+        onSelectionChanged={::this.handleSelectionChange}
         layout={listLayout}
       />,
-      <Footer />
+      <Footer>
+        <Button
+          disabled={this.state.selection.length === 0}
+          icon="fa fa-trash-o"
+          onClick={::this.handleDelete}>
+          Delete
+        </Button>
+      </Footer>
     </div>);
   }
 
