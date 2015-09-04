@@ -2,19 +2,24 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import Button from '../../components/Button';
-import common from '../../common/styles.css';
-import IconButton from '../../components/IconButton';
-import Footer from '../../components/Footer';
-import Table from '../../components/Table/index.js';
-import { boldTextRender } from '../../components/Table/renders.js';
-import * as actions from '../../actions/users.js';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import Button from 'components/Button';
+import common from 'common/styles.css';
+import IconButton from 'components/IconButton';
+import Footer from 'components/Footer';
+import Table from 'components/Table/index.js';
+import { boldTextRender } from 'components/Table/renders.js';
+import * as actions from 'actions/users.js';
+import LoadingSpinner from 'components/LoadingSpinner';
+import loading from 'decorators/loading';
 
 
 @connect(
   (state) => ({users: state.users}),
   (dispatch) => bindActionCreators(actions, dispatch)
+)
+@loading(
+  (state) => state.users.loading,
+  { isLoadingByDefault: true }
 )
 export default class UsersPage extends Component {
 
