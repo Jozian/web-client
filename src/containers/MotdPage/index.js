@@ -36,6 +36,9 @@ export default class StatisticsPage extends Component {
     }
 
     this.props.updateMOTD(value);
+    this.setState({
+      motd: '',
+    });
   }
   render() {
     return (
