@@ -5,8 +5,14 @@ function wrapBindings(bindings) {
   return mapValues(bindings, binding => new WinJS.Binding.List(binding));
 }
 
+function getDisplayName(C) {
+  return C.displayName || C.name || 'Component';
+}
+
 export default propsToBindings => WrappedComponent => {
   class Wrapper extends Component {
+    static displayName = `WinJSBinding.${getDisplayName(WrappedComponent)}`;
+
     constructor(props) {
       super(props);
       const bindings = propsToBindings(props);

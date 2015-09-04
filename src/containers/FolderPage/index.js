@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import cx from 'classnames';
 
 import winjsBind from 'decorators/winjsBind';
+import loading from 'decorators/loading';
 import { loadFoldersList } from 'actions/folders';
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
@@ -25,6 +26,10 @@ import styles from './index.css';
   (props) => ({
     items: props.folder.entity.data,
   })
+)
+@loading(
+  (state) => state.folder.loading,
+  { isLoadingByDefault: true }
 )
 export default class FolderPage extends Component {
   static propTypes = {
@@ -46,28 +51,22 @@ export default class FolderPage extends Component {
   constructor(props) {
     super(props);
     props.loadFoldersList(props.params.folderId);
-    this.state = { loading: true };
-    this.sel = {};
   }
 
   componentWillReceiveProps(props) {
-    this.setState({ loading: props.folder.loading});
     if (props.params.folderId !== this.props.params.folderId) {
       props.loadFoldersList(props.params.folderId);
-      this.setState({loading: true});
     }
   }
 
   componentDidUpdate() {
-    if (!this.state.loading && this.refs.folder) {
-      if (this.props.params.itemId) {
-        this.props.items.forEach((data, index) => {
-          if (data.id.toString() === this.props.params.itemId) {
-            this.refs.folder.winControl.selection.set(index);
-            setImmediate(() => this.refs.folder.winControl.ensureVisible(index));
-          }
-        });
-      }
+    if (this.props.params.itemId) {
+      this.props.items.forEach((data, index) => {
+        if (data.id.toString() === this.props.params.itemId) {
+          this.refs.folder.winControl.selection.set(index);
+          setImmediate(() => this.refs.folder.winControl.ensureVisible(index));
+        }
+      });
     }
   }
 
@@ -129,10 +128,10 @@ export default class FolderPage extends Component {
   }
 
   renderBreadcrumbs() {
-    const path = [...(this.props.folder.entity.path || [])];
+    const path = [...this.props.folder.entity.path];
     path.push({
-      title: this.props.folder.entity.name || '',
-      id: this.props.params.folderId || '',
+      title: this.props.folder.entity.name,
+      id: this.props.params.folderId,
     });
 
     return (<ul className={styles.breadcrumbs}>
@@ -166,7 +165,7 @@ export default class FolderPage extends Component {
 
   render() {
     return (
-      <LoadingSpinner loading={this.state.loading}>
+      <div>
         <h1>{this.props.folder.entity.name}
         <IconButton
           className={commonStyles.headerButton}
@@ -189,6 +188,6 @@ export default class FolderPage extends Component {
           <Button icon="fa fa-save">Save</Button>
         </Footer>
       </div>
-    </LoadingSpinner>);
+    </div>);
   }
 }
