@@ -50,9 +50,9 @@ export default class StatisticsPage extends Component {
 
   async handleItemSelected(event) {
     const item = await event.detail.itemPromise;
-    this.context.router.transitionTo('media', {
+    this.context.router.transitionTo('folderSelection', {
       folderId: item.data.folder.toString(),
-      mediaId: item.data.id.toString(),
+      itemId: item.data.id.toString(),
     });
   }
 

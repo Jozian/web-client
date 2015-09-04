@@ -31,7 +31,7 @@ export default class FolderPage extends Component {
     folder: React.PropTypes.object.isRequired,
     params: React.PropTypes.shape({
       folderId: React.PropTypes.string.isRequired,
-      mediaId: React.PropTypes.string,
+      itemId: React.PropTypes.string,
     }),
     items: React.PropTypes.shape({
       dataSource: React.PropTypes.object.isRequired,
@@ -60,9 +60,9 @@ export default class FolderPage extends Component {
 
   componentDidUpdate() {
     if (!this.state.loading && this.refs.folder) {
-      if (this.props.params.mediaId) {
+      if (this.props.params.itemId) {
         this.props.items.forEach((data, index) => {
-          if (data.id.toString() === this.props.params.mediaId) {
+          if (data.id.toString() === this.props.params.itemId) {
             this.refs.folder.winControl.selection.set(index);
             setImmediate(() => this.refs.folder.winControl.ensureVisible(index));
           }
@@ -104,16 +104,23 @@ export default class FolderPage extends Component {
 
   async handleItemSelected(event) {
     const item = await event.detail.itemPromise;
+    const activeItemId = this.props.params.itemId;
+    const goTo = ::this.context.router.transitionTo;
     switch (item.data.type) {
     case 'folder':
-      this.context.router.transitionTo('folder', {
-        folderId: item.data.id.toString(),
-      });
+      if (activeItemId === item.data.id.toString()) {
+        goTo('folder', {folderId: activeItemId});
+      } else {
+        goTo('folderSelection', {
+          folderId: this.props.params.folderId,
+          itemId: item.data.id.toString(),
+        });
+      }
       break;
     case 'media':
-      this.context.router.transitionTo('media', {
+      goTo('folderSelection', {
         folderId: this.props.params.folderId,
-        mediaId: item.data.id.toString(),
+        itemId: item.data.id.toString(),
       });
       break;
     default:
@@ -142,6 +149,21 @@ export default class FolderPage extends Component {
     </ul>);
   }
 
+  renderItemList() {
+    return (<div>
+      <ListView
+        key="folder"
+        ref="folder"
+        className={styles.list}
+        itemDataSource={this.props.items.dataSource}
+        itemTemplate={this.folderItemRenderer}
+        onItemInvoked={::this.handleItemSelected}
+        layout={listLayout}
+      />,
+      <Footer />
+    </div>);
+  }
+
   render() {
     return (
       <LoadingSpinner loading={this.state.loading}>
@@ -159,16 +181,7 @@ export default class FolderPage extends Component {
       </h1>
       { this.renderBreadcrumbs() }
       <div className={styles.column}>
-        <ListView
-          key="folder"
-          ref="folder"
-          className={styles.list}
-          itemDataSource={this.props.items.dataSource}
-          itemTemplate={this.folderItemRenderer}
-          onItemInvoked={::this.handleItemSelected}
-          layout={listLayout}
-        />
-        <Footer />
+        { this.renderItemList() }
       </div>
       <div className={styles.column} style={{backgroundColor: 'blue'}}>
         <LoadingSpinner loading={true} />
