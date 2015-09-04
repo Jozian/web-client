@@ -7,9 +7,9 @@ function getDisplayName(Component) {
 }
 
 export default (isLoading, options) => WrappedComponent => {
-  debugger;
+  const parentName = getDisplayName(WrappedComponent);
   class WrappedLoader extends WrappedComponent {
-    static displayName = `SmartLoader`;
+    static displayName = `SmartLoader.${parentName}`;
 
     constructor(props, context) {
       super(props, context);
