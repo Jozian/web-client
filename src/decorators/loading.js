@@ -7,8 +7,9 @@ function getDisplayName(Component) {
 }
 
 export default (isLoading, options) => WrappedComponent => {
+  debugger;
   class WrappedLoader extends WrappedComponent {
-    static displayName = `SmartLoader.${getDisplayName(WrappedComponent)}`;
+    static displayName = `SmartLoader`;
 
     constructor(props, context) {
       super(props, context);
@@ -19,7 +20,9 @@ export default (isLoading, options) => WrappedComponent => {
     }
 
     componentWillReceiveProps(newProps) {
-      super.componentWillReceiveProps(newProps);
+      if (super.componentWillReceiveProps) {
+        super.componentWillReceiveProps(newProps);
+      }
       this.setState({
         loading: isLoading(newProps),
       });
