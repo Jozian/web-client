@@ -1,71 +1,73 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react/addons';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import styles from './style.css';
+import Button from '../../components/Button';
+import * as actions from '../../actions/motd.js';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
-class MotdPage extends Component {
+@connect(
+  (state) => ({motd: state.motd}),
+  (dispatch) => bindActionCreators(actions, dispatch)
+)
+export default class StatisticsPage extends Component {
   static propTypes = {
-    text: React.PropTypes.string,
+    motd: React.PropTypes.object,
+    updateMOTD: React.PropTypes.func.isRequired,
   }
-
   constructor(props) {
     super(props);
+
+    props.loadMOTD();
     this.state = {
-      oldText: props.text || '',
-      textLength: props.textLength || 230,
-      disableButton: true,
-      disableError: false,
+      loading: true,
+      motd: '',
     };
   }
-
-  handleClick(e) {
-    e.preventDefault();
-    this.setState({
-      oldText: React.findDOMNode(this.refs.newState).value,
-    });
-    // alert(React.findDOMNode(this.refs.newState).value);
+  componentWillReceiveProps(props) {
+    this.setState({ loading: props.motd.loading});
   }
+  clickHandler() {
+    const value = React.findDOMNode(this.refs.motd).value;
 
-  handleKeyUp(e) {
-    const l = e.target.value.length;
-    if ((l > 0) && (l <= this.state.textLength )) {
-      this.setState({
-        disableButton: false,
-      });
-    } else {
-      this.setState({
-        disableButton: true,
-      });
+    if (!value || value.length > 230) {
+      return;
     }
-    if (l > this.state.textLength) {
-      this.setState({
-        disableError: true,
-      });
-    } else {
-      this.setState({
-        disableError: false,
-      });
-    }
+
+    this.props.updateMOTD(value);
   }
-
   render() {
-    const errorMsg = this.state.disableError ? 'block' : 'none';
-
     return (
-      <div className={styles.motd}>
-        <div className={styles.fieldWrapper}>
-          <label className={styles.label}>Current:</label>
-          <div className={styles.currentValue}>{this.state.oldText}</div>
-        </div>
-        <div className={styles.fieldWrapper}>
-          <label className={styles.label}>New:</label>
-          <textarea ref="newState" onKeyUp = {::this.handleKeyUp}  placeholder={'max. ' + this.state.textLength + ' characters'} className={styles.newValue + ' ' + styles.textarea}></textarea>
-          <div style={{display: errorMsg}} className={styles.error}>? Error: max length {this.state.textLength}</div>
-        </div>
-        <div className={styles.fieldWrapper}>
-          <button disabled={this.state.disableButton} onClick = {::this.handleClick} className={styles.button}>UPDATE</button>
-        </div>
+      <div>
+        <h1>Message of the day</h1>
+        <LoadingSpinner loading={this.state.loading}>
+          <div className={styles.motd}>
+            <div className={styles.fieldWrapper}>
+              <label className={styles.label}>Current:</label>
+              <div className={styles.currentValue}>{this.props.motd.entity.text || '(empty)'}</div>
+            </div>
+
+            <div className={styles.fieldWrapper}>
+              <label className={styles.label}>New:</label>
+              <textarea value={this.state.motd}
+                        ref="motd"
+                        onChange={ (e) => { this.setState({ motd: e.target.value }); }}
+                        placeholder="max. 230 characters"
+                        className={styles.textArea}>
+              </textarea>
+            </div>
+
+            <div className={styles.fieldWrapper}>
+              <div className={styles.buttonWrapper}>
+                <Button disabled={!this.state.motd || this.state.motd.length > 230}
+                        onClick={::this.clickHandler}>
+                  Update </Button>
+              </div>
+            </div>
+          </div>
+        </LoadingSpinner >
       </div>
     );
   }
 }
-
-export default MotdPage;

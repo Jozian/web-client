@@ -40,6 +40,10 @@ const store = createFinalStore(reducer, {
     loading: false,
     entity: {},
   },
+  motd: {
+    loading: false,
+    entity: {},
+  },
 });
 
 export default store;

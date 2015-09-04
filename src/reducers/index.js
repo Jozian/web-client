@@ -25,6 +25,11 @@ export const activeFolder = handleLoadingChain([
   types.FOLDER_LOAD_ERROR,
 ], 'entity', {});
 
+export const motd = handleLoadingChain([
+  types.MOTD_LOADING,
+  types.MOTD_LOADED,
+  types.MOTD_LOAD_ERROR,
+], 'entity', {});
 
 export function currentUser(state) {
   if (!state) {
