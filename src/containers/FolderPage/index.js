@@ -5,16 +5,17 @@ import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { Link } from 'react-router';
 import cx from 'classnames';
 
-import winjsBind from '../../decorators/winjsBind';
-import { loadFoldersList } from '../../actions/folders';
-import Button from '../../components/Button';
-import IconButton from '../../components/IconButton';
-import PreviewImage from '../../components/PreviewImage';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import Footer from '../../components/Footer';
+import winjsBind from 'decorators/winjsBind';
+import { loadFoldersList } from 'actions/folders';
+import Button from 'components/Button';
+import IconButton from 'components/IconButton';
+import PreviewImage from 'components/PreviewImage';
+import LoadingSpinner from 'components/LoadingSpinner';
+import Footer from 'components/Footer';
+import commonStyles from 'common/styles.css';
+import { listLayout } from 'common';
+
 import styles from './index.css';
-import commonStyles from '../../common/styles.css';
-import { listLayout } from '../../common';
 
 @connect(
   (state) => ({folder: state.activeFolder}),
@@ -95,7 +96,6 @@ export default class FolderPage extends Component {
       </div>
     );
 
-    // FIXME:
     return (item.data.type === 'folder'
       ? renderFolderItem
       : renderMediaItem
