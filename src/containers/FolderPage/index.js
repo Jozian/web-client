@@ -15,6 +15,7 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import Footer from 'components/Footer';
 import commonStyles from 'common/styles.css';
 import { listLayout } from 'common';
+import Checkbox from 'components/Checkbox';
 
 import styles from './index.css';
 
@@ -51,22 +52,50 @@ export default class FolderPage extends Component {
   constructor(props) {
     super(props);
     props.loadFoldersList(props.params.folderId);
+    this.state = {
+      selection: [],
+      isSelectionSet: false,
+    };
+  }
+
+  componentWillMount() {
+    document.addEventListener('keydown', ::this.selectAllHandler);
   }
 
   componentWillReceiveProps(props) {
     if (props.params.folderId !== this.props.params.folderId) {
+      this.setState({selection: []});
       props.loadFoldersList(props.params.folderId);
     }
   }
 
   componentDidUpdate() {
-    if (this.props.params.itemId) {
+    if (this.props.params.itemId && !this.state.isSelectionSet && this.refs.folder) {
       this.props.items.forEach((data, index) => {
         if (data.id.toString() === this.props.params.itemId) {
           this.refs.folder.winControl.selection.set(index);
           setImmediate(() => this.refs.folder.winControl.ensureVisible(index));
+          this.setState({isSelectionSet: true});
         }
       });
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', ::this.selectAllHandler);
+  }
+
+  selectAllHandler(e) {
+    const key = String.fromCharCode(e.keyCode);
+    if (key === 'A' && e.ctrlKey) {
+      e.preventDefault();
+      this.refs.folder.winControl.selection.selectAll();
+    }
+    if (e.keyCode === 27 ) {
+      this.refs.folder.winControl.selection.clear();
+    }
+    if (e.keyCode === 46) {
+      this.handleDelete();
     }
   }
 
@@ -114,6 +143,7 @@ export default class FolderPage extends Component {
           folderId: this.props.params.folderId,
           itemId: item.data.id.toString(),
         });
+        this.setState({isSelectionSet: false});
       }
       break;
     case 'media':
@@ -121,12 +151,23 @@ export default class FolderPage extends Component {
         folderId: this.props.params.folderId,
         itemId: item.data.id.toString(),
       });
+      this.setState({isSelectionSet: false});
       break;
     default:
       throw new Error('Unsupported item type');
     }
   }
-
+  handleDelete() {
+    const selection = this.state.selection;
+    console.log('selection:', selection);
+  }
+  handleSelectionChange(e) {
+    e.target.winControl.selection.getItems().then((items) => {
+      this.setState({
+        selection: items.map( (item) => (item.data.id)),
+      });
+    }.bind(this));
+  }
   renderBreadcrumbs() {
     const path = [...this.props.folder.entity.path];
     path.push({
@@ -157,9 +198,17 @@ export default class FolderPage extends Component {
         itemDataSource={this.props.items.dataSource}
         itemTemplate={this.folderItemRenderer}
         onItemInvoked={::this.handleItemSelected}
+        onSelectionChanged={::this.handleSelectionChange}
         layout={listLayout}
       />,
-      <Footer />
+      <Footer>
+        <Button
+          disabled={this.state.selection.length === 0}
+          icon="fa fa-trash-o"
+          onClick={::this.handleDelete}>
+          Delete
+        </Button>
+      </Footer>
     </div>);
   }
 
