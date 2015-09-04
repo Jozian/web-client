@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { mapValues } from 'lodash';
+import { mapValues, isEqual } from 'lodash';
 
 function wrapBindings(bindings) {
   return mapValues(bindings, binding => new WinJS.Binding.List(binding));
@@ -9,20 +9,27 @@ export default propsToBindings => WrappedComponent => {
   class Wrapper extends Component {
     constructor(props) {
       super(props);
+      const bindings = propsToBindings(props);
       this.state = {
-        bindings: wrapBindings(propsToBindings(props)),
+        bindings,
+        lists: wrapBindings(bindings),
       };
     }
 
     componentWillReceiveProps(nextProps) {
-      this.setState({
-        bindings: wrapBindings(propsToBindings(nextProps)),
-      });
+      const bindings = propsToBindings(nextProps);
+      // FIXME: change to one-level comparator
+      if (!isEqual(bindings, this.state.bindings)) {
+        this.setState({
+          bindings: bindings,
+          lists: wrapBindings(bindings),
+        });
+      }
     }
 
     render() {
       return (<WrappedComponent
-        {...this.state.bindings} {...this.props}
+        {...this.state.lists} {...this.props}
       />);
     }
   }

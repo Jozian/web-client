@@ -1,3 +1,4 @@
+import 'babel-core/polyfill';
 import React, { Component } from 'react/addons';
 import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { connect } from 'react-redux';
@@ -32,6 +33,10 @@ export default class StatisticsPage extends Component {
     }),
   }
 
+  static contextTypes = {
+    router: React.PropTypes.func.isRequired,
+  }
+
   constructor(props) {
     super(props);
 
@@ -43,8 +48,15 @@ export default class StatisticsPage extends Component {
     this.setState({ loading: props.statistics.loading});
   }
 
+  async handleItemSelected(event) {
+    const item = await event.detail.itemPromise;
+    this.context.router.transitionTo('media', {
+      folderId: item.data.folder.toString(),
+      mediaId: item.data.id.toString(),
+    });
+  }
+
   listViewItemRenderer = winjsReactRenderer((item) => {
-    // FIXME:
     return (
       <div className={style.listItem}>
         <div className={style.number}>
@@ -72,6 +84,7 @@ export default class StatisticsPage extends Component {
               className={style.container}
               itemDataSource={this.props.topViews.dataSource}
               itemTemplate={this.listViewItemRenderer}
+              onItemInvoked={::this.handleItemSelected}
               layout={ {type: WinJS.UI.ListLayout} }
             />
           </div>
@@ -84,6 +97,7 @@ export default class StatisticsPage extends Component {
               className={style.container}
               itemDataSource={this.props.topDownloads.dataSource}
               itemTemplate={this.listViewItemRenderer}
+              onItemInvoked={::this.handleItemSelected}
               layout={ {type: WinJS.UI.ListLayout} }
             />
           </div>

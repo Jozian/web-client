@@ -4,6 +4,7 @@
   width: 45%;
   height: calc(100% - 225px);
   margin: 0 2.5%;
+  background-color: #f6f6f6;
   position: relative;
 }
 
@@ -19,23 +20,30 @@
     height: 80px;
 }
 
+.folderIcon {
+  line-height: 60px;
+  font-size: 50px;
+}
+
+.name {
+    float: left;
+    vertical-align: middle;
+    height: 60px;
+    line-height: 60px;
+}
+
 .image {
     height: 60px;
     width: 100px;
     margin: 5px 20px 5px 5px;
     float: left;
+    text-align: center;
 }
 
 .column :global(.win-itembox) {
     height: 80px;
 }
 
-.name {
-    float: left;
-    height: 60px;
-    line-height: 60px;
-    vertical-align: middle;
-}
 
 .breadcrumbs {
   list-style: none;

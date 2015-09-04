@@ -34,7 +34,7 @@ export default class LibrariesPage extends Component {
   }
 
   onRowClick(data) {
-    this.context.router.transitionTo('folder', {id: data.id});
+    this.context.router.transitionTo('folder', {folderId: data.id});
   }
 
   config = {

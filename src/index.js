@@ -16,7 +16,8 @@ const routes = (
     <Route name="users" handler={UsersPage} />
     <Route name="libraries">
       <DefaultRoute handler={LibrariesPage} />
-      <Route name="folder" path="/folder/:id" handler={FolderPage} />
+      <Route name="folder" path="/folder/:folderId" handler={FolderPage} />
+      <Route name="media" path="/folder/:folderId/:mediaId" handler={FolderPage} />
     </Route>
     <Route name="statistics" handler={StatisticsPage} />
     <Route name="comments" handler={CommentsPage} />
