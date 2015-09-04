@@ -7,7 +7,6 @@ import common from 'common/styles.css';
 import IconButton from 'components/IconButton';
 import Footer from 'components/Footer';
 import Table from 'components/Table/index.js';
-import { boldTextRender } from 'components/Table/renders.js';
 import * as actions from 'actions/users.js';
 import LoadingSpinner from 'components/LoadingSpinner';
 import loading from 'decorators/loading';
@@ -68,15 +67,13 @@ export default class UsersPage extends Component {
     columns: [
       {
         key: 'name',
-        render: boldTextRender,
       }, {
         key: 'type',
         icon: 'fa fa-user',
         text: 'User Type',
-        render: boldTextRender,
       },
     ],
-    noCheck: false,
+    selectable: true,
   };
 
   render() {

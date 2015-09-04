@@ -47,7 +47,7 @@ export default class FolderPage extends Component {
   static contextTypes = {
     router: React.PropTypes.func.isRequired,
   }
-
+mm
   constructor(props) {
     super(props);
     props.loadFoldersList(props.params.folderId);
@@ -179,7 +179,7 @@ export default class FolderPage extends Component {
       {
         path.map((pathEntry) =>
           (<li>
-            <Link to="folder" params={{folderId: pathEntry.id}}>
+            <Link to="folder" key={pathEntry.id} params={{folderId: pathEntry.id}}>
               {pathEntry.title}
             </Link>
           </li>)

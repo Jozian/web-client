@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { loadLibraries } from 'actions';
 import Table from 'components/Table';
 import IconButton from 'components/IconButton';
-import {boldTextRender} from 'components/Table/renders.js';
 import common from 'common/styles.css';
 import loading from 'decorators/loading';
 
@@ -29,6 +28,7 @@ class LibrariesPage extends Component {
 
   constructor(props) {
     super(props);
+    window.lil = this;
     props.loadLibraries();
   }
 
@@ -40,8 +40,8 @@ class LibrariesPage extends Component {
     columns: [
       {
         key: 'name',
-        render: boldTextRender,
-      }, {
+      },
+      {
         key: 'folder',
         icon: 'fa fa-folder-open',
         text: 'Folder',

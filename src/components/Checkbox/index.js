@@ -1,40 +1,37 @@
 import React, { Component, PropTypes } from 'react';
 import styles from './checkbox.css';
 
+export const partiallyChecked = Symbol('Paritally checked');
+
 export default class Checkbox extends Component {
   static propTypes = {
-    isChecked: PropTypes.bool.isRequired,
-    partialChecked: PropTypes.bool,
-    isDisabled: PropTypes.string,
+    checked: PropTypes.any,
+    disabled: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     className: PropTypes.string,
   }
 
   handleClick() {
     this.props.onChange({
-      isChecked: !this.props.isChecked,
-      partialChecked: false,
+      checked: !(this.props.checked === false),
     });
   }
 
   render() {
-    const { isChecked, isDisabled, partialChecked } = this.props;
-    const name = partialChecked ? styles.partChecked : styles.checked;
+    const { checked, disabled } = this.props;
+    const className = checked === partiallyChecked ? styles.partChecked : styles.checked;
     return (
       <div className={this.props.className}>
         <label>
-          <input type="checkbox" defaultChecked={isChecked} disabled={isDisabled}/>
+          <input type="checkbox" onChange={::this.handleClick} checked={!!checked} disabled={disabled}/>
 
-          <div className={name} onClick={::this.handleClick}></div>
+          <div className={className}></div>
         </label>
       </div>
     );
   }
-
-
 }
 
 Checkbox.defaultProps = {
-  isDisabled: '',
-  partialChecked: false,
+  disabled: false,
 };

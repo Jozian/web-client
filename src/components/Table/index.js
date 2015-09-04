@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import 'font-awesome-webpack';
-import {pluck, sortByOrder} from 'lodash';
+import { sortByOrder } from 'lodash';
 import cx from 'classnames';
 
-import Checkbox from '../Checkbox';
+import Checkbox, { partiallyChecked } from 'components/Checkbox';
 import styles from './index.css';
 
 class Table extends Component {
   static propTypes = {
     config: React.PropTypes.object.isRequired,
     className: React.PropTypes.string,
-    data: React.PropTypes.array.isRequired,
+    data: React.PropTypes.arrayOf(React.PropTypes.shape({
+      id: React.PropTypes.any.isRequired,
+    })),
     onRowClick: React.PropTypes.func,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      isAllSelected: false,
-      partialChecked: false,
-      selected: [],
+      selection: [],
       sort: {
         by: 'name',
         order: true,
@@ -28,43 +27,23 @@ class Table extends Component {
     };
   }
 
-  getChecked() {
-    return this.state.selected;
-  }
-
-  _onRowClick(rowData, event) {
-    let target = event.target;
-    while (target) {
-      if (target.className.indexOf('b_table-button') !== -1) {
-        return;
-      }
-      target = target.parentElement;
-    }
-
+  _onRowClick(rowData) {
     this.props.onRowClick(rowData);
   }
 
-  _generateHeaderCheckBoxCol() {
-    return (
-      <td className={styles.checkTd}>
-        <Checkbox onChange={::this._selectAll} partialChecked={this.state.partialChecked} isChecked={this.state.isAllSelected} className="headerCheckbox"/>
-      </td>
-    );
-  }
-
   _generateCheckBoxCol(row) {
-    const isChecked = this.state.selected.indexOf(row.id) !== -1;
+    const isChecked = this.state.selection.indexOf(row) !== -1;
 
     return (
       <td>
-         <Checkbox onChange={this._check.bind(this, row)} isChecked={isChecked}/>
+         <Checkbox onChange={this.handleCheck.bind(this, row)} checked={isChecked}/>
       </td>
     );
   }
 
   _generateHeaderColumns() {
     return this.props.config.columns.map((col, index) => {
-      const className = classNames(styles.tableHeader, styles['column-' + index]);
+      const className = cx(styles.tableHeader, styles['column-' + index]);
       let icon = '';
 
       if (col.text) {
@@ -85,67 +64,40 @@ class Table extends Component {
     });
   }
 
-  _generateRows() {
-    const rowData = this._orderData();
-
-    return rowData.map((data) => {
-      const td = this._generateTableCel(data);
-
-      if (!this.props.config.noCheck) {
-        td.unshift(this._generateCheckBoxCol(data));
-      }
-
-      return (<tr className={styles.tableBodyRow}>{td}</tr>);
-    });
-  }
 
   _generateTableCel(rowData) {
-    return this.props.config.columns.map((col) => {
-      let insideTd = rowData[col.key];
-      if (col.render) {
-        insideTd = col.render(rowData[col.key] || rowData);
-      }
+    const dumbRenderer = (data) => data;
 
-      return (<td style={col.styles} onClick={this._onRowClick.bind(this, rowData)}>{insideTd}</td>);
+    return this.props.config.columns.map((col) => {
+      const content = (col.renderer || dumbRenderer)(rowData[col.key]);
+
+      return (<td key={col.key} style={col.styles} onClick={this.props.onRowClick.bind(this, rowData)}>{content}</td>);
     });
   }
 
-  _selectAll() {
-    if (this.state.isAllSelected) {
+  selectAll() {
+    if (this.state.selection.length) {
       this.setState({
-        isAllSelected: false,
-        selected: [],
+        selection: [],
       });
     } else {
       this.setState({
-        isAllSelected: true,
-        partialChecked: false,
-        selected: pluck(this.props.data, 'id'),
+        selection: [...this.props.data],
       });
     }
   }
 
-  _check(data) {
-    const id = data.id;
-    const selected = this.state.selected;
-    const index = selected.indexOf(id);
+  handleCheck(row) {
+    const selection = [...this.state.selection];
+    const index = selection.indexOf(row);
 
     if (index === -1) {
-      selected.push(id);
+      selection.push(row);
     } else {
-      selected.splice(index, 1);
+      selection.splice(index, 1);
     }
 
-    this.setState({selected: selected, partialChecked: false});
-
-    if (selected.length === this.props.data.length) {
-      this.setState({isAllSelected: true});
-    } else {
-      this.setState({isAllSelected: false});
-      if (selected.length > 0) {
-        this.setState({partialChecked: true});
-      }
-    }
+    this.setState({ selection });
   }
 
   _reorder(value) {
@@ -171,14 +123,46 @@ class Table extends Component {
     }], this.state.sort.order);
   }
 
+  renderRows() {
+    const rowData = this._orderData();
+
+    return rowData.map((data) => {
+      const td = this._generateTableCel(data);
+
+      if (this.props.config.selectable) {
+        td.unshift(this._generateCheckBoxCol(data));
+      }
+
+      return (<tr key={data.id} className={styles.tableBodyRow}>{td}</tr>);
+    });
+  }
+
+  getHeaderCheckboxState() {
+    if (this.state.selection.length === this.props.data.length) {
+      return true;
+    }
+    return (this.state.selection.length > 0) ? partiallyChecked : false;
+  }
+
+  renderHeaderCheckboxColumn() {
+    return (
+      <td className={styles.checkTd}>
+        <Checkbox
+          onChange={::this.selectAll}
+          checked={::this.getHeaderCheckboxState()}
+          className="headerCheckbox"
+        />
+      </td>
+    );
+  }
+
   render() {
     let headerCheckboxColumn = null;
-    if (!this.props.config.noCheck) {
-      headerCheckboxColumn = this._generateHeaderCheckBoxCol();
+    if (this.props.config.selectable) {
+      headerCheckboxColumn = this.renderHeaderCheckboxColumn();
     }
 
     const headerColumns = this._generateHeaderColumns();
-    const rows = this._generateRows();
 
     return (
       <table className={cx(styles.table, this.props.className)}>
@@ -187,7 +171,7 @@ class Table extends Component {
         </thead>
 
         <tbody className={styles.tableBody}>
-        {rows}
+        { this.renderRows() }
         </tbody>
       </table>
     );

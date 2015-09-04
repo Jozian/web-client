@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Table from '../../components/Table/index.js';
-import {boldTextRender, buttonRender, dateRender} from '../../components/Table/renders.js';
 
+import Table from 'components/Table';
+import { renderDate } from 'components/Table/renderers';
 export default class CommentsPage extends Component {
   onRowClick(value) {
     window.console.log(value);
@@ -15,19 +15,16 @@ export default class CommentsPage extends Component {
     columns: [
       {
         key: 'name',
-        render: boldTextRender,
       },
       {
         key: 'button',
-        render: buttonRender,
-        styles: {
+        style: {
           width: '40px',
         },
       },
       {
         key: 'path',
-        render: boldTextRender,
-        styles: {
+        style: {
           width: '300px',
         },
       },
@@ -35,7 +32,7 @@ export default class CommentsPage extends Component {
         key: 'like',
         icon: 'fa fa-thumbs-o-up',
         text: 'Like',
-        styles: {
+        style: {
           width: '30px',
         },
       },
@@ -51,7 +48,6 @@ export default class CommentsPage extends Component {
         key: 'type',
         icon: 'fa fa-file',
         text: 'Type',
-        render: boldTextRender,
         styles: {
           width: '90px',
         },
@@ -60,7 +56,7 @@ export default class CommentsPage extends Component {
         key: 'date',
         icon: 'fa fa-calendar-o',
         text: 'Date',
-        render: dateRender,
+        renderer: renderDate,
         styles: {
           width: '100px',
         },
@@ -75,7 +71,7 @@ export default class CommentsPage extends Component {
         },
       },
     ],
-    noCheck: false,
+    selectable: true,
   };
 
   data = [
