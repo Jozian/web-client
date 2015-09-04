@@ -6,13 +6,13 @@ export function getMotd() {
   return fetch(apiUrl);
 }
 
-export function updateMotd(body) {
-  if (!body || !body.text) {
-    return Promise.reject('Invalid body');
+export function updateMotd(motd) {
+  if (!motd) {
+    return Promise.reject('Invalid motd');
   }
 
   return fetch(apiUrl, {
     method: 'post',
-    body: JSON.stringify(body),
+    body: JSON.stringify({ text: motd }),
   });
 }
