@@ -15,7 +15,6 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import Footer from 'components/Footer';
 import commonStyles from 'common/styles.css';
 import { listLayout } from 'common';
-import Checkbox from 'components/Checkbox';
 
 import styles from './index.css';
 
@@ -52,6 +51,7 @@ export default class FolderPage extends Component {
   constructor(props) {
     super(props);
     props.loadFoldersList(props.params.folderId);
+    this.handleKeyDown = ::this._handleKeyDown;
     this.state = {
       selection: [],
       isSelectionSet: false,
@@ -59,18 +59,19 @@ export default class FolderPage extends Component {
   }
 
   componentWillMount() {
-    document.addEventListener('keydown', ::this.selectAllHandler);
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillReceiveProps(props) {
     if (props.params.folderId !== this.props.params.folderId) {
       this.setState({selection: []});
+      this.setState({isSelectionSet: false});
       props.loadFoldersList(props.params.folderId);
     }
   }
 
   componentDidUpdate() {
-    if (this.props.params.itemId && !this.state.isSelectionSet && this.refs.folder) {
+    if (this.props.params.itemId && !this.state.isSelectionSet) {
       this.props.items.forEach((data, index) => {
         if (data.id.toString() === this.props.params.itemId) {
           this.refs.folder.winControl.selection.set(index);
@@ -82,10 +83,10 @@ export default class FolderPage extends Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', ::this.selectAllHandler);
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  selectAllHandler(e) {
+  _handleKeyDown(e) {
     const key = String.fromCharCode(e.keyCode);
     if (key === 'A' && e.ctrlKey) {
       e.preventDefault();
@@ -143,7 +144,6 @@ export default class FolderPage extends Component {
           folderId: this.props.params.folderId,
           itemId: item.data.id.toString(),
         });
-        this.setState({isSelectionSet: false});
       }
       break;
     case 'media':
@@ -151,7 +151,6 @@ export default class FolderPage extends Component {
         folderId: this.props.params.folderId,
         itemId: item.data.id.toString(),
       });
-      this.setState({isSelectionSet: false});
       break;
     default:
       throw new Error('Unsupported item type');
@@ -161,12 +160,12 @@ export default class FolderPage extends Component {
     const selection = this.state.selection;
     console.log('selection:', selection);
   }
-  handleSelectionChange(e) {
-    e.target.winControl.selection.getItems().then((items) => {
-      this.setState({
-        selection: items.map( (item) => (item.data.id)),
-      });
-    }.bind(this));
+  async handleSelectionChange(e) {
+    const items = await e.target.winControl.selection.getItems();
+
+    this.setState({
+      selection: items.map( (item) => (item.data.id)),
+    });
   }
   renderBreadcrumbs() {
     const path = [...this.props.folder.entity.path];
