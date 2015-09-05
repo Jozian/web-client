@@ -90,13 +90,13 @@ export default class Table extends Component {
         );
       }
 
-      return (<td className={className} style={col.styles}>{icon}</td>);
+      return (<td key={index} className={className} style={col.styles}>{icon}</td>);
     });
   }
 
   renderHeaderCheckboxColumn() {
     return (
-      <td className={styles.checkTd}>
+      <td key="checkbox" className={styles.checkTd}>
         <Checkbox
           onChange={::this.onSelectAllCheckboxClick}
           checked={::this.getHeaderCheckboxState()}
@@ -110,7 +110,7 @@ export default class Table extends Component {
     const isChecked = this.state.selection.indexOf(row) !== -1;
 
     return (
-      <td>
+      <td key="checkbox">
         <Checkbox onChange={this.onCheckboxClick.bind(this, row)} checked={isChecked}/>
       </td>
     );
@@ -119,10 +119,10 @@ export default class Table extends Component {
   renderRow(rowData) {
     const dumbRenderer = (data) => data;
 
-    return this.props.config.columns.map((col) => {
+    return this.props.config.columns.map((col, idx) => {
       const content = (col.renderer || dumbRenderer)(rowData[col.key]);
 
-      return (<td key={col.key} style={col.styles} onClick={this.props.onRowClick.bind(this, rowData)}>{content}</td>);
+      return (<td key={idx} style={col.styles} onClick={this.props.onRowClick.bind(this, rowData)}>{content}</td>);
     });
   }
 
@@ -139,7 +139,7 @@ export default class Table extends Component {
 
     const rowData = orderData();
 
-    return rowData.map((data) => {
+    return rowData.map((data, idx) => {
       const row = this.renderRow(data);
 
       if (this.props.config.selectable) {
@@ -161,7 +161,7 @@ export default class Table extends Component {
     return (
       <table className={cx(styles.table, this.props.className)}>
         <thead className={styles.tableHeader}>
-          <tr>{[headerCheckboxColumn, ...headerColumns]}</tr>
+          <tr key="header">{[headerCheckboxColumn, ...headerColumns]}</tr>
         </thead>
 
         <tbody className={styles.tableBody}>
