@@ -20,7 +20,7 @@ export default class ToastManager extends Component {
       title: React.PropTypes.string.required,
       text: React.PropTypes.string.required,
     })),
-    removePendingToast: React.PropTypes.func.required,
+    removePendingToast: React.PropTypes.func.isRequired,
   }
 
   constructor(props) {

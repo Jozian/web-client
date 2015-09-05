@@ -1,6 +1,7 @@
 import React, { Component } from 'react/addons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 
 import styles from './style.css';
 import Button from 'components/Button';
@@ -19,6 +20,7 @@ export default class StatisticsPage extends Component {
   static propTypes = {
     motd: React.PropTypes.object,
     updateMOTD: React.PropTypes.func.isRequired,
+    loadMOTD: React.PropTypes.func.isRequired,
   }
   constructor(props) {
     super(props);
@@ -35,12 +37,38 @@ export default class StatisticsPage extends Component {
       return;
     }
 
-    this.props.updateMOTD(value);
+
+    this.props.updateMOTD(value).then(() => {
+      this.setState({
+        motd: '',
+        inProgress: false,
+      });
+      this.props.loadMOTD();
+    });
     this.setState({
-      motd: '',
+      inProgress: true,
     });
   }
+
+  componentDidMount() {
+    console.log('mounted');
+  }
+
   render() {
+    const buttonClass = cx({
+      fa: true,
+      'fa-spin': this.state.inProgress,
+      'fa-cog': this.state.inProgress,
+      'fa-pencil': !this.state.inProgress,
+    });
+
+    const isButtonDisabled = (
+      !this.state.motd
+      || this.state.motd.length > 230
+      || this.state.inProgress
+    );
+
+
     return (
       <div>
         <h1>Message of the day</h1>
@@ -54,6 +82,7 @@ export default class StatisticsPage extends Component {
             <label className={styles.label}>New:</label>
             <textarea value={this.state.motd}
                       ref="motd"
+                      autoFocus
                       onChange={ (e) => { this.setState({ motd: e.target.value }); }}
                       placeholder="max. 230 characters"
                       className={styles.textArea}>
@@ -62,7 +91,7 @@ export default class StatisticsPage extends Component {
 
           <div className={styles.fieldWrapper}>
             <div className={styles.buttonWrapper}>
-              <Button disabled={!this.state.motd || this.state.motd.length > 230}
+              <Button icon={buttonClass} disabled={isButtonDisabled}
                       onClick={::this.clickHandler}>
                 Update </Button>
             </div>
