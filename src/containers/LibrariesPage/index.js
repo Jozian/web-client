@@ -28,7 +28,6 @@ class LibrariesPage extends Component {
 
   constructor(props) {
     super(props);
-    window.lil = this;
     props.loadLibraries();
   }
 
@@ -74,6 +73,7 @@ class LibrariesPage extends Component {
         config={this.config}
         data={this.props.libraries.entities}
         onRowClick={::this.onRowClick}
+        onSelectionChange={::console.log}
       />
     </div>);
   }
