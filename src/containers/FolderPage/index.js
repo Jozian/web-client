@@ -47,14 +47,14 @@ export default class FolderPage extends Component {
   static contextTypes = {
     router: React.PropTypes.func.isRequired,
   }
-mm
+
   constructor(props) {
     super(props);
     props.loadFoldersList(props.params.folderId);
     this.handleKeyDown = ::this._handleKeyDown;
     this.state = {
       selection: [],
-      isSelectionSet: false,
+      selectOnLoad: true,
     };
   }
 
@@ -64,19 +64,22 @@ mm
 
   componentWillReceiveProps(props) {
     if (props.params.folderId !== this.props.params.folderId) {
-      this.setState({selection: []});
-      this.setState({isSelectionSet: false});
       props.loadFoldersList(props.params.folderId);
     }
+    if (props.params !== this.props.params) {
+      this.setState({selection: []});
+      this.setState({selectOnLoad: true});
+    }
+
   }
 
   componentDidUpdate() {
-    if (this.props.params.itemId && !this.state.isSelectionSet) {
+    if (this.props.params.itemId && this.state.selectOnLoad) {
       this.props.items.forEach((data, index) => {
         if (data.id.toString() === this.props.params.itemId) {
           this.refs.folder.winControl.selection.set(index);
           setImmediate(() => this.refs.folder.winControl.ensureVisible(index));
-          this.setState({isSelectionSet: true});
+          this.setState({selectOnLoad: false});
         }
       });
     }
