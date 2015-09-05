@@ -2,7 +2,6 @@ import * as types from '../actions/types.js';
 
 const messages = {
   [types.MOTD_UPDATED]: {
-    title: 'MOTD',
     text: 'MOTD succesfully updated',
     type: 'success',
   },

@@ -31,8 +31,8 @@ export default class ToastManager extends Component {
     const newProps = this.props;
     newProps.toasts.forEach((toast) => {
       this.refs.container[toast.type](
-        toast.title,
         toast.text,
+        toast.title,
         {
           timeOut: 5000,
           extendedTimeOut: 1000,
