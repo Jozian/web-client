@@ -3,8 +3,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { loadLibraries } from 'actions';
+import DocumentTitle from 'components/DocumentTitle';
 import Table from 'components/Table';
 import IconButton from 'components/IconButton';
+import Button from 'components/Button';
+import Footer from 'components/Footer';
 import common from 'common/styles.css';
 import loading from 'decorators/loading';
 
@@ -28,7 +31,14 @@ class LibrariesPage extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      libraries: [],
+    };
     props.loadLibraries();
+  }
+
+  onListSelectionChange(libraries) {
+    this.setState({ libraries });
   }
 
   onRowClick(data) {
@@ -59,6 +69,7 @@ class LibrariesPage extends Component {
 
   render() {
     return (<div>
+      <DocumentTitle title="Libraries" />
       <h1>
         Libraries
         <IconButton
@@ -73,8 +84,23 @@ class LibrariesPage extends Component {
         config={this.config}
         data={this.props.libraries.entities}
         onRowClick={::this.onRowClick}
-        onSelectionChange={::console.log}
+        onSelectionChange={::this.onListSelectionChange}
       />
+      <Footer>
+        <Button
+          disabled={!this.state.libraries.length}
+          icon="fa fa-trash-o"
+          onClick=""
+        >
+          Delete
+        </Button>
+        <Button
+          icon="fa fa-user"
+          onClick=""
+        >
+          Invite users
+        </Button>
+      </Footer>
     </div>);
   }
 }
