@@ -6,7 +6,7 @@ import cx from 'classnames';
 import Checkbox, { partiallyChecked } from 'components/Checkbox';
 import styles from './index.css';
 
-class Table extends Component {
+export default class Table extends Component {
   static propTypes = {
     config: React.PropTypes.object.isRequired,
     className: React.PropTypes.string,
@@ -14,7 +14,13 @@ class Table extends Component {
       id: React.PropTypes.any.isRequired,
     })),
     onRowClick: React.PropTypes.func,
+    onSelectionChange: React.PropTypes.func,
   };
+
+  static defaultProps = {
+    onSelectionChange: () => {},
+    onRowClick: () => {},
+  }
 
   constructor(props) {
     super(props);
@@ -27,67 +33,13 @@ class Table extends Component {
     };
   }
 
-  _onRowClick(rowData) {
-    this.props.onRowClick(rowData);
-  }
-
-  _generateCheckBoxCol(row) {
-    const isChecked = this.state.selection.indexOf(row) !== -1;
-
-    return (
-      <td>
-         <Checkbox onChange={this.handleCheck.bind(this, row)} checked={isChecked}/>
-      </td>
-    );
-  }
-
-  _generateHeaderColumns() {
-    return this.props.config.columns.map((col, index) => {
-      const className = cx(styles.tableHeader, styles['column-' + index]);
-      let icon = '';
-
-      if (col.text) {
-        const pointer = {
-          cursor: 'pointer',
-        };
-        icon = (
-          <i className={col.icon} style={pointer} onClick={this._reorder.bind(this, col.key)}>
-            <div className={styles.labelRect}>
-              {col.text}
-              <div className={styles.labelArrow}></div>
-            </div>
-          </i>
-        );
-      }
-
-      return (<td className={className} style={col.styles}> {icon} </td>);
+  onSelectAllCheckboxClick() {
+    this.setState({
+      selection: this.state.selection.length ? [] : [...this.props.data],
     });
   }
 
-
-  _generateTableCel(rowData) {
-    const dumbRenderer = (data) => data;
-
-    return this.props.config.columns.map((col) => {
-      const content = (col.renderer || dumbRenderer)(rowData[col.key]);
-
-      return (<td key={col.key} style={col.styles} onClick={this.props.onRowClick.bind(this, rowData)}>{content}</td>);
-    });
-  }
-
-  selectAll() {
-    if (this.state.selection.length) {
-      this.setState({
-        selection: [],
-      });
-    } else {
-      this.setState({
-        selection: [...this.props.data],
-      });
-    }
-  }
-
-  handleCheck(row) {
+  onCheckboxClick(row) {
     const selection = [...this.state.selection];
     const index = selection.indexOf(row);
 
@@ -97,10 +49,11 @@ class Table extends Component {
       selection.splice(index, 1);
     }
 
+    this.props.onSelectionChange(selection);
     this.setState({ selection });
   }
 
-  _reorder(value) {
+  onColumnHeaderClick(value) {
     const order = this.state.sort.by === value ? !this.state.sort.order : true;
 
     this.setState({
@@ -111,8 +64,70 @@ class Table extends Component {
     });
   }
 
-  _orderData() {
-    return sortByOrder(this.props.data, [(item) => {
+  getHeaderCheckboxState() {
+    if (this.state.selection.length === this.props.data.length) {
+      return true;
+    }
+    return (this.state.selection.length > 0) ? partiallyChecked : false;
+  }
+
+  renderHeaderColumns() {
+    return this.props.config.columns.map((col, index) => {
+      const className = cx(styles.tableHeader, styles['column-' + index]);
+      let icon = '';
+
+      if (col.text) {
+        const pointer = {
+          cursor: 'pointer',
+        };
+        icon = (
+          <i className={col.icon} style={pointer} onClick={this.onColumnHeaderClick.bind(this, col.key)}>
+            <div className={styles.labelRect}>
+              {col.text}
+              <div className={styles.labelArrow}></div>
+            </div>
+          </i>
+        );
+      }
+
+      return (<td className={className} style={col.styles}>{icon}</td>);
+    });
+  }
+
+  renderHeaderCheckboxColumn() {
+    return (
+      <td className={styles.checkTd}>
+        <Checkbox
+          onChange={::this.onSelectAllCheckboxClick}
+          checked={::this.getHeaderCheckboxState()}
+          className="headerCheckbox"
+          />
+      </td>
+    );
+  }
+
+  renderCheckboxColumn(row) {
+    const isChecked = this.state.selection.indexOf(row) !== -1;
+
+    return (
+      <td>
+        <Checkbox onChange={this.onCheckboxClick.bind(this, row)} checked={isChecked}/>
+      </td>
+    );
+  }
+
+  renderRow(rowData) {
+    const dumbRenderer = (data) => data;
+
+    return this.props.config.columns.map((col) => {
+      const content = (col.renderer || dumbRenderer)(rowData[col.key]);
+
+      return (<td key={col.key} style={col.styles} onClick={this.props.onRowClick.bind(this, rowData)}>{content}</td>);
+    });
+  }
+
+  renderRows() {
+    const orderData = () => sortByOrder(this.props.data, [(item) => {
       if (this.state.sort.by === 'date') {
         return new Date(item[this.state.sort.by]);
       }
@@ -121,39 +136,18 @@ class Table extends Component {
       }
       return item[this.state.sort.by].toLowerCase();
     }], this.state.sort.order);
-  }
 
-  renderRows() {
-    const rowData = this._orderData();
+    const rowData = orderData();
 
     return rowData.map((data) => {
-      const td = this._generateTableCel(data);
+      const row = this.renderRow(data);
 
       if (this.props.config.selectable) {
-        td.unshift(this._generateCheckBoxCol(data));
+        row.unshift(this.renderCheckboxColumn(data));
       }
 
-      return (<tr key={data.id} className={styles.tableBodyRow}>{td}</tr>);
+      return (<tr key={data.id} tabIndex="0" className={styles.tableBodyRow}>{row}</tr>);
     });
-  }
-
-  getHeaderCheckboxState() {
-    if (this.state.selection.length === this.props.data.length) {
-      return true;
-    }
-    return (this.state.selection.length > 0) ? partiallyChecked : false;
-  }
-
-  renderHeaderCheckboxColumn() {
-    return (
-      <td className={styles.checkTd}>
-        <Checkbox
-          onChange={::this.selectAll}
-          checked={::this.getHeaderCheckboxState()}
-          className="headerCheckbox"
-        />
-      </td>
-    );
   }
 
   render() {
@@ -162,7 +156,7 @@ class Table extends Component {
       headerCheckboxColumn = this.renderHeaderCheckboxColumn();
     }
 
-    const headerColumns = this._generateHeaderColumns();
+    const headerColumns = this.renderHeaderColumns();
 
     return (
       <table className={cx(styles.table, this.props.className)}>
@@ -171,11 +165,9 @@ class Table extends Component {
         </thead>
 
         <tbody className={styles.tableBody}>
-        { this.renderRows() }
+          { this.renderRows() }
         </tbody>
       </table>
     );
   }
 }
-
-export default Table;
