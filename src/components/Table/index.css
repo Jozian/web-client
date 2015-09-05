@@ -90,25 +90,7 @@
     padding: 0;
 }
 
-.b_table-button:hover {
-    background-color: #78c623 !important;
-}
-
-.b_table-button:hover {
-    width: 40px;
-    display: block;
-    min-width: 40px;
-    height: 40px;
-    background-color: #583c58;
-    padding: 0;
-}
-
-.b_table-button:hover i {
-    top: 0;
-    color: white;
-}
-
-.table i:hover .labelRect {
+.table i:hover .labelRect, .table i:focus .labelRect {
     position: relative;
     top: -68px;
     -webkit-transform: translateX(-46%);

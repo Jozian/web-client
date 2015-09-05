@@ -4,6 +4,7 @@ import { sortByOrder } from 'lodash';
 import cx from 'classnames';
 
 import Checkbox, { partiallyChecked } from 'components/Checkbox';
+import { onEnterClick } from 'common';
 import styles from './index.css';
 
 export default class Table extends Component {
@@ -39,7 +40,7 @@ export default class Table extends Component {
     });
   }
 
-  onCheckboxClick(row) {
+  onCheckboxClick(row, event) {
     const selection = [...this.state.selection];
     const index = selection.indexOf(row);
 
@@ -51,6 +52,7 @@ export default class Table extends Component {
 
     this.props.onSelectionChange(selection);
     this.setState({ selection });
+    event.stopPropagation();
   }
 
   onColumnHeaderClick(value) {
@@ -80,8 +82,15 @@ export default class Table extends Component {
         const pointer = {
           cursor: 'pointer',
         };
+        const clickHandler = this.onColumnHeaderClick.bind(this, col.key);
         icon = (
-          <i className={col.icon} style={pointer} onClick={this.onColumnHeaderClick.bind(this, col.key)}>
+          <i
+            tabIndex="0"
+            className={col.icon}
+            style={pointer}
+            onClick={clickHandler}
+            onKeyPress={onEnterClick(clickHandler)}
+          >
             <div className={styles.labelRect}>
               {col.text}
               <div className={styles.labelArrow}></div>
@@ -98,6 +107,7 @@ export default class Table extends Component {
     return (
       <td key="checkbox" className={styles.checkTd}>
         <Checkbox
+          tabIndex="0"
           onChange={::this.onSelectAllCheckboxClick}
           checked={::this.getHeaderCheckboxState()}
           className="headerCheckbox"
@@ -111,7 +121,7 @@ export default class Table extends Component {
 
     return (
       <td key="checkbox">
-        <Checkbox onChange={this.onCheckboxClick.bind(this, row)} checked={isChecked}/>
+        <Checkbox tabIndex="0" onChange={this.onCheckboxClick.bind(this, row)} checked={isChecked}/>
       </td>
     );
   }
@@ -122,7 +132,7 @@ export default class Table extends Component {
     return this.props.config.columns.map((col, idx) => {
       const content = (col.renderer || dumbRenderer)(rowData[col.key]);
 
-      return (<td key={idx} style={col.styles} onClick={this.props.onRowClick.bind(this, rowData)}>{content}</td>);
+      return (<td key={idx} style={col.styles}>{content}</td>);
     });
   }
 
@@ -137,16 +147,26 @@ export default class Table extends Component {
       return item[this.state.sort.by].toLowerCase();
     }], this.state.sort.order);
 
-    const rowData = orderData();
+    const rows = orderData();
 
-    return rowData.map((data, idx) => {
-      const row = this.renderRow(data);
+    return rows.map((rowData) => {
+      const row = this.renderRow(rowData);
+      const onRowClick = this.props.onRowClick.bind(this, rowData);
 
       if (this.props.config.selectable) {
-        row.unshift(this.renderCheckboxColumn(data));
+        row.unshift(this.renderCheckboxColumn(rowData));
       }
 
-      return (<tr key={data.id} tabIndex="0" className={styles.tableBodyRow}>{row}</tr>);
+      return (
+        <tr
+          key={rowData.id}
+          tabIndex="0"
+          className={styles.tableBodyRow}
+          onClick={onRowClick}
+          onKeyPress={onEnterClick(onRowClick)}
+        >
+          {row}
+        </tr>);
     });
   }
 
