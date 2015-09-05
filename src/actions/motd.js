@@ -14,7 +14,7 @@ export function updateMOTD(motd) {
   return {
     type: types.CALL_API,
     payload: {
-      types: [types.MOTD_LOADING, types.MOTD_LOADED, types.MOTD_LOAD_ERROR],
+      types: [types.MOTD_UPDATING, types.MOTD_UPDATED, types.MOTD_UPDATE_ERROR],
       promise: motdApi.updateMotd(motd).then(motdApi.getMotd),
     },
   };

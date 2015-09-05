@@ -1,5 +1,8 @@
 import * as types from '../actions/types.js';
-import { handleLoadingChain } from './helpers';
+import { handleLoadingChain, combineChains } from './helpers';
+import toastReducer from './toasts';
+
+export const pendingToasts = toastReducer;
 
 export const libraries = handleLoadingChain([
   types.LIBRARIES_LOADING,
@@ -25,11 +28,11 @@ export const activeFolder = handleLoadingChain([
   types.FOLDER_LOAD_ERROR,
 ], 'entity', {});
 
-export const motd = handleLoadingChain([
-  types.MOTD_LOADING,
-  types.MOTD_LOADED,
-  types.MOTD_LOAD_ERROR,
-], 'entity', {});
+export const motd = combineChains(
+  { loading: false, entity: {} },
+  handleLoadingChain([types.MOTD_LOADING, types.MOTD_LOADED, types.MOTD_LOAD_ERROR], 'entity', {}),
+  handleLoadingChain([types.MOTD_UPDATING, types.MOTD_UPDATED, types.MOTD_UPDATE_ERROR], 'entity', {}),
+);
 
 export function currentUser(state) {
   if (!state) {

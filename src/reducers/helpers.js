@@ -4,7 +4,7 @@ const initialState = {
   error: null,
 };
 
-const handleLoadingChain = (types, field = 'entities', defaultValue = []) =>
+export const handleLoadingChain = (types, field = 'entities', defaultValue = []) =>
   function handleState(state = initialState, action) {
     if (types.length !== 3) {
       throw new Error('There should be exactly 3 events in series');
@@ -23,4 +23,14 @@ const handleLoadingChain = (types, field = 'entities', defaultValue = []) =>
     }
   };
 
-export {handleLoadingChain};
+export const combineChains = (defaultState, ...chains) => (state, action) => {
+  if (state === undefined) {
+    return defaultState;
+  }
+  const newStates = chains.map(fn => fn(state, action)).filter((newState) => newState !== state);
+  if (newStates.length > 1) {
+    throw new Error('Multiple handlers reacted on state change in combine chains. That should not happen');
+  }
+
+  return newStates.length ? newStates[0] : state;
+};

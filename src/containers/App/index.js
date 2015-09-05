@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { RouteHandler } from 'react-router';
 import { connect } from 'react-redux';
 
-import NavBar from '../../components/NavBar';
+import NavBar from 'components/NavBar';
+import ToastManager from '../ToastManager';
 import styles from './index.css';
 
 @connect(
@@ -15,6 +16,7 @@ export default class App extends Component {
 
   render() {
     return (<div>
+      <ToastManager />
       <NavBar username={this.props.user.name} />
       <section className={styles.contenthost}>
         <RouteHandler />

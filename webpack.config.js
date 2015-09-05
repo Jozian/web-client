@@ -28,8 +28,9 @@ module.exports = {
       include: path.join(__dirname, 'src')
     }, {
       test: /\.css$/,
-      loader: "style-loader!css-loader?modules&sourceMap&root=.&localIdentName=[path][name]---[local]---[hash:base64:5]"
-    }, {
+      loader: "style-loader!css-loader?modules&sourceMap&root=.&localIdentName=[path][name]---[local]---[hash:base64:5]",
+      include: path.join(__dirname, 'src')
+    },{
       test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       loader: "url-loader?limit=10000&minetype=application/font-woff"
     }, {

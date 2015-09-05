@@ -20,3 +20,10 @@ export const STATISTICS_EXPORTED = 'Statistics exported';
 export const MOTD_LOADING = 'Loading MOTD';
 export const MOTD_LOADED = 'MOTD loaded';
 export const MOTD_LOAD_ERROR = 'Error loading MOTD';
+
+export const MOTD_UPDATING = 'Updating MOTD';
+export const MOTD_UPDATED = 'MOTD updated';
+export const MOTD_UPDATE_ERROR = 'Error updating MOTD';
+
+
+export const REMOVE_PENDING_TOAST = 'Removing pending toast';
