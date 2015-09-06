@@ -203,7 +203,7 @@ export default class FolderPage extends Component {
         <Button
           disabled={this.state.selection.length === 0}
           icon="fa fa-trash-o"
-          onClick={::this.handleDelete}>
+        >
           Delete
         </Button>
       </Footer>
