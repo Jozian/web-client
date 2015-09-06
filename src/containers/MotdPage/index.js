@@ -30,13 +30,13 @@ export default class StatisticsPage extends Component {
       motd: '',
     };
   }
+
   clickHandler() {
     const value = React.findDOMNode(this.refs.motd).value;
 
     if (!value || value.length > 230) {
       return;
     }
-
 
     this.props.updateMOTD(value).then(() => {
       this.setState({
@@ -45,13 +45,10 @@ export default class StatisticsPage extends Component {
       });
       this.props.loadMOTD();
     });
+
     this.setState({
       inProgress: true,
     });
-  }
-
-  componentDidMount() {
-    console.log('mounted');
   }
 
   render() {

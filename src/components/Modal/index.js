@@ -1,35 +1,25 @@
 import React, { Component } from 'react';
-import style from './modal.css';
-import Button from '../Button';
+import ReactModal from 'react-modal';
+import cx from 'classnames';
+
+import styles from './modal.css';
 
 class Modal extends Component {
   static propTypes = {
-    onOkClick: React.PropTypes.func.isRequired,
-    onCancelClick: React.PropTypes.func.isRequired,
-    isOkDisabled: React.PropTypes.bool,
     title: React.PropTypes.string.isRequired,
+    className: ReactPropTypes.string,
     children: React.PropTypes.node.isRequired,
   }
   render() {
     return (
-      <div className={style.modalHolder}>
-        <div className={style.modalContainer}>
-          <h2 className={style.title}> {this.props.title} </h2>
-
-          <div className={style.contentContainer}>
-            {this.props.children}
-          </div>
-
-          <footer className={style.footer}>
-            <Button onClick={this.props.onOkClick}
-                    text="OK"
-                    disabled={this.props.isOkDisabled} />
-
-            <Button onClick={this.props.onCancelClick}
-                    text="Cancel" />
-          </footer>
-        </div>
-      </div>
+      <ReactModal
+        {...this.props}
+        overlayClassName={styles.modalOverlay}
+        className={cx(styles.modal, this.props.className)}
+      >
+        <h2 className={styles.title}>{this.props.title}</h2>
+        {this.props.children}
+      </ReactModal>
     );
   }
 }

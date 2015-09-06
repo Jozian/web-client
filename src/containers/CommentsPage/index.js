@@ -71,7 +71,7 @@ export default class CommentsPage extends Component {
         },
       },
     ],
-    selectable: true,
+    selectable: false,
   };
 
   data = [

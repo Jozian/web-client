@@ -4,12 +4,15 @@ import { connect } from 'react-redux';
 
 import { loadLibraries } from 'actions';
 import DocumentTitle from 'components/DocumentTitle';
+import Modal from 'components/Modal';
 import Table from 'components/Table';
 import IconButton from 'components/IconButton';
 import Button from 'components/Button';
 import Footer from 'components/Footer';
-import common from 'common/styles.css';
 import loading from 'decorators/loading';
+
+import common from 'common/styles.css';
+import styles from './index.css';
 
 @connect(
   (state) => ({libraries: state.libraries}),
@@ -67,13 +70,40 @@ class LibrariesPage extends Component {
     selectable: true,
   }
 
+  openNewLibraryPopup() {
+    this.setState({isNewLibraryPopupOpen: true});
+  }
+
+  hideNewLibraryPopup() {
+    this.setState({isNewLibraryPopupOpen: false});
+  }
+
+  renderNewLibraryPopup() {
+    return (<Modal
+      isOpen={this.state.isNewLibraryPopupOpen}
+      title="New Library"
+      className={styles.newLibraryModal}
+    >
+      <label className>
+        Name:
+        <input type="text" placeholder="i.e. English" autoFocus />
+      </label>
+      <Footer>
+        <Button icon="fa fa-check" onClick="">Ok</Button>
+        <Button icon="fa fa-ban" onClick={::this.hideNewLibraryPopup}>Cancel</Button>
+      </Footer>
+    </Modal>);
+  }
+
   render() {
     return (<div>
       <DocumentTitle title="Libraries" />
+      { this.renderNewLibraryPopup() }
       <h1>
         Libraries
         <IconButton
           className={common.headerButton}
+          onClick={::this.openNewLibraryPopup}
           icon="fa fa-plus"
           tooltipText="Add new library"
         />

@@ -5,12 +5,13 @@ import { connect } from 'react-redux';
 import winjsBind from '../../decorators/winjsBind';
 import { bindActionCreators } from 'redux';
 
-import style from './style.css';
 import * as actions from 'actions/statistics.js';
 import Button from 'components/Button';
 import PreviewImage from 'components/PreviewImage';
 import Footer from 'components/Footer';
 import loading from 'decorators/loading';
+
+import style from './style.css';
 
 @connect(
   (state) => ({statistics: state.statistics}),

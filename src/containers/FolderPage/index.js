@@ -70,7 +70,6 @@ export default class FolderPage extends Component {
       this.setState({selection: []});
       this.setState({selectOnLoad: true});
     }
-
   }
 
   componentDidUpdate() {
@@ -159,10 +158,7 @@ export default class FolderPage extends Component {
       throw new Error('Unsupported item type');
     }
   }
-  handleDelete() {
-    const selection = this.state.selection;
-    console.log('selection:', selection);
-  }
+
   async handleSelectionChange(e) {
     const items = await e.target.winControl.selection.getItems();
 

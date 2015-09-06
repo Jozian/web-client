@@ -1,0 +1,13 @@
+.newLibraryModal:global(.ReactModal__Content) {
+  width: 530px;
+}
+
+.newLibraryModal:global(.ReactModal__Content) label {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.newLibraryModal:global(.ReactModal__Content) input {
+  width: 400px;
+}

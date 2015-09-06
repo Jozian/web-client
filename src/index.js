@@ -1,15 +1,16 @@
 import React from 'react';
 import Router, {Route, DefaultRoute, Redirect} from 'react-router';
 import { Provider } from 'react-redux';
+import Modal from 'react-modal';
 
-import App from './containers/App';
-import UsersPage from './containers/UsersPage';
-import LibrariesPage from './containers/LibrariesPage';
-import FolderPage from './containers/FolderPage';
-import StatisticsPage from './containers/StatisticsPage';
-import CommentsPage from './containers/CommentsPage';
-import MotdPage from './containers/MotdPage';
-import store from './store/configureStore';
+import App from 'containers/App';
+import UsersPage from 'containers/UsersPage';
+import LibrariesPage from 'containers/LibrariesPage';
+import FolderPage from 'containers/FolderPage';
+import StatisticsPage from 'containers/StatisticsPage';
+import CommentsPage from 'containers/CommentsPage';
+import MotdPage from 'containers/MotdPage';
+import store from 'store/configureStore';
 
 const routes = (
   <Route handler={App} path="/">
@@ -25,6 +26,9 @@ const routes = (
     <Redirect from="/" to="libraries" />
   </Route>
 );
+
+Modal.setAppElement(document.getElementById('root'));
+Modal.injectCSS();
 
 Router.run(routes, Router.HistoryLocation, (Handler, routerState) => {
   React.render(<div>

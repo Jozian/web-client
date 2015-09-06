@@ -1,4 +1,13 @@
-:global(h1) {
+body {
+  font-family: "Segoe", "Open Sans", "Ebrima", "Nirmala UI", "Gadugi", "Segoe UI Emoji", "Segoe UI Symbol", "Symbols", "Meiryo UI", "Leelawadee UI", "Microsoft YaHei UI", "Microsoft JhengHei UI", "Malgun Gothic", "Estrangelo Edessa", "Microsoft Himalaya", "Microsoft New Tai Lue", "Microsoft PhagsPa", "Microsoft Tai Le", "Microsoft Yi Baiti", "Mongolian Baiti", "MV Boli", "Myanmar Text", "Javanese Text", "Cambria Math";
+  letter-spacing: 0.02em;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1 {
   padding-top: 35px;
   padding-bottom: 35px;
   padding-left: 5%;
@@ -12,11 +21,19 @@
   width: 100%;
 }
 
-:global(h1) .headerButton {
+h1 .headerButton {
   vertical-align: bottom;
 }
 
 table.table {
   margin-left: 5%;
   width: 90%;
+}
+
+input {
+  margin: 4px 0;
+  padding: 4px;
+  font-size: 11pt;
+  line-height: 20px;
+  border: solid rgba(0, 0, 0, 0.27) 2px;
 }
