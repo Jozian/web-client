@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import styles from './style.css';
-import fontAwesome from 'font-awesome-webpack'; // eslint-disable-line no-unused-vars
+import 'font-awesome-webpack';
 import classNames from 'classnames';
+
+import styles from './style.css';
 
 export default class IconButton extends Component {
 
   static propTypes = {
     icon: React.PropTypes.string.isRequired,
     tooltipText: React.PropTypes.string,
-    handleClick: React.PropTypes.func,
+    onClick: React.PropTypes.func,
     className: React.PropTypes.string,
   }
 
@@ -43,8 +44,17 @@ export default class IconButton extends Component {
     const cls = classNames(styles.iconButton, this.props.className);
 
     return (
-      <div onMouseEnter={::this.showTooltip} onMouseLeave={::this.hideTooltip} className={cls}>
-        <button onClick={this.props.handleClick} className={styles.btn}>
+      <div
+        onMouseEnter={::this.showTooltip}
+        onMouseLeave={::this.hideTooltip}
+        className={cls}
+      >
+        <button
+          onClick={this.props.onClick}
+          onFocus={::this.showTooltip}
+          onBlur={::this.hideTooltip}
+          className={styles.btn}
+        >
           <i className={this.props.icon}></i>
         </button>
         { tooltip }
