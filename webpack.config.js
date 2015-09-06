@@ -1,13 +1,18 @@
 var path = require('path');
 var webpack = require('webpack');
 
+var isProduction = process.env.NODE_ENV === 'production';
+
+var entryPoint = isProduction ? [] : [
+  'webpack-dev-server/client?http://localhost:3000',
+  'webpack/hot/only-dev-server',
+];
+
 module.exports = {
-  devtool: 'inline-source-maps',
-  entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
+  devtool: isProduction ? 'eval' : 'inline-source-maps',
+  entry: entryPoint.concat([
     './src/index'
-  ],
+  ]),
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
