@@ -92,7 +92,7 @@ export default class Table extends Component {
 
   renderHeaderColumns() {
     return this.props.config.columns.map((col, index) => {
-      const className = cx(styles.tableHeader, styles['column-' + index]);
+      const className = cx(styles.tableHeader, styles['column-' + index], col.className);
       let icon = '';
 
       if (col.text) {
@@ -116,7 +116,7 @@ export default class Table extends Component {
         );
       }
 
-      return (<td key={index} className={className} style={col.styles}>{icon}</td>);
+      return (<td key={index} className={className} style={col.style}>{icon}</td>);
     });
   }
 
@@ -149,7 +149,7 @@ export default class Table extends Component {
     return this.props.config.columns.map((col, idx) => {
       const content = (col.renderer || dumbRenderer)(rowData[col.key]);
 
-      return (<td key={idx} style={col.styles}>{content}</td>);
+      return (<td key={idx} style={col.style} className={col.className}>{content}</td>);
     });
   }
 
