@@ -4,7 +4,7 @@ import { sortByOrder } from 'lodash';
 import cx from 'classnames';
 
 import Checkbox, { partiallyChecked } from 'components/Checkbox';
-import { onEnterClick } from 'common';
+import { onEnterPressed } from 'common';
 import styles from './index.css';
 
 export default class Table extends Component {
@@ -89,7 +89,7 @@ export default class Table extends Component {
             className={col.icon}
             style={pointer}
             onClick={clickHandler}
-            onKeyPress={onEnterClick(clickHandler)}
+            onKeyPress={onEnterPressed(clickHandler)}
           >
             <div className={styles.labelRect}>
               {col.text}
@@ -163,7 +163,7 @@ export default class Table extends Component {
           tabIndex="0"
           className={styles.tableBodyRow}
           onClick={onRowClick}
-          onKeyPress={onEnterClick(onRowClick)}
+          onKeyPress={onEnterPressed(onRowClick)}
         >
           {row}
         </tr>);

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { onEnterClick } from 'common';
+import { onEnterPressed } from 'common';
 import styles from './checkbox.css';
 
 export const partiallyChecked = Symbol('Paritally checked');
@@ -28,7 +28,7 @@ export default class Checkbox extends Component {
     const { checked, disabled } = this.props;
     const className = checked === partiallyChecked ? styles.partChecked : styles.checked;
     return (
-      <div tabIndex={this.props.tabIndex} onKeyPress={onEnterClick(::this.handleClick)} className={this.props.className}>
+      <div tabIndex={this.props.tabIndex} onKeyPress={onEnterPressed(::this.handleClick)} className={this.props.className}>
         <label>
           <input type="checkbox" onChange={::this.handleClick} checked={!!checked} disabled={disabled}/>
           <div className={className}></div>
