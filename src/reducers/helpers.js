@@ -23,6 +23,20 @@ export const handleLoadingChain = (types, field = 'entities', defaultValue = [])
     }
   };
 
+export const handlePendingChain = (startActions = [], endActions = []) =>
+function handleState(state = false, action) {
+  if (startActions.indexOf(action.type) !== -1) {
+    return true;
+  }
+
+  if (endActions.indexOf(action.type) !== -1) {
+    return false;
+  }
+
+  return state;
+};
+
+
 export const combineChains = (defaultState, ...chains) => (state, action) => {
   if (state === undefined) {
     return defaultState;

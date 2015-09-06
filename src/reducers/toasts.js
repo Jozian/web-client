@@ -2,7 +2,11 @@ import * as types from '../actions/types.js';
 
 const messages = {
   [types.MOTD_UPDATED]: {
-    text: 'MOTD succesfully updated',
+    text: 'MOTD successfully updated',
+    type: 'success',
+  },
+  [types.LIBRARY_CREATED]: {
+    text: 'Library successfully created',
     type: 'success',
   },
 };

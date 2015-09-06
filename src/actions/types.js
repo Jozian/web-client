@@ -25,5 +25,8 @@ export const MOTD_UPDATING = 'Updating MOTD';
 export const MOTD_UPDATED = 'MOTD updated';
 export const MOTD_UPDATE_ERROR = 'Error updating MOTD';
 
+export const LIBRARY_CREATING = 'Creating library';
+export const LIBRARY_CREATED = 'Library created';
+export const LIBRARY_CREATION_ERROR = 'Library creation error';
 
 export const REMOVE_PENDING_TOAST = 'Removing pending toast';

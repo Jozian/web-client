@@ -7,14 +7,14 @@ export function getLibrariesList() {
   return fetch(apiUrl);
 }
 
-export function addLibrary(body) {
-  if (!body || !body.name) {
-    return Promise.reject('Invalid body');
+export function createLibrary(name) {
+  if (!name) {
+    return Promise.reject('Name is required');
   }
 
   return fetch(apiUrl, {
     method: 'post',
-    body: JSON.stringify(body),
+    body: JSON.stringify({ name }),
   });
 }
 

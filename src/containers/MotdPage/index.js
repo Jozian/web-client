@@ -1,15 +1,14 @@
 import React, { Component } from 'react/addons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import cx from 'classnames';
 
 import styles from './style.css';
-import Button from 'components/Button';
+import ActionButton from 'components/ActionButton';
 import * as actions from 'actions/motd.js';
 import loading from 'decorators/loading';
 
 @connect(
-  (state) => ({motd: state.motd}),
+  (state) => ({motd: state.motd, pendingActions: state.pendingActions}),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
@@ -19,6 +18,7 @@ import loading from 'decorators/loading';
 export default class StatisticsPage extends Component {
   static propTypes = {
     motd: React.PropTypes.object,
+    pendingActions: React.PropTypes.object,
     updateMOTD: React.PropTypes.func.isRequired,
     loadMOTD: React.PropTypes.func.isRequired,
   }
@@ -41,28 +41,14 @@ export default class StatisticsPage extends Component {
     this.props.updateMOTD(value).then(() => {
       this.setState({
         motd: '',
-        inProgress: false,
       });
-      this.props.loadMOTD();
-    });
-
-    this.setState({
-      inProgress: true,
     });
   }
 
   render() {
-    const buttonClass = cx({
-      fa: true,
-      'fa-spin': this.state.inProgress,
-      'fa-cog': this.state.inProgress,
-      'fa-pencil': !this.state.inProgress,
-    });
-
     const isButtonDisabled = (
       !this.state.motd
       || this.state.motd.length > 230
-      || this.state.inProgress
     );
 
 
@@ -88,9 +74,14 @@ export default class StatisticsPage extends Component {
 
           <div className={styles.fieldWrapper}>
             <div className={styles.buttonWrapper}>
-              <Button icon={buttonClass} disabled={isButtonDisabled}
-                      onClick={::this.clickHandler}>
-                Update </Button>
+              <ActionButton
+                icon="fa fa-pencil"
+                inProgress={this.props.pendingActions.updateMotd}
+                disabled={isButtonDisabled}
+                onClick={::this.clickHandler}
+              >
+                Update
+              </ActionButton>
             </div>
           </div>
         </div>

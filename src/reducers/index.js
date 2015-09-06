@@ -1,5 +1,7 @@
+import {combineReducers } from 'redux';
+
 import * as types from '../actions/types.js';
-import { handleLoadingChain } from './helpers';
+import { handleLoadingChain, handlePendingChain } from './helpers';
 import toastReducer from './toasts';
 
 export const pendingToasts = toastReducer;
@@ -33,6 +35,17 @@ export const motd = handleLoadingChain([
   types.MOTD_LOADED,
   types.MOTD_LOAD_ERROR,
 ], 'entity', {});
+
+export const pendingActions = combineReducers({
+  newLibrary: handlePendingChain(
+    [types.LIBRARY_CREATING],
+    [types.LIBRARY_CREATED, types.LIBRARY_CREATION_ERROR],
+  ),
+  updateMotd: handlePendingChain(
+    [types.MOTD_UPDATING],
+    [types.MOTD_UPDATED, types.MOTD_UPDATE_ERROR],
+  ),
+});
 
 export function currentUser(state) {
   if (!state) {

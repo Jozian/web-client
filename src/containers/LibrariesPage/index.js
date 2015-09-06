@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { loadLibraries } from 'actions';
+import * as actions from 'actions/libraries';
 import DocumentTitle from 'components/DocumentTitle';
 import Modal from 'components/Modal';
 import Table from 'components/Table';
 import IconButton from 'components/IconButton';
+import ActionButton from 'components/ActionButton';
 import Button from 'components/Button';
 import Footer from 'components/Footer';
 import loading from 'decorators/loading';
@@ -15,8 +16,8 @@ import common from 'common/styles.css';
 import styles from './index.css';
 
 @connect(
-  (state) => ({libraries: state.libraries}),
-  (dispatch) => bindActionCreators({ loadLibraries}, dispatch)
+  (state) => ({ libraries: state.libraries, pendingActions: state.pendingActions}),
+  (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
   (state) => state.libraries.loading,
@@ -26,6 +27,8 @@ class LibrariesPage extends Component {
 
   static propTypes = {
     libraries: React.PropTypes.object.isRequired,
+    pendingActions: React.PropTypes.object.isRequired,
+    createLibrary: React.PropTypes.func.isRequired,
   }
 
   static contextTypes = {
@@ -36,6 +39,7 @@ class LibrariesPage extends Component {
     super(props);
     this.state = {
       libraries: [],
+      newLibraryName: '',
     };
     props.loadLibraries();
   }
@@ -71,11 +75,32 @@ class LibrariesPage extends Component {
   }
 
   openNewLibraryPopup() {
-    this.setState({isNewLibraryPopupOpen: true});
+    this.setState({
+      newLibraryName: '',
+      isNewLibraryPopupOpen: true});
   }
 
   hideNewLibraryPopup() {
     this.setState({isNewLibraryPopupOpen: false});
+  }
+
+  onLibraryNameInputChange(event) {
+    this.setState({
+      newLibraryName: event.target.value,
+    });
+  }
+
+  createNewLibrary(event) {
+    if (this.props.pendingActions.newLibrary) {
+      return;
+    }
+
+    if (!this.state.newLibraryName.length) {
+      return;
+    }
+
+    this.props.createLibrary(this.state.newLibraryName).then(::this.hideNewLibraryPopup);
+    event.preventDefault();
   }
 
   renderNewLibraryPopup() {
@@ -84,12 +109,27 @@ class LibrariesPage extends Component {
       title="New Library"
       className={styles.newLibraryModal}
     >
-      <label className>
-        Name:
-        <input type="text" placeholder="i.e. English" autoFocus />
-      </label>
+      <form onSubmit={::this.createNewLibrary}>
+          <label className>
+          Name:
+          <input
+            type="text"
+            placeholder="i.e. English"
+            autoFocus
+            value={this.state.newLibraryName}
+            onChange={::this.onLibraryNameInputChange}
+          />
+        </label>
+      </form>
       <Footer>
-        <Button icon="fa fa-check" onClick={::this.hideNewLibraryPopup}>Ok</Button>
+        <ActionButton
+          icon="fa fa-check"
+          onClick={::this.createNewLibrary}
+          disabled={!this.state.newLibraryName.length}
+          inProgress={this.props.pendingActions.newLibrary}
+        >
+          Ok
+        </ActionButton>
         <Button icon="fa fa-ban" onClick={::this.hideNewLibraryPopup}>Cancel</Button>
       </Footer>
     </Modal>);
