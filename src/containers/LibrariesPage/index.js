@@ -89,7 +89,7 @@ class LibrariesPage extends Component {
         <input type="text" placeholder="i.e. English" autoFocus />
       </label>
       <Footer>
-        <Button icon="fa fa-check" onClick="">Ok</Button>
+        <Button icon="fa fa-check" onClick={::this.hideNewLibraryPopup}>Ok</Button>
         <Button icon="fa fa-ban" onClick={::this.hideNewLibraryPopup}>Cancel</Button>
       </Footer>
     </Modal>);
