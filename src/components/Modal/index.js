@@ -7,7 +7,7 @@ import styles from './modal.css';
 class Modal extends Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
-    className: ReactPropTypes.string,
+    className: React.PropTypes.string,
     children: React.PropTypes.node.isRequired,
   }
   render() {
