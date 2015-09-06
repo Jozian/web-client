@@ -1,5 +1,5 @@
 import React from 'react';
-import Router, {Route, DefaultRoute} from 'react-router';
+import Router, {Route, DefaultRoute, Redirect} from 'react-router';
 import { Provider } from 'react-redux';
 
 import App from './containers/App';
@@ -22,7 +22,7 @@ const routes = (
     <Route name="statistics" handler={StatisticsPage} />
     <Route name="comments" handler={CommentsPage} />
     <Route name="motd" handler={MotdPage} />
-    <DefaultRoute handler={LibrariesPage} />
+    <Redirect from="/" to="libraries" />
   </Route>
 );
 
