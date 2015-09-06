@@ -68,34 +68,16 @@
 
 .table i {
     height: 23px;
-}
-
-.table i:hover {
     width: 20px;
     position: relative;
 }
 
-.table .b_table-button {
-    display: none;
-}
-
-.tableBody tr:hover .b_table-button {
-    width: 40px;
-    display: block;
-    border: 0;
-    min-width: 40px;
-    color: #583c58;
-    height: 40px;
-    background-color: inherit;
-    padding: 0;
-}
-
 .table i:hover .labelRect, .table i:focus .labelRect {
-    position: relative;
-    top: -68px;
-    -webkit-transform: translateX(-46%);
+    position: absolute;
+    top: -40px;
+    -webkit-transform: translateX(-50%);
     width: 100px;
-    right: -3px;
+    left: 7px;
     height: 30px;
     display: inline-block;
     padding-top: 10px;
@@ -105,16 +87,20 @@
     text-align: center;
 }
 
-i .labelRect {
+.table i {
+  position: relative;
+  padding: 2px;
+}
+
+.table i .labelRect {
     display: none;
 }
 
 .labelArrow {
-    width: 16px;
-    background-color: white;
+    width: 20px;
     height: 16px;
     box-sizing: border-box;
-    border: 9px solid transparent;
+    border: 10px solid transparent;
     border-top-color: #583c58;
     position: relative;
     bottom: -6px;
