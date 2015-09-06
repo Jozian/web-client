@@ -66,6 +66,23 @@ export default class Table extends Component {
     });
   }
 
+  onRowKeyDown(event) {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+    if (document.activeElement !== event.target) {
+      return;
+    }
+
+    if (event.which === 38 && event.target.previousSibling) { /* UP */
+      event.target.previousSibling.focus();
+    }
+
+    if (event.which === 40 && event.target.nextSibling) { /* DOWN */
+      event.target.nextSibling.focus();
+    }
+  }
+
   getHeaderCheckboxState() {
     if (this.state.selection.length === this.props.data.length) {
       return true;
@@ -136,6 +153,7 @@ export default class Table extends Component {
     });
   }
 
+
   renderRows() {
     const orderData = () => sortByOrder(this.props.data, [(item) => {
       if (this.state.sort.by === 'date') {
@@ -163,6 +181,7 @@ export default class Table extends Component {
           tabIndex="0"
           className={styles.tableBodyRow}
           onClick={onRowClick}
+          onKeyDown={this.onRowKeyDown}
           onKeyPress={onEnterPressed(onRowClick)}
         >
           {row}
