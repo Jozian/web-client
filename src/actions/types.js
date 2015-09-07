@@ -23,7 +23,9 @@ export const USERS_LOAD_ERROR = 'Error loading users';
 export const STATISTICS_LOADING = 'Loading statistics';
 export const STATISTICS_LOADED = 'Statistics loaded';
 export const STATISTICS_LOAD_ERROR = 'Error loading statistics';
+export const STATISTICS_EXPORTING = 'Exporting statistics';
 export const STATISTICS_EXPORTED = 'Statistics exported';
+export const STATISTICS_EXPORT_ERROR = 'Statistics exported successfully';
 
 export const MOTD_LOADING = 'Loading MOTD';
 export const MOTD_LOADED = 'MOTD loaded';

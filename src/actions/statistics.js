@@ -20,6 +20,11 @@ export function addToExport() {
   return {
     type: types.CALL_API,
     payload: {
+      types: [
+        types.STATISTICS_EXPORTING,
+        types.STATISTICS_EXPORTED,
+        types.STATISTICS_EXPORT_ERROR,
+      ],
       promise: statisticsApi.importStatistics(),
     },
   };

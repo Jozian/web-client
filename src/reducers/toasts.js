@@ -13,6 +13,11 @@ const messages = {
     text: 'Libraries successfully removed',
     type: 'success',
   },
+  [types.STATISTICS_EXPORTED]: {
+    text: 'Statistics successfully exported',
+    type: 'success',
+  },
+
 };
 
 export default function toastReducer(state = [], action) {

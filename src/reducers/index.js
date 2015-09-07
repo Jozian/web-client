@@ -49,7 +49,10 @@ export const pendingActions = combineReducers({
     [types.MOTD_UPDATING],
     [types.MOTD_UPDATED, types.MOTD_UPDATE_ERROR],
   ),
-
+  statisticsExport: handlePendingChain(
+    [types.STATISTICS_EXPORTING],
+    [types.STATISTICS_EXPORTED, types.STATISTICS_EXPORT_ERROR],
+  ),
 });
 
 export function currentUser(state) {

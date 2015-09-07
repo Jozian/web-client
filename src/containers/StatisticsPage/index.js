@@ -2,19 +2,20 @@ import 'babel-core/polyfill';
 import React, { Component } from 'react/addons';
 import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { connect } from 'react-redux';
-import winjsBind from '../../decorators/winjsBind';
 import { bindActionCreators } from 'redux';
 
 import * as actions from 'actions/statistics.js';
-import Button from 'components/Button';
+import ActionButton from 'components/ActionButton';
 import PreviewImage from 'components/PreviewImage';
 import Footer from 'components/Footer';
+import { listLayout } from 'common';
 import loading from 'decorators/loading';
+import winjsBind from 'decorators/winjsBind';
 
 import style from './style.css';
 
 @connect(
-  (state) => ({statistics: state.statistics}),
+  (state) => ({statistics: state.statistics, pendingActions: state.pendingActions}),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @winjsBind(
@@ -36,6 +37,7 @@ export default class StatisticsPage extends Component {
     topDownloads: React.PropTypes.shape({
       dataSource: React.PropTypes.object.isRequired,
     }),
+    pendingActions: React.PropTypes.object.isRequired,
   }
 
   static contextTypes = {
@@ -97,11 +99,17 @@ export default class StatisticsPage extends Component {
             itemDataSource={this.props.topDownloads.dataSource}
             itemTemplate={this.listViewItemRenderer}
             onItemInvoked={::this.handleItemSelected}
-            layout={ {type: WinJS.UI.ListLayout} }
+            layout={listLayout}
           />
         </div>
         <Footer>
-            <Button onClick={::this.props.addToExport}>Export</Button>
+            <ActionButton
+              icon="fa fa-download"
+              inProgress={this.props.pendingActions.statisticsExport}
+              onClick={this.props.addToExport}
+            >
+              Export
+            </ActionButton>
         </Footer>
         </div>
       </div>
