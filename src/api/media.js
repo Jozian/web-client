@@ -2,7 +2,7 @@ import fetch from './helper';
 
 const apiUrl = '/api/media';
 
-export function getList() {
+export function getMediaList() {
   return fetch(apiUrl);
 }
 
@@ -13,4 +13,3 @@ export function getItem(id) {
 
   return fetch(apiUrl + '/' + id);
 }
-

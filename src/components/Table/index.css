@@ -33,7 +33,7 @@
 }
 
 .tableHeader td {
-    min-width: 120px;
+    text-align: center;
 }
 
 .tableBody > tr.tableBodyRow:nth-of-type(odd) {
@@ -58,17 +58,13 @@
     height: 25px;
 }
 
-.column-0 {
-    width: 80%;
-}
-
-.table i {
+.tableHeader i {
     height: 23px;
     width: 20px;
     position: relative;
 }
 
-.table i:hover .labelRect, .table i:focus .labelRect {
+.tableHeader i:hover .labelRect, .tableHeader i:focus .labelRect {
     position: absolute;
     top: -40px;
     -webkit-transform: translateX(-50%);
@@ -83,12 +79,12 @@
     text-align: center;
 }
 
-.table i {
+.tableHeader i {
   position: relative;
   padding: 2px;
 }
 
-.table i .labelRect {
+.tableHeader i .labelRect {
     display: none;
 }
 

@@ -10,7 +10,7 @@ export function getTop5Downloads() {
 export function getTop5Views() {
   return fetch(apiUrl + '/top5Views');
 }
-export function importStatistics() {
+export function exportStatistics() {
   return fetch(apiUrl + '/addToImport', {
     responseType: 'arraybuffer',
   }).then((result) => {

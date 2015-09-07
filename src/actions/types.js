@@ -12,6 +12,10 @@ export const LIBRARIES_DELETING = 'Removing libraries';
 export const LIBRARIES_DELETED = 'Libraries removed';
 export const LIBRARY_DELETE_ERROR = 'Error removing libraries';
 
+export const MEDIA_LIST_LOADING = 'Loading media list';
+export const MEDIA_LIST_LOADED = 'Media list loaded';
+export const MEDIA_LIST_LOAD_ERROR = 'Error loading media list';
+
 export const FOLDER_LOADING = 'Loading folder';
 export const FOLDER_LOADED = 'Folder loaded';
 export const FOLDER_LOAD_ERROR = 'Error loading folder';
@@ -19,6 +23,10 @@ export const FOLDER_LOAD_ERROR = 'Error loading folder';
 export const USERS_LOADING = 'Loading users';
 export const USERS_LOADED = 'Users loaded';
 export const USERS_LOAD_ERROR = 'Error loading users';
+
+export const COMMENTS_EXPORTING = 'Exporting comments';
+export const COMMENTS_EXPORTED = 'Comments exported';
+export const COMMENTS_EXPORT_ERROR = 'Error exporting comments';
 
 export const STATISTICS_LOADING = 'Loading statistics';
 export const STATISTICS_LOADED = 'Statistics loaded';

@@ -1,142 +1,145 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import cx from 'classnames';
 
+import * as actions from 'actions/comments';
 import Table from 'components/Table';
+import DocumentTitle from 'components/DocumentTitle';
+import Footer from 'components/Footer';
+import IconButton from 'components/IconButton';
+import ActionButton from 'components/ActionButton';
 import { renderDate } from 'components/Table/renderers';
+import loading from 'decorators/loading';
+
+import commonStyles from 'common/styles.css';
+import styles from './index.css';
+
+function renderIcon(type) {
+  switch (type) {
+  case 'video':
+    return <i className="fa fa-file-video-o" />;
+  case 'image':
+    return <i className="fa fa-file-image-o" />;
+  default:
+    return <i className="fa fa-file-o" />;
+  }
+}
+
+@connect(
+  (state) => ({ media: state.media, pendingActions: state.pendingActions }),
+  (dispatch) => bindActionCreators(actions, dispatch)
+)
+@loading(
+  (state) => state.media.loading,
+  { isLoadingByDefault: true },
+)
 export default class CommentsPage extends Component {
+  static propTypes = {
+    media: React.PropTypes.array.isRequired,
+  }
+
+  static contextTypes = {
+    router: React.PropTypes.func.isRequired,
+  }
+
+  constructor(props) {
+    super(props);
+    props.loadMediaList();
+  }
+
   onRowClick(value) {
     window.console.log(value);
   }
 
-  displayChecked() {
-    window.console.log(this.refs.table.getChecked());
+  onJumpButtonClick(rowData) {
+    this.context.router.transitionTo('folderSelection', {
+      folderId: rowData.folder.toString(),
+      itemId: rowData.id.toString(),
+    });
   }
 
   config = {
     columns: [
       {
+        key: 'type',
+        icon: 'fa fa-file',
+        text: 'Type',
+        className: commonStyles.numberCell,
+        renderer: renderIcon,
+      },
+      {
         key: 'name',
+        text: 'Name',
       },
       {
         key: 'button',
-        style: {
-          width: '40px',
-        },
+        renderer: ::this.renderJumpButton,
+        className: styles.buttonCell,
       },
       {
         key: 'path',
-        style: {
-          width: '300px',
-        },
+        text: 'Library',
+        className: styles.libraryCell,
       },
       {
         key: 'like',
         icon: 'fa fa-thumbs-o-up',
         text: 'Like',
-        style: {
-          width: '30px',
-        },
+        className: commonStyles.numberCell,
       },
       {
         key: 'unlike',
         icon: 'fa fa-thumbs-o-down',
         text: 'Unlike',
-        styles: {
-          width: '30px',
-        },
+        className: commonStyles.numberCell,
       },
-      {
-        key: 'type',
-        icon: 'fa fa-file',
-        text: 'Type',
-        styles: {
-          width: '90px',
-        },
-      },
+
       {
         key: 'date',
         icon: 'fa fa-calendar-o',
         text: 'Date',
         renderer: renderDate,
-        styles: {
-          width: '100px',
-        },
+        className: styles.dateCell,
       },
       {
         key: 'amount',
         icon: 'fa fa-comment',
         text: 'Amount',
-        styles: {
-          width: '30px',
-          textAlign: 'center',
-        },
+        className: commonStyles.numberCell,
       },
     ],
     selectable: false,
   };
 
-  data = [
-    {
-      id: 18,
-      name: 'dem',
-      type: 'image',
-      like: 0,
-      unlike: 0,
-      path: 'imageTest',
-      amount: 12,
-      date: '2014-12-01T16:45:26.000Z',
-    }, {
-      id: 5,
-      name: 'Maths',
-      type: 'video',
-      like: 0,
-      unlike: 0,
-      path: 'Stage 6',
-      amount: 4,
-      date: '2015-04-30T18:47:18.000Z',
-    }, {
-      id: 7,
-      name: 'Education Values',
-      type: 'video',
-      like: 0,
-      unlike: 0,
-      path: 'Stage 6',
-      amount: 3,
-      date: '2015-05-06T18:20:24.000Z',
-    }, {
-      id: 6,
-      name: 'Science',
-      type: 'video',
-      like: 0,
-      unlike: 0,
-      path: 'Stage 6',
-      amount: 2,
-      date: '2014-11-03T14:21:30.000Z',
-    }, {
-      id: 26,
-      name: 'Nokia Mobile Mathematics 2011',
-      type: 'video',
-      like: 0,
-      unlike: 0,
-      path: 'Sanna\'s Lib',
-      amount: 4,
-      date: '2014-11-03T14:41:11.000Z',
-    }, {
-      id: 4,
-      name: 'English',
-      type: 'video',
-      like: 0,
-      unlike: 0,
-      path: 'Stage 6',
-      amount: 5,
-      date: '2015-05-06T16:00:03.000Z',
-    },
-  ];
+  renderJumpButton(_, rowData) {
+    return (<IconButton
+      className={styles.rowButton}
+      icon="fa fa-search"
+      onClick={this.onJumpButtonClick.bind(this, rowData)}
+    />);
+  }
 
   render() {
     return (
       <div>
-        Commentaries
-        <Table ref="table" config={this.config} data={this.data} onRowClick={::this.onRowClick}/>
+        <DocumentTitle title="Commentaries" />
+        <h1>Commentaries</h1>
+        <Table
+          className={cx(commonStyles.table, styles.table)}
+          config={this.config}
+          data={this.props.media.entities}
+          onRowClick={::this.onRowClick}
+        />
+        <Footer>
+            <ActionButton
+              icon="fa fa-download"
+              inProgress={this.props.pendingActions.commentsExport}
+              onClick={this.props.exportComments}
+            >
+              Export
+            </ActionButton>
+        </Footer>
       </div>
     );
   }

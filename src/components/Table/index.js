@@ -40,21 +40,6 @@ export default class Table extends Component {
     });
   }
 
-  selectRow(row, data, event) {
-    const selection = [...this.state.selection];
-    const index = selection.indexOf(row);
-
-    if (index === -1) {
-      selection.push(row);
-    } else {
-      selection.splice(index, 1);
-    }
-
-    this.props.onSelectionChange(selection);
-    this.setState({ selection });
-    event.stopPropagation();
-  }
-
   onColumnHeaderClick(value) {
     const order = this.state.sort.by === value ? !this.state.sort.order : true;
 
@@ -98,23 +83,48 @@ export default class Table extends Component {
     return (this.state.selection.length > 0) ? partiallyChecked : false;
   }
 
+  selectRow(row, data, event) {
+    const selection = [...this.state.selection];
+    const index = selection.indexOf(row);
+
+    if (index === -1) {
+      selection.push(row);
+    } else {
+      selection.splice(index, 1);
+    }
+
+    this.props.onSelectionChange(selection);
+    this.setState({ selection });
+    event.stopPropagation();
+  }
+
   renderHeaderColumns() {
     return this.props.config.columns.map((col, index) => {
-      const className = cx(styles.tableHeader, styles['column-' + index], col.className);
-      let icon = '';
+      const className = cx(
+        styles.tableHeader,
+        styles['column-' + index],
+        col.className,
+        'header'
+      );
 
-      if (col.text) {
+      const clickHandler = this.onColumnHeaderClick.bind(this, col.key);
+      const handlers = {
+        tabIndex: 0,
+        onClick: clickHandler,
+        onKeyPress: onEnterPressed(clickHandler),
+      };
+
+      let content = <span {...handlers}>{col.text}</span>;
+
+      if (col.icon) {
         const pointer = {
           cursor: 'pointer',
         };
-        const clickHandler = this.onColumnHeaderClick.bind(this, col.key);
-        icon = (
+        content = (
           <i
-            tabIndex="0"
             className={col.icon}
             style={pointer}
-            onClick={clickHandler}
-            onKeyPress={onEnterPressed(clickHandler)}
+            {...handlers}
           >
             <div className={styles.labelRect}>
               {col.text}
@@ -124,7 +134,7 @@ export default class Table extends Component {
         );
       }
 
-      return (<td key={index} className={className} style={col.style}>{icon}</td>);
+      return (<td key={index} className={className} style={col.style}>{content}</td>);
     });
   }
 
@@ -155,7 +165,7 @@ export default class Table extends Component {
     const dumbRenderer = (data) => data;
 
     return this.props.config.columns.map((col, idx) => {
-      const content = (col.renderer || dumbRenderer)(rowData[col.key]);
+      const content = (col.renderer || dumbRenderer)(rowData[col.key], rowData);
 
       return (<td key={idx} style={col.style} className={col.className}>{content}</td>);
     });

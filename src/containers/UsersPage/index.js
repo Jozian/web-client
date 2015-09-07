@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
-import common from 'common/styles.css';
 import IconButton from 'components/IconButton';
 import Footer from 'components/Footer';
 import Table from 'components/Table/index.js';
@@ -11,6 +10,7 @@ import * as actions from 'actions/users.js';
 import LoadingSpinner from 'components/LoadingSpinner';
 import loading from 'decorators/loading';
 
+import commonStyles from 'common/styles.css';
 
 @connect(
   (state) => ({users: state.users}),
@@ -71,6 +71,10 @@ export default class UsersPage extends Component {
         key: 'type',
         icon: 'fa fa-user',
         text: 'User Type',
+        style: {
+          width: '70px',
+          maxWidth: '70px',
+        },
       },
     ],
     selectable: true,
@@ -81,7 +85,7 @@ export default class UsersPage extends Component {
       <h1>
         Users
         <IconButton
-          className={common.headerButton}
+          className={commonStyles.headerButton}
           icon="fa fa-plus"
           tooltipText="Add new user"
           handleClick={this.handleAddUserClick}
@@ -90,7 +94,7 @@ export default class UsersPage extends Component {
       <LoadingSpinner loading={this.state.loading}>
         <Table
           ref="table"
-          className={common.table}
+          className={commonStyles.table}
           config={this.config}
           data={this.props.users.entities}
           onRowClick={::this.onRowClick}

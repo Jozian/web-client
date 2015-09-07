@@ -1,0 +1,39 @@
+
+.dateCell {
+  max-width: 100px;
+  width: 100px;
+  padding: 0;
+  text-align: center;
+}
+
+.buttonCell {
+  width: 60px;
+  max-width: 60px;
+}
+
+.libraryCell {
+  max-width: 250px;
+  width: 250px;
+}
+
+.rowButton {
+  display: none;
+}
+
+.rowButton button {
+  border: none;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  color: #583c58;
+  background-color: initial;
+}
+
+.table tr:hover .rowButton, table tr:focus .rowButton {
+  display: inline-block;
+}
+
+.table button:hover, .table button:focus {
+  background-color: #78c623;
+  color: white;
+}

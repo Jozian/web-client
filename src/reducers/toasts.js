@@ -18,6 +18,15 @@ const messages = {
     type: 'success',
   },
 
+  [types.COMMENTS_EXPORTED]: {
+    text: 'Comments exported successfully',
+    type: 'success',
+  },
+
+  [types.COMMENTS_EXPORT_ERROR]: {
+    text: 'Error exporting comments',
+    type: 'error',
+  },
 };
 
 export default function toastReducer(state = [], action) {

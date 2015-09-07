@@ -25,11 +25,7 @@
   min-width: 45px;
   width: 45px;
   height: 45px;
-  line-height:35px;
   padding:5px 8px;
   border: 2px solid #d6d6d6;
   cursor: pointer;
-}
-.iconButton button :global .fa{
-  line-height: 35px;
 }

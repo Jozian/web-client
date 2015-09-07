@@ -12,7 +12,7 @@ import Button from 'components/Button';
 import Footer from 'components/Footer';
 import loading from 'decorators/loading';
 
-import common from 'common/styles.css';
+import commonStyles from 'common/styles.css';
 import styles from './index.css';
 
 @connect(
@@ -82,19 +82,23 @@ class LibrariesPage extends Component {
     columns: [
       {
         key: 'name',
+        text: 'Name',
       },
       {
         key: 'folder',
         icon: 'fa fa-folder-open',
         text: 'Folder',
+        className: commonStyles.numberCell,
       }, {
         key: 'media',
         icon: 'fa fa-file',
         text: 'Media',
+        className: commonStyles.numberCell,
       }, {
         key: 'views',
         icon: 'fa fa-eye',
         text: 'Views',
+        className: commonStyles.numberCell,
       },
     ],
     selectable: true,
@@ -188,14 +192,14 @@ class LibrariesPage extends Component {
       <h1>
         Libraries
         <IconButton
-          className={common.headerButton}
+          className={commonStyles.headerButton}
           onClick={::this.openNewLibraryPopup}
           icon="fa fa-plus"
           tooltipText="Add new library"
         />
       </h1>
       <Table
-        className={common.table}
+        className={commonStyles.table}
         ref="table"
         config={this.config}
         data={this.props.libraries.entities}

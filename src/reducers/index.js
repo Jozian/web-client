@@ -12,6 +12,12 @@ export const libraries = handleLoadingChain([
   types.LIBRARIES_LOAD_ERROR,
 ]);
 
+export const media = handleLoadingChain([
+  types.MEDIA_LIST_LOADING,
+  types.MEDIA_LIST_LOADED,
+  types.MEDIA_LIST_LOAD_ERROR,
+]);
+
 export const statistics = handleLoadingChain([
   types.STATISTICS_LOADING,
   types.STATISTICS_LOADED,
@@ -52,6 +58,10 @@ export const pendingActions = combineReducers({
   statisticsExport: handlePendingChain(
     [types.STATISTICS_EXPORTING],
     [types.STATISTICS_EXPORTED, types.STATISTICS_EXPORT_ERROR],
+  ),
+  commentsExport: handlePendingChain(
+    [types.COMMENTS_EXPORTING],
+    [types.COMMENTS_EXPORTED, types.COMMENTS_EXPORT_ERROR],
   ),
 });
 

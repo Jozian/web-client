@@ -11,7 +11,7 @@ export function getList(mediaId) {
   return fetch(apiUrl + '/' + mediaId);
 }
 
-export function commentsExport() {
+export function exportComments() {
   return fetch(exportUrl);
 }
 
@@ -52,4 +52,3 @@ export function remove(body) {
     body: JSON.stringify(body),
   });
 }
-
