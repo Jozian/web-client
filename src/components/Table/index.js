@@ -40,7 +40,7 @@ export default class Table extends Component {
     });
   }
 
-  onCheckboxClick(row, event) {
+  onCheckboxClick(row, data, event) {
     const selection = [...this.state.selection];
     const index = selection.indexOf(row);
 
