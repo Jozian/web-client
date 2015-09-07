@@ -28,7 +28,8 @@ export function add(body) {
 }
 
 export function edit(id, body) {
-  if (!body || !body.name || !body.login || !body.password || !body.type) {
+  console.log(body);
+  if (!body || !body.name || !body.login || !body.type) {
     return Promise.reject('Invalid body');
   }
 
@@ -55,7 +56,7 @@ export function deleteUsers(body) {
 }
 
 export function isUnique(body) {
-  if (!body || !body.key || !body.value ) {
+  if (!body || !body.key || !body.value || !body.id) {
     return Promise.reject('Invalid body');
   }
 

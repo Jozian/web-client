@@ -7,12 +7,7 @@
 }
 
 .checkbox {
-    /*float: left;*/
-    /*padding-top: 5px;*/
-    /*width: 300px;*/
-    /*text-align: right;*/
     color: grey;
-    /*margin-right: 20px;*/
 }
 
 .partChecked {
@@ -51,10 +46,3 @@ input[type=checkbox] {
     color: grey;
     display: inline-block;
 }
-
-/*.container {
-    display: inline-block;
-    width: 48%;
-    vertical-align: middle;
-    padding-top: 5px;
-}*/

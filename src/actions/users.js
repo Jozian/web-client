@@ -20,7 +20,26 @@ export function loadUser(id) {
     },
   };
 }
-export function deleteUsers(ids) {
+
+export function isUnique(body) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.USER_CHECKING_UNIQUE, types.USER_CHECKED_UNIQUE, types.USER_CHECK_UNIQUE_ERROR],
+      promise: usersApi.isUnique(body),
+    },
+  };
+}
+
+export function editUser(id, body) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.USER_LOADING, types.USER_LOADED, types.USER_LOAD_ERROR],
+      promise: usersApi.edit(id, body),
+    },
+  };
+}export function deleteUsers(ids) {
   return {
     type: types.CALL_API,
     payload: {

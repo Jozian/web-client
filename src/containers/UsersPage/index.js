@@ -61,7 +61,6 @@ export default class UsersPage extends Component {
   }
 
   onRowClick(value) {
-    window.console.log(value);
     const { router } = this.context;
     router.transitionTo('editUser', {id: value.id});
   }

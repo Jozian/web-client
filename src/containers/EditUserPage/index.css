@@ -1,3 +1,14 @@
+.error {
+    border: 1px solid darkred;
+    box-shadow: 0 0 10px darkred;
+}
+.show {
+    display: block;
+}
+.hide {
+    display: none;
+}
+
 .note {
     font-size: 14px;
     color: grey;
@@ -23,6 +34,7 @@
 
 .backgroundGreen {
     background-color: #e2eed8;
+    margin-top: 10px;
 }
 
 .backgroundGrey {
@@ -32,8 +44,7 @@
 }
 
 .editRow {
-    padding-top: 5px;
-    padding-bottom: 5px;
+   padding: 5px 10px;
 }
 
 .editLabel {
@@ -64,10 +75,47 @@
     display: inline-block;
 }
 
-.editCheckbox{
+.disabled {
+    background-color: rgba(202, 202, 202, 0.4);
+    border-color: rgba(0, 0, 0, 0.15);
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.editCheckbox {
     display: inline-block;
     width: 43%;
+    vertical-align: middle;
+    padding-top: 6px;
     text-align: end;
     float: left;
     margin-right: 2%;
 }
+
+@media (max-width: 1134px) {
+    .editCheckbox {
+        width: 100%;
+        margin-right: 0;
+        text-align: start;
+    }
+}
+
+@media (max-width: 1134px) {
+    .checkboxInput {
+        width: 100%;
+        text-align: start;
+    }
+}
+
+.buttonsWrapper {
+    height: 100px;
+    display: block;
+    margin-left: calc(40% - 50px);
+    margin-top: 35px;
+    position: relative;
+}
+
+.buttonStyle {
+    width: 120px;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
