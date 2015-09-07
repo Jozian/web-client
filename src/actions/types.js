@@ -4,6 +4,14 @@ export const LIBRARIES_LOADING = 'Loading libraries';
 export const LIBRARIES_LOADED = 'Libraries loaded';
 export const LIBRARIES_LOAD_ERROR = 'Error loading libraries';
 
+export const LIBRARY_CREATING = 'Creating library';
+export const LIBRARY_CREATED = 'Library created';
+export const LIBRARY_CREATION_ERROR = 'Library creation error';
+
+export const LIBRARIES_DELETING = 'Removing libraries';
+export const LIBRARIES_DELETED = 'Libraries removed';
+export const LIBRARY_DELETE_ERROR = 'Error removing libraries';
+
 export const FOLDER_LOADING = 'Loading folder';
 export const FOLDER_LOADED = 'Folder loaded';
 export const FOLDER_LOAD_ERROR = 'Error loading folder';
@@ -24,9 +32,5 @@ export const MOTD_LOAD_ERROR = 'Error loading MOTD';
 export const MOTD_UPDATING = 'Updating MOTD';
 export const MOTD_UPDATED = 'MOTD updated';
 export const MOTD_UPDATE_ERROR = 'Error updating MOTD';
-
-export const LIBRARY_CREATING = 'Creating library';
-export const LIBRARY_CREATED = 'Library created';
-export const LIBRARY_CREATION_ERROR = 'Library creation error';
 
 export const REMOVE_PENDING_TOAST = 'Removing pending toast';

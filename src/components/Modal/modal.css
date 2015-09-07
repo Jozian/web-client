@@ -23,7 +23,6 @@
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
   font-weight: 200;
   line-height: 1.2;
 }

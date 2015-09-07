@@ -41,10 +41,15 @@ export const pendingActions = combineReducers({
     [types.LIBRARY_CREATING],
     [types.LIBRARY_CREATED, types.LIBRARY_CREATION_ERROR],
   ),
+  deleteLibraries: handlePendingChain(
+    [types.LIBRARIES_DELETING],
+    [types.LIBRARIES_DELETED, types.LIBRARIES_DELETED],
+  ),
   updateMotd: handlePendingChain(
     [types.MOTD_UPDATING],
     [types.MOTD_UPDATED, types.MOTD_UPDATE_ERROR],
   ),
+
 });
 
 export function currentUser(state) {

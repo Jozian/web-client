@@ -9,6 +9,10 @@ const messages = {
     text: 'Library successfully created',
     type: 'success',
   },
+  [types.LIBRARIES_DELETED]: {
+    text: 'Libraries successfully removed',
+    type: 'success',
+  },
 };
 
 export default function toastReducer(state = [], action) {

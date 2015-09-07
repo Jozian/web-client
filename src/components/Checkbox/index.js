@@ -18,19 +18,24 @@ export default class Checkbox extends Component {
     tabIndex: '-1',
   }
 
-  handleClick() {
+  handleClick(event) {
     this.props.onChange({
       checked: !(this.props.checked === false),
-    });
+    }, event);
   }
 
   render() {
     const { checked, disabled } = this.props;
     const className = checked === partiallyChecked ? styles.partChecked : styles.checked;
     return (
-      <div tabIndex={this.props.tabIndex} onKeyPress={onEnterPressed(::this.handleClick)} className={this.props.className}>
+      <div
+        tabIndex={this.props.tabIndex}
+        onClick={(event) => event.stopPropagation()}
+        onKeyPress={onEnterPressed(::this.handleClick)}
+        className={this.props.className}
+      >
         <label>
-          <input type="checkbox" onChange={::this.handleClick} checked={!!checked} disabled={disabled}/>
+          <input onChange={::this.handleClick} ref="input" type="checkbox" checked={!!checked} disabled={disabled}/>
           <div className={className}></div>
         </label>
       </div>

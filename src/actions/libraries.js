@@ -20,3 +20,13 @@ export function createLibrary(name) {
     },
   };
 }
+
+export function deleteLibraries(ids) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.LIBRARIES_DELETING, types.LIBRARIES_DELETED, types.LIBRARY_DELETE_ERROR],
+      promise: librariesApi.deleteLibraries(ids),
+    },
+  };
+}

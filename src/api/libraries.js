@@ -18,7 +18,7 @@ export function createLibrary(name) {
   });
 }
 
-export function deleteLibrary(body) {
+export function deleteLibraries(body) {
   // body is an array of ids
   if (!body || !body instanceof Array) {
     return Promise.reject('Invalid body');

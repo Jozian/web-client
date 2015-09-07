@@ -28,7 +28,9 @@ class LibrariesPage extends Component {
   static propTypes = {
     libraries: React.PropTypes.object.isRequired,
     pendingActions: React.PropTypes.object.isRequired,
+    loadLibraries: React.PropTypes.func.isRequired,
     createLibrary: React.PropTypes.func.isRequired,
+    deleteLibraries: React.PropTypes.func.isRequired,
   }
 
   static contextTypes = {
@@ -38,18 +40,42 @@ class LibrariesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      libraries: [],
+      selectedLibraries: [],
       newLibraryName: '',
     };
     props.loadLibraries();
   }
 
-  onListSelectionChange(libraries) {
-    this.setState({ libraries });
+  onListSelectionChange(selectedLibraries) {
+    this.setState({ selectedLibraries });
   }
 
   onRowClick(data) {
     this.context.router.transitionTo('folder', {folderId: data.id});
+  }
+
+  onLibraryNameInputChange(event) {
+    this.setState({
+      newLibraryName: event.target.value,
+    });
+  }
+
+  openNewLibraryPopup() {
+    this.setState({
+      newLibraryName: '',
+      isNewLibraryPopupOpen: true});
+  }
+
+  hideNewLibraryPopup() {
+    this.setState({isNewLibraryPopupOpen: false});
+  }
+
+  openDeleteLibrariesPopup() {
+    this.setState({isDeleteLibrariesPopupOpen: true});
+  }
+
+  hideDeleteLibrariesPopup() {
+    this.setState({isDeleteLibrariesPopupOpen: false});
   }
 
   config = {
@@ -74,22 +100,6 @@ class LibrariesPage extends Component {
     selectable: true,
   }
 
-  openNewLibraryPopup() {
-    this.setState({
-      newLibraryName: '',
-      isNewLibraryPopupOpen: true});
-  }
-
-  hideNewLibraryPopup() {
-    this.setState({isNewLibraryPopupOpen: false});
-  }
-
-  onLibraryNameInputChange(event) {
-    this.setState({
-      newLibraryName: event.target.value,
-    });
-  }
-
   createNewLibrary(event) {
     if (this.props.pendingActions.newLibrary) {
       return;
@@ -101,6 +111,41 @@ class LibrariesPage extends Component {
 
     this.props.createLibrary(this.state.newLibraryName).then(::this.hideNewLibraryPopup);
     event.preventDefault();
+  }
+
+  deleteLibraries() {
+    if (this.state.selectedLibraries.length === 0) {
+      return;
+    }
+
+    this.props.deleteLibraries(this.state.selectedLibraries.map((l) => l.id))
+      .then(::this.hideDeleteLibrariesPopup)
+      .then(() => this.setState({selectedLibraries: []}))
+      .then(this.props.loadLibraries)
+
+      .catch(::this.hideDeleteLibrariesPopup)
+      .then(this.props.loadLibraries)
+    ;
+  }
+
+  renderDeleteLibrariesPopup() {
+    return (<Modal
+      isOpen={this.state.isDeleteLibrariesPopupOpen}
+      title="Are you sure you want to delete selected items?"
+      className={styles.newLibraryModal}
+    >
+      <Footer>
+        <ActionButton
+          icon="fa fa-check"
+          onClick={::this.deleteLibraries}
+          disabled={!this.state.selectedLibraries.length}
+          inProgress={this.props.pendingActions.deleteLibraries}
+        >
+          Ok
+        </ActionButton>
+        <Button icon="fa fa-ban" onClick={::this.hideDeleteLibrariesPopup}>Cancel</Button>
+      </Footer>
+    </Modal>);
   }
 
   renderNewLibraryPopup() {
@@ -139,6 +184,7 @@ class LibrariesPage extends Component {
     return (<div>
       <DocumentTitle title="Libraries" />
       { this.renderNewLibraryPopup() }
+      { this.renderDeleteLibrariesPopup() }
       <h1>
         Libraries
         <IconButton
@@ -158,9 +204,9 @@ class LibrariesPage extends Component {
       />
       <Footer>
         <Button
-          disabled={!this.state.libraries.length}
+          disabled={!this.state.selectedLibraries.length}
           icon="fa fa-trash-o"
-          onClick=""
+          onClick={::this.openDeleteLibrariesPopup}
         >
           Delete
         </Button>
