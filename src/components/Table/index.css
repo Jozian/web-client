@@ -32,10 +32,6 @@
     padding-left: 6px;
 }
 
-.tableHeader td {
-    text-align: center;
-}
-
 .tableBody > tr.tableBodyRow:nth-of-type(odd) {
     background-color: #f6f6f6;
     color: black;
