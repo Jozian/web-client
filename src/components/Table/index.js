@@ -40,7 +40,7 @@ export default class Table extends Component {
     });
   }
 
-  onCheckboxClick(row, data, event) {
+  selectRow(row, data, event) {
     const selection = [...this.state.selection];
     const index = selection.indexOf(row);
 
@@ -66,12 +66,20 @@ export default class Table extends Component {
     });
   }
 
-  onRowKeyDown(event) {
+  onRowKeyDown(row, event) {
     if (event.target !== event.currentTarget) {
       return;
     }
     if (document.activeElement !== event.target) {
       return;
+    }
+
+    if (event.which === 32) { /* SPACE */
+      this.selectRow(row, null, event);
+
+      if (event.target.nextSibling) {
+        event.target.nextSibling.focus();
+      }
     }
 
     if (event.which === 38 && event.target.previousSibling) { /* UP */
@@ -138,7 +146,7 @@ export default class Table extends Component {
 
     return (
       <td key="checkbox">
-        <Checkbox tabIndex="0" onChange={this.onCheckboxClick.bind(this, row)} checked={isChecked}/>
+        <Checkbox tabIndex="0" onChange={this.selectRow.bind(this, row)} checked={isChecked}/>
       </td>
     );
   }
@@ -181,7 +189,7 @@ export default class Table extends Component {
           tabIndex="0"
           className={styles.tableBodyRow}
           onClick={onRowClick}
-          onKeyDown={this.onRowKeyDown}
+          onKeyDown={this.onRowKeyDown.bind(this, rowData)}
           onKeyPress={onEnterPressed(onRowClick)}
         >
           {row}
