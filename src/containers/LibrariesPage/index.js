@@ -60,6 +60,14 @@ class LibrariesPage extends Component {
       newLibraryName: event.target.value,
     });
   }
+  onDelKeyDown(e) {
+    if (e.which === 46) {
+      if (this.state.selectedLibraries.length === 0) {
+        return;
+      }
+      this.openDeleteLibrariesPopup();
+    }
+  }
 
   openNewLibraryPopup() {
     this.setState({
@@ -187,7 +195,7 @@ class LibrariesPage extends Component {
   }
 
   render() {
-    return (<div>
+    return (<div onKeyDown={::this.onDelKeyDown}>
       <DocumentTitle title="Libraries" />
       { this.renderNewLibraryPopup() }
       { this.renderDeleteLibrariesPopup() }
