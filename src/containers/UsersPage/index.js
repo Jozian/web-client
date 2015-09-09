@@ -58,6 +58,14 @@ export default class UsersPage extends Component {
   onListSelectionChange(selectedUsers) {
     this.setState({ selectedUsers });
   }
+  onDelKeyDown(e) {
+    if (e.which === 46) {
+      if (this.state.selectedUsers.length === 0) {
+        return;
+      }
+      this.showDeleteUsersPopup();
+    }
+  }
 
   handleAddUserClick(e) {
     window.console.log(e);
@@ -128,7 +136,7 @@ export default class UsersPage extends Component {
 
 
   render() {
-    return (<div>
+    return (<div onKeyDown={::this.onDelKeyDown}>
       { this.renderDeleteLibrariesPopup() }
       <h1>
         Users
