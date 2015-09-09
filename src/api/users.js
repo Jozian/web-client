@@ -41,7 +41,7 @@ export function edit(id, body) {
   });
 }
 
-export function remove(body) {
+export function deleteUsers(body) {
   // body is an array of ids
   if (!body || !body instanceof Array) {
     return Promise.reject('Invalid body');
@@ -63,4 +63,3 @@ export function isUnique(body) {
     body: JSON.stringify(body),
   });
 }
-

@@ -63,6 +63,10 @@ export const pendingActions = combineReducers({
     [types.COMMENTS_EXPORTING],
     [types.COMMENTS_EXPORTED, types.COMMENTS_EXPORT_ERROR],
   ),
+  deleteUsers: handlePendingChain(
+    [types.USERS_DELETING],
+    [types.USERS_DELETED, types.USERS_DELETE_ERROR],
+  ),
 });
 
 export function currentUser(state) {

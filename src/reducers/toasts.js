@@ -27,6 +27,11 @@ const messages = {
     text: 'Error exporting comments',
     type: 'error',
   },
+
+  [types.USERS_DELETED]: {
+    text: 'Users successfully removed',
+    type: 'success',
+  },
 };
 
 export default function toastReducer(state = [], action) {

@@ -24,6 +24,10 @@ export const USERS_LOADING = 'Loading users';
 export const USERS_LOADED = 'Users loaded';
 export const USERS_LOAD_ERROR = 'Error loading users';
 
+export const USERS_DELETING = 'Removing users';
+export const USERS_DELETED = 'Users removed';
+export const USERS_DELETE_ERROR = 'Error removing users';
+
 export const COMMENTS_EXPORTING = 'Exporting comments';
 export const COMMENTS_EXPORTED = 'Comments exported';
 export const COMMENTS_EXPORT_ERROR = 'Error exporting comments';

@@ -11,3 +11,12 @@ export function loadUsers() {
   };
 }
 
+export function deleteUsers(ids) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.USERS_DELETING, types.USERS_DELETED, types.USERS_DELETE_ERROR],
+      promise: usersApi.deleteUsers(ids),
+    },
+  };
+}
