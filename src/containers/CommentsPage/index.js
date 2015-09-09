@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 
 import * as actions from 'actions/comments';
+import Header from 'components/Header';
 import Table from 'components/Table';
 import DocumentTitle from 'components/DocumentTitle';
 import Footer from 'components/Footer';
@@ -124,7 +125,7 @@ export default class CommentsPage extends Component {
     return (
       <div>
         <DocumentTitle title="Commentaries" />
-        <h1>Commentaries</h1>
+        <Header>Commentaries</Header>
         <Table
           overlayClassName={commonStyles.tableOverlay}
           className={cx(commonStyles.table, styles.table)}

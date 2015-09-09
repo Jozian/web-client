@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as actions from 'actions/statistics.js';
+import Header from 'components/Header';
 import ActionButton from 'components/ActionButton';
 import PreviewImage from 'components/PreviewImage';
 import Footer from 'components/Footer';
@@ -75,7 +76,7 @@ export default class StatisticsPage extends Component {
   render() {
     return (
       <div>
-        <h1>Statistics</h1>
+        <Header>Statistics</Header>
         <div style={{height: '100%'}}>
         <div className={style.listContainer}>
           <div className={style.toolbar} id="downloaded">

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import styles from './style.css';
+import Header from 'components/Header';
 import ActionButton from 'components/ActionButton';
 import * as actions from 'actions/motd.js';
 import loading from 'decorators/loading';
@@ -55,7 +56,7 @@ export default class StatisticsPage extends Component {
 
     return (
       <div>
-        <h1>Message of the day</h1>
+        <Header>Message of the day</Header>
         <div className={styles.motd}>
           <div className={styles.fieldWrapper}>
             <label className={styles.label}>Current:</label>

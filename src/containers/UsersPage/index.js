@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import Header from 'components/Header';
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
 import ActionButton from 'components/ActionButton';
@@ -129,7 +130,7 @@ export default class UsersPage extends Component {
   render() {
     return (<div>
       { this.renderDeleteLibrariesPopup() }
-      <h1>
+      <Header>
         Users
         <IconButton
           className={commonStyles.headerButton}
@@ -137,7 +138,7 @@ export default class UsersPage extends Component {
           tooltipText="Add new user"
           handleClick={this.handleAddUserClick}
         />
-      </h1>
+      </Header>
       <LoadingSpinner loading={this.state.loading}>
         <Table
           ref="table"
