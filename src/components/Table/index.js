@@ -80,6 +80,7 @@ export default class Table extends Component {
       if (event.target.nextSibling) {
         event.target.nextSibling.focus();
       }
+      event.preventDefault();
     }
 
     if (event.which === 38 && event.target.previousSibling) { /* UP */
