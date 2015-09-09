@@ -1,7 +1,8 @@
 import isomorphicFetch from 'isomorphic-fetch';
 import store from '../store/configureStore';
 
-const baseUrl = 'http://www.microsofteducationdelivery.net';
+//FIXME: ENV BASED BUILD
+const baseUrl = 'http://medserver.apps.wookieelabs.com';
 
 function getAuthHeader() {
   return 'Bearer ' + (store.getState().currentUser ? store.getState().currentUser.token : '');
