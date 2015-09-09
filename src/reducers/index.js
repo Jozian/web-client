@@ -3,8 +3,10 @@ import {combineReducers } from 'redux';
 import * as types from '../actions/types.js';
 import { handleLoadingChain, handlePendingChain } from './helpers';
 import toastReducer from './toasts';
+import activeFolderReducer from './activeFolder';
 
 export const pendingToasts = toastReducer;
+export const activeFolder = activeFolderReducer;
 
 export const libraries = handleLoadingChain([
   types.LIBRARIES_LOADING,
@@ -29,12 +31,6 @@ export const users = handleLoadingChain([
   types.USERS_LOADED,
   types.USERS_LOAD_ERROR,
 ]);
-
-export const activeFolder = handleLoadingChain([
-  types.FOLDER_LOADING,
-  types.FOLDER_LOADED,
-  types.FOLDER_LOAD_ERROR,
-], 'entity', {});
 
 export const motd = handleLoadingChain([
   types.MOTD_LOADING,

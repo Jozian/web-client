@@ -55,6 +55,7 @@ export default class StatisticsPage extends Component {
     const item = await event.detail.itemPromise;
     this.context.router.transitionTo('folderSelection', {
       folderId: item.data.folder.toString(),
+      itemType: 'media',
       itemId: item.data.id.toString(),
     });
   }

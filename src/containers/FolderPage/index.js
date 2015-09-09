@@ -5,7 +5,6 @@ import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { Link } from 'react-router';
 import cx from 'classnames';
 
-import winjsBind from 'decorators/winjsBind';
 import loading from 'decorators/loading';
 import { loadFoldersList } from 'actions/folders';
 import Header from 'components/Header';
@@ -23,11 +22,6 @@ import styles from './index.css';
   (state) => ({folder: state.activeFolder}),
   (dispatch) => bindActionCreators({ loadFoldersList }, dispatch)
 )
-@winjsBind(
-  (props) => ({
-    items: props.folder.entity.data,
-  })
-)
 @loading(
   (state) => state.folder.loading,
   { isLoadingByDefault: true }
@@ -38,10 +32,7 @@ export default class FolderPage extends Component {
     params: React.PropTypes.shape({
       folderId: React.PropTypes.string.isRequired,
       itemId: React.PropTypes.string,
-    }),
-    items: React.PropTypes.shape({
-      dataSource: React.PropTypes.object.isRequired,
-      forEach: React.PropTypes.func.isRequired,
+      itemType: React.PropTypes.string,
     }),
   }
 
@@ -75,8 +66,8 @@ export default class FolderPage extends Component {
 
   componentDidUpdate() {
     if (this.props.params.itemId && this.state.selectOnLoad) {
-      this.props.items.forEach((data, index) => {
-        if (data.id.toString() === this.props.params.itemId) {
+      this.props.folder.entity.data.forEach((data, index) => {
+        if (data.id.toString() === this.props.params.itemId && data.type === this.props.params.itemType) {
           this.refs.folder.winControl.selection.set(index);
           setImmediate(() => this.refs.folder.winControl.ensureVisible(index));
           this.setState({selectOnLoad: false});
@@ -145,6 +136,7 @@ export default class FolderPage extends Component {
       } else {
         goTo('folderSelection', {
           folderId: this.props.params.folderId,
+          itemType: 'folder',
           itemId: item.data.id.toString(),
         });
       }
@@ -152,6 +144,7 @@ export default class FolderPage extends Component {
     case 'media':
       goTo('folderSelection', {
         folderId: this.props.params.folderId,
+        itemType: 'media',
         itemId: item.data.id.toString(),
       });
       break;
@@ -194,7 +187,7 @@ export default class FolderPage extends Component {
         key="folder"
         ref="folder"
         className={styles.list}
-        itemDataSource={this.props.items.dataSource}
+        itemDataSource={this.props.folder.entity.data.dataSource}
         itemTemplate={this.folderItemRenderer}
         onItemInvoked={::this.handleItemSelected}
         onSelectionChanged={::this.handleSelectionChange}

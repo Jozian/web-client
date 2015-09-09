@@ -56,6 +56,7 @@ export default class CommentsPage extends Component {
   onJumpButtonClick(rowData) {
     this.context.router.transitionTo('folderSelection', {
       folderId: rowData.folder.toString(),
+      itemType: 'media',
       itemId: rowData.id.toString(),
     });
   }

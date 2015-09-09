@@ -38,7 +38,9 @@ const store = createFinalStore(reducer, {
   },
   activeFolder: {
     loading: false,
-    entity: {},
+    entity: {
+      data: new WinJS.Binding.List([]),
+    },
   },
   motd: {
     loading: false,
