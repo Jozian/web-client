@@ -8,6 +8,7 @@ import cx from 'classnames';
 import winjsBind from 'decorators/winjsBind';
 import loading from 'decorators/loading';
 import { loadFoldersList } from 'actions/folders';
+import Header from 'components/Header';
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
 import PreviewImage from 'components/PreviewImage';
@@ -212,8 +213,8 @@ export default class FolderPage extends Component {
 
   render() {
     return (
-      <div>
-        <h1>{this.props.folder.entity.name}
+    <div>
+      <Header>{this.props.folder.entity.name}
         <IconButton
           className={commonStyles.headerButton}
           icon="fa fa-file-o"
@@ -224,7 +225,7 @@ export default class FolderPage extends Component {
           icon="fa fa-folder-open"
           tooltipText="Add new folder"
         />
-      </h1>
+      </Header>
       { this.renderBreadcrumbs() }
       <div className={styles.column}>
         { this.renderItemList() }

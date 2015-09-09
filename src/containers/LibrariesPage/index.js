@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import * as actions from 'actions/libraries';
 import DocumentTitle from 'components/DocumentTitle';
+import Header from 'components/Header';
 import Modal from 'components/Modal';
 import Table from 'components/Table';
 import IconButton from 'components/IconButton';
@@ -190,7 +191,7 @@ class LibrariesPage extends Component {
       <DocumentTitle title="Libraries" />
       { this.renderNewLibraryPopup() }
       { this.renderDeleteLibrariesPopup() }
-      <h1>
+      <Header>
         Libraries
         <IconButton
           className={commonStyles.headerButton}
@@ -198,7 +199,7 @@ class LibrariesPage extends Component {
           icon="fa fa-plus"
           tooltipText="Add new library"
         />
-      </h1>
+      </Header>
       <Table
         overlayClassName={commonStyles.tableOverlay}
         className={commonStyles.table}
