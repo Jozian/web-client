@@ -108,7 +108,7 @@ export default class FolderPage extends Component {
       <div className={styles.listItem}>
         <PreviewImage
           className={styles.image}
-          src={'http://www.microsofteducationdelivery.net' + media.picture}
+          src={media.picture}
           />
         <div className={styles.name}>{media.name}</div>
       </div>

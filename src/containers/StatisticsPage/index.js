@@ -67,7 +67,7 @@ export default class StatisticsPage extends Component {
         </div>
         <PreviewImage
           className={style.image}
-          src={'http://www.microsofteducationdelivery.net' + item.data.picture}
+          src={item.data.picture}
         />
         <div className={style.name}>{item.data.text}</div>
       </div>);
