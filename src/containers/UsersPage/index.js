@@ -100,10 +100,9 @@ export default class UsersPage extends Component {
     });
   }
 
-  deleteUsers() {
-    this.props.deleteUsers(this.state.selectedUsers.map(u => u.id))
-      .then(this.props.loadUsers)
-    ;
+  async deleteUsers() {
+    await this.props.deleteUsers(this.state.selectedUsers.map(u => u.id));
+    this.props.loadUsers();
   }
 
   renderDeleteLibrariesPopup() {

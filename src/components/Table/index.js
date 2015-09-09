@@ -11,6 +11,7 @@ export default class Table extends Component {
   static propTypes = {
     config: React.PropTypes.object.isRequired,
     className: React.PropTypes.string,
+    overlayClassName: React.PropTypes.string,
     data: React.PropTypes.arrayOf(React.PropTypes.shape({
       id: React.PropTypes.any.isRequired,
     })),
@@ -32,6 +33,20 @@ export default class Table extends Component {
         order: true,
       },
     };
+    this.fixScrollHandler = ::this.fixScroll;
+  }
+
+  componentDidMount() {
+    this.fixScroll();
+    window.addEventListener('resize', this.fixScrollHandler);
+  }
+
+  componentDidUpdate() {
+    this.fixScroll();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.fixScrollHandler);
   }
 
   onSelectAllCheckboxClick() {
@@ -81,6 +96,21 @@ export default class Table extends Component {
       return true;
     }
     return (this.state.selection.length > 0) ? partiallyChecked : false;
+  }
+
+  fixScroll() {
+    const tbody = this.refs.bodyContainer.getDOMNode();
+    const table = this.refs.table.getDOMNode();
+    const hasVerticalScrollbar = tbody.scrollHeight > tbody.clientHeight;
+    if (hasVerticalScrollbar && !table.dataset.scrollFixWidth) {
+      const scrollWidth = (tbody.offsetWidth - tbody.clientWidth);
+      table.dataset.scrollFixWidth = scrollWidth;
+      table.style.width = (parseInt(getComputedStyle(table).width, 10) + scrollWidth) + 'px';
+    }
+    if (!hasVerticalScrollbar && table.dataset.scrollFixWidth) {
+      table.style.width = (parseInt(getComputedStyle(table).width, 10) - table.dataset.scrollFixWidth) + 'px';
+      delete table.dataset.scrollFixWidth;
+    }
   }
 
   selectRow(row, data, event) {
@@ -155,8 +185,9 @@ export default class Table extends Component {
     const isChecked = this.state.selection.indexOf(row) !== -1;
 
     return (
-      <td key="checkbox">
-        <Checkbox tabIndex="0" onChange={this.selectRow.bind(this, row)} checked={isChecked}/>
+      <td key="checkbox" className={styles.checkTd}>
+        <Checkbox tabIndex="0"
+                  onChange={this.selectRow.bind(this, row)} checked={isChecked}/>
       </td>
     );
   }
@@ -167,7 +198,7 @@ export default class Table extends Component {
     return this.props.config.columns.map((col, idx) => {
       const content = (col.renderer || dumbRenderer)(rowData[col.key], rowData);
 
-      return (<td key={idx} style={col.style} className={col.className}>{content}</td>);
+      return (<td key={idx} style={col.style} className={cx(styles['column-' + idx], col.className)}>{content}</td>);
     });
   }
 
@@ -214,17 +245,23 @@ export default class Table extends Component {
     }
 
     const headerColumns = this.renderHeaderColumns();
-
     return (
-      <table className={cx(styles.table, this.props.className)}>
-        <thead className={styles.tableHeader}>
-          <tr key="header">{[headerCheckboxColumn, ...headerColumns]}</tr>
-        </thead>
-
-        <tbody className={styles.tableBody}>
-          { this.renderRows() }
-        </tbody>
-      </table>
+        <div className={cx(styles.wrap, this.props.overlayClassName)}>
+          <div>
+            <table className={cx(styles.table, this.props.className)}>
+              <thead className={styles.tableHeader}>
+              <tr key="header">{[headerCheckboxColumn, ...headerColumns]}</tr>
+              </thead>
+            </table>
+          </div>
+          <div ref="bodyContainer" className={styles.wrapTBody}>
+            <table ref="table" className={cx(styles.table, this.props.className)}>
+              <tbody className={styles.tableBody}>
+              { this.renderRows() }
+              </tbody>
+            </table>
+          </div>
+        </div>
     );
   }
 }

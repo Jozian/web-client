@@ -104,7 +104,8 @@ class LibrariesPage extends Component {
     selectable: true,
   }
 
-  createNewLibrary(event) {
+  async createNewLibrary(event) {
+    event.preventDefault();
     if (this.props.pendingActions.newLibrary) {
       return;
     }
@@ -112,9 +113,9 @@ class LibrariesPage extends Component {
     if (!this.state.newLibraryName.length) {
       return;
     }
-
-    this.props.createLibrary(this.state.newLibraryName).then(::this.hideNewLibraryPopup);
-    event.preventDefault();
+    await this.props.createLibrary(this.state.newLibraryName);
+    this.hideNewLibraryPopup();
+    this.props.loadLibraries();
   }
 
   deleteLibraries() {
@@ -199,6 +200,7 @@ class LibrariesPage extends Component {
         />
       </h1>
       <Table
+        overlayClassName={commonStyles.tableOverlay}
         className={commonStyles.table}
         ref="table"
         config={this.config}

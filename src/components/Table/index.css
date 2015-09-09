@@ -11,7 +11,7 @@
     border-collapse: collapse;
 }
 
-.tableHeader .checkTd {
+.table .checkTd {
     min-width: 1px;
     width: 30px;
 }
@@ -21,6 +21,15 @@
     width: 19px;
     height: 19px;
     background-color: white;
+}
+
+.tableBody .checkTd div {
+    width: 19px;
+    height: 19px;
+}
+
+.tableBody tr {
+    border-left: 3px solid rgba(0,0,0,0);
 }
 
 .tableBody tr:hover {
@@ -94,4 +103,27 @@
     bottom: -6px;
     right: 43px;
     left: 43px
+}
+.wrap {
+    position: relative;
+}
+
+.wrap:before, .wrap:after {
+    display: table;
+    content: ' ';
+}
+
+.wrap > .table {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.wrapTBody {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
 }

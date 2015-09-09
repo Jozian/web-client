@@ -30,6 +30,10 @@ table.table {
   width: 90%;
 }
 
+.tableOverlay {
+  height: calc(100% - 200px);
+}
+
 input {
   margin: 4px 0;
   padding: 4px;
