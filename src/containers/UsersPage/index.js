@@ -141,6 +141,7 @@ export default class UsersPage extends Component {
       <LoadingSpinner loading={this.state.loading}>
         <Table
           ref="table"
+          overlayClassName={commonStyles.tableOverlay}
           className={commonStyles.table}
           config={this.config}
           data={this.props.users.entities}
