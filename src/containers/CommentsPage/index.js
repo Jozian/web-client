@@ -126,6 +126,7 @@ export default class CommentsPage extends Component {
         <DocumentTitle title="Commentaries" />
         <h1>Commentaries</h1>
         <Table
+          overlayClassName={commonStyles.tableOverlay}
           className={cx(commonStyles.table, styles.table)}
           config={this.config}
           data={this.props.media.entities}
