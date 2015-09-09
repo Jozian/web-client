@@ -145,8 +145,9 @@ export default class Table extends Component {
     const isChecked = this.state.selection.indexOf(row) !== -1;
 
     return (
-      <td key="checkbox">
-        <Checkbox tabIndex="0" onChange={this.selectRow.bind(this, row)} checked={isChecked}/>
+      <td key="checkbox" className={styles.checkTd}>
+        <Checkbox tabIndex="0"
+                  onChange={this.selectRow.bind(this, row)} checked={isChecked}/>
       </td>
     );
   }
@@ -157,7 +158,7 @@ export default class Table extends Component {
     return this.props.config.columns.map((col, idx) => {
       const content = (col.renderer || dumbRenderer)(rowData[col.key]);
 
-      return (<td key={idx} style={col.style} className={col.className}>{content}</td>);
+      return (<td key={idx} style={col.style} className={cx(styles['column-' + idx], col.className)}>{content}</td>);
     });
   }
 
@@ -204,17 +205,21 @@ export default class Table extends Component {
     }
 
     const headerColumns = this.renderHeaderColumns();
-
     return (
-      <table className={cx(styles.table, this.props.className)}>
-        <thead className={styles.tableHeader}>
-          <tr key="header">{[headerCheckboxColumn, ...headerColumns]}</tr>
-        </thead>
-
-        <tbody className={styles.tableBody}>
-          { this.renderRows() }
-        </tbody>
-      </table>
+        <div className={styles.wrap}>
+          <table className={cx(styles.table, this.props.className)}>
+            <thead className={styles.tableHeader}>
+            <tr key="header">{[headerCheckboxColumn, ...headerColumns]}</tr>
+            </thead>
+          </table>
+            <div className={styles.wrapTBody}>
+              <table className={cx(styles.table, this.props.className)}>
+                <tbody className={styles.tableBody}>
+                { this.renderRows() }
+                </tbody>
+              </table>
+            </div>
+        </div>
     );
   }
 }

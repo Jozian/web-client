@@ -11,7 +11,7 @@
     border-collapse: collapse;
 }
 
-.tableHeader .checkTd {
+.table .checkTd {
     min-width: 1px;
     width: 30px;
 }
@@ -23,6 +23,15 @@
     background-color: white;
 }
 
+.tableBody .checkTd div {
+    width: 19px;
+    height: 19px;
+}
+
+.tableBody tr {
+    border-left: 3px solid rgba(0,0,0,0);
+}
+
 .tableBody tr:hover {
     border-left: 3px solid #583c58;
     background-color: #e2dce1 !important;
@@ -31,8 +40,7 @@
 .tableBody tr:hover > td:first-of-type {
     padding-left: 6px;
 }
-
-.tableHeader td {
+.table td {
     min-width: 120px;
 }
 
@@ -102,4 +110,24 @@
     bottom: -6px;
     right: 43px;
     left: 43px
+}
+.wrap {
+    position: relative;
+}
+
+.wrap:before, .wrap:after {
+    display: table;
+    content: ' ';
+}
+
+.wrap > .table {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.wrapTBody {
+    margin-top: 50px;
+    height: 100%;
+    overflow-y: auto;
 }
