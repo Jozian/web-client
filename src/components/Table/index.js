@@ -40,7 +40,11 @@ export default class Table extends Component {
     this.fixScroll();
     window.addEventListener('resize', this.fixScrollHandler);
   }
-
+  componentWillReceiveProps(newProps) {
+    if (newProps.data.length !== this.props.data.length) {
+      this.setState({selection: []});
+    }
+  }
   componentDidUpdate() {
     this.fixScroll();
   }
