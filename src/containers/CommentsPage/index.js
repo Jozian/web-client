@@ -117,7 +117,7 @@ export default class CommentsPage extends Component {
     ],
     selectable: false,
   };
-  
+
   renderJumpButton(_, rowData) {
     return (<IconButton
       className={styles.rowButton}

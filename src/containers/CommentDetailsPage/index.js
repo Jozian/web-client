@@ -85,7 +85,7 @@ export default class CommentDetails extends Component {
       data.replay = 'Edit';
     }
 
-    this.props.createComment(data).then(() => this.props.loadComments(this.props.params.id)).then(::this.hideNewCommentPopup);
+    this.props.createComment(data).then(() => this.props.loadComments(this.props.params.id)).then( () => this.setState({ newCommentText: ''})).then(::this.hideNewCommentPopup);
     event.preventDefault();
   }
 
@@ -101,7 +101,6 @@ export default class CommentDetails extends Component {
 
   replyAll() {
     const someObj = {
-      newLibraryName: '',
       isNewCommentPopupOpen: true,
       title: `To ${ this.props.params.mediaName }`,
     };
@@ -111,7 +110,6 @@ export default class CommentDetails extends Component {
   async replyToComment(item) {
     const someObj = {
       id: this.props.params.id,
-      newLibraryName: '',
       isNewCommentPopupOpen: true,
       parentId: item.data.id,
       title: `To ${ item.data.author }`,
@@ -121,7 +119,6 @@ export default class CommentDetails extends Component {
 
   async editComment(item) {
     const someObj = {
-      newLibraryName: '',
       isNewCommentPopupOpen: true,
       id: item.data.id,
       replay: 'Edit',
