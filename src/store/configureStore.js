@@ -28,6 +28,12 @@ const store = createFinalStore(reducer, {
       top5Views: [],
     },
   },
+  comments: {
+    loading: false,
+    entities: {
+      allComments: [],
+    },
+  },
   libraries: {
     loading: false,
     entities: [],

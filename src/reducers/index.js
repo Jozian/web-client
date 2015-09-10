@@ -25,6 +25,11 @@ export const statistics = handleLoadingChain([
   types.STATISTICS_LOADED,
   types.STATISTICS_LOAD_ERROR,
 ]);
+export const comments = handleLoadingChain([
+  types.COMMENTS_LOADING,
+  types.COMMENTS_LOADED,
+  types.COMMENTS_ERROR,
+]);
 
 export const users = handleLoadingChain([
   types.USERS_LOADING,
@@ -46,6 +51,14 @@ export const pendingActions = combineReducers({
   deleteLibraries: handlePendingChain(
     [types.LIBRARIES_DELETING],
     [types.LIBRARIES_DELETED, types.LIBRARIES_DELETED],
+  ),
+  newComments: handlePendingChain(
+    [types.COMMENT_CREATING],
+    [types.COMMENT_CREATED, types.COMMENT_CREATING_ERROR],
+  ),
+  deleteComments: handlePendingChain(
+    [types.COMMENTS_DELETING],
+    [types.COMMENTS_DELETED, types.COMMENTS_DELETE_ERROR]
   ),
   updateMotd: handlePendingChain(
     [types.MOTD_UPDATING],

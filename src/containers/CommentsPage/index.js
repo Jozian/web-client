@@ -51,8 +51,10 @@ export default class CommentsPage extends Component {
   }
 
   onRowClick(value) {
-    this.context.router.transitionTo('comment', {id: value.id});
-    window.console.log(value);
+    this.context.router.transitionTo('comment', {
+      mediaName: value.name.toString(),
+      id: value.id.toString(),
+    });
   }
 
   onJumpButtonClick(rowData) {
@@ -115,7 +117,7 @@ export default class CommentsPage extends Component {
     ],
     selectable: false,
   };
-
+  
   renderJumpButton(_, rowData) {
     return (<IconButton
       className={styles.rowButton}

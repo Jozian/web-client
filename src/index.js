@@ -28,7 +28,7 @@ const routes = (
     <Route name="motd" handler={MotdPage} />
     <Redirect from="/" to="libraries" />
     <DefaultRoute handler={LibrariesPage} />
-    <Route name="comment" path="comment/:id" handler={CommentDetails}/>
+    <Route name="comment" path="comments/:mediaName/:id/" handler={CommentDetails}/>
   </Route>
 );
 

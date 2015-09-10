@@ -57,3 +57,11 @@ export const REMOVE_PENDING_TOAST = 'Removing pending toast';
 export const COMMENTS_LOADING = 'Loading comments';
 export const COMMENTS_LOADED = 'Comments loaded';
 export const COMMENTS_ERROR = 'Error loading comments';
+
+export const COMMENT_CREATING = 'Creating comments';
+export const COMMENT_CREATED = 'Created comments';
+export const COMMENT_CREATING_ERROR = 'Error creating comments';
+
+export const COMMENTS_DELETING = 'Comments deleting';
+export const COMMENTS_DELETED = 'Comments deleted';
+export const COMMENTS_DELETE_ERROR = 'Comments deleting error';

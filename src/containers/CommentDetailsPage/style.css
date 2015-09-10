@@ -1,4 +1,4 @@
-/*.b_media-comments--bottombar*/ .bottombar {
+.bottombar {
     position: relative;
     bottom: -10px;
     width: 100%;
@@ -6,74 +6,81 @@
     background-color: #e0e2e2;
     text-align: center;
 
-    display:-ms-flexbox;
-    -ms-flex-pack:center;
-    -ms-flex-align:center;
+    display: -ms-flexbox;
+    -ms-flex-pack: center;
+    -ms-flex-align: center;
 
     /* Firefox */
-    display:-moz-box;
-    -moz-box-pack:center;
-    -moz-box-align:center;
+    display: -moz-box;
+    -moz-box-pack: center;
+    -moz-box-align: center;
 
     /* Safari, Opera, and Chrome */
-    display:-webkit-box;
-    -webkit-box-pack:center;
-    -webkit-box-align:center;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
 
     /* W3C */
-    display:box;
-    box-pack:center;
-    box-align:center;
+    display: box;
+    box-pack: center;
+    box-align: center;
 }
 
-/*.b_media-comments-content*/ .commentsContent {
+.commentsContent {
     display: inline-block;
     width: 90%;
     height: calc(100% - 201px);
-    margin: 1.25%;
-    margin-left: 5%;
+    margin: 1.25% 1.25% 1.25% 5%;
     background-color: #f6f6f6;
 }
 
-/*.b_media-comments-content__list*/ .list {
+.list {
     height: calc(100% - 90px);
 }
 
-/*.b_media-comments-content--toolbar*/ .toolbar {
+.toolbar {
     padding: 5px;
-    height: 36px;
+    height: 44px;
     background-color: #e0e2e2;
 }
 
-/*.b_media-comments-content--toolbar__title*/ .title {
+.title {
     color: #2c6a6c;
     font-size: 16pt;
     margin-left: 5px;
     text-transform: uppercase;
 }
 
-/*.b_media-comments-content--toolbar__btn*/ .toolbarBtn {
+.toolbarBtn {
     float: right;
     margin-right: 5px;
     min-height: 24px;
     text-transform: uppercase;
     color: #f2f2f2;
     font-size: 12pt;
+    background-color: #78c623;
+    min-width: 90px;
+    border:2px solid rgba(0, 0, 0, 0.2);
+    background-clip: padding-box;
+    padding: 4px 8px;
+    font-weight: 600;
+    line-height: 1.3636;
 }
-/*.b_media-comments-list-tpl--item__checkbox*/ .checkbox {
+
+.checkbox {
     float: left;
     padding-top: 20px;
     height: 60px;
     text-align: center;
 }
-/*.b_media-comments-list-tpl--item__text*/ .itemText {
+
+.itemText {
     height: auto;
-    padding: 3px;
-    padding-right: 110px;
+    padding: 3px 110px 3px 3px;
     background-color: white;
 }
 
-/*.b_media-comments-list-tpl__replay*/ .replay {
+.replay {
     position: absolute;
     background-color: white;
     border: 0;
@@ -81,18 +88,26 @@
     color: #5d415e;
     top: 8px;
     right: 8px;
+    font-size: 12pt;
+    text-transform: uppercase;
+    min-height: 32px;
+    min-width: 90px;
 }
-/*.b_media-comments-list-tpl__replay:hover*/ .replay:hover {
+
+.replay:hover {
     background-color: white !important;
     color: gray !important;
 }
-/*.b_media-comments-list-tpl--item*/ .tplItem {
+
+.tplItem {
     width: 100%;
     background-color: #f6f6f6;
     padding: 5px;
     overflow: hidden;
+    height: 55px !important;
 }
-/*.b_body-box*/ .bodyBox {
+
+.bodyBox {
     color: black;
     display: inline-block;
     border: 2px solid #cccccc;
@@ -100,14 +115,76 @@
     height: 15px;
     background-color: white;
 }
-/*.b-footer__wrapper*/ .footerWrapper {
+
+.footerWrapper {
     display: table-cell;
     vertical-align: middle;
 }
-/*.b-footer__wrapper button*/ .footerButton {
+
+.footerButton {
     margin-left: 5px;
     margin-right: 5px;
 }
 
+.level1 {
+    margin-left: 34px;
+}
 
+.level3 {
+    margin-left: 64px;
+}
 
+.displayLikeBlock {
+    display: block;
+}
+
+.displayNone {
+    display: none;
+}
+
+.author {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 260px;
+    font-size: 11pt;
+    font-weight: 600;
+    margin: 0;
+}
+
+.text {
+    font-size: 9pt;
+    font-weight: 400;
+    line-height: 1.6667;
+    margin: 0;
+}
+
+.textArea {
+    display: block;
+    width: 360px;
+    height: 40px;
+}
+
+.commentModal {
+    background-color: white;
+    max-width: 80%;
+    width: 530px;
+    height: 250px;
+    border-top: solid #6ab01c 5px;
+}
+
+.labelName {
+    float: left;
+    width: 100px;
+    margin-right: 10px;
+    text-align: right;
+    color: grey;
+}
+
+:global(.win-container) {
+    height: 55px;
+}
+
+:global(.win-pressed) {
+    transform: none !important;
+}

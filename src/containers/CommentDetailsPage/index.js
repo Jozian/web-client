@@ -1,103 +1,244 @@
 import React, { Component } from 'react';
-import Table from '../../components/Table/index.js';
-import ReactWinJS from 'react-winjs';
+import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { connect } from 'react-redux';
+import Button from 'components/Button';
 import * as actions from '../../actions/media-comments.js';
+import winjsBind from '../../decorators/winjsBind';
 import { bindActionCreators } from 'redux';
+import { listLayout } from 'common';
+import Modal from 'components/Modal';
+import loading from 'decorators/loading';
+import ActionButton from 'components/ActionButton';
+import Footer from 'components/Footer';
+import cx from 'classnames';
 
 import style from './style.css';
 
 @connect(
-    (state) => ({comments: state.comments}),
+    (state) => ({comments: state.comments, user: state.currentUser, pendingActions: state.pendingActions}),
     (dispatch) => bindActionCreators(actions, dispatch)
+)
+@winjsBind(
+    (props) => ({
+      commentList: props.comments.entities.allComments,
+    })
+)
+@loading(
+  (state) => state.comments.loading,
+  { isLoadingByDefault: true }
 )
 export default class CommentDetails extends Component {
 
   static propTypes = {
-    comments: React.PropTypes.array.required,
+    commentList: React.PropTypes.shape({
+      dataSource: React.PropTypes.object.isRequired,
+    }),
+    params: React.PropTypes.object.isRequired,
+    user: React.PropTypes.object.isRequired,
+    deleteComments: React.PropTypes.func.isRequired,
+    pendingActions: React.PropTypes.object.isRequired,
+    createComment: React.PropTypes.func.isRequired,
+    loadComments: React.PropTypes.func.isRequired,
   }
   constructor(props) {
     super(props);
 
     props.loadComments(this.props.params.id);
-    this.state = { loading: true };
+    this.state = {
+      loading: true,
+      selectionComments: [],
+      newCommentText: '',
+    };
   }
 
-  componentWillMount() {
-    const comments = this.props.comments;
-    if(!comments.loading && !comments.error) {
-      this.setState({
-        comments: new WinJS.Binding.List(comments),
-      });
+  componentWillReceiveProps(props) {
+    if (props === this.props) {
+      return;
     }
+    this.setState({ loading: props.comments.loading});
   }
 
-  componentWillUpdate(props) {
-    if(this.props === props) {
+  openNewCommentPopup(data) {
+    this.setState(data);
+  }
+
+  createNewComment(event) {
+    if (this.props.pendingActions.newComment) {
       return;
     }
 
-    const comments = props.comments;
-    this.setState({ loading: comments.loading });
-
-    if(!comments.loading && !comments.error) {
-      this.setState({
-        comments: new WinJS.Binding.List(comments),
-      });
+    if (!this.state.newCommentText.length) {
+      return;
     }
+
+    const data = {
+      id: this.props.params.id,
+      text: this.state.newCommentText,
+      author: this.props.user.name,
+    };
+
+    if (this.state.parentId) {
+      data.parentId = this.state.parentId;
+    }
+
+    if (this.state.replay) {
+      data.replay = 'Edit';
+    }
+
+    this.props.createComment(data).then(() => this.props.loadComments(this.props.params.id)).then(::this.hideNewCommentPopup);
+    event.preventDefault();
   }
 
+  hideNewCommentPopup() {
+    this.setState({isNewCommentPopupOpen: false});
+  }
+
+  onCommentTextInputChange(event) {
+    this.setState({
+      newCommentText: event.target.value,
+    });
+  }
+
+  replyAll() {
+    const someObj = {
+      newLibraryName: '',
+      isNewCommentPopupOpen: true,
+      title: `To ${ this.props.params.mediaName }`,
+    };
+    this.openNewCommentPopup(someObj);
+  }
+
+  async replyToComment(item) {
+    const someObj = {
+      id: this.props.params.id,
+      newLibraryName: '',
+      isNewCommentPopupOpen: true,
+      parentId: item.data.id,
+      title: `To ${ item.data.author }`,
+    };
+    this.openNewCommentPopup(someObj);
+  }
+
+  async editComment(item) {
+    const someObj = {
+      newLibraryName: '',
+      isNewCommentPopupOpen: true,
+      id: item.data.id,
+      replay: 'Edit',
+      title: 'Edit',
+    };
+    this.openNewCommentPopup(someObj);
+  }
+
+  renderAnswerToComments() {
+    return (<Modal
+      isOpen={this.state.isNewCommentPopupOpen}
+      title={this.state.title}
+      className={style.commentModal}
+      >
+      <form onSubmit={::this.createNewComment}>
+        <label className={style.labelName}>
+          Message:
+          </label>
+          <textarea
+            className={style.textArea}
+            type="text"
+            placeholder="i.e. English"
+            autoFocus
+            value={this.state.newCommentText}
+            onChange={::this.onCommentTextInputChange}
+            ></textarea>
+      </form>
+      <Footer>
+        <ActionButton
+          icon="fa fa-check"
+          onClick={::this.createNewComment}
+          disabled={!this.state.newCommentText.length}
+          inProgress={this.props.pendingActions.newComment}
+          >
+          Ok
+        </ActionButton>
+        <Button icon="fa fa-ban" onClick={::this.hideNewCommentPopup}>Cancel</Button>
+      </Footer>
+    </Modal>);
+  }
+
+  async handleSelectionChange(e) {
+    const items = await e.target.winControl.selection.getItems();
+
+    this.setState({
+      selectionComments: items.map( (item) => (item.data.id)),
+    });
+  }
+
+  deleteComments() {
+    if (this.state.selectionComments.length === 0) {
+      return;
+    }
+
+    this.props.deleteComments(this.state.selectionComments)
+      .then(() => this.setState({selectedComments: []}))
+      .then(this.props.loadComments(this.props.params.id))
+    ;
+  }
+
+  listViewItemRenderer = winjsReactRenderer((item) => {
+    const classes = cx({
+      [style.itemText]: true,
+      [style.level3]: item.data.parentId,
+    });
+
+    const classesForReply = cx({
+      [style.replay]: true,
+      [style.displayNone]: item.data.parentId  && item.data.author !== this.props.user.name,
+    });
+
+    const classesForEdit = cx({
+      [style.replay]: true,
+      [style.displayNone]: item.data.author !== this.props.user.name,
+    });
+    return (
+      <div className={style.tplItem}>
+        <div className={classes}>
+          <h3 className={style.author}>{item.data.author}</h3>
+          <h6 className={style.text}>{item.data.text}</h6>
+        </div>
+        <button className={classesForReply} onClick={this.replyToComment.bind(this, item)}>reply</button>
+        <button className={classesForEdit} onClick={this.editComment.bind(this, item)}>edit</button>
+      </div>
+    );
+  });
   render() {
     return (
       <div>
-        <div data-win-control="WinJS.Binding.Template" style={{display: 'none'}}>
-          <div className={style.tplItem}>
-            <div className={style.checkbox}>
-              <label>
-                <input type="checkbox" name="#" data-win-bind="name: id"/>
-                <div className={style.bodyBox}></div>
-              </label>
-            </div>
-            <div className={style.itemText}
-                 data-win-bind="style.marginLeft: lvl NED.mediaComments.getMargin">
-              <h3 data-win-bind="textContent: author"> </h3>
-              <h6 data-win-bind="textContent: text"></h6>
-            </div>
-            <button data-win-bind="style.display: lvl NED.mediaComments.getDisplay" className={style.replay}>reply</button>
-            <button data-win-bind="style.display: author NED.mediaComments.getEditDisplay">edit</button>
-          </div>
-        </div>
-
+        {this.renderAnswerToComments()}
         <h1>
-          <button data-win-control="WinJS.UI.BackButton"></button>
+          {this.props.params.mediaName}
         </h1>
 
         <div className={style.commentsContent}>
 
           <div className={style.toolbar}>
             <span className={style.title}>Commentaries</span>
-            <button className={style.toolbarBtn}>Reply All</button>
+            <button className={style.toolbarBtn} onClick={::this.replyAll} >REPLY ALL</button>
           </div>
-          <div className={style.list}
-             data-win-control="WinJS.UI.ListView"
-             data-win-options="{
-                itemDataSource: MediaComments.ListView.data.dataSource,
-                selectionMode: 'none',
-                tapBehavior: 'none',
-                swipeBehavior: 'none',
-                itemTemplate: select('.b_media-comments-list-tpl'),
-                layout: { type: WinJS.UI.ListLayout }
-            }">
-
-            <ReactWinJS.ListView
+            <ListView
+                ref="folder"
                 className={style.list}
-                itemDataSource={this.props.comments.dataSource}
+                itemDataSource={this.props.commentList.dataSource}
                 itemTemplate={this.listViewItemRenderer}
-                layout={ {type: WinJS.UI.ListLayout} } />
-          </div>
+                onSelectionChanged={::this.handleSelectionChange}
+                layout={listLayout} />
+
           <div className={style.bottombar}>
             <div className={style.footerWrapper}>
-              <button className={style.footerButton} disabled="disabled"><i className="fa fa-trash-o"></i> Delete</button>
+              <Button
+                disabled={this.state.selectionComments.length === 0}
+                icon="fa fa-trash-o"
+                onClick={::this.deleteComments}
+                >
+                Delete
+              </Button>
             </div>
           </div>
         </div>

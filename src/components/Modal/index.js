@@ -9,7 +9,9 @@ class Modal extends Component {
     title: React.PropTypes.string.isRequired,
     className: React.PropTypes.string,
     children: React.PropTypes.node.isRequired,
-  }
+  };
+
+
   render() {
     return (
       <ReactModal
