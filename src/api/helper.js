@@ -1,7 +1,8 @@
 import isomorphicFetch from 'isomorphic-fetch';
 import store from '../store/configureStore';
+import {stringify} from 'querystring';
 
-//FIXME: ENV BASED BUILD
+// FIXME: ENV BASED BUILD
 const baseUrl = 'http://medserver.apps.wookieelabs.com';
 
 function getAuthHeader() {
@@ -18,6 +19,10 @@ function checkStatus(response) {
   throw error;
 }
 
+function addBust(url) {
+  return [url, url.indexOf('?') === - 1 ? '?' : '&', stringify({bust: new Date().getTime()})].join('');
+}
+
 export default function fetch(url, options = {}) {
   const customHeaders = {
     headers: {
@@ -26,8 +31,14 @@ export default function fetch(url, options = {}) {
       'Accept': 'application/json',
     },
   };
+
+  let totalUrl = baseUrl + url;
+  if (!options.method || options.method.toUpperCase() === 'GET') {
+    totalUrl = addBust(totalUrl);
+  }
+
   const requestOptions = {...options, ...customHeaders};
-  return isomorphicFetch(baseUrl + url, requestOptions)
+  return isomorphicFetch(totalUrl, requestOptions)
     .then(checkStatus)
     .then((response) => {
       if (response.status === 204) {
