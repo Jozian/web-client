@@ -13,6 +13,7 @@ import Modal from 'components/Modal';
 import * as actions from 'actions/users.js';
 import loading from 'decorators/loading';
 
+import styles from './index.css';
 import commonStyles from 'common/styles.css';
 
 @connect(
@@ -30,6 +31,7 @@ export default class UsersPage extends Component {
     pendingActions: React.PropTypes.object.isRequired,
     deleteUsers: React.PropTypes.func.isRequired,
     loadUsers: React.PropTypes.func.isRequired,
+    uploadUsers: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -38,6 +40,8 @@ export default class UsersPage extends Component {
     this.state = {
       loading: true,
       selectedUsers: [],
+      selectedFileName: '',
+      uploadFileData: null,
     };
   }
 
@@ -109,11 +113,40 @@ export default class UsersPage extends Component {
     });
   }
 
+  showImportUsersPopup() {
+    this.setState({
+      isImportUsersPopupOpen: true,
+    });
+  }
+
+  hideImportUsersPopup() {
+    this.setState({
+      isImportUsersPopupOpen: false,
+      selectedFileName: '',
+      uploadFileData: null,
+    });
+  }
+
   async deleteUsers() {
     await this.props.deleteUsers(this.state.selectedUsers.map(u => u.id));
     this.props.loadUsers();
   }
+  async uploadFile(e) {
+    e.preventDefault();
+    if (this.props.pendingActions.uploadUsers) {
+      return;
+    }
+    await this.props.uploadUsers(this.state.uploadFileData);
+    this.hideImportUsersPopup();
+    this.props.loadUsers();
+  }
 
+  handlerUploadFile(e) {
+    this.setState({
+      selectedFileName: e.target.files[0].name,
+      uploadFileData: new FormData(e.target.form),
+    });
+  }
   renderDeleteLibrariesPopup() {
     return (<Modal
       isOpen={this.state.isDeleteUsersPopupOpen}
@@ -133,11 +166,41 @@ export default class UsersPage extends Component {
       </Footer>
     </Modal>);
   }
-
+  renderImportUsersPopup() {
+    return (<Modal
+      isOpen={this.state.isImportUsersPopupOpen}
+      title="UPLOAD FILE"
+      className={commonStyles.modal}
+      >
+      <form onSubmit={::this.uploadFile} method="post" encType="multipart/form-data">
+        <lable className={styles.importLable} >File:</lable>
+        <lable className={styles.wrapLable}>
+          <input type="file" name="file" className={styles.inputFile}
+                 onChange={::this.handlerUploadFile} />
+          <div className={styles.importContainer} type="button">Upload template</div>
+          <a className={styles.importContainer}
+             href="http://www.microsofteducationdelivery.net/userImportTemplate.xlsx">Download</a>
+        </lable>
+        <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span>
+      </form>
+      <Footer>
+        <ActionButton
+          icon="fa fa-check"
+          onClick={::this.uploadFile}
+          disabled={!this.state.selectedFileName.length}
+          inProgress={this.props.pendingActions.uploadUsers}
+          >
+          Ok
+        </ActionButton>
+        <Button icon="fa fa-ban" onClick={::this.hideImportUsersPopup}>Cancel</Button>
+      </Footer>
+    </Modal>);
+  }
 
   render() {
     return (<div onKeyDown={::this.onDelKeyDown}>
       { this.renderDeleteLibrariesPopup() }
+      { this.renderImportUsersPopup() }
       <Header>
         Users
         <IconButton
@@ -167,7 +230,7 @@ export default class UsersPage extends Component {
           </Button>
           <Button
             icon="fa fa-upload"
-            onClick={this.handleImportUserClick}
+            onClick={::this.showImportUsersPopup}
           >
             Import
           </Button>

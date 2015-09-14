@@ -3,7 +3,7 @@ import store from '../store/configureStore';
 import {stringify} from 'querystring';
 
 // FIXME: ENV BASED BUILD
-const baseUrl = 'http://medserver.apps.wookieelabs.com';
+const baseUrl =  'http://www.microsofteducationdelivery.net';
 
 function getAuthHeader() {
   return 'Bearer ' + (store.getState().currentUser ? store.getState().currentUser.token : '');
@@ -27,10 +27,12 @@ export default function fetch(url, options = {}) {
   const customHeaders = {
     headers: {
       Authorization: getAuthHeader(),
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      Accept: 'application/json',
     },
   };
+  if (!(options.body instanceof FormData)) {
+    customHeaders.headers['Content-Type'] = 'application/json';
+  }
 
   let totalUrl = baseUrl + url;
   if (!options.method || options.method.toUpperCase() === 'GET') {
@@ -46,6 +48,8 @@ export default function fetch(url, options = {}) {
       }
       if (requestOptions.responseType === 'arraybuffer') {
         return response.arrayBuffer();
+      } else if (requestOptions.responseType === 'text') {
+        return response.text();
       }
       return response.json();
     })

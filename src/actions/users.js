@@ -20,3 +20,12 @@ export function deleteUsers(ids) {
     },
   };
 }
+export function uploadUsers(formData) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.USERS_UPLOADING, types.USERS_UPLOADED, types.USERS_UPLOAD_ERROR],
+      promise: usersApi.uploadFile(formData),
+    },
+  };
+}

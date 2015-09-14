@@ -32,6 +32,14 @@ const messages = {
     text: 'Users successfully removed',
     type: 'success',
   },
+  [types.USERS_UPLOADED]: {
+    text: 'Users successfully uploded',
+    type: 'success',
+  },
+  [types.USERS_UPLOAD_ERROR]: {
+    text: 'Error uploading users',
+    type: 'error',
+  },
 };
 
 export default function toastReducer(state = [], action) {
@@ -41,5 +49,6 @@ export default function toastReducer(state = [], action) {
     newState.splice(index, 1);
     return newState;
   }
+
   return messages[action.type] ? [...state, messages[action.type]] : state;
 }
