@@ -3,7 +3,6 @@ import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { connect } from 'react-redux';
 import Button from 'components/Button';
 import * as actions from '../../actions/media-comments.js';
-import winjsBind from '../../decorators/winjsBind';
 import { bindActionCreators } from 'redux';
 import { listLayout } from 'common';
 import Modal from 'components/Modal';
