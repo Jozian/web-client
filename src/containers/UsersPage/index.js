@@ -173,8 +173,8 @@ export default class UsersPage extends Component {
       className={commonStyles.modal}
       >
       <form onSubmit={::this.uploadFile} method="post" encType="multipart/form-data">
-        <lable className={styles.importLable} >File:</lable>
-        <lable className={styles.wrapLable}>
+        <lable className={styles.importLabel} >File:</lable>
+        <lable className={styles.wrapLabel}>
           <input type="file" name="file" className={styles.inputFile}
                  onChange={::this.handlerUploadFile} />
           <div className={styles.importContainer} type="button">Upload template</div>

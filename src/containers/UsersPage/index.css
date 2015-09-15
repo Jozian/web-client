@@ -14,7 +14,7 @@ a.importContainer {
     width: 85px;
     cursor: default;
 }
-.importLable {
+.importLabel {
     float: left;
     width: 13%;
     text-align: right;
@@ -27,7 +27,7 @@ a.importContainer {
     font-size: 10pt;
     color: grey;
 }
-.wrapLable {
+.wrapLabel {
     position: relative;
 }
 .inputFile {
