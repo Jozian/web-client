@@ -37,6 +37,7 @@ export default class CommentDetails extends Component {
     super(props);
 
     props.loadComments(this.props.params.id);
+    this.handleKeyDown = ::this._handleKeyDown;
     this.state = {
       loading: true,
       modalWindow: {},
@@ -65,6 +66,28 @@ export default class CommentDetails extends Component {
         title: `To ${ this.props.params.mediaName }`,
       },
     });
+  }
+
+  componentWillMount() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  _handleKeyDown(e) {
+    const key = String.fromCharCode(e.keyCode);
+    if (key === 'A' && e.ctrlKey) {
+      e.preventDefault();
+      this.refs.folder.winControl.selection.selectAll();
+    }
+    if (e.keyCode === 27 ) {
+      this.refs.folder.winControl.selection.clear();
+    }
+    if (e.keyCode === 46) {
+      this.deleteComments();
+    }
   }
 
   async replyToCommentState(item) {
@@ -116,7 +139,7 @@ export default class CommentDetails extends Component {
     }
 
     await this.props.deleteComments(this.state.selectionComments);
-    await this.setState({selectedComments: []});
+    await this.setState({selectionComments: []});
     await this.props.loadComments(this.props.params.id);
   }
 
@@ -153,7 +176,6 @@ export default class CommentDetails extends Component {
       <form onSubmit={::this.createNewComment}>
         <label className={style.labelName}>
           Message:
-        </label>
           <textarea
             className={style.textArea}
             type="text"
@@ -161,7 +183,9 @@ export default class CommentDetails extends Component {
             autoFocus
             value={this.state.newCommentText}
             onChange={::this.onCommentTextInputChange}
+            role="Text for new comment"
             />
+        </label>
       </form>
       <Footer>
         <ActionButton
@@ -169,10 +193,11 @@ export default class CommentDetails extends Component {
           onClick={::this.createNewComment}
           disabled={!this.state.newCommentText.length}
           inProgress={this.props.pendingActions.newComments}
+          role="OK button"
           >
           Ok
         </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideNewCommentPopup}>Cancel</Button>
+        <Button icon="fa fa-ban" onClick={::this.hideNewCommentPopup} role="Cancel button">Cancel</Button>
       </Footer>
     </Modal>);
   }
@@ -186,7 +211,6 @@ export default class CommentDetails extends Component {
       <form onSubmit={::this.editComment}>
         <label className={style.labelName}>
           Message:
-        </label>
           <textarea
             className={style.textArea}
             type="text"
@@ -194,7 +218,9 @@ export default class CommentDetails extends Component {
             autoFocus
             value={this.state.newCommentText}
             onChange={::this.onCommentTextInputChange}
+            role="text for edit comment"
             />
+        </label>
       </form>
       <Footer>
         <ActionButton
@@ -202,10 +228,10 @@ export default class CommentDetails extends Component {
           onClick={::this.editComment}
           disabled={!this.state.newCommentText.length}
           inProgress={this.props.pendingActions.newComments}
-          >
+          role="OK button">
           Ok
         </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideEditCommentPopup}>Cancel</Button>
+        <Button icon="fa fa-ban" onClick={::this.hideEditCommentPopup} role="Cancel button">Cancel</Button>
       </Footer>
     </Modal>);
   }
@@ -240,8 +266,8 @@ export default class CommentDetails extends Component {
         <div className={style.commentsContent}>
 
           <div className={style.toolbar}>
-            <span className={style.title}>Commentaries</span>
-            <button className={style.toolbarBtn} onClick={::this.replyAll} >REPLY ALL</button>
+            <span className={style.title} role={ `Commentaries for media ${this.props.params.mediaName} `}>Commentaries</span>
+            <button className={style.toolbarBtn} onClick={::this.replyAll} role="Replay all">REPLY ALL</button>
           </div>
             <ListView
                 ref="folder"
@@ -260,7 +286,7 @@ export default class CommentDetails extends Component {
                   icon="fa fa-trash-o"
                   onClick={::this.deleteComments}
                   className={style.footerButton}
-                  >
+                  role="Delete button">
                   Delete
                 </Button>
             </div>
