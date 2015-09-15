@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import Button from '../../components/Button';
-import {USER_LOADING, USER_LOADED, USER_LOAD_ERROR} from '../../actions/types.js';
 import { connect } from 'react-redux';
 import styles from './index.css';
 import Dropdown from '../../components/Dropdown';
@@ -103,7 +102,7 @@ class EditUserPage extends Component {
     return (
         <Dropdown title="Type:"
                   isDisabled={this.state.user.type === 'owner'}
-                  changeHandler={(e) => {this.change(e, 'type')}}>
+                  onChange={(e) => {this.change(e, 'type')}}>
           {
             (this.values || []).filter((type) =>
                 (this.state.user.type === 'owner' || type.value !== 'owner')
@@ -133,12 +132,12 @@ class EditUserPage extends Component {
     }
   }
 
-  conditionUtility(error, condition) {
-    const errors = [];
+  composeErrorMessages(key, message, condition) {
+    const errors = [...this.state.errors[key]];
     if (!condition) {
-      errors.push(error);
+      errors.push(message);
     } else {
-      const index = errors.indexOf(error);
+      const index = errors.indexOf(message);
       if (index !== -1) {
         errors.splice(index, 1);
       }
@@ -150,7 +149,7 @@ class EditUserPage extends Component {
     const key = event.target.name;
     const value = event.target.value;
     const isUnique = await this.validateUnique(key, value);
-    const errors = this.conditionUtility('already taken', isUnique);
+    const errors = this.composeErrorMessages(key, 'already taken', isUnique);
     const newState = {
       user: {
         ...this.state.user,
@@ -165,32 +164,32 @@ class EditUserPage extends Component {
   }
 
   getUserChanger(field) {
-    let errors = [];
     return function (newValue) {
+      let message = '';
+      let isValid = true;
       if (field === 'email') {
-        errors = this.conditionUtility('wrong format', validator.isEmail(newValue));
+        [message, isValid] = ['wrong format', validator.isEmail(newValue)];
+      } else if (field === 'phone') {
+        [message, isValid] = ['wrong format', validator.isMobilePhone(newValue, 'en-US')];
+      } else if (field === 'name' || field === 'login') {
+        [message, isValid] = ['required', validator.isLength(newValue, 1)];
+      } else if (field === 'confirm') {
+        [message, isValid] = ['does not match', validator.equals(this.state.user.password, newValue)];
       }
-      if (field === 'phone') {
-        errors = this.conditionUtility('wrong format', validator.isMobilePhone(newValue, 'en-US'));
-      }
-      if (field === 'name' || field === 'login') {
-        errors = this.conditionUtility('required', validator.isLength(newValue, 1));
-      }
-      if (field === 'confirm') {
-        errors = this.conditionUtility('dose not match', validator.equals(this.state.user.password, newValue));
-      }
+      const errors = this.composeErrorMessages(field, message, isValid);
+
       if (this.state.user[field] !== newValue) {
         const newState = {
           user: {
             ...this.state.user,
             [field]: newValue,
           },
+          errors: {
+            ...this.state.errors,
+            [field]: errors,
+          }
         };
-        newState.errors = {
-          ...this.state.errors,
-          [field]: errors,
-        };
-      this.setState(newState);
+        this.setState(newState);
       }
     }.bind(this);
   }
@@ -207,46 +206,42 @@ class EditUserPage extends Component {
                 requestChange: this.getUserChanger('name'),
               }}
               label="User Name:"
-              name='name'
-              placeholder='i.e. John Doe'
-              type='text'
+              name="name"
+              placeholder="i.e. John Doe"
+              type="text"
               errorMessage={this.state.errors.name}
-              onBlur={::this.getBlur}>
-            </FormInput>
+              onBlur={::this.getBlur} />
             <FormInput
               valueLink={{
                 value: this.state.user.login,
                 requestChange: this.getUserChanger('login'),
               }}
-              label='Login*:'
-              name='login'
-              placeholder='i.e. johndoe'
-              type='text'
+              label="Login*:"
+              name="login"
+              placeholder="i.e. johndoe"
+              type="text"
               errorMessage={this.state.errors.login}
-              onBlur={::this.getBlur}>
-            </FormInput>
+              onBlur={::this.getBlur} />
             { this.renderTypesOptions() }
             <FormInput
               valueLink={{
                 value: null,
                 requestChange: this.getUserChanger('password'),
               }}
-              label='Password:'
-              name='password'
+              label="Password:"
+              name="password"
               placeholder={null}
-              type='password'
-              errorMessage={this.state.errors.password}>
-            </FormInput>
+              type="password"
+              errorMessage={this.state.errors.password} />
             <FormInput
               valueLink={{
                 value: null,
                 requestChange: this.getUserChanger('confirm'),
               }}
-              label='Confirm Password:'
-              name='confirm'
-              type='password'
-              errorMessage={this.state.errors.confirm}>
-            </FormInput>
+              label="Confirm Password:"
+              name="confirm"
+              type="password"
+              errorMessage={this.state.errors.confirm} />
             <div className={styles.backgroundGreen}>
               <FormInputWithCheckbox
                 valueLink={{
@@ -254,38 +249,34 @@ class EditUserPage extends Component {
                   requestChange: this.getUserChanger('phone'),
                 }}
                 errorMessage={this.state.errors.phone}
-                label='Send credentials in SMS:'
-                name='phone'
-                placeholder='Your mobile phone'
+                label="Send credentials in SMS:"
+                name="phone"
+                placeholder="Your mobile phone"
                 checked={this.state.checked.phone}
-                changeCheckbox={this.check.bind(this, 'phone')}>
-              </FormInputWithCheckbox>
+                changeCheckbox={this.check.bind(this, 'phone')} />
               <FormInputWithCheckbox
                 valueLink={{
                   value: this.state.user.email,
                   requestChange: this.getUserChanger('email'),
                 }}
                 errorMessage={this.state.errors.email}
-                label='Send credentials in emails:'
-                name='email'
-                placeholder='email@email.com'
+                label="Send credentials in emails:"
+                name="email"
+                placeholder="email@email.com"
                 checked={this.state.checked.email}
                 onBlur={::this.getBlur}
-                changeCheckbox={this.check.bind(this, 'email')}>
-              </FormInputWithCheckbox>
+                changeCheckbox={this.check.bind(this, 'email')} />
             </div>
             <p className={styles.note}>
               * user will be able to login both to website and mobile client with this credentials.
             </p>
             <footer className={styles.buttonsWrapper}>
-              <Button style={styles.buttonStyle}
+              <Button className={styles.buttonStyle}
                       onClick={::this.saveUserHendler}
-                      text="OK">
-              </Button>
-              <Button style={styles.buttonStyle}
+                      text="OK" />
+              <Button className={styles.buttonStyle}
                       onClick={::this.cancelUserHendler}
-                      text="Cancel">
-              </Button>
+                      text="Cancel" />
             </footer>
           </form>
         </div>
@@ -297,8 +288,4 @@ function mapStateToProps() {
   return {};
 }
 
-
-export default connect(
-  mapStateToProps,
-  {USER_LOADING, USER_LOADED, USER_LOAD_ERROR}
-)(EditUserPage);
+export default connect(mapStateToProps)(EditUserPage);

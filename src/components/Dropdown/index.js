@@ -5,7 +5,7 @@ import fontAwesome from 'font-awesome-webpack'; // eslint-disable-line no-unused
 export default class Dropdown extends Component {
     static propTypes = {
         title: PropTypes.string,
-        changeHandler: PropTypes.func,
+        onChange: PropTypes.func,
         isDisabled: PropTypes.bool,
     };
 
@@ -15,7 +15,7 @@ export default class Dropdown extends Component {
                 <label className={styles.userLabel}>{this.props.title}</label>
                 <select className={styles.optionsSelect} name="type"
                       disabled={this.props.isDisabled}
-                      onChange={this.props.changeHandler}>
+                      onChange={this.props.onChange}>
                     {this.props.children}
                 </select>
             </div>

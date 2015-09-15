@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-
+import cx from 'classnames';
 import { onEnterPressed } from 'common';
 import styles from './checkbox.css';
 
@@ -27,24 +27,29 @@ export default class Checkbox extends Component {
 
   render() {
     const { checked, disabled } = this.props;
-    const className = checked === partiallyChecked ? styles.partChecked : styles.checked;
+    const wrapperClasses = cx({
+      [styles.checkboxWrapper]: true,
+      [this.props.className]: this.props.className !== null,
+    });
+    const checkboxClasses = cx({
+      [styles.checked]: checked !== partiallyChecked,
+      [styles.partChecked]: checked === partiallyChecked,
+    });
     return (
       <div
         tabIndex={this.props.tabIndex}
         onClick={(event) => event.stopPropagation()}
         onKeyPress={onEnterPressed(::this.handleClick)}
-        className={this.props.className}
+        className={wrapperClasses}
       >
         <label>
           <input onChange={::this.handleClick} ref="input" type="checkbox" checked={!!checked} disabled={disabled}/>
-          <div className={className}></div>
+          <div className={checkboxClasses}></div>
+          <span className={styles.title}>{this.props.title}</span>
         </label>
-        <label className={styles.title}>{this.props.title}</label>
       </div>
     );
   }
-
-
 }
 
 Checkbox.defaultProps = {

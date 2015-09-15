@@ -28,7 +28,6 @@ export function add(body) {
 }
 
 export function edit(id, body) {
-  console.log(body);
   if (!body || !body.name || !body.login || !body.type) {
     return Promise.reject('Invalid body');
   }
