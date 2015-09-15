@@ -11,37 +11,6 @@ import { bindActionCreators } from 'redux';
 import loading from 'decorators/loading';
 import validator from 'validator';
 
-/* Validation
- email: {
- re: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
- unique: true
- },
- name: {
- required: true,
- unique: true
- },
- login: {
- required: true,
- unique: true
- },
- password: {
- required: true
- },
- confirm: {
- match: true
- },
- phone: {
- re:  /^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\. \\\/]?)?((?:\(?\d+\)?[\-\. \\\/]?)*)(?:[\-\. \\\/]?(?:#|ext\.?|extension|x)[\-\. \\\/]?(\d+))?$/i,
- unique: false
- }
- {
- errors: {
- 'name': ['emty', 'does not match'],
- 'login': ['empty']
- }
- }
- */
-
 @connect(
   (state) =>  ({user: state.user.entity}),
   (dispatch) => bindActionCreators(actions, dispatch)
@@ -162,52 +131,26 @@ class EditUserPage extends Component {
         return;
       }
     }
-    /*this.setState({
-      error: {
-        ...this.state.error,
-        require: {
-          ...this.state.error.unique,
-          fields: {
-            ...this.state.error.unique.fields,
-            [key]: item.payload.isUnique,
-          },
-        },
-      },
-    });*/
   }
 
-  validateMatch(value1, value2) {
-    if (value1 !== value2) {
-      return false;
-    }
-  }
-
-  validateEmpty(field, value) {
-    return !value;
-  }
-
-  validateFormat(key, value) {
-    if (key === 'email') {
-      return validator.isEmail(value);
-    }
-    if (key === 'phone') {
-      return validator.isMobilePhone(value);
-    }
-  }
-
-  async getBlur(event) {
+  conditionUtility(error, condition) {
     const errors = [];
-    const key = event.target.name;
-    const value = event.target.value;
-    const isUnique = await this.validateUnique(key, value);
-    if (!isUnique) {
-      errors.push('already taken');
+    if (!condition) {
+      errors.push(error);
     } else {
-      const index = errors.indexOf('already taken');
+      const index = errors.indexOf(error);
       if (index !== -1) {
         errors.splice(index, 1);
       }
     }
+    return errors;
+  }
+
+  async getBlur(event) {
+    const key = event.target.name;
+    const value = event.target.value;
+    const isUnique = await this.validateUnique(key, value);
+    const errors = this.conditionUtility('already taken', isUnique);
     const newState = {
       user: {
         ...this.state.user,
@@ -222,55 +165,19 @@ class EditUserPage extends Component {
   }
 
   getUserChanger(field) {
-    const errors = [];
+    let errors = [];
     return function (newValue) {
       if (field === 'email') {
-        if (!this.validateFormat(field, newValue)) {
-          errors.push('wrong format');
-        } else {
-          const index = errors.indexOf('wrong format');
-          if (index !== -1) {
-            errors.splice(index, 1);
-          }
-        }
-        if (!this.validateUnique(field, newValue)) {
-          errors.push('already taken');
-        } else {
-          const index = errors.indexOf('already taken');
-          if (index !== -1) {
-            errors.splice(index, 1);
-          }
-        }
+        errors = this.conditionUtility('wrong format', validator.isEmail(newValue));
       }
       if (field === 'phone') {
-        if (!this.validateFormat(field, newValue)) {
-          errors.push('wrong format');
-        } else {
-          const index = errors.indexOf('wrong format');
-          if (index !== -1) {
-            errors.splice(index, 1);
-          }
-        }
+        errors = this.conditionUtility('wrong format', validator.isMobilePhone(newValue, 'en-US'));
       }
       if (field === 'name' || field === 'login') {
-        if (this.validateEmpty(field, newValue)) {
-          errors.push('required');
-        } else {
-          const index = errors.indexOf('required');
-          if (index !== -1) {
-            errors.splice(index, 1);
-          }
-        }
+        errors = this.conditionUtility('required', validator.isLength(newValue, 1));
       }
-      if (field === 'password') {
-        if (!this.validateMatch(this.state.user.password, this.state.user.confirm)) {
-          errors.push('dose not match');
-        } else {
-          const index = errors.indexOf('dose not match');
-          if (index !== -1) {
-            errors.splice(index, 1);
-          }
-        }
+      if (field === 'confirm') {
+        errors = this.conditionUtility('dose not match', validator.equals(this.state.user.password, newValue));
       }
       if (this.state.user[field] !== newValue) {
         const newState = {
@@ -292,7 +199,6 @@ class EditUserPage extends Component {
     return (
       <div className={styles.mainContainer}>
         <h1 className={styles.title}>Edit user</h1>
-
         <div className={styles.wrapper}>
           <form className={styles.backgroundGrey}>
             <FormInput
@@ -329,8 +235,7 @@ class EditUserPage extends Component {
               name='password'
               placeholder={null}
               type='password'
-              errorMessage={this.state.errors.password}
-              onBlur={::this.getBlur}>
+              errorMessage={this.state.errors.password}>
             </FormInput>
             <FormInput
               valueLink={{
@@ -340,8 +245,7 @@ class EditUserPage extends Component {
               label='Confirm Password:'
               name='confirm'
               type='password'
-              errorMessage={this.state.errors.confirm}
-              onBlur={::this.getBlur}>
+              errorMessage={this.state.errors.confirm}>
             </FormInput>
             <div className={styles.backgroundGreen}>
               <FormInputWithCheckbox
@@ -366,6 +270,7 @@ class EditUserPage extends Component {
                 name='email'
                 placeholder='email@email.com'
                 checked={this.state.checked.email}
+                onBlur={::this.getBlur}
                 changeCheckbox={this.check.bind(this, 'email')}>
               </FormInputWithCheckbox>
             </div>

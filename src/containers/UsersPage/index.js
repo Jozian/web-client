@@ -35,7 +35,7 @@ export default class UsersPage extends Component {
   };
 
   static contextTypes = {
-    router: PropTypes.func.isRequired,
+    router: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {

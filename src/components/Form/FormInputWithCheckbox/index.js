@@ -16,6 +16,7 @@ export default class FormInputWithCheckbox extends Component {
       value: React.PropTypes.any.isRequired,
       requestChange: React.PropTypes.func.isRequired,
     }),
+    onBlur: React.PropTypes.func,
   };
   render() {
     const classes = cx({
@@ -39,6 +40,7 @@ export default class FormInputWithCheckbox extends Component {
                className={classes}
                type={this.props.type}
                name={this.props.name}
+               onBlur={this.props.onBlur}
                placeholder={this.props.placeholder}/>
         <span className={display}>{this.props.errorMessage}</span>
       </div>
