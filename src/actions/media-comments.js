@@ -5,15 +5,12 @@ export function loadComments(id) {
   return {
     type: types.CALL_API,
     payload: {
-      types: [types.COMMENTS_LOADING, types.COMMENTS_LOADED, types.COMMENTS_ERROR],
-      promise: Promise.all([
-        mediaCommentsApi.getList(id),
-      ]).then((response) =>
-      ({
-        allComments: response[0],
+      types: [types.COMMENTS_LOADING, types.COMMENTS_LOADED, types.COMMENTS_LOAD_ERROR],
+      promise: mediaCommentsApi.getList(id).then((response) => ({
+        data: response,
       })),
     },
-  }
+  };
 }
 
 export function deleteComments(ids) {
@@ -32,6 +29,16 @@ export function createComment(data) {
     payload: {
       types: [types.COMMENT_CREATING, types.COMMENT_CREATED, types.COMMENT_CREATING_ERROR],
       promise: mediaCommentsApi.createComment(data),
+    },
+  };
+}
+
+export function updateComment(commentData) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.COMMENTS_UPDATING, types.COMMENTS_UPDATED, types.COMMENTS_UPDATE_ERROR],
+      promise: mediaCommentsApi.updateComment(commentData),
     },
   };
 }

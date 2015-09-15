@@ -5,25 +5,7 @@
     height: 50px;
     background-color: #e0e2e2;
     text-align: center;
-
-    display: -ms-flexbox;
-    -ms-flex-pack: center;
-    -ms-flex-align: center;
-
-    /* Firefox */
-    display: -moz-box;
-    -moz-box-pack: center;
-    -moz-box-align: center;
-
-    /* Safari, Opera, and Chrome */
-    display: -webkit-box;
-    -webkit-box-pack: center;
-    -webkit-box-align: center;
-
-    /* W3C */
-    display: box;
-    box-pack: center;
-    box-align: center;
+    display: table;
 }
 
 .commentsContent {
@@ -54,17 +36,14 @@
 .toolbarBtn {
     float: right;
     margin-right: 5px;
-    min-height: 24px;
+    height: 35px;
+    min-width: 90px;
     text-transform: uppercase;
     color: #f2f2f2;
     font-size: 12pt;
     background-color: #78c623;
-    min-width: 90px;
-    border:2px solid rgba(0, 0, 0, 0.2);
-    background-clip: padding-box;
-    padding: 4px 8px;
-    font-weight: 600;
-    line-height: 1.3636;
+    border:2px solid #f2f2f2;
+    padding: 4px 8px 4px 8px;
 }
 
 .checkbox {
@@ -75,7 +54,6 @@
 }
 
 .itemText {
-    height: auto;
     padding: 3px 110px 3px 3px;
     background-color: white;
 }
@@ -117,13 +95,14 @@
 }
 
 .footerWrapper {
-    display: table-cell;
-    vertical-align: middle;
+    display: table;
 }
 
 .footerButton {
     margin-left: 5px;
     margin-right: 5px;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .level1 {
@@ -134,10 +113,6 @@
     margin-left: 64px;
 }
 
-.displayLikeBlock {
-    display: block;
-}
-
 .displayNone {
     display: none;
 }
@@ -146,7 +121,6 @@
     display: inline-block;
     text-overflow: ellipsis;
     overflow: hidden;
-    width: 260px;
     font-size: 11pt;
     font-weight: 600;
     margin: 0;
@@ -160,7 +134,6 @@
 }
 
 .textArea {
-    display: block;
     width: 360px;
     height: 40px;
 }
@@ -181,10 +154,7 @@
     color: grey;
 }
 
-:global(.win-container) {
+.commentBlock :global(.win-container) {
     height: 55px;
-}
-
-:global(.win-pressed) {
     transform: none !important;
 }

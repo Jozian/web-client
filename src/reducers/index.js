@@ -4,9 +4,11 @@ import * as types from '../actions/types.js';
 import { handleLoadingChain, handlePendingChain } from './helpers';
 import toastReducer from './toasts';
 import activeFolderReducer from './activeFolder';
+import activeCommentDetailReducer from './activeCommentDetail';
 
 export const pendingToasts = toastReducer;
 export const activeFolder = activeFolderReducer;
+export const activeComment = activeCommentDetailReducer;
 
 export const libraries = handleLoadingChain([
   types.LIBRARIES_LOADING,
@@ -28,7 +30,7 @@ export const statistics = handleLoadingChain([
 export const comments = handleLoadingChain([
   types.COMMENTS_LOADING,
   types.COMMENTS_LOADED,
-  types.COMMENTS_ERROR,
+  types.COMMENTS_LOAD_ERROR,
 ]);
 
 export const users = handleLoadingChain([
@@ -55,6 +57,10 @@ export const pendingActions = combineReducers({
   newComments: handlePendingChain(
     [types.COMMENT_CREATING],
     [types.COMMENT_CREATED, types.COMMENT_CREATING_ERROR],
+  ),
+  updateComments: handlePendingChain(
+    [types.COMMENTS_UPDATING],
+    [types.COMMENTS_UPDATED, types.COMMENTS_UPDATE_ERROR],
   ),
   deleteComments: handlePendingChain(
     [types.COMMENTS_DELETING],

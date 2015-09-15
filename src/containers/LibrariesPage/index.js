@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import * as actions from 'actions/libraries';
 import DocumentTitle from 'components/DocumentTitle';
-import Header from 'components/Header';
 import Modal from 'components/Modal';
 import Table from 'components/Table';
 import IconButton from 'components/IconButton';
@@ -13,7 +12,7 @@ import Button from 'components/Button';
 import Footer from 'components/Footer';
 import loading from 'decorators/loading';
 
-import commonStyles from 'common/styles.css';
+import common from 'common/styles.css';
 import styles from './index.css';
 
 @connect(
@@ -60,14 +59,6 @@ class LibrariesPage extends Component {
       newLibraryName: event.target.value,
     });
   }
-  onDelKeyDown(e) {
-    if (e.which === 46) {
-      if (this.state.selectedLibraries.length === 0) {
-        return;
-      }
-      this.openDeleteLibrariesPopup();
-    }
-  }
 
   openNewLibraryPopup() {
     this.setState({
@@ -91,30 +82,25 @@ class LibrariesPage extends Component {
     columns: [
       {
         key: 'name',
-        text: 'Name',
       },
       {
         key: 'folder',
         icon: 'fa fa-folder-open',
         text: 'Folder',
-        className: commonStyles.numberCell,
       }, {
         key: 'media',
         icon: 'fa fa-file',
         text: 'Media',
-        className: commonStyles.numberCell,
       }, {
         key: 'views',
         icon: 'fa fa-eye',
         text: 'Views',
-        className: commonStyles.numberCell,
       },
     ],
     selectable: true,
   }
 
-  async createNewLibrary(event) {
-    event.preventDefault();
+  createNewLibrary(event) {
     if (this.props.pendingActions.newLibrary) {
       return;
     }
@@ -122,9 +108,9 @@ class LibrariesPage extends Component {
     if (!this.state.newLibraryName.length) {
       return;
     }
-    await this.props.createLibrary(this.state.newLibraryName);
-    this.hideNewLibraryPopup();
-    this.props.loadLibraries();
+
+    this.props.createLibrary(this.state.newLibraryName).then(::this.hideNewLibraryPopup);
+    event.preventDefault();
   }
 
   deleteLibraries() {
@@ -195,22 +181,21 @@ class LibrariesPage extends Component {
   }
 
   render() {
-    return (<div onKeyDown={::this.onDelKeyDown}>
+    return (<div>
       <DocumentTitle title="Libraries" />
       { this.renderNewLibraryPopup() }
       { this.renderDeleteLibrariesPopup() }
-      <Header>
+      <h1>
         Libraries
         <IconButton
-          className={commonStyles.headerButton}
+          className={common.headerButton}
           onClick={::this.openNewLibraryPopup}
           icon="fa fa-plus"
           tooltipText="Add new library"
         />
-      </Header>
+      </h1>
       <Table
-        overlayClassName={commonStyles.tableOverlay}
-        className={commonStyles.table}
+        className={common.table}
         ref="table"
         config={this.config}
         data={this.props.libraries.entities}

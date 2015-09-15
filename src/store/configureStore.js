@@ -30,8 +30,8 @@ const store = createFinalStore(reducer, {
   },
   comments: {
     loading: false,
-    entities: {
-      allComments: [],
+    entity: {
+      data: new WinJS.Binding.List([]),
     },
   },
   libraries: {

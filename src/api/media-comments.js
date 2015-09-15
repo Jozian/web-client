@@ -30,35 +30,24 @@ export function deleteComments(body) {
   });
 }
 
-export function createComment(data) {
-  let method;
-  let currentUrl = apiUrl;
-  const dataObject = {
-    id: data.id,
-    text: data.text,
-    author: data.author,
-  };
-
-  if (data.parentId) {
-    dataObject.parentId = data.parentId;
-  }
-
-  if (!data.text && !data.author) {
+export function createComment(commentData) {
+  if (!commentData.text && !commentData.author) {
     return Promise.reject('Invalid text comment or user id');
   }
 
-  if (data.replay === 'Edit') {
-    method = 'PUT';
-  } else {
-    method = 'POST';
+  return fetch(apiUrl, {
+    method: 'POST',
+    body: JSON.stringify(commentData),
+  });
+}
+
+export function updateComment(commentData) {
+  if (!commentData.text && !commentData.author) {
+    return Promise.reject('Invalid text comment or user id');
   }
 
-  if (method === 'PUT') {
-    currentUrl += data.id;
-  }
-
-  return fetch(currentUrl, {
-    method: method,
-    body: JSON.stringify(dataObject),
+  return fetch(apiUrl + commentData.id, {
+    method: 'PUT',
+    body: JSON.stringify(commentData),
   });
 }

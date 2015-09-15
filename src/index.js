@@ -4,15 +4,15 @@ import { Provider } from 'react-redux';
 import Modal from 'react-modal';
 
 
-import App from './containers/App';
-import UsersPage from './containers/UsersPage';
-import LibrariesPage from './containers/LibrariesPage';
-import FolderPage from './containers/FolderPage';
-import StatisticsPage from './containers/StatisticsPage';
-import CommentsPage from './containers/CommentsPage';
-import MotdPage from './containers/MotdPage';
-import store from './store/configureStore';
-import CommentDetails from './containers/CommentDetailsPage';
+import App from 'containers/App';
+import UsersPage from 'containers/UsersPage';
+import LibrariesPage from 'containers/LibrariesPage';
+import FolderPage from 'containers/FolderPage';
+import StatisticsPage from 'containers/StatisticsPage';
+import CommentsPage from 'containers/CommentsPage';
+import MotdPage from 'containers/MotdPage';
+import store from 'store/configureStore';
+import CommentDetails from 'containers/CommentDetailsPage';
 
 const routes = (
 

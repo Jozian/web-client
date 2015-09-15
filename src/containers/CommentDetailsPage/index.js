@@ -15,13 +15,8 @@ import cx from 'classnames';
 import style from './style.css';
 
 @connect(
-    (state) => ({comments: state.comments, user: state.currentUser, pendingActions: state.pendingActions}),
+    (state) => ({comments: state.activeComment, user: state.currentUser, pendingActions: state.pendingActions}),
     (dispatch) => bindActionCreators(actions, dispatch)
-)
-@winjsBind(
-    (props) => ({
-      commentList: props.comments.entities.allComments,
-    })
 )
 @loading(
   (state) => state.comments.loading,
@@ -30,22 +25,21 @@ import style from './style.css';
 export default class CommentDetails extends Component {
 
   static propTypes = {
-    commentList: React.PropTypes.shape({
-      dataSource: React.PropTypes.object.isRequired,
-    }),
+    comments: React.PropTypes.object.isRequired,
     params: React.PropTypes.object.isRequired,
     user: React.PropTypes.object.isRequired,
     deleteComments: React.PropTypes.func.isRequired,
     pendingActions: React.PropTypes.object.isRequired,
     createComment: React.PropTypes.func.isRequired,
     loadComments: React.PropTypes.func.isRequired,
-  }
+  };
   constructor(props) {
     super(props);
 
     props.loadComments(this.props.params.id);
     this.state = {
       loading: true,
+      modalWindow: {},
       selectionComments: [],
       newCommentText: '',
     };
@@ -58,41 +52,6 @@ export default class CommentDetails extends Component {
     this.setState({ loading: props.comments.loading});
   }
 
-  openNewCommentPopup(data) {
-    this.setState(data);
-  }
-
-  createNewComment(event) {
-    if (this.props.pendingActions.newComment) {
-      return;
-    }
-
-    if (!this.state.newCommentText.length) {
-      return;
-    }
-
-    const data = {
-      id: this.props.params.id,
-      text: this.state.newCommentText,
-      author: this.props.user.name,
-    };
-
-    if (this.state.parentId) {
-      data.parentId = this.state.parentId;
-    }
-
-    if (this.state.replay) {
-      data.replay = 'Edit';
-    }
-
-    this.props.createComment(data).then(() => this.props.loadComments(this.props.params.id)).then( () => this.setState({ newCommentText: ''})).then(::this.hideNewCommentPopup);
-    event.preventDefault();
-  }
-
-  hideNewCommentPopup() {
-    this.setState({isNewCommentPopupOpen: false});
-  }
-
   onCommentTextInputChange(event) {
     this.setState({
       newCommentText: event.target.value,
@@ -100,64 +59,47 @@ export default class CommentDetails extends Component {
   }
 
   replyAll() {
-    const someObj = {
+    this.setState({
       isNewCommentPopupOpen: true,
-      title: `To ${ this.props.params.mediaName }`,
-    };
-    this.openNewCommentPopup(someObj);
+      modalWindow: {
+        title: `To ${ this.props.params.mediaName }`,
+      },
+    });
   }
 
-  async replyToComment(item) {
-    const someObj = {
+  async replyToCommentState(item) {
+    this.setState({
       id: this.props.params.id,
       isNewCommentPopupOpen: true,
       parentId: item.data.id,
-      title: `To ${ item.data.author }`,
-    };
-    this.openNewCommentPopup(someObj);
+      modalWindow: {
+        title: `To ${ item.data.author }`,
+      },
+    });
   }
 
-  async editComment(item) {
-    const someObj = {
-      isNewCommentPopupOpen: true,
+  async editCommentState(item) {
+    this.setState({
+      isEditCommentPopupOpen: true,
       id: item.data.id,
       replay: 'Edit',
-      title: 'Edit',
-    };
-    this.openNewCommentPopup(someObj);
+      modalWindow: {
+        title: 'Edit',
+      },
+    });
   }
 
-  renderAnswerToComments() {
-    return (<Modal
-      isOpen={this.state.isNewCommentPopupOpen}
-      title={this.state.title}
-      className={style.commentModal}
-      >
-      <form onSubmit={::this.createNewComment}>
-        <label className={style.labelName}>
-          Message:
-          </label>
-          <textarea
-            className={style.textArea}
-            type="text"
-            placeholder="i.e. English"
-            autoFocus
-            value={this.state.newCommentText}
-            onChange={::this.onCommentTextInputChange}
-            ></textarea>
-      </form>
-      <Footer>
-        <ActionButton
-          icon="fa fa-check"
-          onClick={::this.createNewComment}
-          disabled={!this.state.newCommentText.length}
-          inProgress={this.props.pendingActions.newComment}
-          >
-          Ok
-        </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideNewCommentPopup}>Cancel</Button>
-      </Footer>
-    </Modal>);
+  async editComment() {
+
+   const editData = {
+     id: this.props.params.id,
+     text: this.state.newCommentText,
+     author: this.props.user.name,
+  };
+
+    await this.props.updateComment(editData);
+    await this.props.loadComments(this.props.params.id);
+    await this.setState({ newCommentText: '', isEditCommentPopupOpen: false});
   }
 
   async handleSelectionChange(e) {
@@ -168,15 +110,104 @@ export default class CommentDetails extends Component {
     });
   }
 
-  deleteComments() {
+  async deleteComments() {
     if (this.state.selectionComments.length === 0) {
       return;
     }
 
-    this.props.deleteComments(this.state.selectionComments)
-      .then(() => this.setState({selectedComments: []}))
-      .then(this.props.loadComments(this.props.params.id))
-    ;
+    await this.props.deleteComments(this.state.selectionComments);
+    await this.setState({selectedComments: []});
+    await this.props.loadComments(this.props.params.id);
+  }
+
+  async createNewComment() {
+    const newCommentData = {
+      id: this.props.params.id,
+      text: this.state.newCommentText,
+      author: this.props.user.name,
+    };
+
+    if(this.state.parentId) {
+      newCommentData.parentId = this.state.parentId;
+    }
+
+    await this.props.createComment(newCommentData);
+    await this.props.loadComments(this.props.params.id);
+    await this.setState({ newCommentText: '', isNewCommentPopupOpen: false});
+  }
+
+  hideNewCommentPopup() {
+    this.setState({isNewCommentPopupOpen: false});
+  }
+
+  hideEditCommentPopup() {
+    this.setState({isEditCommentPopupOpen: false});
+  }
+
+  renderAnswerToComments() {
+    return (<Modal
+      isOpen={this.state.isNewCommentPopupOpen}
+      title={this.state.modalWindow.title}
+      className={style.commentModal}
+      >
+      <form onSubmit={::this.createNewComment}>
+        <label className={style.labelName}>
+          Message:
+        </label>
+          <textarea
+            className={style.textArea}
+            type="text"
+            placeholder="i.e. English"
+            autoFocus
+            value={this.state.newCommentText}
+            onChange={::this.onCommentTextInputChange}
+            />
+      </form>
+      <Footer>
+        <ActionButton
+          icon="fa fa-check"
+          onClick={::this.createNewComment}
+          disabled={!this.state.newCommentText.length}
+          inProgress={this.props.pendingActions.newComments}
+          >
+          Ok
+        </ActionButton>
+        <Button icon="fa fa-ban" onClick={::this.hideNewCommentPopup}>Cancel</Button>
+      </Footer>
+    </Modal>);
+  }
+
+  renderEditComments() {
+    return (<Modal
+      isOpen={this.state.isEditCommentPopupOpen}
+      title={this.state.modalWindow.title}
+      className={style.commentModal}
+      >
+      <form onSubmit={::this.editComment}>
+        <label className={style.labelName}>
+          Message:
+        </label>
+          <textarea
+            className={style.textArea}
+            type="text"
+            placeholder="i.e. English"
+            autoFocus
+            value={this.state.newCommentText}
+            onChange={::this.onCommentTextInputChange}
+            />
+      </form>
+      <Footer>
+        <ActionButton
+          icon="fa fa-check"
+          onClick={::this.editComment}
+          disabled={!this.state.newCommentText.length}
+          inProgress={this.props.pendingActions.newComments}
+          >
+          Ok
+        </ActionButton>
+        <Button icon="fa fa-ban" onClick={::this.hideEditCommentPopup}>Cancel</Button>
+      </Footer>
+    </Modal>);
   }
 
   listViewItemRenderer = winjsReactRenderer((item) => {
@@ -185,30 +216,23 @@ export default class CommentDetails extends Component {
       [style.level3]: item.data.parentId,
     });
 
-    const classesForReply = cx({
-      [style.replay]: true,
-      [style.displayNone]: item.data.parentId  && item.data.author !== this.props.user.name,
-    });
-
-    const classesForEdit = cx({
-      [style.replay]: true,
-      [style.displayNone]: item.data.author !== this.props.user.name,
-    });
     return (
       <div className={style.tplItem}>
         <div className={classes}>
           <h3 className={style.author}>{item.data.author}</h3>
           <h6 className={style.text}>{item.data.text}</h6>
         </div>
-        <button className={classesForReply} onClick={this.replyToComment.bind(this, item)}>reply</button>
-        <button className={classesForEdit} onClick={this.editComment.bind(this, item)}>edit</button>
+        { (!item.data.parentId  && item.data.author !== this.props.user.name) ? <button className={style.replay} onClick={this.replyToCommentState.bind(this, item)}>reply</button> : '' }
+
+        { (item.data.author === this.props.user.name) ? <button className={style.replay} onClick={this.editCommentState.bind(this, item)}>edit</button> : '' }
       </div>
     );
   });
   render() {
     return (
-      <div>
+      <div className={style.commentBlock}>
         {this.renderAnswerToComments()}
+        {this.renderEditComments()}
         <h1>
           {this.props.params.mediaName}
         </h1>
@@ -222,20 +246,23 @@ export default class CommentDetails extends Component {
             <ListView
                 ref="folder"
                 className={style.list}
-                itemDataSource={this.props.commentList.dataSource}
+                itemDataSource={this.props.comments.entity.data.dataSource}
                 itemTemplate={this.listViewItemRenderer}
                 onSelectionChanged={::this.handleSelectionChange}
                 layout={listLayout} />
 
+
           <div className={style.bottombar}>
             <div className={style.footerWrapper}>
-              <Button
-                disabled={this.state.selectionComments.length === 0}
-                icon="fa fa-trash-o"
-                onClick={::this.deleteComments}
-                >
-                Delete
-              </Button>
+
+                <Button
+                  disabled={this.state.selectionComments.length === 0}
+                  icon="fa fa-trash-o"
+                  onClick={::this.deleteComments}
+                  className={style.footerButton}
+                  >
+                  Delete
+                </Button>
             </div>
           </div>
         </div>
