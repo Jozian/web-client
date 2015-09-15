@@ -12,7 +12,6 @@ export default class Checkbox extends Component {
     onChange: PropTypes.func.isRequired,
     className: PropTypes.string,
     tabIndex: PropTypes.string,
-  }
     title: PropTypes.string,
   };
 

@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 
 import App from 'containers/App';
 import UsersPage from 'containers/UsersPage';
+import EditUserPage from 'containers/EditUserPage';
 import LibrariesPage from 'containers/LibrariesPage';
 import FolderPage from 'containers/FolderPage';
 import StatisticsPage from 'containers/StatisticsPage';
@@ -18,8 +19,6 @@ const routes = (
       <DefaultRoute handler={UsersPage} />
       <Route name="editUser" path="edit/:id" handler={EditUserPage} />
     </Route>
-    <Route name="libraries" handler={LibrariesPage} />
-    <Route name="users" handler={UsersPage} />
     <Route name="libraries">
       <DefaultRoute handler={LibrariesPage} />
       <Route name="folder" path="/folder/:folderId" handler={FolderPage} />

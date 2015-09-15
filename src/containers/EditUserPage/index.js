@@ -3,30 +3,58 @@ import Button from '../../components/Button';
 import {USER_LOADING, USER_LOADED, USER_LOAD_ERROR} from '../../actions/types.js';
 import { connect } from 'react-redux';
 import styles from './index.css';
-import Checkbox from '../../components/Checkbox';
 import Dropdown from '../../components/Dropdown';
-/*import {connectReduxForm} from 'redux-form';*/
-/*import { widgetValidation } from '../../components/Validation/index.js';*/
+import FormInput from '../../components/Form/FormInput';
+import FormInputWithCheckbox from '../../components/Form/FormInputWithCheckbox';
 import * as actions from '../../actions/users.js';
 import { bindActionCreators } from 'redux';
+import loading from 'decorators/loading';
+import validator from 'validator';
+
+/* Validation
+ email: {
+ re: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+ unique: true
+ },
+ name: {
+ required: true,
+ unique: true
+ },
+ login: {
+ required: true,
+ unique: true
+ },
+ password: {
+ required: true
+ },
+ confirm: {
+ match: true
+ },
+ phone: {
+ re:  /^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\. \\\/]?)?((?:\(?\d+\)?[\-\. \\\/]?)*)(?:[\-\. \\\/]?(?:#|ext\.?|extension|x)[\-\. \\\/]?(\d+))?$/i,
+ unique: false
+ }
+ {
+ errors: {
+ 'name': ['emty', 'does not match'],
+ 'login': ['empty']
+ }
+ }
+ */
 
 @connect(
   (state) =>  ({user: state.user.entity}),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
-
-/*@connectReduxForm({
-  form: 'widget',
-  fields: ['phone', 'email', 'password', 'login', 'name', 'confirm'],
-  validate: widgetValidation,
-})*/
+@loading(
+  (state) => state.user.loading,
+  { isLoadingByDefault: true }
+)
 class EditUserPage extends Component {
   static propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
     }),
-    /*fields: PropTypes.object.isRequired,
-    handleBlur: PropTypes.func.isRequired,*/
     user: PropTypes.object,
   };
 
@@ -36,14 +64,22 @@ class EditUserPage extends Component {
 
   constructor(props) {
     super(props);
+    this.linkState = React.addons.LinkedStateMixin.linkState.bind(this);
     props.loadUser(props.params.id);
     this.state = {
       loading: true,
       user: {},
       checked: {},
-      error: {},
+      oldValues: {},
+      errors: {
+        name: [],
+        login: [],
+        password: [],
+        confirm: [],
+        email: [],
+        phone: [],
+      },
     };
-
     this.values = [{
       value: 'admin',
       label: 'Admin',
@@ -66,27 +102,11 @@ class EditUserPage extends Component {
         phone: !!props.user.phone,
         email: !!props.user.email,
       },
-      error: {
-        name: !props.user.name,
-        login: !props.user.login,
-        password: !props.user.password,
-        confirm: !props.user.confirm,
-        email: !props.user.email,
-        phone: !props.user.phone,
-      },
-      errorMessage: {
-        /*a: 'required',
-        b: 'already taken',
-        c: 'dose not match',
-        d: 'wrong format',*/
-      },
-      unique: {
-        name: true,
-        login: true,
-      },
-      match: {
-        password: true,
-        confirm: true,
+      oldValues: {
+        name: props.user.name,
+        login: props.user.login,
+        email: props.user.email,
+        phone: props.user.phone,
       },
     });
   }
@@ -97,22 +117,12 @@ class EditUserPage extends Component {
     router.transitionTo('users');
   }
 
-  change(event) {
-    const user = this.state.user;
-    const checked = this.state.checked;
-    const key = event.target.name;
-    user[key] = event.target.value;
-    if (checked.hasOwnProperty(key)) {
-      checked[key] = !!user[key];
-    }
-    this.setState({
-      user: user,
-      checked: checked,
-    });
-    /*console.log('change checked', key, this.state.checked);*/
+  cancelUserHendler() {
+    const { router } = this.context;
+    router.transitionTo('users');
   }
 
-  check(key) {
+  check(key, data, event) {
     const checked = this.state.checked;
     checked[key] = !checked[key];
     this.setState({
@@ -120,106 +130,162 @@ class EditUserPage extends Component {
     });
   }
 
-  validateEmpty(name, value) {
-    this.setState({
-      error: {
-        ...this.state.error,
-        [name]: !value,
-      },
-      errorMessage: {
-        required: 'Required',
-      },
-    });
-  }
-
-  unique(key, value) {
-    this.props.isUnique({id: this.props.params.id, key:key, value:value });
-  }
-
-  match(password, confirm_password) {
-  this.setState({
-    match: {
-      ...this.state.match,
-    [name]: !value,
-    },
-  });
-   /* if (password !== confirm_password) {
-      console.log('fail');
-    }*/
-  }
-
-  blur(event) {
-    const name = event.target.name;
-    this.validateEmpty(name, event.target.value);
-    if (event.target.value) {
-      this.unique(event.target.name, event.target.value);
-    }
-    /*if (event.target.name === 'password' || event.target.value) {
-      match();
-    }*/
-  }
-
-  renderInputField(label, name, value, placeholder, type = 'text', validation) {
-    const cx = React.addons.classSet;
-    const classes = cx({
-      [styles.editInput]: true,
-      [styles.error]: this.state.error[name] && validation,
-    });
-
-    return (
-      <div className={styles.editRow}>
-        <label className={styles.editLabel}>{label}</label>
-        <input className={classes}
-               type={type}
-               name={name}
-               onChange={::this.change}
-               placeholder={placeholder}
-               value={value}
-               onBlur={::this.blur}/>
-        <span>{this.state.errorMessage}</span>
-      </div>
-    );
-  }
-
-  renderInputFieldWithCheckbox(label, name, value, placeholder, type = 'text') {
-    const cx = React.addons.classSet;
-    const classes = cx({
-      [styles.editInput]: true,
-      [styles.checkboxInput]: true,
-      [styles.disabled]: !this.state.checked[name],
-    });
-    return (
-      <div className={styles.editRow}>
-        <div className={styles.editCheckbox}>
-          <Checkbox title={label}
-                    onChange={this.check.bind(this, name)}
-                    isChecked={this.state.checked[name]}/>
-        </div>
-        <input
-          className={classes}
-          type={type}
-          name={name}
-          placeholder={placeholder}
-          onChange={(e) => {this.change(e, name)}}
-          value={value}/>
-      </div>
-    );
-  }
-
   renderTypesOptions() {
     return (
-      <Dropdown title="Type:"
-                isDisabled={this.state.user.type === 'owner'}
-                changeHandler={(e) => {this.change(e, 'type')}}>
-        {
-          (this.values || []).filter((type) =>
-              (this.state.user.type === 'owner' || type.value !== 'owner')
-          ).map((type) =>
-              (<option value={type.value} selected={type.value === this.state.user.type}>{type.label}</option>)
-          )
-        }
-      </Dropdown>
+        <Dropdown title="Type:"
+                  isDisabled={this.state.user.type === 'owner'}
+                  changeHandler={(e) => {this.change(e, 'type')}}>
+          {
+            (this.values || []).filter((type) =>
+                (this.state.user.type === 'owner' || type.value !== 'owner')
+            ).map((type) =>
+                (<option value={type.value} selected={type.value === this.state.user.type}>{type.label}</option>)
+            )
+          }
+        </Dropdown>
     );
+  }
+
+  async validateUnique(key, value) {
+    if (!value) {
+      return true;
+    }
+    const oldValue = this.state.oldValues[key];
+    if (value === oldValue) {
+      return true;
+    } else {
+      try {
+        const item = await this.props.isUnique( {id: this.props.params.id, key: key, value: value} );
+        return item.payload.isUnique;
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+    }
+    /*this.setState({
+      error: {
+        ...this.state.error,
+        require: {
+          ...this.state.error.unique,
+          fields: {
+            ...this.state.error.unique.fields,
+            [key]: item.payload.isUnique,
+          },
+        },
+      },
+    });*/
+  }
+
+  validateMatch(value1, value2) {
+    if (value1 !== value2) {
+      return false;
+    }
+  }
+
+  validateEmpty(field, value) {
+    return !value;
+  }
+
+  validateFormat(key, value) {
+    if (key === 'email') {
+      return validator.isEmail(value);
+    }
+    if (key === 'phone') {
+      return validator.isMobilePhone(value);
+    }
+  }
+
+  async getBlur(event) {
+    const errors = [];
+    const key = event.target.name;
+    const value = event.target.value;
+    const isUnique = await this.validateUnique(key, value);
+    if (!isUnique) {
+      errors.push('already taken');
+    } else {
+      const index = errors.indexOf('already taken');
+      if (index !== -1) {
+        errors.splice(index, 1);
+      }
+    }
+    const newState = {
+      user: {
+        ...this.state.user,
+        [key]: value,
+      },
+      errors: {
+        ...this.state.errors,
+        [key]: errors,
+      }
+    };
+    this.setState(newState);
+  }
+
+  getUserChanger(field) {
+    const errors = [];
+    return function (newValue) {
+      if (field === 'email') {
+        if (!this.validateFormat(field, newValue)) {
+          errors.push('wrong format');
+        } else {
+          const index = errors.indexOf('wrong format');
+          if (index !== -1) {
+            errors.splice(index, 1);
+          }
+        }
+        if (!this.validateUnique(field, newValue)) {
+          errors.push('already taken');
+        } else {
+          const index = errors.indexOf('already taken');
+          if (index !== -1) {
+            errors.splice(index, 1);
+          }
+        }
+      }
+      if (field === 'phone') {
+        if (!this.validateFormat(field, newValue)) {
+          errors.push('wrong format');
+        } else {
+          const index = errors.indexOf('wrong format');
+          if (index !== -1) {
+            errors.splice(index, 1);
+          }
+        }
+      }
+      if (field === 'name' || field === 'login') {
+        if (this.validateEmpty(field, newValue)) {
+          errors.push('required');
+        } else {
+          const index = errors.indexOf('required');
+          if (index !== -1) {
+            errors.splice(index, 1);
+          }
+        }
+      }
+      if (field === 'password') {
+        if (!this.validateMatch(this.state.user.password, this.state.user.confirm)) {
+          errors.push('dose not match');
+        } else {
+          const index = errors.indexOf('dose not match');
+          if (index !== -1) {
+            errors.splice(index, 1);
+          }
+        }
+      }
+      if (this.state.user[field] !== newValue) {
+        const newState = {
+          user: {
+            ...this.state.user,
+            [field]: newValue,
+          },
+        };
+        newState.errors = {
+          ...this.state.errors,
+          [field]: errors,
+        };
+      this.setState(newState);
+      }
+    }.bind(this);
   }
 
   render() {
@@ -228,27 +294,80 @@ class EditUserPage extends Component {
         <h1 className={styles.title}>Edit user</h1>
 
         <div className={styles.wrapper}>
-          <form name="widget" className={styles.backgroundGrey}>
-            { this.renderInputField('User Name:', 'name', this.state.user.name,
-              'i.e. John Doe', 'text', true) }
-
-            { this.renderInputField('Login*:', 'login', this.state.user.login,
-              'i.e. johndoe', 'text', true) }
-
+          <form className={styles.backgroundGrey}>
+            <FormInput
+              valueLink={{
+                value: this.state.user.name,
+                requestChange: this.getUserChanger('name'),
+              }}
+              label="User Name:"
+              name='name'
+              placeholder='i.e. John Doe'
+              type='text'
+              errorMessage={this.state.errors.name}
+              onBlur={::this.getBlur}>
+            </FormInput>
+            <FormInput
+              valueLink={{
+                value: this.state.user.login,
+                requestChange: this.getUserChanger('login'),
+              }}
+              label='Login*:'
+              name='login'
+              placeholder='i.e. johndoe'
+              type='text'
+              errorMessage={this.state.errors.login}
+              onBlur={::this.getBlur}>
+            </FormInput>
             { this.renderTypesOptions() }
-
-            { this.renderInputField('Password:', 'password',
-              null, null, 'password', false) }
-
-            { this.renderInputField('Confirm Password:', 'confirm-password',
-              null, null, 'password', false) }
-
+            <FormInput
+              valueLink={{
+                value: null,
+                requestChange: this.getUserChanger('password'),
+              }}
+              label='Password:'
+              name='password'
+              placeholder={null}
+              type='password'
+              errorMessage={this.state.errors.password}
+              onBlur={::this.getBlur}>
+            </FormInput>
+            <FormInput
+              valueLink={{
+                value: null,
+                requestChange: this.getUserChanger('confirm'),
+              }}
+              label='Confirm Password:'
+              name='confirm'
+              type='password'
+              errorMessage={this.state.errors.confirm}
+              onBlur={::this.getBlur}>
+            </FormInput>
             <div className={styles.backgroundGreen}>
-              { this.renderInputFieldWithCheckbox('Send credentials in SMS:',
-                'phone', this.state.user.phone, 'Your mobile phone', 'phone') }
-
-              { this.renderInputFieldWithCheckbox('Send credentials in emails:',
-                'email', this.state.user.email, 'email@email.com', 'email') }
+              <FormInputWithCheckbox
+                valueLink={{
+                  value: this.state.user.phone,
+                  requestChange: this.getUserChanger('phone'),
+                }}
+                errorMessage={this.state.errors.phone}
+                label='Send credentials in SMS:'
+                name='phone'
+                placeholder='Your mobile phone'
+                checked={this.state.checked.phone}
+                changeCheckbox={this.check.bind(this, 'phone')}>
+              </FormInputWithCheckbox>
+              <FormInputWithCheckbox
+                valueLink={{
+                  value: this.state.user.email,
+                  requestChange: this.getUserChanger('email'),
+                }}
+                errorMessage={this.state.errors.email}
+                label='Send credentials in emails:'
+                name='email'
+                placeholder='email@email.com'
+                checked={this.state.checked.email}
+                changeCheckbox={this.check.bind(this, 'email')}>
+              </FormInputWithCheckbox>
             </div>
             <p className={styles.note}>
               * user will be able to login both to website and mobile client with this credentials.
@@ -256,10 +375,12 @@ class EditUserPage extends Component {
             <footer className={styles.buttonsWrapper}>
               <Button style={styles.buttonStyle}
                       onClick={::this.saveUserHendler}
-                      text="OK"
-                />
+                      text="OK">
+              </Button>
               <Button style={styles.buttonStyle}
-                      text="Cancel"/>
+                      onClick={::this.cancelUserHendler}
+                      text="Cancel">
+              </Button>
             </footer>
           </form>
         </div>
