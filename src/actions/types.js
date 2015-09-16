@@ -28,6 +28,10 @@ export const USERS_DELETING = 'Removing users';
 export const USERS_DELETED = 'Users removed';
 export const USERS_DELETE_ERROR = 'Error removing users';
 
+export const USERS_UPLOADING = 'Uploading users';
+export const USERS_UPLOADED = 'Users uploaded';
+export const USERS_UPLOAD_ERROR = 'Error uploading users';
+
 export const COMMENTS_EXPORTING = 'Exporting comments';
 export const COMMENTS_EXPORTED = 'Comments exported';
 export const COMMENTS_EXPORT_ERROR = 'Error exporting comments';

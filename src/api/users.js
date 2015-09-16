@@ -2,6 +2,7 @@ import fetch from './helper';
 
 const apiUrl = '/api/users';
 const isUniqueUrl = '/api/isUnique';
+const userManagementUrl = '/api/userManagement';
 
 export function getList() {
   return fetch(apiUrl);
@@ -61,5 +62,16 @@ export function isUnique(body) {
   return fetch(isUniqueUrl, {
     method: 'post',
     body: JSON.stringify(body),
+  });
+}
+export function uploadFile(body) {
+  if (!body || !(body instanceof FormData)) {
+    return Promise.reject('Invalid body');
+  }
+
+  return fetch(userManagementUrl + '/userImport', {
+    method: 'post',
+    body: body,
+    responseType: 'text',
   });
 }
