@@ -1,5 +1,5 @@
-import * as types from '../actions/types';
-import * as mediaCommentsApi from '../api/media-comments.js';
+import * as types from 'actions/types';
+import * as mediaCommentsApi from 'api/media-comments.js';
 
 export function loadComments(id) {
   return {
@@ -37,7 +37,7 @@ export function updateComment(commentData) {
   return {
     type: types.CALL_API,
     payload: {
-      types: [types.COMMENTS_UPDATING, types.COMMENTS_UPDATED, types.COMMENTS_UPDATE_ERROR],
+      types: [types.COMMENT_UPDATING, types.COMMENT_UPDATED, types.COMMENT_UPDATE_ERROR],
       promise: mediaCommentsApi.updateComment(commentData),
     },
   };

@@ -1,22 +1,8 @@
 import fetch from './helper';
-
 const apiUrl = '/api/comments/';
 
 export function getList(id) {
-  return fetch(apiUrl + id).then( (data) => {
-    const arraySort = [];
-    data.forEach( (itemParent) => {
-      if (!itemParent.parentId) {
-        arraySort.push(itemParent);
-        data.forEach( (itemChild) => {
-          if (itemParent.id === itemChild.parentId) {
-            arraySort.push(itemChild);
-          }
-        });
-      }
-    });
-    return arraySort;
-  });
+  return fetch(apiUrl + id);
 }
 
 export function deleteComments(body) {

@@ -112,16 +112,15 @@ export default class CommentDetails extends Component {
   }
 
   async editComment() {
-
    const editData = {
      id: this.props.params.id,
      text: this.state.newCommentText,
      author: this.props.user.name,
-  };
+   };
 
     await this.props.updateComment(editData);
-    await this.props.loadComments(this.props.params.id);
-    await this.setState({ newCommentText: '', isEditCommentPopupOpen: false});
+    this.props.loadComments(this.props.params.id);
+    this.setState({ newCommentText: '', isEditCommentPopupOpen: false});
   }
 
   async handleSelectionChange(e) {
@@ -138,8 +137,8 @@ export default class CommentDetails extends Component {
     }
 
     await this.props.deleteComments(this.state.selectionComments);
-    await this.setState({selectionComments: []});
-    await this.props.loadComments(this.props.params.id);
+    this.setState({selectionComments: []});
+    this.props.loadComments(this.props.params.id);
   }
 
   async createNewComment() {
@@ -149,13 +148,13 @@ export default class CommentDetails extends Component {
       author: this.props.user.name,
     };
 
-    if(this.state.parentId) {
+    if (this.state.parentId) {
       newCommentData.parentId = this.state.parentId;
     }
 
     await this.props.createComment(newCommentData);
-    await this.props.loadComments(this.props.params.id);
-    await this.setState({ newCommentText: '', isNewCommentPopupOpen: false});
+    this.props.loadComments(this.props.params.id);
+    this.setState({ newCommentText: '', isNewCommentPopupOpen: false});
   }
 
   hideNewCommentPopup() {
@@ -217,7 +216,7 @@ export default class CommentDetails extends Component {
             autoFocus
             value={this.state.newCommentText}
             onChange={::this.onCommentTextInputChange}
-            role="text for edit comment"
+            role="Text for edit comment"
             />
         </label>
       </form>
@@ -247,7 +246,7 @@ export default class CommentDetails extends Component {
           <h3 className={style.author}>{item.data.author}</h3>
           <h6 className={style.text}>{item.data.text}</h6>
         </div>
-        { (!item.data.parentId  && item.data.author !== this.props.user.name) ? <button className={style.replay} onClick={this.replyToCommentState.bind(this, item)}>reply</button> : '' }
+        { (!item.data.parentId  && item.data.author !== this.props.user.name) ? <button className={style.replay} onClick={this.replyToCommentState.bind(this, item)} onEnter={this.replyToCommentState.bind(this, item)} >reply</button> : '' }
 
         { (item.data.author === this.props.user.name) ? <button className={style.replay} onClick={this.editCommentState.bind(this, item)}>edit</button> : '' }
       </div>

@@ -66,6 +66,6 @@ export const COMMENTS_DELETING = 'Comments deleting';
 export const COMMENTS_DELETED = 'Comments deleted';
 export const COMMENTS_DELETE_ERROR = 'Comments deleting error';
 
-export const COMMENTS_UPDATING = 'Comments updating';
-export const COMMENTS_UPDATED = 'Comments updated';
-export const COMMENTS_UPDATE_ERROR = 'Comments updating error';
+export const COMMENT_UPDATING = 'Comments updating';
+export const COMMENT_UPDATED = 'Comments updated';
+export const COMMENT_UPDATE_ERROR = 'Comments updating error';
