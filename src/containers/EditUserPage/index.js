@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Button from '../../components/Button';
 import { connect } from 'react-redux';
 import styles from './index.css';
+import { isUnique } from '../../api/users.js';
 import Dropdown from '../../components/Dropdown';
 import FormInput from '../../components/Form/FormInput';
 import FormInputWithCheckbox from '../../components/Form/FormInputWithCheckbox';
@@ -38,7 +39,6 @@ class EditUserPage extends Component {
       loading: true,
       user: {},
       checked: {},
-      oldValues: {},
       errors: {
         name: [],
         login: [],
@@ -48,7 +48,7 @@ class EditUserPage extends Component {
         phone: [],
       },
     };
-    this.values = [{
+    this.types = [{
       value: 'admin',
       label: 'Admin',
     }, {
@@ -70,22 +70,16 @@ class EditUserPage extends Component {
         phone: !!props.user.phone,
         email: !!props.user.email,
       },
-      oldValues: {
-        name: props.user.name,
-        login: props.user.login,
-        email: props.user.email,
-        phone: props.user.phone,
-      },
     });
   }
 
-  saveUserHendler() {
+  saveUserHandler() {
     this.props.editUser(this.props.params.id, this.state.user);
     const { router } = this.context;
     router.transitionTo('users');
   }
 
-  cancelUserHendler() {
+  cancelUserHandler() {
     const { router } = this.context;
     router.transitionTo('users');
   }
@@ -101,10 +95,10 @@ class EditUserPage extends Component {
   renderTypesOptions() {
     return (
         <Dropdown title="Type:"
-                  isDisabled={this.state.user.type === 'owner'}
+                  disabled={this.state.user.type === 'owner'}
                   onChange={(e) => {this.change(e, 'type')}}>
           {
-            (this.values || []).filter((type) =>
+            (this.types || []).filter((type) =>
                 (this.state.user.type === 'owner' || type.value !== 'owner')
             ).map((type) =>
                 (<option value={type.value} selected={type.value === this.state.user.type}>{type.label}</option>)
@@ -118,15 +112,15 @@ class EditUserPage extends Component {
     if (!value) {
       return true;
     }
-    const oldValue = this.state.oldValues[key];
+    const oldValue = this.props.user[key];
     if (value === oldValue) {
       return true;
     } else {
       try {
-        const item = await this.props.isUnique( {id: this.props.params.id, key: key, value: value} );
-        return item.payload.isUnique;
-      } catch (e) {
-        console.error(e);
+        const item = await isUnique( {id: this.props.params.id, key: key, value: value} );
+        return item.isUnique;
+      } catch (_x_) {
+        console.error(_x_);
         return;
       }
     }
@@ -135,7 +129,9 @@ class EditUserPage extends Component {
   composeErrorMessages(key, message, condition) {
     const errors = [...this.state.errors[key]];
     if (!condition) {
-      errors.push(message);
+      if (!errors.includes(message)) {
+        errors.push(message);
+      }
     } else {
       const index = errors.indexOf(message);
       if (index !== -1) {
@@ -145,7 +141,7 @@ class EditUserPage extends Component {
     return errors;
   }
 
-  async getBlur(event) {
+  async onBlur(event) {
     const key = event.target.name;
     const value = event.target.value;
     const isUnique = await this.validateUnique(key, value);
@@ -163,10 +159,11 @@ class EditUserPage extends Component {
     this.setState(newState);
   }
 
-  getUserChanger(field) {
+  getUserChange(field) {
     return function (newValue) {
       let message = '';
       let isValid = true;
+      let key = field;
       if (field === 'email') {
         [message, isValid] = ['wrong format', validator.isEmail(newValue)];
       } else if (field === 'phone') {
@@ -175,9 +172,11 @@ class EditUserPage extends Component {
         [message, isValid] = ['required', validator.isLength(newValue, 1)];
       } else if (field === 'confirm') {
         [message, isValid] = ['does not match', validator.equals(this.state.user.password, newValue)];
+      } else if (field === 'password') {
+        key = 'confirm';
+        [message, isValid] = ['does not match', validator.equals(this.state.user.confirm, newValue)];
       }
-      const errors = this.composeErrorMessages(field, message, isValid);
-
+      const errors = this.composeErrorMessages(key, message, isValid);
       if (this.state.user[field] !== newValue) {
         const newState = {
           user: {
@@ -186,8 +185,8 @@ class EditUserPage extends Component {
           },
           errors: {
             ...this.state.errors,
-            [field]: errors,
-          }
+            [key]: errors,
+          },
         };
         this.setState(newState);
       }
@@ -203,30 +202,30 @@ class EditUserPage extends Component {
             <FormInput
               valueLink={{
                 value: this.state.user.name,
-                requestChange: this.getUserChanger('name'),
+                requestChange: this.getUserChange('name'),
               }}
               label="User Name:"
               name="name"
               placeholder="i.e. John Doe"
               type="text"
               errorMessage={this.state.errors.name}
-              onBlur={::this.getBlur} />
+              onBlur={::this.onBlur} />
             <FormInput
               valueLink={{
                 value: this.state.user.login,
-                requestChange: this.getUserChanger('login'),
+                requestChange: this.getUserChange('login'),
               }}
               label="Login*:"
               name="login"
               placeholder="i.e. johndoe"
               type="text"
               errorMessage={this.state.errors.login}
-              onBlur={::this.getBlur} />
+              onBlur={::this.onBlur} />
             { this.renderTypesOptions() }
             <FormInput
               valueLink={{
                 value: null,
-                requestChange: this.getUserChanger('password'),
+                requestChange: this.getUserChange('password'),
               }}
               label="Password:"
               name="password"
@@ -236,7 +235,7 @@ class EditUserPage extends Component {
             <FormInput
               valueLink={{
                 value: null,
-                requestChange: this.getUserChanger('confirm'),
+                requestChange: this.getUserChange('confirm'),
               }}
               label="Confirm Password:"
               name="confirm"
@@ -246,36 +245,36 @@ class EditUserPage extends Component {
               <FormInputWithCheckbox
                 valueLink={{
                   value: this.state.user.phone,
-                  requestChange: this.getUserChanger('phone'),
+                  requestChange: this.getUserChange('phone'),
                 }}
                 errorMessage={this.state.errors.phone}
                 label="Send credentials in SMS:"
                 name="phone"
                 placeholder="Your mobile phone"
                 checked={this.state.checked.phone}
-                changeCheckbox={this.check.bind(this, 'phone')} />
+                onCheckboxChange={this.check.bind(this, 'phone')} />
               <FormInputWithCheckbox
                 valueLink={{
                   value: this.state.user.email,
-                  requestChange: this.getUserChanger('email'),
+                  requestChange: this.getUserChange('email'),
                 }}
                 errorMessage={this.state.errors.email}
                 label="Send credentials in emails:"
                 name="email"
                 placeholder="email@email.com"
                 checked={this.state.checked.email}
-                onBlur={::this.getBlur}
-                changeCheckbox={this.check.bind(this, 'email')} />
+                onBlur={::this.onBlur}
+                onCheckboxChange={this.check.bind(this, 'email')} />
             </div>
             <p className={styles.note}>
               * user will be able to login both to website and mobile client with this credentials.
             </p>
             <footer className={styles.buttonsWrapper}>
               <Button className={styles.buttonStyle}
-                      onClick={::this.saveUserHendler}
+                      onClick={::this.saveUserHandler}
                       text="OK" />
               <Button className={styles.buttonStyle}
-                      onClick={::this.cancelUserHendler}
+                      onClick={::this.cancelUserHandler}
                       text="Cancel" />
             </footer>
           </form>

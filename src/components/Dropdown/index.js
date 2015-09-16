@@ -6,7 +6,7 @@ export default class Dropdown extends Component {
     static propTypes = {
         title: PropTypes.string,
         onChange: PropTypes.func,
-        isDisabled: PropTypes.bool,
+        disabled: PropTypes.bool,
     };
 
     render() {
@@ -14,7 +14,7 @@ export default class Dropdown extends Component {
             <div className={styles.editUser}>
                 <label className={styles.userLabel}>{this.props.title}</label>
                 <select className={styles.optionsSelect} name="type"
-                      disabled={this.props.isDisabled}
+                      disabled={this.props.disabled}
                       onChange={this.props.onChange}>
                     {this.props.children}
                 </select>

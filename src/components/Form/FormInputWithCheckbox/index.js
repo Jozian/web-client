@@ -9,8 +9,8 @@ export default class FormInputWithCheckbox extends Component {
     name: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     type: React.PropTypes.string,
-    changeCheckbox: React.PropTypes.func,
-    checked: React.PropTypes.any,
+    onCheckboxChange: React.PropTypes.func,
+    checked: React.PropTypes.bool,
     errorMessage: React.PropTypes.string,
     valueLink: React.PropTypes.shape({
       value: React.PropTypes.any.isRequired,
@@ -25,15 +25,16 @@ export default class FormInputWithCheckbox extends Component {
       [styles.disabled]: !this.props.checked,
       [styles.error]: this.props.errorMessage.length !== 0,
     });
-    const display = cx({
-      [styles.errorMessage]: true,
-      [styles.show]: this.props.errorMessage.length !== 0,
-    });
+    const ErrorMessage = (() => {
+      if (this.props.errorMessage.length !== 0) {
+        return <span className={styles.errorMessage}>{this.props.errorMessage}</span>;
+      }
+    }());
     return (
       <div className={styles.editRow}>
         <div className={styles.editCheckbox}>
           <Checkbox title={this.props.label}
-                    onChange={this.props.changeCheckbox}
+                    onChange={this.props.onCheckboxChange}
                     checked={this.props.checked}/>
         </div>
         <input valueLink={this.props.valueLink}
@@ -42,7 +43,7 @@ export default class FormInputWithCheckbox extends Component {
                name={this.props.name}
                onBlur={this.props.onBlur}
                placeholder={this.props.placeholder}/>
-        <span className={display}>{this.props.errorMessage}</span>
+        {ErrorMessage}
       </div>
     );
   }

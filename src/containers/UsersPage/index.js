@@ -14,7 +14,6 @@ import loading from 'decorators/loading';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
-import { RouteHandler } from 'react-router';
 
 @connect(
   (state) => ({users: state.users, pendingActions: state.pendingActions}),

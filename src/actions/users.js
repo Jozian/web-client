@@ -21,16 +21,6 @@ export function loadUser(id) {
   };
 }
 
-export function isUnique(body) {
-  return {
-    type: types.CALL_API,
-    payload: {
-      types: [types.USER_CHECKING_UNIQUE, types.USER_CHECKED_UNIQUE, types.USER_CHECK_UNIQUE_ERROR],
-      promise: usersApi.isUnique(body),
-    },
-  };
-}
-
 export function editUser(id, body) {
   return {
     type: types.CALL_API,

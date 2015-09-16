@@ -40,10 +40,6 @@ export const USER_LOADING = 'Loading user';
 export const USER_LOADED = 'User loaded';
 export const USER_LOAD_ERROR = 'Error loading user';
 
-export const USER_CHECKING_UNIQUE = 'Checking user unique';
-export const USER_CHECKED_UNIQUE = 'Checked user unique';
-export const USER_CHECK_UNIQUE_ERROR = 'Check user unique error';
-
 export const STATISTICS_LOADING = 'Loading statistics';
 export const STATISTICS_LOADED = 'Statistics loaded';
 export const STATISTICS_LOAD_ERROR = 'Error loading statistics';

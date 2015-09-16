@@ -6,10 +6,6 @@
     color: darkred;
     font-size: 14px;
     text-align: end;
-    display: none;
-}
-
-.show {
     display: block;
 }
 

@@ -15,15 +15,17 @@ export default class FormInput extends Component {
     type: React.PropTypes.string,
     errorMessage: React.PropTypes.string,
   };
+
   render() {
     const classes = cx({
       [styles.editInput]: true,
       [styles.error]: this.props.errorMessage.length !== 0,
     });
-    const display = cx({
-      [styles.errorMessage]: true,
-      [styles.show]: this.props.errorMessage.length !== 0,
-    });
+    const ErrorMessage = (() => {
+      if (this.props.errorMessage.length !== 0) {
+        return <span className={styles.errorMessage}>{this.props.errorMessage}</span>;
+      }
+    }());
     return (
       <div className={styles.editRow}>
         <label className={styles.editLabel}>
@@ -34,7 +36,7 @@ export default class FormInput extends Component {
                name={this.props.name}
                placeholder={this.props.placeholder}
                onBlur={this.props.onBlur}/>
-        <span className={display}>{this.props.errorMessage}</span>
+        {ErrorMessage}
       </div>
     );
   }

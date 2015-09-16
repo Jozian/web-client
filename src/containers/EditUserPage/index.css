@@ -1,14 +1,3 @@
-/*.error {
-    border: 1px solid darkred;
-    box-shadow: 0 0 10px darkred;
-}
-.errorMessage {
-    color: darkred;
-    display: block;
-    font-size: 14px;
-    text-align: end;
-}*/
-
 .note {
     font-size: 14px;
     color: grey;

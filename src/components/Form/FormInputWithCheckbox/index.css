@@ -6,17 +6,11 @@
     color: darkred;
     font-size: 14px;
     text-align: end;
-    display: none;
-}
-
-.show {
     display: block;
 }
-
 .editRow {
     padding: 5px 10px;
 }
-
 .editLabel {
     padding-top: 5px;
     width: 43%;
@@ -25,7 +19,6 @@
     margin-right: 2%;
     display: inline-block;
 }
-
 .editInput {
     border: 2px solid rgba(0, 0, 0, 0.27);
     letter-spacing: 0.02em;
@@ -44,13 +37,11 @@
     color: #000000;
     display: inline-block;
 }
-
 .disabled {
     background-color: rgba(202, 202, 202, 0.4);
     border-color: rgba(0, 0, 0, 0.15);
     color: rgba(0, 0, 0, 0.4);
 }
-
 .editCheckbox {
     display: inline-block;
     width: 43%;
@@ -60,7 +51,6 @@
     float: left;
     margin-right: 2%;
 }
-
 @media (max-width: 1134px) {
     .editCheckbox {
         width: 100%;
@@ -68,7 +58,6 @@
         text-align: start;
     }
 }
-
 @media (max-width: 1134px) {
     .checkboxInput {
         width: 100%;
