@@ -179,7 +179,7 @@ export default class UsersPage extends Component {
                  onChange={::this.handlerUploadFile} />
           <div className={styles.importContainer} type="button">Upload template</div>
           <a className={styles.importContainer}
-             href="http://www.microsofteducationdelivery.net/userImportTemplate.xlsx">Download</a>
+             href="/userImportTemplate.xlsx">Download</a>
         </lable>
         <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span>
       </form>
