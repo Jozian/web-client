@@ -27,7 +27,6 @@ const routes = (
     <Route name="comment" path="comments/:mediaName/:id/" handler={CommentDetails}/>
     <Route name="motd" handler={MotdPage} />
     <Redirect from="/" to="libraries" />
-    <DefaultRoute handler={LibrariesPage} />
   </Route>
 );
 
