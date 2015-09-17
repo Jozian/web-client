@@ -3,7 +3,6 @@ import Router, {Route, DefaultRoute, Redirect} from 'react-router';
 import { Provider } from 'react-redux';
 import Modal from 'react-modal';
 
-
 import App from 'containers/App';
 import UsersPage from 'containers/UsersPage';
 import LibrariesPage from 'containers/LibrariesPage';
@@ -25,10 +24,10 @@ const routes = (
     </Route>
     <Route name="statistics" handler={StatisticsPage} />
     <Route name="comments" handler={CommentsPage} />
+    <Route name="comment" path="comments/:mediaName/:id/" handler={CommentDetails}/>
     <Route name="motd" handler={MotdPage} />
     <Redirect from="/" to="libraries" />
     <DefaultRoute handler={LibrariesPage} />
-    <Route name="comment" path="comments/:mediaName/:id/" handler={CommentDetails}/>
   </Route>
 );
 

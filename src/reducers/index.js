@@ -54,7 +54,7 @@ export const pendingActions = combineReducers({
     [types.LIBRARIES_DELETING],
     [types.LIBRARIES_DELETED, types.LIBRARIES_DELETED],
   ),
-  newComments: handlePendingChain(
+  newComment: handlePendingChain(
     [types.COMMENT_CREATING],
     [types.COMMENT_CREATED, types.COMMENT_CREATING_ERROR],
   ),

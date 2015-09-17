@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { connect } from 'react-redux';
-import Button from 'components/Button';
-import * as actions from '../../actions/media-comments.js';
 import { bindActionCreators } from 'redux';
+
+import Button from 'components/Button';
+import * as actions from '../../actions/media-comments';
 import { listLayout } from 'common';
 import Modal from 'components/Modal';
 import loading from 'decorators/loading';
@@ -67,6 +68,12 @@ export default class CommentDetails extends Component {
     });
   }
 
+  replyAllEnter(e) {
+    if (e.keyCode === 13) {
+      this.replyAll();
+    }
+  }
+
   componentWillMount() {
     document.addEventListener('keydown', this.handleKeyDown);
   }
@@ -89,7 +96,7 @@ export default class CommentDetails extends Component {
     }
   }
 
-  async replyToCommentState(item) {
+  replyToCommentState(item) {
     this.setState({
       id: this.props.params.id,
       isNewCommentPopupOpen: true,
@@ -98,6 +105,12 @@ export default class CommentDetails extends Component {
         title: `To ${ item.data.author }`,
       },
     });
+  }
+
+  replyToCommentEnterState(item, event) {
+    if (event.keyCode === 13) {
+      this.replyToCommentState(item);
+    }
   }
 
   async editCommentState(item) {
@@ -109,6 +122,12 @@ export default class CommentDetails extends Component {
         title: 'Edit',
       },
     });
+  }
+
+  editCommentEnterState (item, event) {
+    if (event.keyCode === 13) {
+      this.editCommentState(item);
+    }
   }
 
   async editComment() {
@@ -166,14 +185,14 @@ export default class CommentDetails extends Component {
   }
 
   renderAnswerToComments() {
-    return (<Modal
-      isOpen={this.state.isNewCommentPopupOpen}
-      title={this.state.modalWindow.title}
-      className={style.commentModal}
-      >
+    return (
+      <Modal
+        isOpen={this.state.isNewCommentPopupOpen}
+        title={this.state.modalWindow.title}
+        className={style.commentModal}>
       <form onSubmit={::this.createNewComment}>
-        <label className={style.labelName}>
-          Message:
+        <label>
+          <div className={style.labelName}>Message:</div>
           <textarea
             className={style.textArea}
             type="text"
@@ -190,7 +209,7 @@ export default class CommentDetails extends Component {
           icon="fa fa-check"
           onClick={::this.createNewComment}
           disabled={!this.state.newCommentText.length}
-          inProgress={this.props.pendingActions.newComments}
+          inProgress={this.props.pendingActions.newComment}
           role="OK button"
           >
           Ok
@@ -207,8 +226,8 @@ export default class CommentDetails extends Component {
       className={style.commentModal}
       >
       <form onSubmit={::this.editComment}>
-        <label className={style.labelName}>
-          Message:
+        <label >
+          <div className={style.labelName}>Message:</div>
           <textarea
             className={style.textArea}
             type="text"
@@ -225,7 +244,7 @@ export default class CommentDetails extends Component {
           icon="fa fa-check"
           onClick={::this.editComment}
           disabled={!this.state.newCommentText.length}
-          inProgress={this.props.pendingActions.newComments}
+          inProgress={this.props.pendingActions.newComment}
           role="OK button">
           Ok
         </ActionButton>
@@ -246,9 +265,9 @@ export default class CommentDetails extends Component {
           <h3 className={style.author}>{item.data.author}</h3>
           <h6 className={style.text}>{item.data.text}</h6>
         </div>
-        { (!item.data.parentId  && item.data.author !== this.props.user.name) ? <button className={style.replay} onClick={this.replyToCommentState.bind(this, item)} onEnter={this.replyToCommentState.bind(this, item)} >reply</button> : '' }
+        { (!item.data.parentId  && item.data.author !== this.props.user.name) ? <button className={style.replay} onClick={this.replyToCommentState.bind(this, item)} onKeyUp={this.replyToCommentEnterState.bind(this, item)} >reply</button> : '' }
 
-        { (item.data.author === this.props.user.name) ? <button className={style.replay} onClick={this.editCommentState.bind(this, item)}>edit</button> : '' }
+        { (item.data.author === this.props.user.name) ? <button className={style.replay} onClick={this.editCommentState.bind(this, item)} onKeyUp={this.editCommentEnterState.bind(this, item)}>edit</button> : '' }
       </div>
     );
   });
@@ -265,14 +284,14 @@ export default class CommentDetails extends Component {
 
           <div className={style.toolbar}>
             <span className={style.title} role={ `Commentaries for media ${this.props.params.mediaName} `}>Commentaries</span>
-            <button className={style.toolbarBtn} onClick={::this.replyAll} role="Replay all">REPLY ALL</button>
+            <button className={style.toolbarBtn} onClick={::this.replyAll} onKeyUp={::this.replyAllEnter}  role="Replay all" >REPLY ALL</button>
           </div>
             <ListView
                 ref="folder"
                 className={style.list}
                 itemDataSource={this.props.comments.entity.data.dataSource}
                 itemTemplate={this.listViewItemRenderer}
-                onSelectionChanged={::this.handleSelectionChange}
+                tapBehavior="none"
                 layout={listLayout} />
 
 

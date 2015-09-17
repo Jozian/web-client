@@ -1,5 +1,5 @@
 import * as types from 'actions/types';
-import * as mediaCommentsApi from 'api/media-comments.js';
+import * as mediaCommentsApi from 'api/media-comments';
 
 export function loadComments(id) {
   return {
