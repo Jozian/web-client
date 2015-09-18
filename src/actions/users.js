@@ -11,7 +11,25 @@ export function loadUsers() {
   };
 }
 
-export function deleteUsers(ids) {
+export function loadUser(id) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.USER_LOADING, types.USER_LOADED, types.USER_LOAD_ERROR],
+      promise: usersApi.getItem(id),
+    },
+  };
+}
+
+export function editUser(id, body) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.USER_LOADING, types.USER_LOADED, types.USER_LOAD_ERROR],
+      promise: usersApi.edit(id, body),
+    },
+  };
+}export function deleteUsers(ids) {
   return {
     type: types.CALL_API,
     payload: {

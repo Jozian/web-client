@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import Header from 'components/Header';
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
@@ -34,6 +33,10 @@ export default class UsersPage extends Component {
     uploadUsers: React.PropTypes.func.isRequired,
   };
 
+  static contextTypes = {
+    router: React.PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
     props.loadUsers();
@@ -57,7 +60,8 @@ export default class UsersPage extends Component {
   }
 
   onRowClick(value) {
-    window.console.log(value);
+    const { router } = this.context;
+    router.transitionTo('editUser', {id: value.id});
   }
 
   onListSelectionChange(selectedUsers) {

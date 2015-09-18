@@ -12,7 +12,7 @@ import styles from './index.css';
 export default class App extends Component {
   static propTypes = {
     user: React.PropTypes.object.isRequired,
-  }
+  };
 
   render() {
     return (<div>

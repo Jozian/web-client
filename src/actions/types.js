@@ -36,6 +36,10 @@ export const COMMENTS_EXPORTING = 'Exporting comments';
 export const COMMENTS_EXPORTED = 'Comments exported';
 export const COMMENTS_EXPORT_ERROR = 'Error exporting comments';
 
+export const USER_LOADING = 'Loading user';
+export const USER_LOADED = 'User loaded';
+export const USER_LOAD_ERROR = 'Error loading user';
+
 export const STATISTICS_LOADING = 'Loading statistics';
 export const STATISTICS_LOADED = 'Statistics loaded';
 export const STATISTICS_LOAD_ERROR = 'Error loading statistics';

@@ -1,4 +1,4 @@
-.checked {
+.checkboxWrapper .checked {
     display: inline-block;
     border: 2px solid #cccccc;
     width: 19px;
@@ -6,25 +6,42 @@
     background-color: white;
 }
 
-.partChecked {
+.checkboxWrapper .checkbox {
+    color: grey;
+}
+
+.checkboxWrapper .partChecked {
     display: inline-block;
     border: 2px solid #cccccc;
     width: 19px;
     height: 19px;
     background-color: white;
 }
-.partChecked:after {
+
+.checkboxWrapper .partChecked:after {
     content: '\f00c';
     font-family: 'FontAwesome';
     font-size: 11pt;
     color: #ccc;
 }
-input[type="checkbox"] {
+
+.checkboxWrapper input[type="checkbox"] {
     display: none;
+    width: 21px;
+    height: 21px;
+    margin-right: 5px;
 }
 
-input[type="checkbox"]:checked + div:after {
+.checkboxWrapper input[type="checkbox"]:checked + div:after {
     content: '\f00c';
     font-family: 'FontAwesome';
     font-size: 11pt;
+    vertical-align: middle;
+}
+
+.checkboxWrapper .title {
+    vertical-align: middle;
+    margin-left: 10px;
+    color: grey;
+    display: inline-block;
 }

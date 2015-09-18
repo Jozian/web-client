@@ -1,23 +1,32 @@
-import React, { Component } from 'react';
-import style from './index.css';
+import React, { Component, PropTypes } from 'react';
+import styles from './index.css';
+import cx from 'classnames';
 import 'font-awesome-webpack';
 
 export default class Button extends Component {
   static propTypes = {
-    children: React.PropTypes.node,
-    icon: React.PropTypes.string,
-    text: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    onClick: React.PropTypes.func,
+    children: PropTypes.node,
+    icon: PropTypes.string,
+    text: PropTypes.string,
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func,
+    className: PropTypes.string,
   };
 
   render() {
     const disabled = this.props.disabled ? 'disabled' : '';
-
+    const classes = cx({
+      [styles.button]: true,
+      [this.props.className]: this.props.className !== null,
+    });
     return (
-      <button type="button" className={style.button} onClick={this.props.onClick} disabled={disabled}>
-        {this.props.icon ? <i className={this.props.icon}></i> : null }
-        {this.props.children}
+      <button type="button"
+              className={classes}
+              onClick={this.props.onClick}
+              disabled={disabled}>
+              {this.props.icon ? <i className={this.props.icon}></i> : null }
+              {this.props.children}
+              {this.props.text}
       </button>
     );
   }

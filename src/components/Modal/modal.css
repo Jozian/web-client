@@ -34,6 +34,8 @@
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 2;
+    overflow-y: scroll;
     background-color: rgba(0, 0, 0, 0.5);
 }
 .modalContainer {
@@ -44,14 +46,17 @@
     border-top: solid #6ab01c 5px;
     margin-left: calc(35vw / 2);
     margin-top: 50px;
+    margin-bottom: 50px;
     padding-bottom: 50px;
     font-weight: 300;
 }
 .contentContainer {
     display: block;
     max-height: 60vh;
-    margin-left: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
     overflow: auto;
+    text-align: right;
 }
 .footer {
     position: absolute;
@@ -72,5 +77,4 @@
     font-size: 35px;
     color: #1a5055;
     display: block;
-}
-*/
+}*/
