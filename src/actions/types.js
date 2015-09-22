@@ -98,6 +98,10 @@ export const MOTD_UPDATING = 'Updating MOTD';
 export const MOTD_UPDATED = 'MOTD updated';
 export const MOTD_UPDATE_ERROR = 'Error updating MOTD';
 
+export const SEARCH_RESULT_UPLOADING = 'Uploading search result';
+export const SEARCH_RESULT_UPLOADED = 'Uploaded search result';
+export const SEARCH_RESULT_ERROR = 'Error uploading search result';
+
 export const REMOVE_PENDING_TOAST = 'Removing pending toast';
 
 export const COMMENTS_LOADING = 'Loading comments';

@@ -12,6 +12,7 @@ import IconButton from 'components/IconButton';
 import ActionButton from 'components/ActionButton';
 import { renderDate } from 'components/Table/renderers';
 import loading from 'decorators/loading';
+import SearchBar from 'components/SearchBar';
 
 import commonStyles from 'common/styles.css';
 import styles from './index.css';
@@ -125,6 +126,7 @@ export default class CommentsPage extends Component {
   render() {
     return (
       <div>
+        <SearchBar />
         <DocumentTitle title="Commentaries" />
         <Header>Commentaries</Header>
         <Table

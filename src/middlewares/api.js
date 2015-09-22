@@ -5,7 +5,6 @@ export default store => next => action => {
   if (action.type !== CALL_API) {
     return next(action);
   }
-
   const {promise, types = [null, null, null]} = action.payload;
   if (typeof promise !== 'object' || typeof promise.then !== 'function') {
     throw new Error('Promise required');

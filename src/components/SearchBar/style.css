@@ -1,0 +1,54 @@
+.searchBar {
+    position: relative;
+    margin: 10px;
+}
+
+.input {
+    width: 400px;
+    border-radius: 4px;
+    margin: 0;
+}
+.list {
+    width: 400px;
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #c0c0c0;
+    z-index: 1000;
+}
+
+.headerList {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 10px 10px 0;
+    color: #fff;
+    border-top: 1px solid #c0c0c0;
+    border-bottom: 1px solid #c0c0c0;
+    background-color: green;
+}
+
+.icon {
+    margin: 5px;
+}
+
+.red {
+    color: red;
+}
+
+.noResults {
+    margin: 10px;
+}
+
+.searchBar :global(.win-container) {
+    height: 30px;
+}
+
+.searchBar :global(.win-listview) {
+    height: auto !important;
+}
+
+.searchBar :global(.win-listview > .win-viewport) {
+    height: auto !important;
+}

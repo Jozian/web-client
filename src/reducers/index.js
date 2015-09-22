@@ -5,7 +5,9 @@ import { handleLoadingChain, handlePendingChain } from './helpers';
 import toastReducer from './toasts';
 import editUser from './editUser';
 import activeFolderReducer from './activeFolder';
+
 import activeCommentDetailReducer from './activeCommentDetail';
+import activeSearchResultReducer from './activeSerachResult';
 
 export const pendingToasts = toastReducer;
 export const activeFolder = activeFolderReducer;
@@ -79,6 +81,13 @@ export const usersTemplate  = handleLoadingChain([
   types.USERS_TEMPLATE_UPLOADED,
   types.USERS_TEMPLATE_ERROR,
 ]);
+
+export const searchResultList = handleLoadingChain([
+  types.SEARCH_RESULT_UPLOADING,
+  types.SEARCH_RESULT_UPLOADED,
+  types.SEARCH_RESULT_ERROR,
+]);
+
 export const pendingActions = combineReducers({
   newLibrary: handlePendingChain(
     [types.LIBRARY_CREATING],
