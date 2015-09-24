@@ -1,4 +1,5 @@
 import fetch from './helper';
+import {saveAs} from 'browser-filesaver';
 
 const apiUrl = '/api/comments';
 const exportUrl = '/api/commentsManagement/commentsExport';
@@ -12,7 +13,13 @@ export function getList(mediaId) {
 }
 
 export function exportComments() {
-  return fetch(exportUrl);
+  return fetch(exportUrl, {
+    responseType: 'arraybuffer',
+  }).then((result) => {
+    debugger;
+    const blob = new Blob([result], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    saveAs(blob, 'medComments'  + new Date() + '.xlsx');
+  });
 }
 
 export function add(body) {

@@ -130,6 +130,11 @@
     font-weight: 400;
     line-height: 1.6667;
     margin: 0;
+    width: 800px;
+    height: 70%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
 }
 
 .textArea {

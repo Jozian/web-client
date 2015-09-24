@@ -25,7 +25,7 @@ export function addToExport() {
         types.STATISTICS_EXPORTED,
         types.STATISTICS_EXPORT_ERROR,
       ],
-      promise: statisticsApi.importStatistics(),
+      promise: statisticsApi.exportStatistics(),
     },
   };
 }

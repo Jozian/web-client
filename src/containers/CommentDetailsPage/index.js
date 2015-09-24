@@ -117,6 +117,7 @@ export default class CommentDetails extends Component {
     this.setState({
       isEditCommentPopupOpen: true,
       id: item.data.id,
+      newCommentText: item.data.text,
       replay: 'Edit',
       modalWindow: {
         title: 'Edit',
@@ -130,7 +131,7 @@ export default class CommentDetails extends Component {
     }
   }
 
-  async editComment() {
+  async editComment(item) {
    const editData = {
      id: this.props.params.id,
      text: this.state.newCommentText,
