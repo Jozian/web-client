@@ -13,9 +13,9 @@ const defaultState = {
 
 export default function reducer(state = defaultState, action) {
   switch (action.type) {
-  case types.SEARCH_RESULT_UPLOADING:
+  case types.SEARCH_RESULT_LOADING:
     return { ...state, loading: true, error: null };
-  case types.SEARCH_RESULT_UPLOADED:
+  case types.SEARCH_RESULT_LOADED:
     const newEntity = {...action.payload};
     newEntity.users.data = new WinJS.Binding.List(action.payload.users);
     newEntity.media.data = new WinJS.Binding.List(action.payload.media);

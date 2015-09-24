@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { debounce } from 'lodash';
 import cx from 'classnames';
 
-import loading from 'decorators/loading';
 import { listLayout } from 'common';
 import * as actions from 'actions/searchResult';
 
@@ -15,7 +14,6 @@ import styles from './style.css';
   (state) => ({ searchResult: state.searchResult }),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
-
 export default class SearchBar extends Component {
 
   static propTypes = {
@@ -49,9 +47,11 @@ export default class SearchBar extends Component {
     });
   }
   _handleClick(e) {
+    const searchTableElem = this.refs.searchList.getDOMNode();
     let currentElem = e.target;
+
     while (currentElem && this.state.showSearchList) {
-      if (currentElem.className.indexOf('searchList') !== -1) {
+      if (searchTableElem === currentElem) {
         break;
       } else {
         currentElem = currentElem.parentElement;
@@ -73,7 +73,7 @@ export default class SearchBar extends Component {
     this.context.router.transitionTo('folderSelection', routeParams);
   }
 
-  fireCurrentSearch(currentString) {
+  highlightCurrentSearch(currentString) {
     const startIndex = currentString.toLowerCase().indexOf(this.state.searchText.toLowerCase());
     if (startIndex === -1) {
       return <span>{currentString}</span>;
@@ -111,7 +111,7 @@ export default class SearchBar extends Component {
     return (
       <div onClick={this.userSelected.bind(item, this)}>
         <span className={cx('fa', 'fa-user', styles.icon)}></span>
-        {this.fireCurrentSearch(item.data.name)}
+        {this.highlightCurrentSearch(item.data.name)}
       </div>
     );
   });
@@ -127,13 +127,13 @@ export default class SearchBar extends Component {
     return (
       <div onClick={this.mediaSelected.bind(this, item)}>
         <span className={classes}></span>
-        {this.fireCurrentSearch(item.data.name)}
+        {this.highlightCurrentSearch(item.data.name)}
       </div>
     );
   });
   render() {
     return (
-      <div className={styles.searchBar}>
+      <div className={styles.searchBar} ref="searchList">
         <input type="text" className={styles.input} onInput={(e) => {::this.inputHandler(e.target.value); }} />
 
         {this.state.showSearchList ?
