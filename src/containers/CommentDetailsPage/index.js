@@ -114,7 +114,7 @@ export default class CommentDetails extends Component {
   }
 
   async editCommentState(item) {
-    this.setState({
+    const editDataComment = {
       isEditCommentPopupOpen: true,
       id: item.data.id,
       newCommentText: item.data.text,
@@ -122,7 +122,11 @@ export default class CommentDetails extends Component {
       modalWindow: {
         title: 'Edit',
       },
-    });
+    };
+    if (item.data.parentId) {
+      editDataComment.parentId = item.data.parentId;
+    }
+    this.setState(editDataComment);
   }
 
   editCommentEnterState (item, event) {
@@ -132,11 +136,14 @@ export default class CommentDetails extends Component {
   }
 
   async editComment(item) {
-   const editData = {
-     id: this.props.params.id,
-     text: this.state.newCommentText,
-     author: this.props.user.name,
-   };
+    const editData = {
+      id: this.state.id,
+      text: this.state.newCommentText,
+      author: this.props.user.name,
+    };
+    if (this.state.parentId) {
+      editData.parentId = this.state.parentId;
+    }
 
     await this.props.updateComment(editData);
     this.props.loadComments(this.props.params.id);
@@ -292,7 +299,7 @@ export default class CommentDetails extends Component {
                 className={style.list}
                 itemDataSource={this.props.comments.entity.data.dataSource}
                 itemTemplate={this.listViewItemRenderer}
-                tapBehavior="none"
+                onSelectionChanged={::this.handleSelectionChange}
                 layout={listLayout} />
 
 

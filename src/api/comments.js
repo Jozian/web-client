@@ -16,7 +16,6 @@ export function exportComments() {
   return fetch(exportUrl, {
     responseType: 'arraybuffer',
   }).then((result) => {
-    debugger;
     const blob = new Blob([result], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
     saveAs(blob, 'medComments'  + new Date() + '.xlsx');
   });
