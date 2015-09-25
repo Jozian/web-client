@@ -92,11 +92,15 @@ class EditUserPage extends Component {
     });
   }
 
+  change(e, type) {
+    this.props.user.type = type[e.target.selectedIndex].value;
+  }
+
   renderTypesOptions() {
     return (
         <Dropdown title="Type:"
                   disabled={this.state.user.type === 'owner'}
-                  onChange={(e) => {this.change(e, 'type')}}>
+                  onChange={(e) => {this.change(e, this.types)}}>
           {
             (this.types || []).filter((type) =>
                 (this.state.user.type === 'owner' || type.value !== 'owner')
@@ -110,11 +114,11 @@ class EditUserPage extends Component {
 
   async validateUnique(key, value) {
     if (!value) {
-      return true;
+      return false;
     }
     const oldValue = this.props.user[key];
     if (value === oldValue) {
-      return true;
+      return false;
     } else {
       try {
         const item = await isUnique( {id: this.props.params.id, key: key, value: value} );
@@ -165,6 +169,7 @@ class EditUserPage extends Component {
       let isValid = true;
       let key = field;
       if (field === 'email') {
+        console.log(validator.isEmail(newValue));
         [message, isValid] = ['wrong format', validator.isEmail(newValue)];
       } else if (field === 'phone') {
         [message, isValid] = ['wrong format', validator.isMobilePhone(newValue, 'en-US')];
