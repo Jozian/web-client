@@ -13,6 +13,7 @@ import Footer from 'components/Footer';
 import cx from 'classnames';
 
 import style from './style.css';
+import commonStyles from 'common/styles.css';
 
 @connect(
     (state) => ({comments: state.activeComment, user: state.currentUser, pendingActions: state.pendingActions}),
@@ -160,6 +161,12 @@ export default class CommentDetails extends Component {
     this.setState({ newCommentText: '', isEditCommentPopupOpen: false});
   }
 
+  showDeleteCommentsPopup() {
+    this.setState({
+      isDeleteCommentsPopupOpen: true,
+    });
+  }
+
   async handleSelectionChange(e) {
     const items = await e.target.winControl.selection.getItems();
 
@@ -175,6 +182,7 @@ export default class CommentDetails extends Component {
 
     await this.props.deleteComments(this.state.selectionComments);
     this.setState({selectionComments: []});
+    this.hideDeleteCommentsPopup();
     this.props.loadComments(this.props.params.id);
   }
 
@@ -199,15 +207,28 @@ export default class CommentDetails extends Component {
 
     await this.props.createComment(newCommentData);
     this.props.loadComments(this.props.params.id);
-    this.setState({ newCommentText: '', isNewCommentPopupOpen: false});
+    this.setState({
+      newCommentText: '',
+      isNewCommentPopupOpen: false,
+    });
   }
 
   hideNewCommentPopup() {
-    this.setState({isNewCommentPopupOpen: false});
+    this.setState({
+      isNewCommentPopupOpen: false,
+    });
   }
 
   hideEditCommentPopup() {
-    this.setState({isEditCommentPopupOpen: false});
+    this.setState({
+      isEditCommentPopupOpen: false,
+    });
+  }
+
+  hideDeleteCommentsPopup() {
+    this.setState({
+      isDeleteCommentsPopupOpen: false,
+    });
   }
 
   renderAnswerToComments() {
@@ -278,6 +299,25 @@ export default class CommentDetails extends Component {
       </Footer>
     </Modal>);
   }
+  renderDeleteLibrariesPopup() {
+    return (<Modal
+      isOpen={this.state.isDeleteCommentsPopupOpen}
+      title="Are you sure you want to delete selected items?"
+      className={commonStyles.modal}
+      >
+      <Footer>
+        <ActionButton
+          icon="fa fa-check"
+          onClick={::this.deleteComments}
+          disabled={!this.state.selectionComments.length}
+          inProgress={this.props.pendingActions.deleteComments}
+          >
+          Ok
+        </ActionButton>
+        <Button icon="fa fa-ban" onClick={::this.hideDeleteCommentsPopup}>Cancel</Button>
+      </Footer>
+    </Modal>);
+  }
 
   listViewItemRenderer = winjsReactRenderer((item) => {
     const classes = cx({
@@ -300,6 +340,7 @@ export default class CommentDetails extends Component {
   render() {
     return (
       <div className={style.commentBlock}>
+        { this.renderDeleteLibrariesPopup() }
         {this.renderAnswerToComments()}
         {this.renderEditComments()}
         <h1>
@@ -328,7 +369,7 @@ export default class CommentDetails extends Component {
                 <Button
                   disabled={this.state.selectionComments.length === 0}
                   icon="fa fa-trash-o"
-                  onClick={::this.deleteComments}
+                  onClick={::this.showDeleteCommentsPopup}
                   className={style.footerButton}
                   role="Delete button">
                   Delete
