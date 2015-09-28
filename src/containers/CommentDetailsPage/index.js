@@ -42,6 +42,8 @@ export default class CommentDetails extends Component {
       loading: true,
       modalWindow: {},
       selectionComments: [],
+      selectOnLoad: '',
+      selectItem: {},
       newCommentText: '',
     };
   }
@@ -80,6 +82,14 @@ export default class CommentDetails extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentDidUpdate() {
+    if (this.state.selectItem && this.state.selectOnLoad) {
+      this.refs.folder.winControl.selection.set(this.state.selectItem);
+      setImmediate(() => this.refs.folder.winControl.ensureVisible(this.state.selectItem));
+      this.setState({selectOnLoad: false});
+    }
   }
 
   _handleKeyDown(e) {
@@ -166,6 +176,14 @@ export default class CommentDetails extends Component {
     await this.props.deleteComments(this.state.selectionComments);
     this.setState({selectionComments: []});
     this.props.loadComments(this.props.params.id);
+  }
+
+  async handleItemSelected(event) {
+    const item = await event.detail.itemPromise;
+    this.setState({
+      selectItem: item,
+      selectOnLoad: true,
+    });
   }
 
   async createNewComment() {
@@ -299,6 +317,7 @@ export default class CommentDetails extends Component {
                 className={style.list}
                 itemDataSource={this.props.comments.entity.data.dataSource}
                 itemTemplate={this.listViewItemRenderer}
+                onItemInvoked={::this.handleItemSelected}
                 onSelectionChanged={::this.handleSelectionChange}
                 layout={listLayout} />
 
