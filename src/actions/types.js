@@ -47,6 +47,7 @@ export const STATISTICS_EXPORTING = 'Exporting statistics';
 export const STATISTICS_EXPORTED = 'Statistics exported';
 export const STATISTICS_EXPORT_ERROR = 'Statistics exported successfully';
 
+
 export const MOTD_LOADING = 'Loading MOTD';
 export const MOTD_LOADED = 'MOTD loaded';
 export const MOTD_LOAD_ERROR = 'Error loading MOTD';
@@ -56,3 +57,19 @@ export const MOTD_UPDATED = 'MOTD updated';
 export const MOTD_UPDATE_ERROR = 'Error updating MOTD';
 
 export const REMOVE_PENDING_TOAST = 'Removing pending toast';
+
+export const COMMENTS_LOADING = 'Loading comments';
+export const COMMENTS_LOADED = 'Comments loaded';
+export const COMMENTS_LOAD_ERROR = 'Error loading comments';
+
+export const COMMENT_CREATING = 'Creating comments';
+export const COMMENT_CREATED = 'Created comments';
+export const COMMENT_CREATING_ERROR = 'Error creating comments';
+
+export const COMMENTS_DELETING = 'Comments deleting';
+export const COMMENTS_DELETED = 'Comments deleted';
+export const COMMENTS_DELETE_ERROR = 'Comments deleting error';
+
+export const COMMENT_UPDATING = 'Comments updating';
+export const COMMENT_UPDATED = 'Comments updated';
+export const COMMENT_UPDATE_ERROR = 'Comments updating error';

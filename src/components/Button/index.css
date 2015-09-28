@@ -1,7 +1,6 @@
 .button {
     border-style: solid;
     background-clip: padding-box;
-    margin: 0;
     min-height: 40px;
     min-width: 100px;
     padding: 4px 8px;

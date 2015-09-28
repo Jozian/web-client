@@ -28,6 +28,12 @@ const store = createFinalStore(reducer, {
       top5Views: [],
     },
   },
+  comments: {
+    loading: false,
+    entity: {
+      data: new WinJS.Binding.List([]),
+    },
+  },
   libraries: {
     loading: false,
     entities: [],

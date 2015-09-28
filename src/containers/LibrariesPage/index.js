@@ -134,11 +134,11 @@ class LibrariesPage extends Component {
 
     this.props.deleteLibraries(this.state.selectedLibraries.map((l) => l.id))
       .then(::this.hideDeleteLibrariesPopup)
-      .then(() => this.setState({selectedLibraries: []}))
+  .then(() => this.setState({selectedLibraries: []}))
       .then(this.props.loadLibraries)
 
       .catch(::this.hideDeleteLibrariesPopup)
-      .then(this.props.loadLibraries)
+  .then(this.props.loadLibraries)
     ;
   }
 
@@ -147,14 +147,14 @@ class LibrariesPage extends Component {
       isOpen={this.state.isDeleteLibrariesPopupOpen}
       title="Are you sure you want to delete selected items?"
       className={styles.newLibraryModal}
-    >
+      >
       <Footer>
         <ActionButton
           icon="fa fa-check"
           onClick={::this.deleteLibraries}
           disabled={!this.state.selectedLibraries.length}
           inProgress={this.props.pendingActions.deleteLibraries}
-        >
+          >
           Ok
         </ActionButton>
         <Button icon="fa fa-ban" onClick={::this.hideDeleteLibrariesPopup}>Cancel</Button>
@@ -167,9 +167,9 @@ class LibrariesPage extends Component {
       isOpen={this.state.isNewLibraryPopupOpen}
       title="New Library"
       className={styles.newLibraryModal}
-    >
+      >
       <form onSubmit={::this.createNewLibrary}>
-          <label className>
+        <label className>
           Name:
           <input
             type="text"
@@ -177,7 +177,7 @@ class LibrariesPage extends Component {
             autoFocus
             value={this.state.newLibraryName}
             onChange={::this.onLibraryNameInputChange}
-          />
+            />
         </label>
       </form>
       <Footer>
@@ -186,7 +186,7 @@ class LibrariesPage extends Component {
           onClick={::this.createNewLibrary}
           disabled={!this.state.newLibraryName.length}
           inProgress={this.props.pendingActions.newLibrary}
-        >
+          >
           Ok
         </ActionButton>
         <Button icon="fa fa-ban" onClick={::this.hideNewLibraryPopup}>Cancel</Button>
@@ -206,7 +206,7 @@ class LibrariesPage extends Component {
           onClick={::this.openNewLibraryPopup}
           icon="fa fa-plus"
           tooltipText="Add new library"
-        />
+          />
       </Header>
       <Table
         overlayClassName={commonStyles.tableOverlay}
@@ -216,19 +216,19 @@ class LibrariesPage extends Component {
         data={this.props.libraries.entities}
         onRowClick={::this.onRowClick}
         onSelectionChange={::this.onListSelectionChange}
-      />
+        />
       <Footer>
         <Button
           disabled={!this.state.selectedLibraries.length}
           icon="fa fa-trash-o"
           onClick={::this.openDeleteLibrariesPopup}
-        >
+          >
           Delete
         </Button>
         <Button
           icon="fa fa-user"
           onClick=""
-        >
+          >
           Invite users
         </Button>
       </Footer>
