@@ -1,7 +1,7 @@
 import fetch from './helper';
 
 const apiUrl = '/api/users';
-const isUniqueUrl = '/api/isUnique';
+const isUniqueUrl = '/api/userManagement/isUnique';
 const userManagementUrl = '/api/userManagement';
 
 export function getList() {
