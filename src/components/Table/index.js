@@ -17,17 +17,19 @@ export default class Table extends Component {
     })),
     onRowClick: React.PropTypes.func,
     onSelectionChange: React.PropTypes.func,
+    initSelection: React.PropTypes.array,
   };
 
   static defaultProps = {
     onSelectionChange: () => {},
     onRowClick: () => {},
+    initSelection: [],
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      selection: [],
+      selection: props.initSelection,
       sort: {
         by: 'name',
         order: true,

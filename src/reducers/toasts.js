@@ -40,6 +40,14 @@ const messages = {
     text: 'Error uploading users',
     type: 'error',
   },
+  [types.INVITED_USERS_UPDATED]: {
+    text: 'Invited users successfully updated',
+    type: 'success',
+  },
+  [types.INVITED_USERS_UPDATE_ERROR]: {
+    text: 'Error invited users update',
+    type: 'error',
+  },
 };
 
 export default function toastReducer(state = [], action) {

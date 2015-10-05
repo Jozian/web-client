@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+
 import * as actions from 'actions/libraries';
+import { loadUsers } from 'actions/users';
 import DocumentTitle from 'components/DocumentTitle';
 import Header from 'components/Header';
 import Modal from 'components/Modal';
@@ -17,21 +19,25 @@ import commonStyles from 'common/styles.css';
 import styles from './index.css';
 
 @connect(
-  (state) => ({ libraries: state.libraries, pendingActions: state.pendingActions}),
-  (dispatch) => bindActionCreators(actions, dispatch)
+  (state) => ({
+    libraries: state.libraries, users: state.users, pendingActions: state.pendingActions,
+  }),
+  (dispatch) => bindActionCreators({...actions, loadUsers}, dispatch)
 )
 @loading(
   (state) => state.libraries.loading,
   { isLoadingByDefault: true },
 )
 class LibrariesPage extends Component {
-
   static propTypes = {
     libraries: React.PropTypes.object.isRequired,
+    users: React.PropTypes.object.isRequired,
     pendingActions: React.PropTypes.object.isRequired,
+    loadUsers: React.PropTypes.func.isRequired,
     loadLibraries: React.PropTypes.func.isRequired,
     createLibrary: React.PropTypes.func.isRequired,
     deleteLibraries: React.PropTypes.func.isRequired,
+    inviteUsers: React.PropTypes.func.isRequired,
   }
 
   static contextTypes = {
@@ -45,10 +51,14 @@ class LibrariesPage extends Component {
       newLibraryName: '',
     };
     props.loadLibraries();
+    props.loadUsers();
   }
 
   onListSelectionChange(selectedLibraries) {
     this.setState({ selectedLibraries });
+  }
+  onSelectInvitedUser(invitedUsers) {
+    this.setState({ invitedUsers });
   }
 
   onRowClick(data) {
@@ -68,6 +78,17 @@ class LibrariesPage extends Component {
       this.openDeleteLibrariesPopup();
     }
   }
+  getInvitedUsers() {
+    const libIds = this.state.selectedLibraries.map(lib => parseInt(lib.id.slice(7), 10));
+    const invited = [];
+    this.props.users.entities.forEach((user) => {
+      const userLibIds = user.libraries.map(lib => lib.id);
+      if (libIds.every(libId => userLibIds.indexOf(libId) !== -1)) {
+        invited.push(user);
+      }
+    });
+    this.setState({alreadyInvited: invited});
+  }
 
   openNewLibraryPopup() {
     this.setState({
@@ -85,6 +106,14 @@ class LibrariesPage extends Component {
 
   hideDeleteLibrariesPopup() {
     this.setState({isDeleteLibrariesPopupOpen: false});
+  }
+
+  openInviteUsersPopup() {
+    this.getInvitedUsers();
+    this.setState({isInviteUsersPopupOpen: true});
+  }
+  hideInviteUsersPopup() {
+    this.setState({isInviteUsersPopupOpen: false});
   }
 
   config = {
@@ -108,6 +137,16 @@ class LibrariesPage extends Component {
         icon: 'fa fa-eye',
         text: 'Views',
         className: commonStyles.numberCell,
+      },
+    ],
+    selectable: true,
+  }
+
+  configInviteUsers = {
+    columns: [
+      {
+        key: 'name',
+        text: 'Select all',
       },
     ],
     selectable: true,
@@ -140,6 +179,28 @@ class LibrariesPage extends Component {
       .catch(::this.hideDeleteLibrariesPopup)
   .then(this.props.loadLibraries)
     ;
+  }
+
+  async inviteUsers(event) {
+    event.preventDefault();
+    if (this.props.pendingActions.inviteUsers) {
+      return;
+    }
+    if (!this.state.invitedUsers.length) {
+      return;
+    }
+
+    const params = {};
+    params.libraries = this.state.selectedLibraries.map(lib => lib.id);
+    params.users = this.state.invitedUsers.map(invUsr => invUsr.id);
+    params.removeUsers = this.props.users.entities.map(user => user.id)
+      .filter(userId => params.users.indexOf(userId) === -1);
+
+    await this.props.inviteUsers(params);
+
+    this.hideInviteUsersPopup();
+
+    this.props.loadUsers();
   }
 
   renderDeleteLibrariesPopup() {
@@ -194,11 +255,40 @@ class LibrariesPage extends Component {
     </Modal>);
   }
 
+  renderInviteUsersPopup() {
+    return (<Modal
+      isOpen={this.state.isInviteUsersPopupOpen}
+      title="Invite Users"
+      className={styles.inviteUsersModal}
+      >
+      <Table
+        overlayClassName={styles.inviteTable}
+        className={commonStyles.table}
+        ref="table"
+        config={this.configInviteUsers}
+        data={this.props.users.entities}
+        onSelectionChange={::this.onSelectInvitedUser}
+        initSelection={this.state.alreadyInvited}
+        />
+      <Footer>
+        <ActionButton
+          icon="fa fa-check"
+          onClick={::this.inviteUsers}
+          inProgress={this.props.pendingActions.inviteUsers}
+          >
+          Ok
+        </ActionButton>
+        <Button icon="fa fa-ban" onClick={::this.hideInviteUsersPopup}>Cancel</Button>
+      </Footer>
+    </Modal>);
+  }
+
   render() {
     return (<div onKeyDown={::this.onDelKeyDown}>
       <DocumentTitle title="Libraries" />
       { this.renderNewLibraryPopup() }
       { this.renderDeleteLibrariesPopup() }
+      { this.renderInviteUsersPopup() }
       <Header>
         Libraries
         <IconButton
@@ -226,8 +316,9 @@ class LibrariesPage extends Component {
           Delete
         </Button>
         <Button
+          disabled={!this.state.selectedLibraries.length}
           icon="fa fa-user"
-          onClick=""
+          onClick={::this.openInviteUsersPopup}
           >
           Invite users
         </Button>
