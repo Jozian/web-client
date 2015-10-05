@@ -148,18 +148,21 @@ class EditUserPage extends Component {
   async onBlur(event) {
     const key = event.target.name;
     const value = event.target.value;
-    const isUnique = await this.validateUnique(key, value);
-    const errors = this.composeErrorMessages(key, 'already taken', isUnique);
+    let errors = [];
+    if (this.props.user[key] !== value) {
+      const isUnique = await this.validateUnique(key, value);
+      errors = this.composeErrorMessages(key, 'already taken', isUnique);
+    }
     const newState = {
-      user: {
-        ...this.state.user,
+        user: {
+          ...this.state.user,
         [key]: value,
       },
       errors: {
         ...this.state.errors,
         [key]: errors,
-      }
-    };
+        }
+        };
     this.setState(newState);
   }
 
