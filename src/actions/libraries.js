@@ -30,3 +30,13 @@ export function deleteLibraries(ids) {
     },
   };
 }
+
+export function inviteUsers(body) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.INVITED_USERS_UPDATING, types.INVITED_USERS_UPDATED, types.INVITED_USERS_UPDATE_ERROR],
+      promise: librariesApi.inviteUsers(body),
+    },
+  };
+}

@@ -92,6 +92,10 @@ export const pendingActions = combineReducers({
     [types.USERS_UPLOADING],
     [types.USERS_UPLOADED, types.USERS_UPLOAD_ERROR],
   ),
+  inviteUsers: handlePendingChain(
+    [types.INVITED_USERS_UPDATING],
+    [types.INVITED_USERS_UPDATED, types.INVITED_USERS_UPDATE_ERROR],
+  ),
 });
 
 export function currentUser(state) {

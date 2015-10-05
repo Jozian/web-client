@@ -73,3 +73,7 @@ export const COMMENTS_DELETE_ERROR = 'Comments deleting error';
 export const COMMENT_UPDATING = 'Comments updating';
 export const COMMENT_UPDATED = 'Comments updated';
 export const COMMENT_UPDATE_ERROR = 'Comments updating error';
+
+export const INVITED_USERS_UPDATING = 'Invited users updating';
+export const INVITED_USERS_UPDATED = 'Invited users updated';
+export const INVITED_USERS_UPDATE_ERROR = 'Invited users updating error';
