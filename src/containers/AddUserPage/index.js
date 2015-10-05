@@ -16,18 +16,11 @@ import validator from 'validator';
   (state) =>  ({user: state.user.entity}),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
-@loading(
-  (state) => state.user.loading,
-  { isLoadingByDefault: true }
-)
-class EditUserPage extends Component {
+
+class AddUserPage extends Component {
   static propTypes = {
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }),
     user: PropTypes.object,
   };
-
   static contextTypes = {
     router: PropTypes.func.isRequired,
   };
@@ -35,10 +28,11 @@ class EditUserPage extends Component {
   constructor(props) {
     super(props);
     this.linkState = React.addons.LinkedStateMixin.linkState.bind(this);
-    props.loadUser(props.params.id);
     this.state = {
       loading: true,
-      user: {},
+      user: {
+        type: 'admin',
+      },
       checked: {},
       errors: {
         name: [],
@@ -75,8 +69,8 @@ class EditUserPage extends Component {
   }
 
   saveUserHandler() {
-    console.log(this.props.params.id, this.state.user);
-    this.props.editUser(this.props.params.id, this.state.user);
+    this.props.addUser(this.state.user);
+    console.log(this.state.user);
     const { router } = this.context;
     router.transitionTo('users');
   }
@@ -100,17 +94,17 @@ class EditUserPage extends Component {
 
   renderTypesOptions() {
     return (
-        <Dropdown title="Type:"
-                  disabled={this.state.user.type === 'owner'}
-                  onChange={(e) => {this.change(e, this.types)}}>
-          {
-            (this.types || []).filter((type) =>
-                (this.state.user.type === 'owner' || type.value !== 'owner')
-            ).map((type) =>
-                (<option value={type.value} selected={type.value === this.state.user.type}>{type.label}</option>)
-            )
-          }
-        </Dropdown>
+      <Dropdown title="Type:"
+                disabled={this.state.user.type === 'owner'}
+                onChange={(e) => {this.change(e, this.types)}}>
+        {
+          (this.types || []).filter((type) =>
+              (this.state.user.type === 'owner' || type.value !== 'owner')
+          ).map((type) =>
+              (<option value={type.value} selected={type.value === this.state.user.type}>{type.label}</option>)
+          )
+        }
+      </Dropdown>
     );
   }
 
@@ -123,7 +117,7 @@ class EditUserPage extends Component {
       return false;
     } else {
       try {
-        const item = await isUnique( {id: this.props.params.id, key: key, value: value} );
+        const item = await isUnique( {key: key, value: value} );
         return item.isUnique;
       } catch (_x_) {
         console.error(_x_);
@@ -151,20 +145,20 @@ class EditUserPage extends Component {
     const key = event.target.name;
     const value = event.target.value;
     let errors = [];
-    if (this.props.user[key] !== value) {
+    if (value !== '') {
       const isUnique = await this.validateUnique(key, value);
       errors = this.composeErrorMessages(key, 'already taken', isUnique);
     }
     const newState = {
-      user: {
-        ...this.state.user,
+        user: {
+          ...this.state.user,
         [key]: value,
       },
       errors: {
         ...this.state.errors,
         [key]: errors,
-      }
-    };
+        }
+        };
     this.setState(newState);
   }
 
@@ -181,9 +175,11 @@ class EditUserPage extends Component {
         [message, isValid] = ['required', validator.isLength(newValue, 1)];
       } else if (field === 'confirm') {
         [message, isValid] = ['does not match', validator.equals(this.state.user.password, newValue)];
+        [message, isValid] = ['required', validator.isLength(newValue, 1)];
       } else if (field === 'password') {
         key = 'confirm';
         [message, isValid] = ['does not match', validator.equals(this.state.user.confirm, newValue)];
+        [message, isValid] = ['required', validator.isLength(newValue, 1)];
       }
       const errors = this.composeErrorMessages(key, message, isValid);
       if (this.state.user[field] !== newValue) {
@@ -203,97 +199,96 @@ class EditUserPage extends Component {
   }
 
   render() {
-    return (
-      <div className={styles.mainContainer}>
-        <Header>Edit user</Header>
-        <div className={styles.wrapper}>
-          <form className={styles.backgroundGrey}>
-            <FormInput
-              valueLink={{
+      return (
+        <div className={styles.mainContainer}>
+          <Header>Add User Account</Header>
+          <div className={styles.wrapper}>
+            <form className={styles.backgroundGrey}>
+              <FormInput
+                valueLink={{
                 value: this.state.user.name,
                 requestChange: this.getUserChange('name'),
               }}
-              label="User Name:"
-              name="name"
-              placeholder="i.e. John Doe"
-              type="text"
-              errorMessage={this.state.errors.name}
-              onBlur={::this.onBlur} />
-            <FormInput
-              valueLink={{
+                label="User Name:"
+                name="name"
+                placeholder="i.e. John Doe"
+                type="text"
+                errorMessage={this.state.errors.name}
+                onBlur={::this.onBlur} />
+              <FormInput
+                valueLink={{
                 value: this.state.user.login,
                 requestChange: this.getUserChange('login'),
               }}
-              label="Login*:"
-              name="login"
-              placeholder="i.e. johndoe"
-              type="text"
-              errorMessage={this.state.errors.login}
-              onBlur={::this.onBlur} />
-            { this.renderTypesOptions() }
-            <FormInput
-              valueLink={{
+                label="Login*:"
+                name="login"
+                placeholder="i.e. johndoe"
+                type="text"
+                errorMessage={this.state.errors.login}
+                onBlur={::this.onBlur} />
+              { this.renderTypesOptions() }
+              <FormInput
+                valueLink={{
                 value: null,
                 requestChange: this.getUserChange('password'),
               }}
-              label="Password:"
-              name="password"
-              placeholder={null}
-              type="password"
-              errorMessage={this.state.errors.password} />
-            <FormInput
-              valueLink={{
+                label="Password:"
+                name="password"
+                placeholder={null}
+                type="password"
+                errorMessage={this.state.errors.password} />
+              <FormInput
+                valueLink={{
                 value: null,
                 requestChange: this.getUserChange('confirm'),
               }}
-              label="Confirm Password:"
-              name="confirm"
-              type="password"
-              errorMessage={this.state.errors.confirm} />
-            <div className={styles.backgroundGreen}>
-              <FormInputWithCheckbox
-                valueLink={{
+                label="Confirm Password:"
+                name="confirm"
+                type="password"
+                errorMessage={this.state.errors.confirm} />
+              <div className={styles.backgroundGreen}>
+                <FormInputWithCheckbox
+                  valueLink={{
                   value: this.state.user.phone,
                   requestChange: this.getUserChange('phone'),
                 }}
-                errorMessage={this.state.errors.phone}
-                label="Send credentials in SMS:"
-                name="phone"
-                placeholder="Your mobile phone"
-                checked={this.state.checked.phone}
-                onCheckboxChange={this.check.bind(this, 'phone')} />
-              <FormInputWithCheckbox
-                valueLink={{
+                  errorMessage={this.state.errors.phone}
+                  label="Send credentials in SMS:"
+                  name="phone"
+                  placeholder="Your mobile phone"
+                  checked={this.state.checked.phone}
+                  onCheckboxChange={this.check.bind(this, 'phone')} />
+                <FormInputWithCheckbox
+                  valueLink={{
                   value: this.state.user.email,
                   requestChange: this.getUserChange('email'),
                 }}
-                errorMessage={this.state.errors.email}
-                label="Send credentials in emails:"
-                name="email"
-                placeholder="email@email.com"
-                checked={this.state.checked.email}
-                onBlur={::this.onBlur}
-                onCheckboxChange={this.check.bind(this, 'email')} />
-            </div>
-            <p className={styles.note}>
-              * user will be able to login both to website and mobile client with this credentials.
-            </p>
-            <footer className={styles.buttonsWrapper}>
-              <Button className={styles.buttonStyle}
-                      onClick={::this.saveUserHandler}
-                      text="OK" />
-              <Button className={styles.buttonStyle}
-                      onClick={::this.cancelUserHandler}
-                      text="Cancel" />
-            </footer>
-          </form>
-        </div>
-      </div>);
-  }
+                  errorMessage={this.state.errors.email}
+                  label="Send credentials in emails:"
+                  name="email"
+                  placeholder="email@email.com"
+                  checked={this.state.checked.email}
+                  onBlur={::this.onBlur}
+                  onCheckboxChange={this.check.bind(this, 'email')} />
+              </div>
+              <p className={styles.note}>
+                * user will be able to login both to website and mobile client with this credentials.
+              </p>
+              <footer className={styles.buttonsWrapper}>
+                <Button className={styles.buttonStyle}
+                        onClick={::this.saveUserHandler}
+                        text="OK" />
+                <Button className={styles.buttonStyle}
+                        onClick={::this.cancelUserHandler}
+                        text="Cancel" />
+              </footer>
+            </form>
+          </div>
+        </div>);
+    }
 }
 
 function mapStateToProps() {
   return {};
 }
-
-export default connect(mapStateToProps)(EditUserPage);
+export default connect(mapStateToProps)(AddUserPage);
