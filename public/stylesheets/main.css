@@ -23,30 +23,47 @@ input[type="checkbox"] {
     color: #737373;
     font-size: 14px;
     float: left;
+<<<<<<< HEAD
     margin: 25px 40px 0 125px;
 }
 .b_start-footer__link {
     max-height: 50px;
     margin-left: 3%;
     margin-right: 3%;
+=======
+    margin: 25px 40px 0 120px;
+}
+.b_start-footer__link {
+    max-height: 50px;
+    margin-left: 40px;
+    margin-right: 40px;
+>>>>>>> Finished creating static pages
     display: inline-block;
 }
 .b_start-footer__link a {
     color: #737373;
 }
+<<<<<<< HEAD
 
 .b_start-footer__link a:last-child {
     border: none;
 }
 .b-start-footer-bottom-menu {
     width: 62%;
+=======
+.b-start-footer-bottom-menu {
+>>>>>>> Finished creating static pages
     display: inherit;
     margin: 25px 80px 0 0;
     float: right;
 }
 .b_column-container {
     margin-left: 6%;
+<<<<<<< HEAD
     width: 94%;
+=======
+    width: 100%;
+>>>>>>> Finished creating static pages
     height: auto;
     display: inline-block;
 }
@@ -155,7 +172,11 @@ input[type="checkbox"] {
 }
 
 .b_source_content__span__title {
+<<<<<<< HEAD
     font-weight: 700;
+=======
+    font-weight: bold;
+>>>>>>> Finished creating static pages
     margin-bottom: 10px;
 }
 .b_column-container .b_source_content__span {
@@ -247,7 +268,11 @@ input[type="checkbox"] {
 .b_start-header-logo {
     height: 60px;
     width: 29%;
+<<<<<<< HEAD
     margin: 2px 0px 0 60px;
+=======
+    margin: 10px 0px 0 50px;
+>>>>>>> Finished creating static pages
     display: inline-block;
 }
 .b_start-header-logo-image {
@@ -261,12 +286,21 @@ input[type="checkbox"] {
     font-size: 18px;
     font-weight: 400;
     letter-spacing: -0.36px;
+<<<<<<< HEAD
     line-height: 26px;
     margin: 10px 0 0 15px;
 }
 .b_start-header-menu {
     margin: 0;
     padding-left: 5px;
+=======
+    line-height: 38px;
+    margin: 10px 0 0 15px;
+}
+.b_start-header-menu {
+    width: 63%;
+    margin: 0;
+>>>>>>> Finished creating static pages
     display: inline-block;
     color: #505050;
 }
@@ -277,7 +311,11 @@ input[type="checkbox"] {
 }
 .b_start-header-menu li a {
     color: #505050;
+<<<<<<< HEAD
     padding: 14px 40px 20px 30px;
+=======
+    padding: 30px 40px 20px 30px;
+>>>>>>> Finished creating static pages
 }
 .b_start-header-menu--selected {
     background-color: #5e8000;
@@ -285,6 +323,7 @@ input[type="checkbox"] {
     color: #ffffff !important;
 }
 .b_start-header-menu-login {
+<<<<<<< HEAD
     margin-left: 80px;
 }
 .b_start-header--content {
@@ -295,6 +334,18 @@ input[type="checkbox"] {
 .b_start-header--content__links {
     margin-top: 50px;
     margin-bottom: 10px;
+=======
+    margin-left: 100px;
+}
+.b_start-header--content {
+    float: right;
+    margin-left: 136px;
+    width: 50%;
+}
+.b_start-header--content__links {
+    margin-top: 30px;
+    margin-bottom: 20px;
+>>>>>>> Finished creating static pages
     margin-left: 10px;
 
 }
@@ -317,7 +368,10 @@ input[type="checkbox"] {
     color: #5e8000;
     font-size: 62px;
     font-weight: 300;
+<<<<<<< HEAD
     margin: 0;
+=======
+>>>>>>> Finished creating static pages
 }
 .b_source_content__h:before {
     content: '\f111';
@@ -340,8 +394,12 @@ input[type="checkbox"] {
 }
 .b_source_content-left-video {
     display: inline-block;
+<<<<<<< HEAD
     width: 40% !important;
     height: 100%;
+=======
+    width: 40%;
+>>>>>>> Finished creating static pages
     margin-right: 0 !important;
 }
 .b_start-header--title {
@@ -359,7 +417,11 @@ input[type="checkbox"] {
     background-color: #ffffff;
 }
 .b_start-header--content-title {
+<<<<<<< HEAD
     margin-top: 70px;
+=======
+    margin-top: 55px;
+>>>>>>> Finished creating static pages
     padding-left: 15px;
     padding-right: 6%;
     width: 85%;
@@ -380,6 +442,7 @@ nav {
     margin-top: 20px;
     position: relative;
 }
+<<<<<<< HEAD
 
 .b_source_content__list {
     font-size: 6pt;
@@ -387,6 +450,8 @@ nav {
     top: -5px;
     margin-right: 40px;
 }
+=======
+>>>>>>> Finished creating static pages
 .b_start-header {
     height: auto;
     display: inline-flex;
@@ -497,7 +562,10 @@ section#contenthost {
     height: 100%;
     padding-left: 250px;
 }
+<<<<<<< HEAD
 
 .pageBody {
     background-color: #ffffff;
 }
+=======
+>>>>>>> Finished creating static pages

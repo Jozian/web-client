@@ -5,6 +5,7 @@
     allIdElem.push(document.getElementById('useCases'));
     allIdElem.push(document.getElementById('openSource'));
     allIdElem.push(document.getElementById('support'));
+
     allIdElem.push(document.getElementById('loginRegister'));
     var baseUrl = 'http://medserver.apps.wookieelabs.com';
 

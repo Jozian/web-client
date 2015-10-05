@@ -22,6 +22,7 @@ export function loadUser(id) {
 }
 
 export function editUser(id, body) {
+  debugger;
   return {
     type: types.CALL_API,
     payload: {
