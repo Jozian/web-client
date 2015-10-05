@@ -149,7 +149,6 @@ input[type="submit"], a {
     padding-left: 0;
     margin: 0;
     text-transform: uppercase;
-
 }
 
 .box#login-box h1 {
@@ -276,3 +275,4 @@ form#login-form a {
 .confirm_err {
     right: 31px !important;
 }
+

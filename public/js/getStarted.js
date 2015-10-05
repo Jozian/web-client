@@ -35,7 +35,7 @@
       for (var j = 0; j < allElemMenu.length; j++) {
         allElemMenu[j].classList.remove('b_start-header-menu--selected');
       }
-
+      
       document.getElementById(name).style.display = 'block';
       window.scrollTo(0, 0);
 
