@@ -64,6 +64,11 @@ export default class UsersPage extends Component {
     router.transitionTo('editUser', {id: value.id});
   }
 
+  onAddClick(value) {
+    const { router } = this.context;
+    router.transitionTo('addUser');
+  }
+
   onListSelectionChange(selectedUsers) {
     this.setState({ selectedUsers });
   }
@@ -212,6 +217,7 @@ export default class UsersPage extends Component {
           icon="fa fa-plus"
           tooltipText="Add new user"
           handleClick={this.handleAddUserClick}
+          onClick={::this.onAddClick}
         />
       </Header>
       <LoadingSpinner loading={this.state.loading}>

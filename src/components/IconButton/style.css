@@ -1,8 +1,7 @@
 .iconButton{
     display: inline-block;
     vertical-align: middle;
-    margin-left: 10px;
-    padding-bottom: 20px;
+    margin-left: 20px;
 }
 
 .iconButton .tooltip{

@@ -17,6 +17,7 @@ export function getItem(id) {
 }
 
 export function add(body) {
+  console.log('add', body.type);
   if (!body || !body.name || !body.login || !body.password || !body.type) {
     return Promise.reject('Invalid body');
   }
@@ -55,7 +56,7 @@ export function deleteUsers(body) {
 }
 
 export function isUnique(body) {
-  if (!body || !body.key || !body.value || !body.id) {
+  if (!body || !body.key || !body.value) {
     return Promise.reject('Invalid body');
   }
 
