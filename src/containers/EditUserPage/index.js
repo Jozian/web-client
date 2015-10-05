@@ -104,7 +104,7 @@ export default class EditUserPage extends Component {
     }
     return errors;
   }
-
+  
   async saveUserHandler() {
     const { router } = this.context;
     let required = ['name', 'login', 'password'];

@@ -1,4 +1,5 @@
 (function() {
+
   window.addEventListener('load', function() {
     var allIdElem = [];
     allIdElem.push(document.getElementById('getStarted'));
@@ -26,6 +27,10 @@
 
     var loginErr = document.getElementById('login_err');
     var registerErr = document.getElementById('reg_err');
+
+    var allElemMenu = document.querySelectorAll('.b_start-header-menu > li > a');
+
+    location.hash = '#getStarted';
 
     function selectBlock(name, number) {
       for (var i = 0; i < allIdElem.length; i++) {
@@ -197,3 +202,4 @@
     window.closePopup = closeModalWindow;
   });
 }());
+
