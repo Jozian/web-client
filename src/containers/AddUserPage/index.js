@@ -158,7 +158,7 @@ class AddUserPage extends Component {
         ...this.state.errors,
         [key]: errors,
         }
-        };
+      };
     this.setState(newState);
   }
 

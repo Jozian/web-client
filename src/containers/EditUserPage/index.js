@@ -163,8 +163,8 @@ class EditUserPage extends Component {
       errors: {
         ...this.state.errors,
         [key]: errors,
-        }
-        };
+      }
+    };
     this.setState(newState);
   }
 
