@@ -8,8 +8,6 @@
 
     var allElemMenu = document.querySelectorAll('.b_start-header-menu > li > a');
 
-    location.hash = '#getStarted';
-
     function selectBlock(name, number) {
       for (var i = 0; i < allIdElem.length; i++) {
         allIdElem[i].style.display = 'none';
@@ -24,6 +22,8 @@
       window.scrollTo(0, 0);
     }
 
+    selectBlock('getStarted', 0);
+    
     window.addEventListener('hashchange', function(event) {
       event.preventDefault();
       switch (location.hash.substring(1)) {

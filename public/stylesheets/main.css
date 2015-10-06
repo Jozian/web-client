@@ -23,25 +23,26 @@ input[type="checkbox"] {
     color: #737373;
     font-size: 14px;
     float: left;
-    margin: 25px 40px 0 120px;
+    margin: 25px 40px 0 125px;
 }
 .b_start-footer__link {
     max-height: 50px;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 6%;
+    margin-right: 6%;
     display: inline-block;
 }
 .b_start-footer__link a {
     color: #737373;
 }
 .b-start-footer-bottom-menu {
+    width: 62%;
     display: inherit;
     margin: 25px 80px 0 0;
     float: right;
 }
 .b_column-container {
     margin-left: 6%;
-    width: 100%;
+    width: 94%;
     height: auto;
     display: inline-block;
 }
@@ -150,7 +151,7 @@ input[type="checkbox"] {
 }
 
 .b_source_content__span__title {
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 10px;
 }
 .b_column-container .b_source_content__span {
@@ -242,7 +243,7 @@ input[type="checkbox"] {
 .b_start-header-logo {
     height: 60px;
     width: 29%;
-    margin: 10px 0px 0 50px;
+    margin: 2px 0px 0 60px;
     display: inline-block;
 }
 .b_start-header-logo-image {
@@ -256,12 +257,12 @@ input[type="checkbox"] {
     font-size: 18px;
     font-weight: 400;
     letter-spacing: -0.36px;
-    line-height: 38px;
+    line-height: 26px;
     margin: 10px 0 0 15px;
 }
 .b_start-header-menu {
-    width: 63%;
     margin: 0;
+    padding-left: 5px;
     display: inline-block;
     color: #505050;
 }
@@ -272,7 +273,7 @@ input[type="checkbox"] {
 }
 .b_start-header-menu li a {
     color: #505050;
-    padding: 30px 40px 20px 30px;
+    padding: 14px 40px 20px 30px;
 }
 .b_start-header-menu--selected {
     background-color: #5e8000;
@@ -284,12 +285,12 @@ input[type="checkbox"] {
 }
 .b_start-header--content {
     float: right;
-    margin-left: 136px;
+    margin-left: 20px;
     width: 50%;
 }
 .b_start-header--content__links {
-    margin-top: 30px;
-    margin-bottom: 20px;
+    margin-top: 50px;
+    margin-bottom: 10px;
     margin-left: 10px;
 
 }
@@ -312,6 +313,7 @@ input[type="checkbox"] {
     color: #5e8000;
     font-size: 62px;
     font-weight: 300;
+    margin: 0;
 }
 .b_source_content__h:before {
     content: '\f111';
@@ -352,7 +354,7 @@ input[type="checkbox"] {
     background-color: #ffffff;
 }
 .b_start-header--content-title {
-    margin-top: 55px;
+    margin-top: 70px;
     padding-left: 15px;
     padding-right: 6%;
     width: 85%;
