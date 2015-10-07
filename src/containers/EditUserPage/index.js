@@ -208,6 +208,18 @@ export default class EditUserPage extends Component {
       this.setUser(key, value);
       this.setErrors(key, errors);
     }
+
+    const newState = {
+      user: {
+        ...this.state.user,
+        [key]: value,
+      },
+      errors:{
+        ...this.state.errors,
+        [key]: errors,
+      }
+    };
+    this.setState(newState);
   }
 
   getUserChange(field) {
