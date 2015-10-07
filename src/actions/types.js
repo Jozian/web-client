@@ -64,9 +64,20 @@ export const USER_LOADING = 'Loading user';
 export const USER_LOADED = 'User loaded';
 export const USER_LOAD_ERROR = 'Error loading user';
 
+export const NEW_USER_LOAD = 'New user loading';
+
+export const USER_EDITING = 'User editing';
+export const USER_EDITED = 'User edited';
+export const USER_EDIT_ERROR = 'Error editing user';
+
+export const USER_CREATING = 'User creating';
+export const USER_CREATED = 'User created';
+export const USER_CREATE_ERROR = 'Error creating user';
+
 export const STATISTICS_LOADING = 'Loading statistics';
 export const STATISTICS_LOADED = 'Statistics loaded';
 export const STATISTICS_LOAD_ERROR = 'Error loading statistics';
+
 export const STATISTICS_EXPORTING = 'Exporting statistics';
 export const STATISTICS_EXPORTED = 'Statistics exported';
 export const STATISTICS_EXPORT_ERROR = 'Statistics exported successfully';

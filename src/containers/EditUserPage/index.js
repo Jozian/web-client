@@ -21,12 +21,12 @@ import styles from './index.css';
 )
 @loading(
   (state) => state.user.loading,
-  { isLoadingByDefault: true }
+  {isLoadingByDefault: true}
 )
-class EditUserPage extends Component {
+export default class EditUserPage extends Component {
   static propTypes = {
     params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.string,
     }),
     user: PropTypes.object,
   };
@@ -38,7 +38,6 @@ class EditUserPage extends Component {
   constructor(props) {
     super(props);
     this.linkState = React.addons.LinkedStateMixin.linkState.bind(this);
-    props.loadUser(props.params.id);
     this.state = {
       loading: true,
       user: {},
@@ -52,6 +51,12 @@ class EditUserPage extends Component {
         phone: [],
       },
     };
+    if (props.params.id) {
+      props.loadUser(props.params.id);
+    } else {
+      props.newUser();
+      //this.state.user.type = 'admin';
+    }
     this.types = [{
       value: 'admin',
       label: 'Admin',
@@ -68,19 +73,46 @@ class EditUserPage extends Component {
   }
 
   componentWillReceiveProps(props) {
-    this.setState({
-      user: props.user,
-      checked: {
-        phone: !!props.user.phone,
-        email: !!props.user.email,
-      },
-    });
+    if (props.params.id) {
+      this.setState({
+        user: props.user,
+        checked: {
+          phone: !!props.user.phone,
+          email: !!props.user.email,
+        },
+      });
+    }
   }
 
   async saveUserHandler() {
-    await this.props.editUser(this.props.params.id, this.state.user);
     const { router } = this.context;
-    router.transitionTo('users');
+    let message = '';
+    let isValid = true;
+    const required = ['name', 'login', 'password'];
+    let newState = {
+      errors: this.state.errors,
+    };
+    _(required).forEach(function(key) {
+      [message, isValid] = ['required', validator.isLength(this.state.user[key], 1)];
+      const errors = this.composeErrorMessages(key, message, isValid);
+      newState.errors[key] = errors;
+    }, this).value();
+    this.setState(newState);
+    const errors = [];
+    _(this.state.errors).forEach(function(val, key) {
+      if (val.length) {
+        errors.push(val);
+      }
+    }, this).value();
+    if (!errors.length) {
+      if (this.props.params.id) {
+        await this.props.editUser(this.props.params.id, this.state.user);
+        router.transitionTo('users');
+      } else {
+        await this.props.addUser(this.state.user);
+        router.transitionTo('users');
+      }
+    }
   }
 
   cancelUserHandler() {
@@ -102,17 +134,17 @@ class EditUserPage extends Component {
 
   renderTypesOptions() {
     return (
-        <Dropdown title="Type"
-                  disabled={this.state.user.type === 'owner'}
-                  onChange={(e) => {this.change(e, this.types)}}>
-          {
-            (this.types || []).filter((type) =>
-                (this.state.user.type === 'owner' || type.value !== 'owner')
-            ).map((type) =>
-                (<option value={type.value} selected={type.value === this.state.user.type}>{type.label}</option>)
-            )
-          }
-        </Dropdown>
+      <Dropdown title="Type:"
+                disabled={this.state.user.type === 'owner'}
+                onChange={(e) => {this.change(e, this.types)}}>
+        {
+          (this.types || []).filter((type) =>
+              (this.state.user.type === 'owner' || type.value !== 'owner')
+          ).map((type) =>
+              (<option value={type.value} selected={type.value === this.state.user.type}>{type.label}</option>)
+          )
+        }
+      </Dropdown>
     );
   }
 
@@ -125,7 +157,7 @@ class EditUserPage extends Component {
       return false;
     } else {
       try {
-        const item = await isUnique( {id: this.props.params.id, key: key, value: value} );
+        const item = await isUnique({id: this.props.params.id, key: key, value: value});
         return item.isUnique;
       } catch (_x_) {
         console.error(_x_);
@@ -158,15 +190,15 @@ class EditUserPage extends Component {
       errors = this.composeErrorMessages(key, 'already taken', isUnique);
     }
     const newState = {
-        user: {
-          ...this.state.user,
+      user: {
+        ...this.state.user,
         [key]: value,
       },
-      errors: {
+      errors:{
         ...this.state.errors,
         [key]: errors,
-        }
-        };
+      }
+    };
     this.setState(newState);
   }
 
@@ -208,6 +240,7 @@ class EditUserPage extends Component {
     return (
       <div className={styles.mainContainer}>
         <Header>Edit user</Header>
+        {/*<Header>Add User Account</Header>*/}
         <div className={styles.wrapper}>
           <form className={styles.backgroundWhite}>
             <div className={styles.leftBlock}>
@@ -242,7 +275,9 @@ class EditUserPage extends Component {
                 errorMessage={this.state.errors.email}
                 name="email"
                 placeholder="email@email.com"
-                />
+                checked={this.state.checked.email}
+                onBlur={::this.onBlur}
+                onCheckboxChange={this.check.bind(this, 'email')}/>
             </div>
 
 
@@ -282,23 +317,18 @@ class EditUserPage extends Component {
               * user will be able to login both to website and mobile client with this credentials.
             </p>
 
+            <footer className={styles.buttonsWrapper}>
+              <Button className={styles.buttonStyle}
+                      onClick={::this.saveUserHandler}
+                      text="OK"/>
+              <Button className={styles.buttonStyle}
+                      onClick={::this.cancelUserHandler}
+                      text="Cancel"/>
+            </footer>
           </form>
 
         </div>
-        <Footer>
-          <Button className="mdl2-check-mark"
-                  onClick={::this.saveUserHandler}
-                   />
-          <Button className="mdl2-cancel"
-                  onClick={::this.cancelUserHandler}
-                  />
-      </Footer>
       </div>);
   }
 }
 
-function mapStateToProps() {
-  return {};
-}
-
-export default connect(mapStateToProps)(EditUserPage);

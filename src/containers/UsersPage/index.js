@@ -205,7 +205,6 @@ export default class UsersPage extends Component {
                  onChange={::this.handlerUploadFile} />
           <div className={styles.importContainer} type="button">Upload template</div>
           <a className={styles.importContainer} href={`${baseUrl}/api/userManagement/getImportFile?token=${this.props.currentUser.token}`}>Download</a>
-
         </lable>
         <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span>
       </form>

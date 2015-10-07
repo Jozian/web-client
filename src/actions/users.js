@@ -25,7 +25,7 @@ export function editUser(id, body) {
   return {
     type: types.CALL_API,
     payload: {
-      types: [types.USER_LOADING, types.USER_LOADED, types.USER_LOAD_ERROR],
+      types: [types.USER_EDITING, types.USER_EDITED, types.USER_EDIT_ERROR],
       promise: usersApi.edit(id, body),
     },
   };
@@ -35,11 +35,17 @@ export function addUser(body) {
   return {
     type: types.CALL_API,
     payload: {
-      types: [types.USER_LOADING, types.USER_LOADED, types.USER_LOAD_ERROR],
+      types: [types.USER_CREATING, types.USER_CREATED, types.USER_CREATE_ERROR],
       promise: usersApi.add(body),
     },
   };
 }
+
+export function newUser() {
+  return {
+    type: types.NEW_USER_LOAD,
+  };
+};
 
 export function deleteUsers(ids) {
   return {

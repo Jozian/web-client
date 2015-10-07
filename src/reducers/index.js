@@ -3,6 +3,7 @@ import {combineReducers } from 'redux';
 import * as types from '../actions/types.js';
 import { handleLoadingChain, handlePendingChain } from './helpers';
 import toastReducer from './toasts';
+import editUser from './editUser';
 import activeFolderReducer from './activeFolder';
 import activeCommentDetailReducer from './activeCommentDetail';
 
@@ -51,11 +52,21 @@ export const activeMedia = handleLoadingChain([
   types.MEDIA_LOAD_ERROR,
 ]);
 
-export const user = handleLoadingChain([
-  types.USER_LOADING,
-  types.USER_LOADED,
-  types.USER_LOAD_ERROR,
-], 'entity', {});
+
+export const user = (state, action) => {
+  const loadingReducer = handleLoadingChain([
+    types.USER_LOADING,
+    types.USER_LOADED,
+    types.USER_LOAD_ERROR,
+  ], 'entity', {});
+
+  const newState = loadingReducer(state, action);
+  if (state !== newState) {
+    return newState;
+  } else {
+    return editUser(state, action);
+  }
+}
 
 export const motd = handleLoadingChain([
   types.MOTD_LOADING,

@@ -17,7 +17,6 @@ export function getItem(id) {
 }
 
 export function add(body) {
-  console.log('add', body.type);
   if (!body || !body.name || !body.login || !body.password || !body.type) {
     return Promise.reject('Invalid body');
   }
@@ -36,7 +35,6 @@ export function edit(id, body) {
   if (!id || typeof id  !== 'string') {
     return Promise.reject('Invalid UserId');
   }
-
   return fetch(apiUrl + '/' + id, {
     method: 'put',
     body: JSON.stringify(body),

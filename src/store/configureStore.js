@@ -59,6 +59,7 @@ const store = createFinalStore(reducer, {
   },
   user: {
     loading: false,
+    isNew: false,
     entity: {},
   },
   folder: {
