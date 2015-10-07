@@ -96,6 +96,10 @@ export const pendingActions = combineReducers({
     [types.INVITED_USERS_UPDATING],
     [types.INVITED_USERS_UPDATED, types.INVITED_USERS_UPDATE_ERROR],
   ),
+  createFolder: handlePendingChain(
+    [types.FOLDER_CREATING],
+    [types.FOLDER_CREATED, types.FOLDER_LOAD_ERROR],
+  ),
 });
 
 export function currentUser(state) {

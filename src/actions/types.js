@@ -20,6 +20,10 @@ export const FOLDER_LOADING = 'Loading folder';
 export const FOLDER_LOADED = 'Folder loaded';
 export const FOLDER_LOAD_ERROR = 'Error loading folder';
 
+export const FOLDER_CREATING = 'Creating new folder';
+export const FOLDER_CREATED = 'Folder was created';
+export const FOLDER_CREATION_ERROR = 'Library creation error';
+
 export const USERS_LOADING = 'Loading users';
 export const USERS_LOADED = 'Users loaded';
 export const USERS_LOAD_ERROR = 'Error loading users';

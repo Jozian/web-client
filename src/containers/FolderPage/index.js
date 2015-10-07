@@ -6,21 +6,23 @@ import { Link } from 'react-router';
 import cx from 'classnames';
 
 import loading from 'decorators/loading';
-import { loadFoldersList } from 'actions/folders';
+import * as actions from 'actions/folders';
 import Header from 'components/Header';
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
 import PreviewImage from 'components/PreviewImage';
 import LoadingSpinner from 'components/LoadingSpinner';
 import Footer from 'components/Footer';
-import commonStyles from 'common/styles.css';
 import { listLayout } from 'common';
+import Modal from 'components/Modal';
+import ActionButton from 'components/ActionButton';
 
 import styles from './index.css';
+import commonStyles from 'common/styles.css';
 
 @connect(
   (state) => ({folder: state.activeFolder}),
-  (dispatch) => bindActionCreators({ loadFoldersList }, dispatch)
+  (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
   (state) => state.folder.loading,
@@ -29,6 +31,7 @@ import styles from './index.css';
 export default class FolderPage extends Component {
   static propTypes = {
     folder: React.PropTypes.object.isRequired,
+    createFolder: React.PropTypes.func.isRequired,
     params: React.PropTypes.shape({
       folderId: React.PropTypes.string.isRequired,
       itemId: React.PropTypes.string,
@@ -47,6 +50,7 @@ export default class FolderPage extends Component {
     this.state = {
       selection: [],
       selectOnLoad: true,
+      newFolderName: '',
     };
   }
 
@@ -204,9 +208,75 @@ export default class FolderPage extends Component {
     </div>);
   }
 
+  onFolderNameInputChange(event) {
+    this.setState({
+      newFolderName: event.target.value,
+    });
+  }
+
+  async addFolder() {
+    const newFolderData = {
+      name: this.state.newFolderName,
+    };
+    if (this.props.params.itemType === 'folder') {
+      newFolderData.parentId = this.props.params.itemId;
+    } else {
+      newFolderData.parentId = this.props.params.folderId;
+    }
+    await this.props.createFolder(newFolderData);
+    this.props.loadFoldersList(this.props.params.folderId);
+    this.setState({newFolderName: '', isAddPopupOpen: false});
+  }
+
+  openAddFolderModal() {
+    this.setState({
+      isAddPopupOpen: true,
+    });
+  }
+  hideAddFolderModal() {
+    this.setState({
+      isAddPopupOpen: false,
+      newFolderName: '',
+    });
+  }
+
+  renderAddFolder() {
+    return (<Modal
+      isOpen={this.state.isAddPopupOpen}
+      title='Add new folder'
+      className={commonStyles.modal}
+      >
+      <form onSubmit={::this.addFolder}>
+        <label className={styles.folderNameLabel}>
+          Name:
+          <input
+            type="text"
+            placeholder="i.e. English"
+            autoFocus
+            value={this.state.newFolderName}
+            onChange={::this.onFolderNameInputChange}
+            role="Name for new folder"
+            className={styles.folderNameInput}
+            />
+        </label>
+      </form>
+      <Footer>
+        <ActionButton
+          icon="fa fa-check"
+          onClick={::this.addFolder}
+          disabled={!this.state.newFolderName.length}
+          role="OK button">
+          Ok
+        </ActionButton>
+        <Button icon="fa fa-ban" role="Cancel button" onClick={::this.hideAddFolderModal} >Cancel</Button>
+      </Footer>
+    </Modal>);
+  }
+
   render() {
     return (
     <div>
+      {this.renderAddFolder()}
       <Header>{this.props.folder.entity.name}
         <IconButton
           className={commonStyles.headerButton}
@@ -216,6 +286,7 @@ export default class FolderPage extends Component {
         <IconButton
           className={commonStyles.headerButton}
           icon="fa fa-folder-open"
+          onClick={::this.openAddFolderModal}
           tooltipText="Add new folder"
         />
       </Header>

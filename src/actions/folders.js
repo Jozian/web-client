@@ -10,3 +10,13 @@ export function loadFoldersList(id) {
     },
   };
 }
+
+export function createFolder(newData) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.FOLDER_CREATING, types.FOLDER_CREATED, types.FOLDER_CREATION_ERROR],
+      promise: api.addFolder(newData),
+    },
+  };
+}
