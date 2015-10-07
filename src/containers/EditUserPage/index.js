@@ -190,15 +190,15 @@ export default class EditUserPage extends Component {
       errors = this.composeErrorMessages(key, 'already taken', isUnique);
     }
     const newState = {
-      user: {
-        ...this.state.user,
+        user: {
+          ...this.state.user,
         [key]: value,
       },
       errors:{
         ...this.state.errors,
         [key]: errors,
-      }
-    };
+        }
+        };
     this.setState(newState);
   }
 
