@@ -1,4 +1,5 @@
 import fetch from './helper';
+import {saveAs} from 'browser-filesaver';
 
 const apiUrl = '/api/users';
 const isUniqueUrl = '/api/userManagement/isUnique';
@@ -89,3 +90,12 @@ export function dontAskUser() {
   }
 }
 
+export function loadUserTemplate() {
+  return fetch(userManagementUrl + '/getImportFile', {
+    method: 'get',
+    responseType: 'arraybuffer',
+  }).then((result) => {
+    const blob = new Blob([result], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    saveAs(blob, 'medComments'  + new Date() + '.xlsx');
+  });
+}
