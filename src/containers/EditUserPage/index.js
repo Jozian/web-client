@@ -19,9 +19,6 @@ import ActionButtonForModal from 'components/ActionButtonForModal';
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
 
-
-
-
 @connect(
   (state) =>  ({user: state.user.entity, currentUser: state.currentUser }),
   (dispatch) => bindActionCreators(actions, dispatch)

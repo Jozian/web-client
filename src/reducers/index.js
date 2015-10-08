@@ -89,6 +89,12 @@ export const searchResultList = handleLoadingChain([
   types.SEARCH_RESULT_ERROR,
 ]);
 
+export const usersTemplate  = handleLoadingChain([
+  types.USERS_TEMPLATE_UPLOADING,
+  types.USERS_TEMPLATE_UPLOADED,
+  types.USERS_TEMPLATE_ERROR,
+]);
+
 export const pendingActions = combineReducers({
   newLibrary: handlePendingChain(
     [types.LIBRARY_CREATING],

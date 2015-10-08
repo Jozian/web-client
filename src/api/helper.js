@@ -3,6 +3,7 @@ import store from '../store/configureStore';
 import {stringify} from 'querystring';
 
 // FIXME: ENV BASED BUILD
+
 export const baseUrl = 'http://medserver.apps.wookieelabs.com';
 
 function getAuthHeader() {

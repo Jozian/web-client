@@ -74,6 +74,7 @@ export function uploadFile(body) {
   });
 }
 
+
 export function userLogout() {
   localStorage.removeItem('MEDuser');
   localStorage.removeItem('MEDtoken');
@@ -115,3 +116,4 @@ export function loadUserTemplate() {
     saveAs(blob, 'medComments'  + new Date() + '.xlsx');
   });
 }
+
