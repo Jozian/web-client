@@ -51,6 +51,11 @@ export const motd = handleLoadingChain([
   types.MOTD_LOAD_ERROR,
 ], 'entity', {});
 
+export const usersTemplate  = handleLoadingChain([
+  types.USERS_TEMPLATE_UPLOADING,
+  types.USERS_TEMPLATE_UPLOADED,
+  types.USERS_TEMPLATE_ERROR,
+]);
 export const pendingActions = combineReducers({
   newLibrary: handlePendingChain(
     [types.LIBRARY_CREATING],

@@ -156,6 +156,11 @@ export default class UsersPage extends Component {
       uploadFileData: new FormData(e.target.form),
     });
   }
+
+  usersTemplateLoading() {
+    this.props.loadTemplateImport();
+  }
+
   renderDeleteLibrariesPopup() {
     return (<Modal
       isOpen={this.state.isDeleteUsersPopupOpen}
@@ -187,8 +192,7 @@ export default class UsersPage extends Component {
           <input type="file" name="file" className={styles.inputFile}
                  onChange={::this.handlerUploadFile} />
           <div className={styles.importContainer} type="button">Upload template</div>
-          <a className={styles.importContainer}
-             href="/userImportTemplate.xlsx">Download</a>
+          <a className={styles.importContainer} onClick={::this.usersTemplateLoading}>Download</a>
         </lable>
         <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span>
       </form>
