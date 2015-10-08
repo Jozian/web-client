@@ -32,10 +32,6 @@ export const USERS_UPLOADING = 'Uploading users';
 export const USERS_UPLOADED = 'Users uploaded';
 export const USERS_UPLOAD_ERROR = 'Error uploading users';
 
-export const USERS_TEMPLATE_UPLOADING = 'Uploading users template';
-export const USERS_TEMPLATE_UPLOADED = 'Users template uploaded';
-export const USERS_TEMPLATE_ERROR = 'Error users template uploading';
-
 export const COMMENTS_EXPORTING = 'Exporting comments';
 export const COMMENTS_EXPORTED = 'Comments exported';
 export const COMMENTS_EXPORT_ERROR = 'Error exporting comments';

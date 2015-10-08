@@ -11,12 +11,13 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import Modal from 'components/Modal';
 import * as actions from 'actions/users.js';
 import loading from 'decorators/loading';
+import { baseUrl } from '../../api/helper'
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
 
 @connect(
-  (state) => ({users: state.users, pendingActions: state.pendingActions}),
+  (state) => ({users: state.users, pendingActions: state.pendingActions, currentUser: state.currentUser }),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
@@ -158,6 +159,7 @@ export default class UsersPage extends Component {
   }
 
   usersTemplateLoading() {
+    debugger;
     this.props.loadTemplateImport();
   }
 
@@ -192,7 +194,8 @@ export default class UsersPage extends Component {
           <input type="file" name="file" className={styles.inputFile}
                  onChange={::this.handlerUploadFile} />
           <div className={styles.importContainer} type="button">Upload template</div>
-          <a className={styles.importContainer} onClick={::this.usersTemplateLoading}>Download</a>
+          <a className={styles.importContainer}
+            href={`${baseUrl}/api/userManagement/getImportFile?token=${this.props.currentUser.token}`}>Download</a>
         </lable>
         <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span>
       </form>

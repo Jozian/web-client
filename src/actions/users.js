@@ -60,12 +60,3 @@ export function uploadUsers(formData) {
   };
 }
 
-export function loadTemplateImport() {
-  return {
-    type: types.CALL_API,
-    payload: {
-      types: [types.USERS_TEMPLATE_UPLOADING, types.USERS_TEMPLATE_UPLOADED, types.USERS_TEMPLATE_ERROR],
-      promise: usersApi.loadUserTemplate(),
-    }
-  }
-}
