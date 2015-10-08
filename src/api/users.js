@@ -1,4 +1,5 @@
 import fetch from './helper';
+import {saveAs} from 'browser-filesaver';
 
 const apiUrl = '/api/users';
 const isUniqueUrl = '/api/userManagement/isUnique';
@@ -76,3 +77,4 @@ export function uploadFile(body) {
     responseType: 'text',
   });
 }
+

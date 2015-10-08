@@ -11,12 +11,13 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import Modal from 'components/Modal';
 import * as actions from 'actions/users.js';
 import loading from 'decorators/loading';
+import { baseUrl } from '../../api/helper'
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
 
 @connect(
-  (state) => ({users: state.users, pendingActions: state.pendingActions}),
+  (state) => ({users: state.users, pendingActions: state.pendingActions, currentUser: state.currentUser }),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
@@ -156,6 +157,12 @@ export default class UsersPage extends Component {
       uploadFileData: new FormData(e.target.form),
     });
   }
+
+  usersTemplateLoading() {
+    debugger;
+    this.props.loadTemplateImport();
+  }
+
   renderDeleteLibrariesPopup() {
     return (<Modal
       isOpen={this.state.isDeleteUsersPopupOpen}
@@ -188,7 +195,7 @@ export default class UsersPage extends Component {
                  onChange={::this.handlerUploadFile} />
           <div className={styles.importContainer} type="button">Upload template</div>
           <a className={styles.importContainer}
-             href="/userImportTemplate.xlsx">Download</a>
+            href={`${baseUrl}/api/userManagement/getImportFile?token=${this.props.currentUser.token}`}>Download</a>
         </lable>
         <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span>
       </form>
