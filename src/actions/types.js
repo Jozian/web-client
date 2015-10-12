@@ -20,9 +20,17 @@ export const FOLDER_LOADING = 'Loading folder';
 export const FOLDER_LOADED = 'Folder loaded';
 export const FOLDER_LOAD_ERROR = 'Error loading folder';
 
+export const FOLDER_ID_LOADING = 'Loading one folder';
+export const FOLDER_ID_LOADED = 'One folder was loaded';
+export const FOLDER_ID_ERROR = 'Error loading one folder';
+
 export const FOLDER_CREATING = 'Creating new folder';
 export const FOLDER_CREATED = 'Folder was created';
 export const FOLDER_CREATION_ERROR = 'Library creation error';
+
+export const FOLDER_UPDATING = 'Updating folder';
+export const FOLDER_UPDATED = 'Folder was updated';
+export const FOLDER_UPDATE_ERROR = 'Folder updating error';
 
 export const USERS_LOADING = 'Loading users';
 export const USERS_LOADED = 'Users loaded';

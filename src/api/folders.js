@@ -21,8 +21,8 @@ export function addFolder(body) {
   });
 }
 
-export function editFolder(id, body) {
-  if (!body || !body.name) {
+export function editFolder(folderId, name) {
+  if (!name || typeof name  !== 'string') {
     return Promise.reject('Invalid body');
   }
 
@@ -30,8 +30,16 @@ export function editFolder(id, body) {
     return Promise.reject('Invalid folderId');
   }
 
-  return fetch(`${apiUrl}/${id}`, {
+  return fetch(`${apiUrl}/${folderId}`, {
     method: 'put',
-    body: JSON.stringify(body),
+    body: JSON.stringify({name: name}),
   });
+}
+
+export function getFolder(folderId) {
+  if (!folderId || typeof folderId !== 'string') {
+    return Promise.reject('Invalid folder id');
+  }
+
+  return fetch(apiUrl + '/' + folderId);
 }

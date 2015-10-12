@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { Link } from 'react-router';
+import { RouteHandler } from 'react-router';
 import cx from 'classnames';
 
 import loading from 'decorators/loading';
@@ -14,8 +15,6 @@ import PreviewImage from 'components/PreviewImage';
 import LoadingSpinner from 'components/LoadingSpinner';
 import Footer from 'components/Footer';
 import { listLayout } from 'common';
-import Modal from 'components/Modal';
-import ActionButton from 'components/ActionButton';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
@@ -50,7 +49,6 @@ export default class FolderPage extends Component {
     this.state = {
       selection: [],
       selectOnLoad: true,
-      newFolderName: '',
     };
   }
 
@@ -64,6 +62,9 @@ export default class FolderPage extends Component {
     }
     if (props.params !== this.props.params) {
       this.setState({selection: []});
+      this.setState({selectOnLoad: true});
+    }
+    if (props.params.itemId) {
       this.setState({selectOnLoad: true});
     }
   }
@@ -185,6 +186,42 @@ export default class FolderPage extends Component {
     </ul>);
   }
 
+  renderEditFolder() {
+    return (
+      <div className={styles.column}>
+        <form onSubmit={::this.updateFolder}>
+          <label className={styles.folderNameLabel}>
+            Name:
+            <input
+              type="text"
+              placeholder="i.e. English"
+              autoFocus
+              value={this.state.newFolderName}
+              onChange={::this.onFolderNameInputChange}
+              role="Name for new folder"
+              className={styles.folderNameInput}
+              />
+          </label>
+        </form>
+
+          <Footer>
+            <Button icon="fa fa-save">Save</Button>
+          </Footer>
+      </div>
+    );
+  }
+
+  renderEditMedia() {
+    return (
+      <div className={styles.column} style={{backgroundColor: 'blue'}}>
+        <LoadingSpinner loading={true} />
+        <Footer>
+          <Button icon="fa fa-save">Save</Button>
+        </Footer>
+      </div>
+    );
+  }
+
   renderItemList() {
     return (<div>
       <ListView
@@ -208,75 +245,26 @@ export default class FolderPage extends Component {
     </div>);
   }
 
-  onFolderNameInputChange(event) {
-    this.setState({
-      newFolderName: event.target.value,
-    });
-  }
-
-  async addFolder() {
+  async addDefaultFolder() {
     const newFolderData = {
-      name: this.state.newFolderName,
+      name: 'Folder',
+      parentId: this.props.params.folderId,
     };
-    if (this.props.params.itemType === 'folder') {
-      newFolderData.parentId = this.props.params.itemId;
-    } else {
-      newFolderData.parentId = this.props.params.folderId;
-    }
-    await this.props.createFolder(newFolderData);
-    this.props.loadFoldersList(this.props.params.folderId);
-    this.setState({newFolderName: '', isAddPopupOpen: false});
-  }
 
-  openAddFolderModal() {
-    this.setState({
-      isAddPopupOpen: true,
+    this.props.createFolder(newFolderData).then((data) => {
+      this.props.loadFoldersList(this.props.params.folderId);
+      this.context.router.transitionTo('folderSelection', {
+        folderId: this.props.params.folderId,
+        itemType: 'folder',
+        itemId: data.payload.id,
+      });
     });
-  }
-  hideAddFolderModal() {
-    this.setState({
-      isAddPopupOpen: false,
-      newFolderName: '',
-    });
-  }
 
-  renderAddFolder() {
-    return (<Modal
-      isOpen={this.state.isAddPopupOpen}
-      title='Add new folder'
-      className={commonStyles.modal}
-      >
-      <form onSubmit={::this.addFolder}>
-        <label className={styles.folderNameLabel}>
-          Name:
-          <input
-            type="text"
-            placeholder="i.e. English"
-            autoFocus
-            value={this.state.newFolderName}
-            onChange={::this.onFolderNameInputChange}
-            role="Name for new folder"
-            className={styles.folderNameInput}
-            />
-        </label>
-      </form>
-      <Footer>
-        <ActionButton
-          icon="fa fa-check"
-          onClick={::this.addFolder}
-          disabled={!this.state.newFolderName.length}
-          role="OK button">
-          Ok
-        </ActionButton>
-        <Button icon="fa fa-ban" role="Cancel button" onClick={::this.hideAddFolderModal} >Cancel</Button>
-      </Footer>
-    </Modal>);
   }
 
   render() {
     return (
     <div>
-      {this.renderAddFolder()}
       <Header>{this.props.folder.entity.name}
         <IconButton
           className={commonStyles.headerButton}
@@ -286,7 +274,7 @@ export default class FolderPage extends Component {
         <IconButton
           className={commonStyles.headerButton}
           icon="fa fa-folder-open"
-          onClick={::this.openAddFolderModal}
+          onClick={::this.addDefaultFolder}
           tooltipText="Add new folder"
         />
       </Header>
@@ -294,11 +282,8 @@ export default class FolderPage extends Component {
       <div className={styles.column}>
         { this.renderItemList() }
       </div>
-      <div className={styles.column} style={{backgroundColor: 'blue'}}>
-        <LoadingSpinner loading={true} />
-        <Footer>
-          <Button icon="fa fa-save">Save</Button>
-        </Footer>
+      <div className={styles.column}>
+        <RouteHandler />
       </div>
     </div>);
   }

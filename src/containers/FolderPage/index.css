@@ -30,6 +30,10 @@
     vertical-align: middle;
     height: 60px;
     line-height: 60px;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 300px;
+    text-overflow: ellipsis;
 }
 
 .image {
