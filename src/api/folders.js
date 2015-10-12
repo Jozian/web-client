@@ -43,6 +43,7 @@ export function getFolder(folderId) {
   }
 
   return fetch(apiUrl + '/' + folderId);
+
 }
 
 export function deleteFolders(body) {
