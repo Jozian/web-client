@@ -421,8 +421,8 @@ export default class FolderPage extends Component {
   onChangeCheckbox(e) {
     this.setState({
       showPopupAfterMediaLoading: !e.checked,
+
     });
-  }
 
   redirectToLibrary() {
     window.location.href = '/libraries';
@@ -548,6 +548,7 @@ export default class FolderPage extends Component {
         <ActionButtonForModal className={commonStyles.cancelButtonModal}  onClick={::this.hideNewMediaModal}>Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
+
   }
 
   render() {
