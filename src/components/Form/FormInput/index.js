@@ -6,15 +6,19 @@ export default class FormInput extends Component {
   static propTypes = {
     label: React.PropTypes.string,
     valueLink: React.PropTypes.shape({
-      value: React.PropTypes.any.isRequired,
+      value: React.PropTypes.isRequired,
       requestChange: React.PropTypes.func.isRequired,
     }),
     onBlur: React.PropTypes.func,
     name: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     type: React.PropTypes.string,
+<<<<<<< HEAD
     errorMessage: React.PropTypes.string,
     onChange: React.PropTypes.func,
+=======
+    errorMessage: React.PropTypes.array,
+>>>>>>> fix bug with required and already taken
   };
 
   render() {
@@ -23,8 +27,13 @@ export default class FormInput extends Component {
       [styles.error]: this.props.errorMessage && this.props.errorMessage.length !== 0,
     });
     const ErrorMessage = (() => {
+<<<<<<< HEAD
       if (this.props.errorMessage && this.props.errorMessage.length !== 0) {
         return <span className={styles.errorMessage}>{this.props.errorMessage}</span>;
+=======
+      if (this.props.errorMessage.length !== 0) {
+        return <span className={styles.errorMessage}>{this.props.errorMessage.join(', ')}</span>;
+>>>>>>> fix bug with required and already taken
       }
     }());
     return (

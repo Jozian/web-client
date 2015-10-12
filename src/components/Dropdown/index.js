@@ -7,6 +7,7 @@ export default class Dropdown extends Component {
         title: PropTypes.string,
         onChange: PropTypes.func,
         disabled: PropTypes.bool,
+        value: PropTypes.string,
     };
 
     render() {
@@ -14,8 +15,10 @@ export default class Dropdown extends Component {
             <div className={styles.editUser}>
                 <label className={styles.userLabel}>{this.props.title}</label>
                 <select className={styles.optionsSelect} name="type"
-                      disabled={this.props.disabled}
-                      onChange={this.props.onChange}>
+                        disabled={this.props.disabled}
+                        value={this.props.value}
+                        onChange={this.props.onChange}
+                        required>
                     {this.props.children}
                 </select>
             </div>

@@ -1,3 +1,11 @@
+.hideHeader {
+    display: none;
+}
+
+.showHeader {
+    display: block;
+}
+
 .note {
     font-size: 14px;
     color: grey;

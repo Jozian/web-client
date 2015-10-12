@@ -13,9 +13,7 @@ export default function reducer(state = defaultState, action) {
     return { ...state, loading: true, error: null };
   case types.USER_EDITED:
   case types.USER_CREATED:
-    const newEntity = {...action.payload};
-    newEntity.data = new WinJS.Binding.List(action.payload.data);
-    return { ...state, loading: false, entity: newEntity, error: null };
+    return {... state, loading: false, error: null};
   case types.USER_EDIT_ERROR:
   case types.USER_CREATE_ERROR:
     return { ...state, loading: false, error: action.payload };

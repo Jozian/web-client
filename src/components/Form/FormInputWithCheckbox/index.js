@@ -11,9 +11,9 @@ export default class FormInputWithCheckbox extends Component {
     type: React.PropTypes.string,
     onCheckboxChange: React.PropTypes.func,
     checked: React.PropTypes.bool,
-    errorMessage: React.PropTypes.string,
+    errorMessage: React.PropTypes.array,
     valueLink: React.PropTypes.shape({
-      value: React.PropTypes.any.isRequired,
+      value: React.PropTypes.isRequired,
       requestChange: React.PropTypes.func.isRequired,
     }),
     onBlur: React.PropTypes.func,
@@ -27,7 +27,7 @@ export default class FormInputWithCheckbox extends Component {
     });
     const ErrorMessage = (() => {
       if (this.props.errorMessage.length !== 0) {
-        return <span className={styles.errorMessage}>{this.props.errorMessage}</span>;
+        return <span className={styles.errorMessage}>{this.props.errorMessage.join(', ')}</span>;
       }
     }());
     return (

@@ -55,7 +55,7 @@ export default class EditUserPage extends Component {
       props.loadUser(props.params.id);
     } else {
       props.newUser();
-      //this.state.user.type = 'admin';
+      this.state.user.type = 'admin';
     }
     this.types = [{
       value: 'admin',
@@ -84,27 +84,43 @@ export default class EditUserPage extends Component {
     }
   }
 
+  composeErrorMessages(key, message, condition) {
+    const errors = [...this.state.errors[key]];
+    if (!condition) {
+      if (!errors.includes(message)) {
+        errors.push(message);
+      }
+    } else {
+      const index = errors.indexOf(message);
+      if (index !== -1) {
+        errors.splice(index, 1);
+      }
+    }
+    return errors;
+  }
+
   async saveUserHandler() {
     const { router } = this.context;
-    let message = '';
-    let isValid = true;
-    const required = ['name', 'login', 'password'];
+    let required = ['name', 'login', 'password'];
     let newState = {
       errors: this.state.errors,
     };
-    _(required).forEach(function(key) {
-      [message, isValid] = ['required', validator.isLength(this.state.user[key], 1)];
-      const errors = this.composeErrorMessages(key, message, isValid);
-      newState.errors[key] = errors;
-    }, this).value();
+    if (this.props.params.id) {
+      required.pop();
+    }
+    required.forEach((key) => {
+      newState.errors[key] = this.composeErrorMessages(
+        key, 'required', validator.isLength(this.state.user[key], 1));
+    });
+
     this.setState(newState);
-    const errors = [];
+    let errorsSave = [];
     _(this.state.errors).forEach(function(val, key) {
       if (val.length) {
-        errors.push(val);
+        errorsSave.push(val);
       }
     }, this).value();
-    if (!errors.length) {
+    if (!errorsSave.length) {
       if (this.props.params.id) {
         await this.props.editUser(this.props.params.id, this.state.user);
         router.transitionTo('users');
@@ -128,21 +144,24 @@ export default class EditUserPage extends Component {
     });
   }
 
-  change(e, type) {
-    this.props.user.type = type[e.target.selectedIndex].value;
+  change(event) {
+    const user = this.state.user;
+    const key = event.target.name;
+    user[key] = event.target.value;
+    this.setState({
+      user: user,
+    });
   }
 
   renderTypesOptions() {
     return (
       <Dropdown title="Type:"
+                value={this.state.user.type}
                 disabled={this.state.user.type === 'owner'}
-                onChange={(e) => {this.change(e, this.types)}}>
+                onChange={(e) => {this.change(e, 'type')}}>
         {
-          (this.types || []).filter((type) =>
-              (this.state.user.type === 'owner' || type.value !== 'owner')
-          ).map((type) =>
-              (<option value={type.value} selected={type.value === this.state.user.type}>{type.label}</option>)
-          )
+          (this.types || []).filter((type) => (this.state.user.type === 'owner' || type.value !== 'owner')
+          ).map((type) => (<option value={type.value}>{type.label}</option>))
         }
       </Dropdown>
     );
@@ -166,40 +185,16 @@ export default class EditUserPage extends Component {
     }
   }
 
-  composeErrorMessages(key, message, condition) {
-    const errors = [...this.state.errors[key]];
-    if (!condition) {
-      if (!errors.includes(message)) {
-        errors.push(message);
-      }
-    } else {
-      const index = errors.indexOf(message);
-      if (index !== -1) {
-        errors.splice(index, 1);
-      }
-    }
-    return errors;
-  }
-
   async onBlur(event) {
     const key = event.target.name;
     const value = event.target.value;
     let errors = [];
-    if (this.props.user[key] !== value) {
+    if (value && this.props.user[key] !== value) {
       const isUnique = await this.validateUnique(key, value);
       errors = this.composeErrorMessages(key, 'already taken', isUnique);
+      this.setUser(key, value);
+      this.setErrors(key, errors);
     }
-    const newState = {
-        user: {
-          ...this.state.user,
-        [key]: value,
-      },
-      errors:{
-        ...this.state.errors,
-        [key]: errors,
-        }
-        };
-    this.setState(newState);
   }
 
   getUserChange(field) {
@@ -216,31 +211,52 @@ export default class EditUserPage extends Component {
       } else if (field === 'confirm') {
         [message, isValid] = ['does not match', validator.equals(this.state.user.password, newValue)];
       } else if (field === 'password') {
+        if (!this.props.params.id) {
+          [message, isValid] = ['required', validator.isLength(newValue, 1)];
+          this.state.errors[field] = this.composeErrorMessages(field, message, isValid);
+        }
         key = 'confirm';
         [message, isValid] = ['does not match', validator.equals(this.state.user.confirm, newValue)];
       }
       const errors = this.composeErrorMessages(key, message, isValid);
       if (this.state.user[field] !== newValue) {
-        const newState = {
-          user: {
-            ...this.state.user,
-            [field]: newValue,
-          },
-          errors: {
-            ...this.state.errors,
-            [key]: errors,
-          },
-        };
-        this.setState(newState);
+        this.setUser(field, newValue);
+        this.setErrors(key, errors);
       }
     }.bind(this);
   }
 
+  setUser(field, value) {
+    this.setState({
+      user: {
+        ...this.state.user,
+        [field]: value,
+      },
+    });
+  }
+
+  setErrors(field, errors) {
+    this.setState({
+      errors: {
+        ...this.state.errors,
+        [field]: errors,
+      },
+    });
+  }
+
   render() {
+    const editUser = cx({
+      [styles.hideHeader]: true,
+      [styles.showHeader]: this.props.params.id,
+    });
+    const addUser = cx({
+      [styles.hideHeader]: true,
+      [styles.showHeader]: !this.props.params.id,
+    });
     return (
       <div className={styles.mainContainer}>
-        <Header>Edit user</Header>
-        {/*<Header>Add User Account</Header>*/}
+        <div className={editUser}><Header>Edit user</Header></div>
+        <div className={addUser}><Header>Add User Account</Header></div>
         <div className={styles.wrapper}>
           <form className={styles.backgroundWhite}>
             <div className={styles.leftBlock}>

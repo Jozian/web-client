@@ -20,7 +20,6 @@ export function add(body) {
   if (!body || !body.name || !body.login || !body.password || !body.type) {
     return Promise.reject('Invalid body');
   }
-
   return fetch(apiUrl, {
     method: 'post',
     body: JSON.stringify(body),
@@ -31,8 +30,7 @@ export function edit(id, body) {
   if (!body || !body.name || !body.login || !body.type) {
     return Promise.reject('Invalid body');
   }
-
-  if (!id || typeof id  !== 'string') {
+  if (typeof id  !== 'string') {
     return Promise.reject('Invalid UserId');
   }
   return fetch(apiUrl + '/' + id, {
