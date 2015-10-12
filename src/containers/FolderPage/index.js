@@ -475,6 +475,7 @@ export default class FolderPage extends Component {
         <ActionButtonForModal className={commonStyles.cancelButtonModal}  onClick={::this.hideDeleteFoldersPopup}>Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
+
   }
 
   onChange(field, e) {
@@ -554,6 +555,7 @@ export default class FolderPage extends Component {
   render() {
     return (
     <div>
+
       { this.renderDeleteFoldersModal() }
       { this.renderAddMediaModal() }
       { this.renderModalAfterMediaUpload() }
@@ -566,6 +568,7 @@ export default class FolderPage extends Component {
           className="mdl2-new-folder"
           onClick={::this.addDefaultFolder}
         ></Button>
+
       </Header>
       { this.renderBreadcrumbs() }
       <div className={styles.column}>
