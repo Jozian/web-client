@@ -8,7 +8,10 @@
     <link rel="stylesheet" href="public/stylesheets/main.css" />
     <link rel="stylesheet" href="public/stylesheets/password-recovery.css" />
     <link rel="stylesheet" href="public/stylesheets/register.css" />
+
     <script type="text/javascript" src="public/js/getStarted.js"></script>
+    <script type="text/javascript" src="public/js/localStorageService.js"></script>
+    <script type="text/javascript" src="public/js/httpService.js"></script>
     <title></title>
 </head>
 <body>
@@ -18,6 +21,7 @@
     <div class="b_start-header-top-line--blue"></div>
     <div class="b_start-header-top-line--yellow"></div>
 </div>
+
 <div class="b_logo-and-menu">
     <div class="b_start-header-logo">
         <img class="b_start-header-logo-image" src="public/images/logo.png" />
@@ -29,7 +33,7 @@
         <li><a href="#useCases">Use Cases</a></li>
         <li><a href="#openSource">Open Source</a></li>
         <li><a href="#support">Support</a></li>
-        <li class="b_start-header-menu-login">Login/Register</li>
+        <li class="b_start-header-menu-login"><a href="#loginRegister">Login/Register</a></li>
     </ul>
 </div>
 
@@ -197,6 +201,27 @@
             </div>
         </div>
     </div>
+
+    <footer class="b_start-footer">
+        <div class="b_start-footer__copyright">
+            Copyright &#169; Microsoft
+        </div>
+        <div style="width: 43%;"> </div>
+        <div class="b-start-footer-bottom-menu">
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#getStarted">Get Started</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#useCases">Use Cases</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#openSource">Open Source</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#support" style="border: none;">Support</a>
+            </div>
+        </div>
+    </footer>
 </div>
 
 <div id="useCases">
@@ -360,6 +385,27 @@
             </div>
         </div>
     </div>
+
+    <footer class="b_start-footer">
+        <div class="b_start-footer__copyright">
+            Copyright &#169; Microsoft
+        </div>
+        <div style="width: 43%;"> </div>
+        <div class="b-start-footer-bottom-menu">
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#getStarted">Get Started</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#useCases">Use Cases</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#openSource">Open Source</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#support" style="border: none;">Support</a>
+            </div>
+        </div>
+    </footer>
 </div>
 
 <div id="openSource">
@@ -427,6 +473,27 @@
             </div>
         </div>
     </div>
+
+    <footer class="b_start-footer">
+        <div class="b_start-footer__copyright">
+            Copyright &#169; Microsoft
+        </div>
+        <div style="width: 43%;"> </div>
+        <div class="b-start-footer-bottom-menu">
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#getStarted">Get Started</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#useCases">Use Cases</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#openSource">Open Source</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#support" style="border: none;">Support</a>
+            </div>
+        </div>
+    </footer>
 </div>
 
 <div id="support">
@@ -610,27 +677,78 @@
             </div>
         </div>
     </div>
+
+    <footer class="b_start-footer">
+        <div class="b_start-footer__copyright">
+            Copyright &#169; Microsoft
+        </div>
+        <div style="width: 43%;"> </div>
+        <div class="b-start-footer-bottom-menu">
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#getStarted">Get Started</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#useCases">Use Cases</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#openSource">Open Source</a>
+            </div>
+            <div class="b_start-footer__link">
+                <a class="b_start-footer-link" href="#support" style="border: none;">Support</a>
+            </div>
+        </div>
+    </footer>
 </div>
-<footer class="b_start-footer">
-    <div class="b_start-footer__copyright">
-        Copyright &#169; Microsoft
+
+<div id="loginRegister">
+    <a name="loginRegister"></a>
+
+    <div id="login-box" class="box">
+        <form id="login-form" class="side-form" name="login" method="post" >
+            <div class="control">
+                <h1>Login</h1>
+                <input type="text" name="login"  placeholder="Your login" required autocomplete="on"/>
+            </div>
+            <div class="control">
+                <input type="password" name="loginPass" placeholder="Password"  required/>
+                <div class="b_error_msg hidden" id="login_err">
+                    <span>Login/password combination is incorrect.</span>
+                </div>
+            </div>
+
+            <div class="control">
+                <input type="submit" value="Login"  class="b_login-btn">
+            </div>
+            <div class="control">
+                <a class="forgot-pass" id="forgot-pass">FORGOT PASSWORD</a>
+            </div>
+
+
+            <!--<div class="control">
+                <a href="#" class="live_id_login_btn forgot-pass">LogIn via Live ID</a>
+            </div> -->
+        </form>
     </div>
-    <div style="width: 43%;"> </div>
-    <div class="b-start-footer-bottom-menu">
-        <div class="b_start-footer__link">
-            <a class="b_start-footer-link" href="#getStarted">Get Started</a>
-        </div>
-        <div class="b_start-footer__link">
-            <a class="b_start-footer-link" href="#useCases">Use Cases</a>
-        </div>
-        <div class="b_start-footer__link">
-            <a class="b_start-footer-link" href="#openSource">Open Source</a>
-        </div>
-        <div class="b_start-footer__link">
-            <a class="b_start-footer-link" href="#support" style="border: none;">Support</a>
-        </div>
+
+    <div id="register-box" class="box" >
+        <form id="register-form" class="side-form" name="register" method="post" >
+            <div class="control">
+                <h1>Register</h1>
+                <input type="text"  name="name" placeholder="Name"  required autocomplete="on"/>
+            </div>
+            <div class="control">
+                <input type="email" name="email" placeholder="Email" required autocomplete="on"/>
+                <div class="b_error_msg hidden" id="reg_err">
+                    <span>The email address is already taken. Please choose another one in order to sign up new account.</span>
+                </div>
+            </div>
+
+            <div class="control">
+                <input type="submit" value="Continue" class="b_reg-btn">
+            </div>
+        </form>
     </div>
-</footer>
+</div>
 
 </body>
 </html>

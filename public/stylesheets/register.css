@@ -1,7 +1,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #696969;
+    background-color: #fff;
 }
 #header {
     min-height: 85px;
@@ -52,7 +52,7 @@ header nav {
 .b_error_msg {
     background-color: #ff0000;
     border-radius: 8px;
-    width: 371px;
+    width: 346px;
     padding: 10px;
     margin: auto;
 
@@ -145,17 +145,23 @@ input[type="submit"], a {
 }
 
 .box#register-box h1 {
+    position: relative;
+    right: 58px;
     padding-left: 0;
+    margin: 0;
+    text-transform: uppercase;
 }
 
 .box#login-box h1 {
     position: relative;
-    right: 58px;
+    right: 145px;
     padding-left: 0;
+    margin: 0;
+    text-transform: uppercase;
 }
 
 .box h1 {
-    color: #fff;
+    color: #696969;
     display: block;
 }
 
@@ -163,20 +169,20 @@ input[type="submit"], a {
     border: 2px solid #fff;
     width: 347px;
     height: 40px;
-    background-color: #fff;
+    background-color: rgba(192, 192, 192, 0.2);
     line-height: 40px;
     outline: 0 none;
     padding: 0 10px;
     margin: 0 58px 14px 0;
 }
 .side-form .control input:focus {
-    border-color: #6ab01c;
+    border-color: #c2ccd1;
 }
 
 .side-form .control input[type="submit"],
 .side-form .control input[type="submit"]:focus {
     border: 0 none;
-    width: 214px;
+    width: 371px;
     height: 51px;
     background-color: #6ab01c;
     color: #fff;
@@ -205,11 +211,10 @@ form#login-form input {
 }
 
 form#login-form a {
-    color: #fff;
+    color: #6ab01c;
 }
 
 .forgot-pass {
-
     font-size: 10pt;
     font-weight: 700;
     position: relative;
@@ -225,4 +230,45 @@ form#login-form a {
     bottom: 196px;
     left: 651px;
     width: 151px;
+}
+
+.b_register-popup {
+    width: 100%;
+    position:fixed;
+    top: 0;
+    left: 0;
+    margin-top: 100px;
+    background-color: #fff;
+    height: 300px;
+    z-index: 30;
+}
+
+.b_register-popup-text {
+    width: 351px;
+    margin: 0 auto;
+    padding: 20px 0 20px 0;
+}
+
+.b-register-popup-button-ok {
+    width: 351px;
+    height: 36px;
+    margin: 20px auto 20px auto;
+    text-align: center;
+    color: #fff;
+    background-color: #6ab01c;
+    padding-top: 15px;
+}
+
+.hidden {
+    width: 0;
+}
+
+.b_overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 29;
+    position:fixed;
+    top:0;
+    left: 0;
 }

@@ -86,3 +86,43 @@
     font-weight: bold;
     font-size: 14pt;
 }
+
+.b_forgot-password {
+    position: fixed;
+    top: 100px;
+    background-color: #fff;
+    z-index: 30;
+    width: 100%;
+    height: 400px;
+}
+
+.b_forgot-password-body {
+    margin: 0 auto;
+    padding: 20px 0px 20px 0px;
+    width: 470px;
+}
+
+.b_close-recovery-password {
+    border: 0 none;
+    width: 371px;
+    height: 36px;
+    color: #6ab01c;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 15px;
+}
+
+.b-forgot-password-body-title {
+    text-align: center;
+}
+
+.b-forgot-password-body-text {
+    width: 371px;
+    margin-left: 60px;
+}
+
+.b_label-for-input {
+    text-align: left;
+    color: #000;
+    font-weight: normal;
+}
