@@ -1,3 +1,17 @@
+.b_source_content {
+    padding-bottom: 0;
+}
+.b_source_content__background {
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 5;
+}
+.b_source_content__text {
+    width: calc(100% - 300px);
+    display: inline-block;
+}
+
 .b_source_content__img {
     margin-top: 30px;
 }
@@ -9,6 +23,8 @@
     width: 34%;
     margin-left: calc(6% + 51px);
     margin-right: 3%;
+    position: relative;
+    z-index: 10;
 }
 .b-main__link-active {
     font-weight: bold;
@@ -38,7 +54,7 @@
 .downloads-btn {
     position: absolute;
     bottom: -40px;
-    right: 20px;
+    right: 200px;
 }
 .download-btn {
     width: 271px;
@@ -80,6 +96,8 @@
     float: right;
     color: white;
     font-size: 11pt;
+    position: relative;
+    z-index: 10;
 }
 .b_source_content__img--right div {
     margin-bottom: 20px;
@@ -125,4 +143,8 @@
     text-align: left;
     color: #000;
     font-weight: normal;
+}
+
+.b_start-footer-link:last-child {
+    border: none;
 }

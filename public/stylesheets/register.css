@@ -137,7 +137,7 @@ input[type="submit"], a {
 }
 
 #login-form {
-    border-right: 3px solid #6ab01c;
+    border-right: 2px solid #c0c0c0;
 }
 
 .side-form .control {
@@ -271,4 +271,8 @@ form#login-form a {
     position:fixed;
     top:0;
     left: 0;
+}
+
+.confirm_err {
+    right: 31px !important;
 }

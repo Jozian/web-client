@@ -34,6 +34,10 @@ input[type="checkbox"] {
 .b_start-footer__link a {
     color: #737373;
 }
+
+.b_start-footer__link a:last-child {
+    border: none;
+}
 .b-start-footer-bottom-menu {
     width: 62%;
     display: inherit;
@@ -336,7 +340,7 @@ input[type="checkbox"] {
 }
 .b_source_content-left-video {
     display: inline-block;
-    width: 40%;
+    width: 40% !important;
     margin-right: 0 !important;
 }
 .b_start-header--title {
@@ -374,6 +378,13 @@ nav {
     margin-right: 10%;
     margin-top: 20px;
     position: relative;
+}
+
+.b_source_content__list {
+    font-size: 6pt;
+    position: relative;
+    top: -5px;
+    margin-right: 40px;
 }
 .b_start-header {
     height: auto;
@@ -484,4 +495,8 @@ section#contenthost {
     font-size: 14pt;
     height: 100%;
     padding-left: 250px;
+}
+
+.pageBody {
+    background-color: #ffffff;
 }

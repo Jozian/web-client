@@ -22,9 +22,87 @@
     <div class="b_start-header-top-line--yellow"></div>
 </div>
 
+<script type="text/htmlTpl" id="forgotPasswordTpl">
+    <div class="b_overlay-forgot-password b_overlay">
+        <div id="forgot-password-modal" class="b_forgot-password">
+
+            <div class="b_forgot-password-body">
+                 <h3 class="b-forgot-password-body-title">Password recovery</h3>
+
+                <p class="b-forgot-password-body-text">
+                    In order to reset your password, enter your email. If you have not received an email please check your Spam folder.
+                </p>
+
+                <form id="password-recovery-form" class="side-form" name="passwordRecovery" method="post" >
+
+                    <div class="control">
+                        <input type="email" name="email" placeholder="Email" required autocomplete="on"/>
+                    </div>
+
+                    <div class="control">
+                        <input type="submit" value="Save" class="b_reg-btn">
+                    </div>
+
+                    <div class="control">
+                        <div onClick="closePopup()" class="b_reg-btn b_close-recovery-password">CANCEL</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/htmlTpl" id="changePasswordTpl">
+    <div class="b_overlay-reset-password b_overlay">
+        <div id="reset-password-modal" class="b_forgot-password">
+
+            <div class="b_forgot-password-body">
+                <h3 class="b-forgot-password-body-title">Password recovery</h3>
+
+                <form id="reset-password-form" class="side-form" name="passwordRecovery" method="post" >
+
+                    <div class="control">
+                        <input type="password" name="password" placeholder="password" required autocomplete="on"/>
+                    </div>
+
+                    <div class="control">
+                        <input type="password" name="confirmPassword" placeholder="Confirm password" required autocomplete="on"/>
+                    </div>
+
+                    <div class="b_error_msg hidden" id="confirm_err">
+                        <span>Passwords does not match</span>
+                    </div>
+
+                    <div class="control">
+                        <input type="submit" value="Save" class="b_reg-btn">
+                    </div>
+
+                    <div class="control">
+                        <div onClick="closePopup()" class="b_reg-btn b_close-recovery-password">CANCEL</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/htmlTpl" id="succesRegistrationTpl">
+    <div class="b_overlay b_overlay_register-popup">
+        <div id="modal-window" class="b_register-popup">
+            <div class="b_register-popup-text">
+                Your account has been successfully created. An email has been sent to you with your credentials.
+                If you have not received an email please check your Spam folder.
+            </div>
+
+            <div class="b-register-popup-button-ok">OK</div>
+        </div>
+    </div>
+</script>
+
+
 <div class="b_logo-and-menu">
     <div class="b_start-header-logo">
-        <img class="b_start-header-logo-image" src="public/images/logo.png" />
+        <img class="b_start-header-logo-image" src="public/images/logo.png" alt="Microsoft Education Delivery logo" />
         <p class="b_start-header-logo-text">Microsoft Education Delivery</p>
     </div>
 
@@ -38,7 +116,6 @@
 </div>
 
 <div id="getStarted">
-    <a name="getStarted"></a>
     <header class="b_start-header">
 
         <div class="b_start-header--shape">
@@ -64,9 +141,9 @@
         </div>
     </header>
 
-    <div style="background-color: #ffffff">
+    <div class="pageBody">
 
-        <div class="b_source_content" style="padding-bottom: 0;">
+        <div class="b_source_content">
             <a name="what-is-it"></a>
             <h1 class="b_source_content__h">
                 What is it
@@ -78,6 +155,7 @@
 
             </div>
             <div class="b_source_content__img">
+                <img src="public/images/panorama.png" class="b_source_content__background" alt="Public school class panorama" />
                 <div class="b_source_content__img--left">
                     <div>
                         Support for collective learning in public schools
@@ -108,45 +186,41 @@
                 How does it work
             </h1>
             <div class="b_step-box">
-                <div id="step1" class="b_img-box">
+                <img id="step1" class="b_img-box" src="public/images/step1.png" alt="Step 1. Download software to your windows phone"/>
 
-                </div>
-                <div id="step2" class="b_img-box">
+                <img id="step2" class="b_img-box" src="public/images/step2.png" alt="Step 2. Acess media files on server"/>
 
-                </div>
-                <div id="step3" class="b_img-box">
+                <img id="step3" class="b_img-box" src="public/images/step3.png" alt="Step 3. Download media files from server"/>
 
-                </div>
-                <div id="step4" class="b_img-box">
+                <img id="step4" class="b_img-box" src="public/images/step4.png" alt="Step 4. View files on phone, TV or data projector"/>
 
-                </div>
             </div>
             <div class="b_source_content__span">
                 For the Microsoft Education Delivery solution to work, you need:
 
             </div>
             <div class="b_source_content__span">
-                <i class="fa fa-circle" style="font-size: 6pt;  position: relative; top: -5px;margin-right: 40px"></i>
+                <i class="fa fa-circle b_source_content__list"></i>
                 The Microsoft Education Delivery software (free)
 
             </div>
             <div class="b_source_content__span">
-                <i class="fa fa-circle" style="font-size: 6pt;  position: relative; top: -5px;margin-right: 40px"></i>
+                <i class="fa fa-circle b_source_content__list"></i>
                 Microsoft phone(s): the service runs on Windows Phone 8.1
 
             </div>
             <div class="b_source_content__span">
-                <i class="fa fa-circle" style="font-size: 6pt;  position: relative; top: -5px;margin-right: 40px"></i>
+                <i class="fa fa-circle b_source_content__list"></i>
                 TV/projector and cable (if used for collective learning in a class room)
 
             </div>
             <div class="b_source_content__span">
-                <i class="fa fa-circle" style="font-size: 6pt;  position: relative; top: -5px;margin-right: 40px"></i>
+                <i class="fa fa-circle b_source_content__list"></i>
                 Content: educational media files (some materials are available for free)
 
             </div>
             <div class="b_source_content__span">
-                <i class="fa fa-circle" style="font-size: 6pt;  position: relative; top: -5px;margin-right: 40px"></i>
+                <i class="fa fa-circle b_source_content__list"></i>
                 Server: hosted cloud server or own server and server management
 
             </div>
@@ -188,11 +262,11 @@
                     Download
                 </h1>
                 <div class="b_source_content__span">
-                    <div style="width: calc(100% - 300px); display: inline-block">
+                    <div>
                         Access Windows Marketplace with your mobile device.
                     </div>
 
-                    <div class="downloads-btn">
+                    <div class="downloads-btn" role="Link for downloading mobile application">
                         <a href="http://www.windowsphone.com/s?appid=56f6a178-33fc-4b89-b3be-8a99849e6553"><div class="download-btn"></div></a>
                     </div>
 
@@ -206,7 +280,6 @@
         <div class="b_start-footer__copyright">
             Copyright &#169; Microsoft
         </div>
-        <div style="width: 43%;"> </div>
         <div class="b-start-footer-bottom-menu">
             <div class="b_start-footer__link">
                 <a class="b_start-footer-link" href="#getStarted">Get Started</a>
@@ -218,14 +291,13 @@
                 <a class="b_start-footer-link" href="#openSource">Open Source</a>
             </div>
             <div class="b_start-footer__link">
-                <a class="b_start-footer-link" href="#support" style="border: none;">Support</a>
+                <a class="b_start-footer-link" href="#support">Support</a>
             </div>
         </div>
     </footer>
 </div>
 
 <div id="useCases">
-    <a name="useCases"></a>
     <header class="b_start-header">
 
         <div class="b_start-header--shape">
@@ -249,7 +321,7 @@
         </div>
     </header>
 
-    <div style="background-color: #ffffff">
+    <div class="pageBody">
 
         <div class="b_source_content">
             <a name="work"></a>
@@ -274,23 +346,23 @@
                 What's needed:
             </div>
             <div class="b_source_content__span">
-                <i class="fa fa-circle" style="font-size: 6pt;  position: relative; top: -5px;margin-right: 40px"></i>
+                <i class="fa fa-circle b_source_content__list"></i>
                 the Microsoft Education Delivery software and concept provided by Microsoft (free)
             </div>
             <div class="b_source_content__span">
-                <i class="fa fa-circle" style="font-size: 6pt;  position: relative; top: -5px;margin-right: 40px"></i>
+                <i class="fa fa-circle b_source_content__list"></i>
                 technical infrastructure (a mobile phone and a TV)
             </div>
             <div class="b_source_content__span">
-                <i class="fa fa-circle" style="font-size: 6pt;  position: relative; top: -5px;margin-right: 40px"></i>
+                <i class="fa fa-circle b_source_content__list"></i>
                 teacher training (technical and professional development)
             </div>
             <div class="b_source_content__span">
-                <i class="fa fa-circle" style="font-size: 6pt;  position: relative; top: -5px;margin-right: 40px"></i>
+                <i class="fa fa-circle b_source_content__list"></i>
                 multimedia content (educational material)
             </div>
             <div class="b_source_content__span">
-                <i class="fa fa-circle" style="font-size: 6pt;  position: relative; top: -5px;margin-right: 40px"></i>
+                <i class="fa fa-circle b_source_content__list"></i>
                 a public organization like the Ministry of Education and/or a non-profit organization to provide the
                 educational content and training, and to draw these components together and to facilitate the
                 interaction of the parties.
@@ -361,7 +433,7 @@
                     </div>
                     See how it looks. These screenshots show the steps of browsing for a media item and downloading it with a mobile device.
                 </div>
-                <div class="b_screen-shot"></div>
+                <img class="b_screen-shot" src="public/images/screens.png" alt="Mobile application screenshots"/>
                 <div class="b_source_content__span">
                     <div class="b_source_content__span__title">
                         Videos
@@ -390,7 +462,7 @@
         <div class="b_start-footer__copyright">
             Copyright &#169; Microsoft
         </div>
-        <div style="width: 43%;"> </div>
+
         <div class="b-start-footer-bottom-menu">
             <div class="b_start-footer__link">
                 <a class="b_start-footer-link" href="#getStarted">Get Started</a>
@@ -402,14 +474,13 @@
                 <a class="b_start-footer-link" href="#openSource">Open Source</a>
             </div>
             <div class="b_start-footer__link">
-                <a class="b_start-footer-link" href="#support" style="border: none;">Support</a>
+                <a class="b_start-footer-link" href="#support">Support</a>
             </div>
         </div>
     </footer>
 </div>
 
 <div id="openSource">
-    <a name="openSource"></a>
     <header class="b_start-header">
 
         <div class="b_start-header--shape">
@@ -432,7 +503,7 @@
     </header>
 
 
-    <div style="background-color: #ffffff">
+    <div class="pageBody">
 
         <div class="b_source_content">
             <a name="community"></a>
@@ -478,7 +549,7 @@
         <div class="b_start-footer__copyright">
             Copyright &#169; Microsoft
         </div>
-        <div style="width: 43%;"> </div>
+
         <div class="b-start-footer-bottom-menu">
             <div class="b_start-footer__link">
                 <a class="b_start-footer-link" href="#getStarted">Get Started</a>
@@ -490,14 +561,13 @@
                 <a class="b_start-footer-link" href="#openSource">Open Source</a>
             </div>
             <div class="b_start-footer__link">
-                <a class="b_start-footer-link" href="#support" style="border: none;">Support</a>
+                <a class="b_start-footer-link" href="#support">Support</a>
             </div>
         </div>
     </footer>
 </div>
 
 <div id="support">
-    <a name="support"></a>
     <header class="b_start-header">
 
         <div class="b_start-header--shape">
@@ -521,7 +591,7 @@
         </div>
     </header>
 
-    <div style="background-color: #ffffff">
+    <div class="pageBody">
 
         <div class="b_source_content">
             <a name="general"></a>
@@ -682,7 +752,6 @@
         <div class="b_start-footer__copyright">
             Copyright &#169; Microsoft
         </div>
-        <div style="width: 43%;"> </div>
         <div class="b-start-footer-bottom-menu">
             <div class="b_start-footer__link">
                 <a class="b_start-footer-link" href="#getStarted">Get Started</a>
@@ -694,14 +763,13 @@
                 <a class="b_start-footer-link" href="#openSource">Open Source</a>
             </div>
             <div class="b_start-footer__link">
-                <a class="b_start-footer-link" href="#support" style="border: none;">Support</a>
+                <a class="b_start-footer-link" href="#support">Support</a>
             </div>
         </div>
     </footer>
 </div>
 
 <div id="loginRegister">
-    <a name="loginRegister"></a>
 
     <div id="login-box" class="box">
         <form id="login-form" class="side-form" name="login" method="post" >
