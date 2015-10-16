@@ -3,24 +3,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { Link } from 'react-router';
+import { RouteHandler } from 'react-router';
 import cx from 'classnames';
 
 import loading from 'decorators/loading';
-import { loadFoldersList } from 'actions/folders';
+import * as actions from 'actions/folders';
 import Header from 'components/Header';
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
 import PreviewImage from 'components/PreviewImage';
 import LoadingSpinner from 'components/LoadingSpinner';
 import Footer from 'components/Footer';
-import commonStyles from 'common/styles.css';
 import { listLayout } from 'common';
 
 import styles from './index.css';
+import commonStyles from 'common/styles.css';
 
 @connect(
   (state) => ({folder: state.activeFolder}),
-  (dispatch) => bindActionCreators({ loadFoldersList }, dispatch)
+  (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
   (state) => state.folder.loading,
@@ -29,6 +30,7 @@ import styles from './index.css';
 export default class FolderPage extends Component {
   static propTypes = {
     folder: React.PropTypes.object.isRequired,
+    createFolder: React.PropTypes.func.isRequired,
     params: React.PropTypes.shape({
       folderId: React.PropTypes.string.isRequired,
       itemId: React.PropTypes.string,
@@ -60,6 +62,9 @@ export default class FolderPage extends Component {
     }
     if (props.params !== this.props.params) {
       this.setState({selection: []});
+      this.setState({selectOnLoad: true});
+    }
+    if (props.params.itemId) {
       this.setState({selectOnLoad: true});
     }
   }
@@ -181,6 +186,42 @@ export default class FolderPage extends Component {
     </ul>);
   }
 
+  renderEditFolder() {
+    return (
+      <div className={styles.column}>
+        <form onSubmit={::this.updateFolder}>
+          <label className={styles.folderNameLabel}>
+            Name:
+            <input
+              type="text"
+              placeholder="i.e. English"
+              autoFocus
+              value={this.state.newFolderName}
+              onChange={::this.onFolderNameInputChange}
+              role="Name for new folder"
+              className={styles.folderNameInput}
+              />
+          </label>
+        </form>
+
+          <Footer>
+            <Button icon="fa fa-save">Save</Button>
+          </Footer>
+      </div>
+    );
+  }
+
+  renderEditMedia() {
+    return (
+      <div className={styles.column} style={{backgroundColor: 'blue'}}>
+        <LoadingSpinner loading={true} />
+        <Footer>
+          <Button icon="fa fa-save">Save</Button>
+        </Footer>
+      </div>
+    );
+  }
+
   renderItemList() {
     return (<div>
       <ListView
@@ -204,6 +245,23 @@ export default class FolderPage extends Component {
     </div>);
   }
 
+  async addDefaultFolder() {
+    const newFolderData = {
+      name: 'Folder',
+      parentId: this.props.params.folderId,
+    };
+
+    this.props.createFolder(newFolderData).then((data) => {
+      this.props.loadFoldersList(this.props.params.folderId);
+      this.context.router.transitionTo('folderSelection', {
+        folderId: this.props.params.folderId,
+        itemType: 'folder',
+        itemId: data.payload.id,
+      });
+    });
+
+  }
+
   render() {
     return (
     <div>
@@ -216,6 +274,7 @@ export default class FolderPage extends Component {
         <IconButton
           className={commonStyles.headerButton}
           icon="fa fa-folder-open"
+          onClick={::this.addDefaultFolder}
           tooltipText="Add new folder"
         />
       </Header>
@@ -223,11 +282,8 @@ export default class FolderPage extends Component {
       <div className={styles.column}>
         { this.renderItemList() }
       </div>
-      <div className={styles.column} style={{backgroundColor: 'blue'}}>
-        <LoadingSpinner loading={true} />
-        <Footer>
-          <Button icon="fa fa-save">Save</Button>
-        </Footer>
+      <div className={styles.column}>
+        <RouteHandler />
       </div>
     </div>);
   }

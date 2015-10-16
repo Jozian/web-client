@@ -14,6 +14,7 @@ import CommentsPage from 'containers/CommentsPage';
 import MotdPage from 'containers/MotdPage';
 import store from 'store/configureStore';
 import CommentDetails from 'containers/CommentDetailsPage';
+import EditFolderPage from 'containers/EditFolderPage';
 
 const routes = (
 
@@ -25,8 +26,10 @@ const routes = (
     </Route>
     <Route name="libraries">
       <DefaultRoute handler={LibrariesPage} />
-      <Route name="folder" path="/folder/:folderId" handler={FolderPage} />
-      <Route name="folderSelection" path="/folder/:folderId/:itemType/:itemId" handler={FolderPage} />
+      <Route name="folder" path="/folder/:folderId/" handler={FolderPage}>
+        <Route name="folderSelection" path=":itemType/:itemId/" handler={EditFolderPage} />
+      </Route>
+
     </Route>
     <Route name="statistics" handler={StatisticsPage} />
     <Route name="comments" handler={CommentsPage} />

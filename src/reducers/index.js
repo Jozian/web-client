@@ -39,6 +39,12 @@ export const users = handleLoadingChain([
   types.USERS_LOAD_ERROR,
 ]);
 
+export const folder = handleLoadingChain([
+  types.FOLDER_ID_LOADING,
+  types.FOLDER_ID_LOADED,
+  types.FOLDER_ID_ERROR,
+]);
+
 export const user = handleLoadingChain([
   types.USER_LOADING,
   types.USER_LOADED,
@@ -95,6 +101,14 @@ export const pendingActions = combineReducers({
   inviteUsers: handlePendingChain(
     [types.INVITED_USERS_UPDATING],
     [types.INVITED_USERS_UPDATED, types.INVITED_USERS_UPDATE_ERROR],
+  ),
+  createFolder: handlePendingChain(
+    [types.FOLDER_CREATING],
+    [types.FOLDER_CREATED, types.FOLDER_LOAD_ERROR],
+  ),
+  updateFolder: handlePendingChain(
+    [types.FOLDER_UPDATING],
+    [types.FOLDER_UPDATED, types.FOLDER_UPDATE_ERROR],
   ),
 });
 

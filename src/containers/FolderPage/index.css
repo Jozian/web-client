@@ -30,6 +30,10 @@
     vertical-align: middle;
     height: 60px;
     line-height: 60px;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 300px;
+    text-overflow: ellipsis;
 }
 
 .image {
@@ -64,9 +68,16 @@
   color: #593c56;
 }
 
-
 .breadcrumbs li:not(:first-child):before {
   content: '>';
   margin: 0 5px;
 
+}
+
+.folderNameLabel {
+    margin-left: 35px;
+}
+
+.folderNameInput {
+    width: 70%;
 }

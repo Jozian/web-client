@@ -3,7 +3,7 @@ import store from '../store/configureStore';
 import {stringify} from 'querystring';
 
 // FIXME: ENV BASED BUILD
-export const baseUrl = /*'http://medserver.apps.wookieelabs.com'*/ 'http://192.168.88.129:3010';
+export const baseUrl = 'http://medserver.apps.wookieelabs.com';
 
 function getAuthHeader() {
   return 'Bearer ' + (store.getState().currentUser ? store.getState().currentUser.token : '');
