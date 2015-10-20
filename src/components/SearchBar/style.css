@@ -1,6 +1,9 @@
 .searchBar {
-    position: relative;
+    position: absolute;
+    top: 10px;
+    right: 20px;
     margin: 10px;
+    z-index: 300;
 }
 
 .input {
@@ -10,23 +13,19 @@
 }
 .list {
     width: 400px;
-    height: 300px;
+    height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
     position: absolute;
-    background-color: #fff;
-    border: 1px solid #c0c0c0;
+    padding: 10px 20px 10px 15px;
+    background-color: #c0c0c0;
     z-index: 1000;
 }
 
 .headerList {
     width: 100%;
-    padding: 10px;
-    margin: 10px 10px 10px 0;
-    color: #fff;
-    border-top: 1px solid #c0c0c0;
-    border-bottom: 1px solid #c0c0c0;
-    background-color: green;
+    color: #78c623;
+    border-bottom: 1px solid #78c623;
 }
 
 .icon {
@@ -42,13 +41,44 @@
 }
 
 .searchBar :global(.win-container) {
-    height: 30px;
+    height: 70px;
+}
+
+.searchBar :global(.win-listview > .win-vertical .win-container) {
+    margin: 10px 0px 0px 0px;
+
 }
 
 .searchBar :global(.win-listview) {
     height: auto !important;
 }
 
+.searchBar :global(.win-itembox) {
+    background-color: #c0c0c0;
+}
+
 .searchBar :global(.win-listview > .win-viewport) {
     height: auto !important;
+}
+
+.searchBar :global(.win-listview .win-horizontal .win-surface.win-nocssgrid) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+}
+
+.searchBar :global(.win-listview .win-groupheader) {
+    padding: 0;
+}
+
+.image {
+    height: 60px;
+    width: 100px;
+    margin: 5px 20px 5px 5px;
+    float: left;
+}
+
+.notFloat {
+    float: none;
+    display: block;
 }

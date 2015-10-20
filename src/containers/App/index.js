@@ -64,9 +64,11 @@ export default class App extends Component {
         <div className={styles.yellowLine}></div>
       </div>
       <ToastManager />
+
       <NavBar username={this.props.user.name} logout={this.props.logoutUser} />
+      <SearchBar />
       <section className={styles.contenthost}>
-        <SearchBar />
+
         <RouteHandler />
       </section>
     </div>);

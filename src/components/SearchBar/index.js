@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { debounce } from 'lodash';
 import cx from 'classnames';
+import PreviewImage from 'components/PreviewImage';
 
 import { listLayout } from 'common';
 import * as actions from 'actions/searchResult';
@@ -71,6 +72,7 @@ export default class SearchBar extends Component {
       routeParams.folderId = 'library' + item.data.LibraryId;
     }
     this.context.router.transitionTo('folderSelection', routeParams);
+    this.hideList();
   }
 
   highlightCurrentSearch(currentString) {
@@ -110,24 +112,15 @@ export default class SearchBar extends Component {
   listViewSearchUserItemRenderer = winjsReactRenderer((item) => {
     return (
       <div onClick={this.userSelected.bind(item, this)}>
-        <span className={cx('fa', 'fa-user', styles.icon)}></span>
         {this.highlightCurrentSearch(item.data.name)}
       </div>
     );
   });
 
   listViewSearchMediaItemRenderer = winjsReactRenderer((item) => {
-    const classes = cx({
-      'fa': true,
-      [styles.icon]: true,
-      'fa-file-video-o': item.data.type === 'video',
-      'fa-file-picture-o': item.data.type === 'image',
-      'fa-file-text-o': item.data.type === 'text',
-    });
     return (
-      <div onClick={this.mediaSelected.bind(this, item)}>
-        <span className={classes}></span>
-        {this.highlightCurrentSearch(item.data.name)}
+      <div class={styles.notFloat}>
+        {item.data.type}
       </div>
     );
   });
@@ -138,25 +131,15 @@ export default class SearchBar extends Component {
 
         {this.state.showSearchList ?
             <div className={cx(styles.list, 'searchList')}>
-              <h3 className={styles.headerList}>Users</h3>
-              {this.props.searchResult.entity.users.data.length > 0 ?
               <ListView
-                itemDataSource={this.props.searchResult.entity.users.data.dataSource}
+                itemDataSource={this.props.searchResult.entity.data.dataSource}
                 itemTemplate={this.listViewSearchUserItemRenderer}
-                layout={listLayout}
+                layout={ {type: WinJS.UI.GridLayout} }
+                groupDataSource={ this.props.searchResult.entity.data.groups.dataSource}
+                groupHeaderTemplate={ this.listViewSearchMediaItemRenderer}
                 />
-                : <span className={styles.noResults}>No results found</span> }
 
-              <h3 className={styles.headerList}>Media files</h3>
-              {this.props.searchResult.entity.media.data.length > 0 ?
-              <ListView
-                itemDataSource={this.props.searchResult.entity.media.data.dataSource}
-                itemTemplate={this.listViewSearchMediaItemRenderer}
-                layout={listLayout} />
-                : <span className={styles.noResults}>No results found</span> }
             </div> : ''}
-
-
       </div>
     );
   }

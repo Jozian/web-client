@@ -77,12 +77,7 @@ const store = createFinalStore(reducer, {
   searchResult: {
     loading: false,
     entity: {
-      users: {
-        data: new WinJS.Binding.List([]),
-      },
-      media: {
-        data: new WinJS.Binding.List([]),
-      },
+      data: new WinJS.Binding.List([]),
     },
   },
 });

@@ -12,6 +12,7 @@ import activeSearchResultReducer from './activeSerachResult';
 export const pendingToasts = toastReducer;
 export const activeFolder = activeFolderReducer;
 export const activeComment = activeCommentDetailReducer;
+export const searchResult = activeSearchResultReducer;
 
 export const libraries = handleLoadingChain([
   types.LIBRARIES_LOADING,
