@@ -89,3 +89,5 @@ export const COMMENT_UPDATE_ERROR = 'Comments updating error';
 export const INVITED_USERS_UPDATING = 'Invited users updating';
 export const INVITED_USERS_UPDATED = 'Invited users updated';
 export const INVITED_USERS_UPDATE_ERROR = 'Invited users updating error';
+
+export const LOGOUT_USER = 'User logout';
