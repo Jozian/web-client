@@ -5,3 +5,37 @@
   height: 100%;
   width: calc(100% - 250px);
 }
+
+.topLine {
+  height: 5px;
+  width: 100%;
+  clear: both;
+}
+
+.redLine {
+  width: 25%;
+  height: 100%;
+  background-color: #c75719;
+  float: left;
+}
+
+.greenLine {
+  width: 25%;
+  height: 100%;
+  background-color: #5e8000;
+  float: left;
+}
+
+.blueLine {
+  width: 25%;
+  height: 100%;
+  background-color: #3278ba;
+  float: left;
+}
+
+.yellowLine {
+  width: 25%;
+  height: 100%;
+  background-color: #f5c011;
+  float: left;
+}

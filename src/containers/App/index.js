@@ -16,6 +16,12 @@ export default class App extends Component {
 
   render() {
     return (<div>
+      <div className={styles.topLine}>
+        <div className={styles.redLine}></div>
+        <div className={styles.greenLine}></div>
+        <div className={styles.blueLine}></div>
+        <div className={styles.yellowLine}></div>
+      </div>
       <ToastManager />
       <NavBar username={this.props.user.name} />
       <section className={styles.contenthost}>
