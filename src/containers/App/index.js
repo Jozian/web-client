@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import { RouteHandler } from 'react-router';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import * as actions from '../../actions/apps';
 import NavBar from 'components/NavBar';
 import ToastManager from '../ToastManager';
 import styles from './index.css';
 
 @connect(
-  (state) => ({user: state.currentUser})
+  (state) => ({user: state.currentUser}),
+  (dispatch) => bindActionCreators(actions, dispatch)
 )
 export default class App extends Component {
   static propTypes = {
     user: React.PropTypes.object.isRequired,
   };
+
+  componentWillReceiveProps(props) {
+    if (!props.user.token) {
+      window.location.reload();
+    }
+  }
 
   render() {
     return (<div>
@@ -23,7 +32,7 @@ export default class App extends Component {
         <div className={styles.yellowLine}></div>
       </div>
       <ToastManager />
-      <NavBar username={this.props.user.name} />
+      <NavBar username={this.props.user.name} logout={this.props.logoutUser} />
       <section className={styles.contenthost}>
         <RouteHandler />
       </section>
