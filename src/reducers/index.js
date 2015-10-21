@@ -112,7 +112,12 @@ export const pendingActions = combineReducers({
   ),
 });
 
-export function currentUser(state) {
+export function currentUser(state, action) {
+
+  if (action.type === types.LOGOUT_USER) {
+    return {};
+  }
+
   if (!state) {
     const user = JSON.parse(localStorage.getItem('MEDuser'));
     if (!user) {
