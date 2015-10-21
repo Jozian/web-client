@@ -4,14 +4,12 @@
   display: inline;
   width: 250px;
   height: 100%;
-  background-color: #226266;
-  border-right: solid #eaeaea 10px;
+  background-color: #f1f1f1;
 }
 
 .logo {
   padding-top: 60px;
   padding-bottom: 45px;
-  border-bottom: solid #3f824f 1px;
   width: 100%;
 }
 
@@ -24,33 +22,35 @@
 .sidebar a {
   cursor: pointer;
   text-decoration: none;
-  color: grey;
+  color: #626262;
   display: block;
   width: 100%;
   box-sizing: border-box;
   line-height: 45px;
   height: 45px;
-  font-size: 16pt;
+  font-size: 14pt;
   padding-left: 16px;
 }
 
 .sidebar :global(a.active) {
   padding-left: 16px;
-  color: white;
-  font-weight: bold;
-  background-color: #287074;
-  border-left: solid #6ab01c 4px;
+  color: #626262;
+  /*border-right: dotted #6ab01c 7px;*/
+  border-right-width: 11px;
+  border-right-color: #626262;
+  border-right-style: dotted;
 }
 
 .footer {
   position: absolute;
-  background-color: #145054;
+  background-color: #f1f1f1;
   bottom: 0;
-  width: 100%;
+  left: 20px;
+  width: calc(100% - 40px);
   height: 92px;
   line-height: 90px;
-  color: #5c7e82;
-  border-top: solid #6ab01c 2px;
+  color: #626262;
+  border-top: solid #626262 2px;
   font-size: 14pt;
 }
 
@@ -62,14 +62,6 @@ h1 {
   color: grey;
   display: inline-block;
   margin: 0;
-}
-
-.icon {
-  height: 90px;
-  line-height: 94px;
-  vertical-align: middle;
-  float: left;
-  margin: 0 2px;
 }
 
 .username {
@@ -89,14 +81,13 @@ h1 {
 }
 
 div.logout button {
-  color: #5c7e82;
-  background-color: #39696d;
+  color: #6ab01c;
+  background-color: #f1f1f1;
   border: 0;
 }
 
 div.logout button:hover {
-  background-color: #78c623;
-  color: white;
+  color: #626262;
 }
 
 div.logout button i {

@@ -36,7 +36,6 @@ export default class NavBar extends Component {
         )
       }
       <div className={styles.footer}>
-        <i className={cx('fa', 'fa-user', styles.icon)}></i>
         <span className={styles.username}>{this.props.username}</span>
         <IconButton icon="fa fa-power-off" className={styles.logout} />
       </div>
