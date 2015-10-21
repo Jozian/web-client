@@ -29,6 +29,7 @@ export default class NavBar extends Component {
     return (<nav className={styles.sidebar}>
       <div className={styles.logo}>
         <img src={logo} />
+        <p className={styles.logoText}>Microsoft<br /> Education Delivery</p>
       </div>
       {
         this.getAvailableLinks().map((item) =>
