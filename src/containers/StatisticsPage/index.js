@@ -81,7 +81,7 @@ export default class StatisticsPage extends Component {
         <div style={{height: '100%'}}>
         <div className={style.listContainer}>
           <div className={style.toolbar} id="downloaded">
-            <span className={style.toolbarTitle}>most downloaded media</span>
+            <span className={style.toolbarTitle}>Most downloaded media</span>
           </div>
           <ListView
             className={style.container}
@@ -93,7 +93,7 @@ export default class StatisticsPage extends Component {
         </div>
         <div className={style.listContainer}>
           <div className={style.toolbar} id="downloaded">
-            <span className={style.toolbarTitle}>most viewed media</span>
+            <span className={style.toolbarTitle}>Most viewed media</span>
           </div>
 
           <ListView
@@ -106,11 +106,10 @@ export default class StatisticsPage extends Component {
         </div>
         <Footer>
             <ActionButton
-              icon="fa fa-download"
+              className="mdl2-download"
               inProgress={this.props.pendingActions.statisticsExport}
               onClick={this.props.addToExport}
             >
-              Export
             </ActionButton>
         </Footer>
         </div>
