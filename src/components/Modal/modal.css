@@ -1,9 +1,9 @@
 .modal:global(.ReactModal__Content) {
   border: none;
   border-radius: 0;
-  border-top: solid #6ab01c 5px;
   padding: 0 0 75px 0;
   height: auto;
+  width: 100%;
   top: 50%;
   left: 50%;
   bottom: auto;
@@ -13,19 +13,28 @@
 
 .modalOverlay:global(.ReactModal__Overlay) {
   background-color: rgba(128, 128, 128, 0.5);
+  z-index: 2;
 }
 
 .title {
-  margin: 0;
-  padding: 35px;
-  font-size: 35px;
-  color: #1a5055;
+  margin: 20px auto;
+  padding: 12px 0;
+  font-size: 18px;
+  color: #404041;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 200;
+  font-weight: 700;
   line-height: 1.2;
+  width: 400px;
+
 }
+
+.children {
+  width: 400px;
+  margin: 0 auto;
+}
+
 
 /*
 .modalHolder {
