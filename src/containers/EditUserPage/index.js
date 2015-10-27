@@ -322,7 +322,7 @@ export default class EditUserPage extends Component {
                   placeholder="email@email.com"
                   />
               </div>
-  
+
               <div className={styles.rightBlock}>
                 <FormInput
                   valueLink={{
