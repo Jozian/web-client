@@ -7,6 +7,7 @@ import { isUnique } from 'api/users.js';
 import Dropdown from 'components/Dropdown';
 import FormInput from 'components/Form/FormInput';
 import Header from 'components/Header';
+import Footer from 'components/Footer';
 import FormInputWithCheckbox from 'components/Form/FormInputWithCheckbox';
 import * as actions from 'actions/users.js';
 import loading from 'decorators/loading';
@@ -245,77 +246,68 @@ export default class EditUserPage extends Component {
   }
 
   render() {
-    const editUser = cx({
-      [styles.hideHeader]: true,
-      [styles.showHeader]: this.props.params.id,
-    });
-    const addUser = cx({
-      [styles.hideHeader]: true,
-      [styles.showHeader]: !this.props.params.id,
-    });
-    return (
-      <div className={styles.mainContainer}>
-        <div className={editUser}><Header>Edit user</Header></div>
-        <div className={addUser}><Header>Add User Account</Header></div>
-        <div className={styles.wrapper}>
-          <form className={styles.backgroundWhite}>
-            <div className={styles.leftBlock}>
-              { this.renderTypesOptions() }
-              <FormInput
-                valueLink={{
+      return (
+        <div className={styles.mainContainer}>
+          <Header>Edit user</Header>
+          <div className={styles.wrapper}>
+            <form className={styles.backgroundWhite}>
+              <div className={styles.leftBlock}>
+                { this.renderTypesOptions() }
+                <FormInput
+                  valueLink={{
                 value: this.state.user.name,
                 requestChange: this.getUserChange('name'),
               }}
-                label="User name"
-                name="name"
-                placeholder="i.e. John Doe"
-                type="text"
-                errorMessage={this.state.errors.name}
-                onBlur={::this.onBlur} />
-              <FormInput
-                valueLink={{
+                  label="User name"
+                  name="name"
+                  placeholder="i.e. John Doe"
+                  type="text"
+                  errorMessage={this.state.errors.name}
+                  onBlur={::this.onBlur} />
+                <FormInput
+                  valueLink={{
                   value: null,
                   requestChange: this.getUserChange('password'),
                 }}
-                label="Password"
-                name="password"
-                placeholder={null}
-                type="password"
-                errorMessage={this.state.errors.password} />
-              <FormInput
-                valueLink={{
+                  label="Password"
+                  name="password"
+                  placeholder={null}
+                  type="password"
+                  errorMessage={this.state.errors.password} />
+                <FormInput
+                  valueLink={{
                     value: this.state.user.email,
                     requestChange: this.getUserChange('email'),
                   }}
-                label="Send credentials on Email"
-                errorMessage={this.state.errors.email}
-                name="email"
-                placeholder="email@email.com"
-                />
-            </div>
+                  label="Send credentials on Email"
+                  errorMessage={this.state.errors.email}
+                  name="email"
+                  placeholder="email@email.com"
+                  />
+              </div>
 
 
-            <div className={styles.rightBlock}>
-              <FormInput
-                valueLink={{
+              <div className={styles.rightBlock}>
+                <FormInput
+                  valueLink={{
                 value: this.state.user.login,
                 requestChange: this.getUserChange('login'),
               }}
-                label="Login"
-                name="login"
-                placeholder="i.e. johndoe"
-                type="text"
-                errorMessage={this.state.errors.login}
-                onBlur={::this.onBlur} />
-              <FormInput
-                valueLink={{
+                  label="Login"
+                  name="login"
+                  placeholder="i.e. johndoe"
+                  type="text"
+                  errorMessage={this.state.errors.login}
+                  onBlur={::this.onBlur} />
+                <FormInput
+                  valueLink={{
                   value: null,
                   requestChange: this.getUserChange('confirm'),
                 }}
-                label="Confirm password"
-                name="confirm"
-                type="password"
-                errorMessage={this.state.errors.confirm} />
+                  label="Confirm password"
+                  name="confirm"
+                  type="password"
+                  errorMessage={this.state.errors.confirm} />
                 <FormInput
                   valueLink={{
                     value: this.state.user.phone,
