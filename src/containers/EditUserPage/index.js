@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import cx from 'classnames';
 
 import Button from 'components/Button';
 import { isUnique } from 'api/users.js';
@@ -18,6 +19,7 @@ import ActionButtonForModal from 'components/ActionButtonForModal';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
+
 
 @connect(
   (state) =>  ({user: state.user.entity, currentUser: state.currentUser }),
