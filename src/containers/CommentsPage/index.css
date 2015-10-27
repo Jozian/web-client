@@ -6,14 +6,28 @@
   text-align: center;
 }
 
+.typeCell {
+  max-width: 40px;
+  width: 40px;
+  padding: 0;
+  text-align: left;
+}
+
+.nameCell {
+  max-width: 120px;
+  width: 120px;
+  padding: 0;
+  text-align: left;
+}
+
 .buttonCell {
   width: 60px;
   max-width: 60px;
 }
 
 .libraryCell {
-  max-width: 250px;
-  width: 250px;
+  max-width: 120px;
+  width: 120px;
 }
 
 .rowButton {
