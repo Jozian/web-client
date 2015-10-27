@@ -168,6 +168,7 @@ export default class EditUserPage extends Component {
 
   renderTypesOptions() {
     return (
+<<<<<<< HEAD
       <Dropdown title="Type:"
                 value={this.state.user.type}
                 disabled={this.state.user.type === 'owner'}
@@ -321,8 +322,7 @@ export default class EditUserPage extends Component {
                   placeholder="email@email.com"
                   />
               </div>
-
-
+  
               <div className={styles.rightBlock}>
                 <FormInput
                   valueLink={{
@@ -344,6 +344,7 @@ export default class EditUserPage extends Component {
                   name="confirm"
                   type="password"
                   errorMessage={this.state.errors.confirm} />
+
                 <FormInput
                   valueLink={{
                     value: this.state.user.phone,
