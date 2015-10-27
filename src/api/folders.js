@@ -43,3 +43,14 @@ export function getFolder(folderId) {
 
   return fetch(apiUrl + '/' + folderId);
 }
+
+export function deleteFolders(body) {
+  if (!body) {
+    return Promise.reject();
+  }
+
+  return fetch('/api/contentActions/delete', {
+    method: 'post',
+    body: JSON.stringify(body),
+  });
+}
