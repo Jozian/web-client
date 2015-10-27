@@ -3,31 +3,26 @@
     color: grey;
     margin-left: 20px;
     text-align: start;
+    clear: both;
 }
 
 .mainContainer {
     display: block;
     height: 100%;
     padding-right: 15px;
-    padding-left: 15px;
     overflow-y: auto;
 }
 
 .wrapper {
-    background-color: #f6f6f6;
+    background-color: #ffffff;
     width: 80%;
     padding-top: 10px;
     margin-left: 5%;
     position: relative;
 }
 
-.backgroundGreen {
-    background-color: #e2eed8;
-    margin-top: 10px;
-}
-
-.backgroundGrey {
-    background-color: #f6f6f6;
+.backgroundWhite {
+    background-color: #ffffff;
     margin: 0;
     padding: 0;
 }
@@ -40,13 +35,15 @@
     position: relative;
 }
 
-.buttonStyle {
-    min-height: 28px;
-    border-color: rgba(0, 0, 0, 0.2);
-    margin-left: 5px;
-    margin-right: 5px;
-    min-width: 120px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+.leftBlock {
+    display: inline-block;
+    width: 40%;
+    float:left;
+}
+
+.rightBlock {
+    margin-top: 57px;
+    display: inline-block;
+    width: 40%;
 }
 
