@@ -36,6 +36,10 @@ export const USERS_LOADING = 'Loading users';
 export const USERS_LOADED = 'Users loaded';
 export const USERS_LOAD_ERROR = 'Error loading users';
 
+export const FOLDER_DELETING = 'Removing folders';
+export const FOLDER_DELETED = 'Folders was deleted';
+export const FOLDER_DELETE_ERROR = 'Error deleting folders';
+
 export const USERS_DELETING = 'Removing users';
 export const USERS_DELETED = 'Users removed';
 export const USERS_DELETE_ERROR = 'Error removing users';

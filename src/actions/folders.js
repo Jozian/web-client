@@ -40,3 +40,13 @@ export function loadFolder(id) {
     },
   };
 }
+
+export function deleteFolders(data) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.FOLDER_DELETING, types.FOLDER_DELETED, types.FOLDER_DELETE_ERROR],
+      promise: api.deleteFolders(data),
+    },
+  };
+}
