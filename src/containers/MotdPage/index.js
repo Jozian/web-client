@@ -76,14 +76,12 @@ export default class StatisticsPage extends Component {
 
           <div className={styles.fieldWrapper}>
             <div className={styles.buttonWrapper}>
-              <ActionButton
-                icon="fa fa-pencil"
-                inProgress={this.props.pendingActions.updateMotd}
+              <button
+                className={styles.buttonGreen}
                 disabled={isButtonDisabled}
                 onClick={::this.clickHandler}
-              >
-                Update
-              </ActionButton>
+              >Upload</button>
+
             </div>
           </div>
         </div>
