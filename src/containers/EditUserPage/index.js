@@ -291,9 +291,7 @@ export default class EditUserPage extends Component {
                 errorMessage={this.state.errors.email}
                 name="email"
                 placeholder="email@email.com"
-                checked={this.state.checked.email}
-                onBlur={::this.onBlur}
-                onCheckboxChange={this.check.bind(this, 'email')}/>
+                />
             </div>
 
 
@@ -342,7 +340,6 @@ export default class EditUserPage extends Component {
                       text="Cancel"/>
             </footer>
           </form>
-
         </div>
       </div>);
   }
