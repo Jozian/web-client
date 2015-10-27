@@ -21,10 +21,11 @@
 .logoText {
   display: inline-block;
   color: #505050;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 28px;
   padding-left: 10px;
+  margin-right: 10px;
 }
 
 .sidebar a {
@@ -36,9 +37,14 @@
   box-sizing: border-box;
   line-height: 45px;
   height: 45px;
-  font-size: 14pt;
+  font-size: 14px;
+  font-weight: 700;
   padding-left: 16px;
 }
+
+/*.sidebar a:first-child {
+  margin-top: 200px;
+}*/
 
 .sidebar :global(a.active) {
   padding-left: 16px;
@@ -49,13 +55,14 @@
   position: absolute;
   background-color: #f1f1f1;
   bottom: 0;
-  left: 20px;
+  left: 17px;
   width: calc(100% - 40px);
   height: 92px;
   line-height: 90px;
   color: #626262;
-  border-top: solid #626262 2px;
-  font-size: 14pt;
+  border-top: solid #626262 1px;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 h1 {
@@ -79,7 +86,7 @@ h1 {
 
 .logout {
   position: absolute;
-  right: 5px;
+  right: -10px;
   top: 50%;
   transform: translateY(-50%);
 }
