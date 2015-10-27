@@ -7,6 +7,8 @@ import { RouteHandler } from 'react-router';
 import cx from 'classnames';
 
 import loading from 'decorators/loading';
+import Modal from 'components/Modal';
+import ActionButton from 'components/ActionButton';
 import * as actions from 'actions/folders';
 import Header from 'components/Header';
 import Button from 'components/Button';
@@ -238,6 +240,7 @@ export default class FolderPage extends Component {
         <Button
           disabled={this.state.selection.length === 0}
           className="mdl2-delete"
+          onClick={::this.openDeleteFoldersModal}
         >
         </Button>
       </Footer>
@@ -258,12 +261,53 @@ export default class FolderPage extends Component {
         itemId: data.payload.id,
       });
     });
+  }
 
+  openDeleteFoldersModal() {
+    this.setState({isOpenDeleteFoldersModal: true});
+  }
+
+  hideDeleteFoldersPopup() {
+    this.setState({isOpenDeleteFoldersModal: false});
+  }
+
+  async deleteFolders() {
+    if (this.state.selection.length === 0) {
+      return;
+    }
+
+    await this.props.deleteFolders(this.state.selection.map(l => ({id: l, type: 'folder'})));
+    this.hideDeleteFoldersPopup();
+    this.setState({selection: []});
+    this.context.router.transitionTo('folder', {
+      folderId: this.props.params.folderId.toString(),
+    });
+    this.props.loadFoldersList(this.props.params.folderId);
+  }
+
+  renderDeleteFoldersModal() {
+    return (<Modal
+      isOpen={this.state.isOpenDeleteFoldersModal}
+      title="Are you sure you want to delete selected items?"
+      className={styles.newLibraryModal}
+      >
+      <Footer>
+        <ActionButton
+          icon="fa fa-check"
+          onClick={::this.deleteFolders}
+          inProgress={this.props.pendingActions}
+          >
+          Ok
+        </ActionButton>
+        <Button icon="fa fa-ban" onClick={::this.hideDeleteFoldersPopup}>Cancel</Button>
+      </Footer>
+    </Modal>);
   }
 
   render() {
     return (
     <div>
+      { this.renderDeleteFoldersModal() }
       <Header>{this.props.folder.entity.name}
         <Button
           className="mdl2-document"
