@@ -7,13 +7,15 @@ import { RouteHandler } from 'react-router';
 import cx from 'classnames';
 
 import loading from 'decorators/loading';
+import Modal from 'components/Modal';
+import ActionButtonForModal from 'components/ActionButtonForModal';
 import * as actions from 'actions/folders';
 import Header from 'components/Header';
 import Button from 'components/Button';
-import IconButton from 'components/IconButton';
 import PreviewImage from 'components/PreviewImage';
 import LoadingSpinner from 'components/LoadingSpinner';
 import Footer from 'components/Footer';
+import WhiteFooter from 'components/WhiteFooter';
 import { listLayout } from 'common';
 
 import styles from './index.css';
@@ -238,6 +240,7 @@ export default class FolderPage extends Component {
         <Button
           disabled={this.state.selection.length === 0}
           className="mdl2-delete"
+          onClick={::this.openDeleteFoldersModal}
         >
         </Button>
       </Footer>
@@ -258,12 +261,53 @@ export default class FolderPage extends Component {
         itemId: data.payload.id,
       });
     });
+  }
 
+  openDeleteFoldersModal() {
+    this.setState({isOpenDeleteFoldersModal: true});
+  }
+
+  hideDeleteFoldersPopup() {
+    this.setState({isOpenDeleteFoldersModal: false});
+  }
+
+  async deleteFolders() {
+    if (this.state.selection.length === 0) {
+      return;
+    }
+
+    await this.props.deleteFolders(this.state.selection.map(l => ({id: l, type: 'folder'})));
+    this.hideDeleteFoldersPopup();
+    this.setState({selection: []});
+    this.context.router.transitionTo('folder', {
+      folderId: this.props.params.folderId.toString(),
+    });
+    this.props.loadFoldersList(this.props.params.folderId);
+  }
+
+  renderDeleteFoldersModal() {
+    return (<Modal
+      isOpen={this.state.isOpenDeleteFoldersModal}
+      title="Are you sure you want to delete selected items?"
+      className={styles.newLibraryModal}
+      >
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
+          onClick={::this.deleteFolders}
+          inProgress={this.props.pendingActions}
+          >
+          Ok
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal}  onClick={::this.hideDeleteFoldersPopup}>Cancel</ActionButtonForModal>
+      </WhiteFooter>
+    </Modal>);
   }
 
   render() {
     return (
     <div>
+      { this.renderDeleteFoldersModal() }
       <Header>{this.props.folder.entity.name}
         <Button
           className="mdl2-document"
