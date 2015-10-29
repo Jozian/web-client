@@ -215,7 +215,7 @@ class LibrariesPage extends Component {
           disabled={!this.state.selectedLibraries.length}
           inProgress={this.props.pendingActions.deleteLibraries}
           >
-          Save
+          OK
         </ActionButtonForModal>
         <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteLibrariesPopup}>Cancel</ActionButtonForModal>
       </WhiteFooter>
@@ -275,7 +275,7 @@ class LibrariesPage extends Component {
             onClick={::this.inviteUsers}
             inProgress={this.props.pendingActions.inviteUsers}
             >
-            Ok
+            Invite
           </ActionButtonForModal>
           <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideInviteUsersPopup}>Cancel</ActionButtonForModal>
         </WhiteFooter>
