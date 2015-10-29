@@ -127,6 +127,7 @@ export default class CommentDetails extends Component {
   }
 
   async editCommentState(item) {
+    debugger;
     const editDataComment = {
       isEditCommentPopupOpen: true,
       id: item.data.id,
@@ -197,6 +198,7 @@ export default class CommentDetails extends Component {
   }
 
   async createNewComment() {
+    debugger;
     const newCommentData = {
       id: this.props.params.id,
       text: this.state.newCommentText,
@@ -212,6 +214,7 @@ export default class CommentDetails extends Component {
     this.setState({
       newCommentText: '',
       isNewCommentPopupOpen: false,
+      parentId: '',
     });
   }
 
@@ -219,6 +222,7 @@ export default class CommentDetails extends Component {
     this.setState({
       isNewCommentPopupOpen: false,
       newCommentText: '',
+      parentId: '',
     });
   }
 
@@ -226,6 +230,7 @@ export default class CommentDetails extends Component {
     this.setState({
       isEditCommentPopupOpen: false,
       newCommentText: '',
+      parentId: '',
     });
   }
 
@@ -263,7 +268,7 @@ export default class CommentDetails extends Component {
           inProgress={this.props.pendingActions.newComment}
           role="OK button"
           >
-          Ok
+          Send
         </ActionButtonForModal>
         <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideNewCommentPopup} role="Cancel button">Cancel</ActionButtonForModal>
       </WhiteFooter>
@@ -297,7 +302,7 @@ export default class CommentDetails extends Component {
           disabled={!this.state.newCommentText.length}
           inProgress={this.props.pendingActions.newComment}
           role="OK button">
-          Ok
+          Send
         </ActionButtonForModal>
         <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideEditCommentPopup} role="Cancel button">Cancel</ActionButtonForModal>
       </WhiteFooter>
