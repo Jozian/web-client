@@ -8,14 +8,14 @@ import cx from 'classnames';
 
 import loading from 'decorators/loading';
 import Modal from 'components/Modal';
-import ActionButton from 'components/ActionButton';
+import ActionButtonForModal from 'components/ActionButtonForModal';
 import * as actions from 'actions/folders';
 import Header from 'components/Header';
 import Button from 'components/Button';
-import IconButton from 'components/IconButton';
 import PreviewImage from 'components/PreviewImage';
 import LoadingSpinner from 'components/LoadingSpinner';
 import Footer from 'components/Footer';
+import WhiteFooter from 'components/WhiteFooter';
 import { listLayout } from 'common';
 
 import styles from './index.css';
@@ -291,16 +291,16 @@ export default class FolderPage extends Component {
       title="Are you sure you want to delete selected items?"
       className={styles.newLibraryModal}
       >
-      <Footer>
-        <ActionButton
-          icon="fa fa-check"
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
           onClick={::this.deleteFolders}
           inProgress={this.props.pendingActions}
           >
           Ok
-        </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideDeleteFoldersPopup}>Cancel</Button>
-      </Footer>
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal}  onClick={::this.hideDeleteFoldersPopup}>Cancel</ActionButtonForModal>
+      </WhiteFooter>
     </Modal>);
   }
 
