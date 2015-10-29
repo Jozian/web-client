@@ -14,14 +14,14 @@ class Modal extends Component {
 
   render() {
     return (
-      <ReactModal
-        {...this.props}
-        overlayClassName={styles.modalOverlay}
-        className={cx(styles.modal, this.props.className)}
-      >
-        <h2 className={styles.title}>{this.props.title}</h2>
-        {this.props.children}
-      </ReactModal>
+        <ReactModal
+          {...this.props}
+          overlayClassName={styles.modalOverlay}
+          className={cx(styles.modal, this.props.className)}
+        >
+          <h2 className={styles.title}>{this.props.title}</h2>
+          <div className={styles.children}>{this.props.children}</div>
+        </ReactModal>
     );
   }
 }

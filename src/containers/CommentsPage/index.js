@@ -69,14 +69,14 @@ export default class CommentsPage extends Component {
     columns: [
       {
         key: 'type',
-        icon: 'fa fa-file',
         text: 'Type',
-        className: commonStyles.numberCell,
+        className: styles.typeCell,
         renderer: renderIcon,
       },
       {
         key: 'name',
         text: 'Name',
+        className: styles.nameCell,
       },
       {
         key: 'button',
@@ -90,27 +90,23 @@ export default class CommentsPage extends Component {
       },
       {
         key: 'like',
-        icon: 'fa fa-thumbs-o-up',
         text: 'Like',
         className: commonStyles.numberCell,
       },
       {
         key: 'unlike',
-        icon: 'fa fa-thumbs-o-down',
         text: 'Unlike',
         className: commonStyles.numberCell,
       },
 
       {
         key: 'date',
-        icon: 'fa fa-calendar-o',
         text: 'Date',
         renderer: renderDate,
         className: styles.dateCell,
       },
       {
         key: 'amount',
-        icon: 'fa fa-comment',
         text: 'Amount',
         className: commonStyles.numberCell,
       },
@@ -140,11 +136,10 @@ export default class CommentsPage extends Component {
         />
         <Footer>
             <ActionButton
-              icon="fa fa-download"
+              className="mdl2-download"
               inProgress={this.props.pendingActions.commentsExport}
               onClick={this.props.exportComments}
             >
-              Export
             </ActionButton>
         </Footer>
       </div>

@@ -6,6 +6,7 @@ import { isUnique } from 'api/users.js';
 import Dropdown from 'components/Dropdown';
 import FormInput from 'components/Form/FormInput';
 import Header from 'components/Header';
+import Footer from 'components/Footer';
 import FormInputWithCheckbox from 'components/Form/FormInputWithCheckbox';
 import * as actions from 'actions/users.js';
 import { bindActionCreators } from 'redux';
@@ -201,89 +202,92 @@ class AddUserPage extends Component {
   render() {
       return (
         <div className={styles.mainContainer}>
-          <Header>Add User Account</Header>
+          <Header>Edit user</Header>
           <div className={styles.wrapper}>
-            <form className={styles.backgroundGrey}>
-              <FormInput
-                valueLink={{
+            <form className={styles.backgroundWhite}>
+              <div className={styles.leftBlock}>
+                { this.renderTypesOptions() }
+                <FormInput
+                  valueLink={{
                 value: this.state.user.name,
                 requestChange: this.getUserChange('name'),
               }}
-                label="User Name:"
-                name="name"
-                placeholder="i.e. John Doe"
-                type="text"
-                errorMessage={this.state.errors.name}
-                onBlur={::this.onBlur} />
-              <FormInput
-                valueLink={{
+                  label="User name"
+                  name="name"
+                  placeholder="i.e. John Doe"
+                  type="text"
+                  errorMessage={this.state.errors.name}
+                  onBlur={::this.onBlur} />
+                <FormInput
+                  valueLink={{
+                  value: null,
+                  requestChange: this.getUserChange('password'),
+                }}
+                  label="Password"
+                  name="password"
+                  placeholder={null}
+                  type="password"
+                  errorMessage={this.state.errors.password} />
+                <FormInput
+                  valueLink={{
+                    value: this.state.user.email,
+                    requestChange: this.getUserChange('email'),
+                  }}
+                  label="Send credentials on Email"
+                  errorMessage={this.state.errors.email}
+                  name="email"
+                  placeholder="email@email.com"
+                  />
+              </div>
+
+
+              <div className={styles.rightBlock}>
+                <FormInput
+                  valueLink={{
                 value: this.state.user.login,
                 requestChange: this.getUserChange('login'),
               }}
-                label="Login*:"
-                name="login"
-                placeholder="i.e. johndoe"
-                type="text"
-                errorMessage={this.state.errors.login}
-                onBlur={::this.onBlur} />
-              { this.renderTypesOptions() }
-              <FormInput
-                valueLink={{
-                value: null,
-                requestChange: this.getUserChange('password'),
-              }}
-                label="Password:"
-                name="password"
-                placeholder={null}
-                type="password"
-                errorMessage={this.state.errors.password} />
-              <FormInput
-                valueLink={{
-                value: null,
-                requestChange: this.getUserChange('confirm'),
-              }}
-                label="Confirm Password:"
-                name="confirm"
-                type="password"
-                errorMessage={this.state.errors.confirm} />
-              <div className={styles.backgroundGreen}>
-                <FormInputWithCheckbox
+                  label="Login"
+                  name="login"
+                  placeholder="i.e. johndoe"
+                  type="text"
+                  errorMessage={this.state.errors.login}
+                  onBlur={::this.onBlur} />
+                <FormInput
                   valueLink={{
-                  value: this.state.user.phone,
-                  requestChange: this.getUserChange('phone'),
+                  value: null,
+                  requestChange: this.getUserChange('confirm'),
                 }}
+                  label="Confirm password"
+                  name="confirm"
+                  type="password"
+                  errorMessage={this.state.errors.confirm} />
+                <FormInput
+                  valueLink={{
+                    value: this.state.user.phone,
+                    requestChange: this.getUserChange('phone'),
+                  }}
+                  label="Send credentials in SMS"
                   errorMessage={this.state.errors.phone}
-                  label="Send credentials in SMS:"
                   name="phone"
                   placeholder="Your mobile phone"
-                  checked={this.state.checked.phone}
-                  onCheckboxChange={this.check.bind(this, 'phone')} />
-                <FormInputWithCheckbox
-                  valueLink={{
-                  value: this.state.user.email,
-                  requestChange: this.getUserChange('email'),
-                }}
-                  errorMessage={this.state.errors.email}
-                  label="Send credentials in emails:"
-                  name="email"
-                  placeholder="email@email.com"
-                  checked={this.state.checked.email}
-                  onBlur={::this.onBlur}
-                  onCheckboxChange={this.check.bind(this, 'email')} />
+                  />
               </div>
               <p className={styles.note}>
                 * user will be able to login both to website and mobile client with this credentials.
               </p>
-              <footer className={styles.buttonsWrapper}>
-                <Button className={styles.buttonStyle}
-                        onClick={::this.saveUserHandler}
-                        text="OK" />
-                <Button className={styles.buttonStyle}
-                        onClick={::this.cancelUserHandler}
-                        text="Cancel" />
-              </footer>
+
             </form>
+
           </div>
+          <Footer>
+            <Button className="mdl2-check-mark"
+                    onClick={::this.saveUserHandler}
+              ></Button>
+            <Button className="mdl2-cancel"
+                    onClick={::this.cancelUserHandler}
+              ></Button>
+          </Footer>
         </div>);
     }
 }

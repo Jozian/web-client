@@ -1,16 +1,18 @@
 .userLabel {
     padding-top: 5px;
+    padding-left: 10px;
     width: 43%;
-    text-align: right;
     color: grey;
     margin-right: 2%;
-    display: inline-block;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .optionsSelect {
     border-style: solid;
     border-width: 2px;
-    margin: 4px 0px;
+    margin: 4px 0px 4px 10px;
     width: 90px;
     min-width: 64px;
     min-height: 28px;

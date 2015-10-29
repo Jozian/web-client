@@ -1,7 +1,7 @@
 .motd {
-    background-color: #F6F6F6;
-    width: 96%;
-    margin-left: 20px;
+    background-color: #ffffff;
+    width: 320px;
+    margin-left: 55px;
     padding-top: 30px;
     padding-bottom: 30px;
 }
@@ -10,10 +10,13 @@
     margin-bottom: 25px;
 }
 .label {
-    float: left;
     width: 150px;
     text-align: right;
-    color: #808080;
+    color: #000000;
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    line-height: 25px;
 }
 
 .error {
@@ -23,18 +26,42 @@
 }
 
 .buttonWrapper {
-    padding-left: 155px;
+    width: 100%;
 }
 .currentValue {
-    margin-left: 160px;
     max-width: 800px;
+    font-size: 15px;
+    font-weight: 300;
+    color: #505050;
 }
 .textArea {
     padding: 4px 8px;
-    margin-left: 160px;
     max-width: 800px;
     display: block;
     width: 100%;
     min-height: 60px;
     resize: vertical;
+    background-color: #f1f1f1;
+    border: 0;
+}
+
+.buttonGreen {
+    border-style: solid;
+    background-clip: padding-box;
+    padding: 4px 8px;
+    border-width: 2px;
+    font-size: 12pt;
+    font-weight: 600;
+    line-height: 1.3636;
+    color: white;
+    background-color: #78c623;
+    border-color: #78c623;
+    width: 100%;
+    height: 40px;
+}
+
+.buttonGreen:disabled {
+    background-color: rgba(202, 202, 202, 0.4);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.4);
 }

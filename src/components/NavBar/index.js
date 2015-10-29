@@ -10,7 +10,8 @@ import logo from 'file!./assets/logo.png';
 export default class NavBar extends Component {
   static propTypes = {
     username: React.PropTypes.string.isRequired,
-  }
+    logout: React.PropTypes.func.isRequired,
+  };
 
   getAvailableLinks() {
     // TODO: implement operator check logic
@@ -23,12 +24,13 @@ export default class NavBar extends Component {
     {to: 'comments', title: 'Comments'},
     {to: 'motd', title: 'Message of the Day'},
     {to: 'statistics', title: 'Statistics'},
-  ]
+  ];
 
   render() {
     return (<nav className={styles.sidebar}>
       <div className={styles.logo}>
         <img src={logo} />
+        <p className={styles.logoText}>Microsoft<br /> Education Delivery</p>
       </div>
       {
         this.getAvailableLinks().map((item) =>
@@ -36,9 +38,8 @@ export default class NavBar extends Component {
         )
       }
       <div className={styles.footer}>
-        <i className={cx('fa', 'fa-user', styles.icon)}></i>
         <span className={styles.username}>{this.props.username}</span>
-        <IconButton icon="fa fa-power-off" className={styles.logout} />
+        <IconButton onClick={this.props.logout} icon="fa fa-power-off" className={styles.logout} />
       </div>
     </nav>);
   }

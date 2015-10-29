@@ -1,5 +1,4 @@
 import fetch from './helper';
-import {saveAs} from 'browser-filesaver';
 
 const apiUrl = '/api/users';
 const isUniqueUrl = '/api/userManagement/isUnique';
@@ -76,5 +75,11 @@ export function uploadFile(body) {
     body: body,
     responseType: 'text',
   });
+}
+
+export function userLogout() {
+  localStorage.removeItem('MEDuser');
+  localStorage.removeItem('MEDtoken');
+  return Promise.resolve('success');
 }
 

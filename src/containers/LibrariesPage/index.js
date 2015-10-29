@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import cx from 'classnames';
 
 import * as actions from 'actions/libraries';
 import { loadUsers } from 'actions/users';
@@ -11,8 +11,10 @@ import Modal from 'components/Modal';
 import Table from 'components/Table';
 import IconButton from 'components/IconButton';
 import ActionButton from 'components/ActionButton';
+import ActionButtonForModal from 'components/ActionButtonForModal';
 import Button from 'components/Button';
 import Footer from 'components/Footer';
+import WhiteFooter from 'components/WhiteFooter';
 import loading from 'decorators/loading';
 
 import commonStyles from 'common/styles.css';
@@ -120,21 +122,18 @@ class LibrariesPage extends Component {
     columns: [
       {
         key: 'name',
-        text: 'Name',
+        text: 'Select all',
       },
       {
         key: 'folder',
-        icon: 'fa fa-folder-open',
         text: 'Folder',
         className: commonStyles.numberCell,
       }, {
         key: 'media',
-        icon: 'fa fa-file',
         text: 'Media',
         className: commonStyles.numberCell,
       }, {
         key: 'views',
-        icon: 'fa fa-eye',
         text: 'Views',
         className: commonStyles.numberCell,
       },
@@ -209,17 +208,17 @@ class LibrariesPage extends Component {
       title="Are you sure you want to delete selected items?"
       className={styles.newLibraryModal}
       >
-      <Footer>
-        <ActionButton
-          icon="fa fa-check"
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
           onClick={::this.deleteLibraries}
           disabled={!this.state.selectedLibraries.length}
           inProgress={this.props.pendingActions.deleteLibraries}
           >
-          Ok
-        </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideDeleteLibrariesPopup}>Cancel</Button>
-      </Footer>
+          OK
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteLibrariesPopup}>Cancel</ActionButtonForModal>
+      </WhiteFooter>
     </Modal>);
   }
 
@@ -241,46 +240,46 @@ class LibrariesPage extends Component {
             />
         </label>
       </form>
-      <Footer>
-        <ActionButton
-          icon="fa fa-check"
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
           onClick={::this.createNewLibrary}
           disabled={!this.state.newLibraryName.length}
           inProgress={this.props.pendingActions.newLibrary}
           >
           Ok
-        </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideNewLibraryPopup}>Cancel</Button>
-      </Footer>
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideNewLibraryPopup}>Cancel</ActionButtonForModal>
+      </WhiteFooter>
     </Modal>);
   }
 
   renderInviteUsersPopup() {
     return (<Modal
-      isOpen={this.state.isInviteUsersPopupOpen}
-      title="Invite Users"
-      className={styles.inviteUsersModal}
-      >
-      <Table
-        overlayClassName={styles.inviteTable}
-        className={commonStyles.table}
-        ref="table"
-        config={this.configInviteUsers}
-        data={this.props.users.entities}
-        onSelectionChange={::this.onSelectInvitedUser}
-        initSelection={this.state.alreadyInvited}
-        />
-      <Footer>
-        <ActionButton
-          icon="fa fa-check"
-          onClick={::this.inviteUsers}
-          inProgress={this.props.pendingActions.inviteUsers}
-          >
-          Ok
-        </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideInviteUsersPopup}>Cancel</Button>
-      </Footer>
-    </Modal>);
+        isOpen={this.state.isInviteUsersPopupOpen}
+        title="Invite Users"
+        className={styles.inviteUsersModal}
+        >
+        <Table
+          overlayClassName={styles.inviteTable}
+          className={commonStyles.table}
+          ref="table"
+          config={this.configInviteUsers}
+          data={this.props.users.entities}
+          onSelectionChange={::this.onSelectInvitedUser}
+          initSelection={this.state.alreadyInvited}
+          />
+        <WhiteFooter>
+          <ActionButtonForModal
+            className={commonStyles.saveButtonModal}
+            onClick={::this.inviteUsers}
+            inProgress={this.props.pendingActions.inviteUsers}
+            >
+            Invite
+          </ActionButtonForModal>
+          <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideInviteUsersPopup}>Cancel</ActionButtonForModal>
+        </WhiteFooter>
+      </Modal>);
   }
 
   render() {
@@ -291,12 +290,10 @@ class LibrariesPage extends Component {
       { this.renderInviteUsersPopup() }
       <Header>
         Libraries
-        <IconButton
-          className={commonStyles.headerButton}
+        <Button
+          className={cx(commonStyles.headerButton, styles.buttonAdd, "mdl2-add")}
           onClick={::this.openNewLibraryPopup}
-          icon="fa fa-plus"
-          tooltipText="Add new library"
-          />
+          ></Button>
       </Header>
       <Table
         overlayClassName={commonStyles.tableOverlay}
@@ -310,17 +307,16 @@ class LibrariesPage extends Component {
       <Footer>
         <Button
           disabled={!this.state.selectedLibraries.length}
-          icon="fa fa-trash-o"
+          className="mdl2-delete"
           onClick={::this.openDeleteLibrariesPopup}
           >
-          Delete
+
         </Button>
         <Button
           disabled={!this.state.selectedLibraries.length}
-          icon="fa fa-user"
+          className="mdl2-add-friend"
           onClick={::this.openInviteUsersPopup}
           >
-          Invite users
         </Button>
       </Footer>
     </div>);

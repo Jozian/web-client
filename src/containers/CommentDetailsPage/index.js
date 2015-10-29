@@ -3,13 +3,15 @@ import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Button from 'components/Button';
 import * as actions from '../../actions/media-comments';
 import { listLayout } from 'common';
 import Modal from 'components/Modal';
 import loading from 'decorators/loading';
 import ActionButton from 'components/ActionButton';
+import ActionButtonForModal from 'components/ActionButtonForModal';
 import Footer from 'components/Footer';
+import WhiteFooter from 'components/WhiteFooter';
+import Header from 'components/Header';
 import cx from 'classnames';
 
 import style from './style.css';
@@ -210,18 +212,23 @@ export default class CommentDetails extends Component {
     this.setState({
       newCommentText: '',
       isNewCommentPopupOpen: false,
+      parentId: '',
     });
   }
 
   hideNewCommentPopup() {
     this.setState({
       isNewCommentPopupOpen: false,
+      newCommentText: '',
+      parentId: '',
     });
   }
 
   hideEditCommentPopup() {
     this.setState({
       isEditCommentPopupOpen: false,
+      newCommentText: '',
+      parentId: '',
     });
   }
 
@@ -251,18 +258,18 @@ export default class CommentDetails extends Component {
             />
         </label>
       </form>
-      <Footer>
-        <ActionButton
-          icon="fa fa-check"
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
           onClick={::this.createNewComment}
           disabled={!this.state.newCommentText.length}
           inProgress={this.props.pendingActions.newComment}
           role="OK button"
           >
-          Ok
-        </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideNewCommentPopup} role="Cancel button">Cancel</Button>
-      </Footer>
+          Send
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideNewCommentPopup} role="Cancel button">Cancel</ActionButtonForModal>
+      </WhiteFooter>
     </Modal>);
   }
 
@@ -286,17 +293,17 @@ export default class CommentDetails extends Component {
             />
         </label>
       </form>
-      <Footer>
-        <ActionButton
-          icon="fa fa-check"
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
           onClick={::this.editComment}
           disabled={!this.state.newCommentText.length}
           inProgress={this.props.pendingActions.newComment}
           role="OK button">
-          Ok
-        </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideEditCommentPopup} role="Cancel button">Cancel</Button>
-      </Footer>
+          Send
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideEditCommentPopup} role="Cancel button">Cancel</ActionButtonForModal>
+      </WhiteFooter>
     </Modal>);
   }
   renderDeleteLibrariesPopup() {
@@ -305,17 +312,17 @@ export default class CommentDetails extends Component {
       title="Are you sure you want to delete selected items?"
       className={commonStyles.modal}
       >
-      <Footer>
-        <ActionButton
-          icon="fa fa-check"
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
           onClick={::this.deleteComments}
           disabled={!this.state.selectionComments.length}
           inProgress={this.props.pendingActions.deleteComments}
           >
           Ok
-        </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideDeleteCommentsPopup}>Cancel</Button>
-      </Footer>
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteCommentsPopup}>Cancel</ActionButtonForModal>
+      </WhiteFooter>
     </Modal>);
   }
 
@@ -343,15 +350,15 @@ export default class CommentDetails extends Component {
         { this.renderDeleteLibrariesPopup() }
         {this.renderAnswerToComments()}
         {this.renderEditComments()}
-        <h1>
+        <Header>
           {this.props.params.mediaName}
-        </h1>
+        </Header>
 
         <div className={style.commentsContent}>
 
           <div className={style.toolbar}>
             <span className={style.title} role={ `Commentaries for media ${this.props.params.mediaName} `}>Commentaries</span>
-            <button className={style.toolbarBtn} onClick={::this.replyAll} onKeyUp={::this.replyAllEnter}  role="Replay all" >REPLY ALL</button>
+            <div className={style.toolbarBtn} onClick={::this.replyAll} onKeyUp={::this.replyAllEnter}  role="Replay all" >REPLY ALL</div>
           </div>
             <ListView
                 ref="folder"
@@ -362,21 +369,16 @@ export default class CommentDetails extends Component {
                 onSelectionChanged={::this.handleSelectionChange}
                 layout={listLayout} />
 
-
-          <div className={style.bottombar}>
-            <div className={style.footerWrapper}>
-
-                <Button
-                  disabled={this.state.selectionComments.length === 0}
-                  icon="fa fa-trash-o"
-                  onClick={::this.showDeleteCommentsPopup}
-                  className={style.footerButton}
-                  role="Delete button">
-                  Delete
-                </Button>
-            </div>
-          </div>
         </div>
+        <Footer>
+
+          <ActionButton
+            disabled={this.state.selectionComments.length === 0}
+            onClick={::this.showDeleteCommentsPopup}
+            className="mdl2-delete"
+            role="Delete button">
+          </ActionButton>
+        </Footer>
       </div>
     );
   }

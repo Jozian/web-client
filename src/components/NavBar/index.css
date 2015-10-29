@@ -4,54 +4,65 @@
   display: inline;
   width: 250px;
   height: 100%;
-  background-color: #226266;
-  border-right: solid #eaeaea 10px;
+  background-color: #f1f1f1;
 }
 
 .logo {
   padding-top: 60px;
   padding-bottom: 45px;
-  border-bottom: solid #3f824f 1px;
   width: 100%;
 }
 
 .logo img {
-  width: 200px;
-  margin: auto;
-  display: block;
+  display: inline-block;
+  padding-left: 16px;
+}
+
+.logoText {
+  display: inline-block;
+  color: #505050;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  padding-left: 10px;
+  margin-right: 10px;
 }
 
 .sidebar a {
   cursor: pointer;
   text-decoration: none;
-  color: grey;
+  color: #626262;
   display: block;
   width: 100%;
   box-sizing: border-box;
   line-height: 45px;
   height: 45px;
-  font-size: 16pt;
+  font-size: 14px;
+  font-weight: 700;
   padding-left: 16px;
 }
 
+/*.sidebar a:first-child {
+  margin-top: 200px;
+}*/
+
 .sidebar :global(a.active) {
   padding-left: 16px;
-  color: white;
-  font-weight: bold;
-  background-color: #287074;
-  border-left: solid #6ab01c 4px;
+  color: #6ab01c;
 }
 
 .footer {
   position: absolute;
-  background-color: #145054;
+  background-color: #f1f1f1;
   bottom: 0;
-  width: 100%;
+  left: 17px;
+  width: calc(100% - 40px);
   height: 92px;
   line-height: 90px;
-  color: #5c7e82;
-  border-top: solid #6ab01c 2px;
-  font-size: 14pt;
+  color: #626262;
+  border-top: solid #626262 1px;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 h1 {
@@ -62,14 +73,6 @@ h1 {
   color: grey;
   display: inline-block;
   margin: 0;
-}
-
-.icon {
-  height: 90px;
-  line-height: 94px;
-  vertical-align: middle;
-  float: left;
-  margin: 0 2px;
 }
 
 .username {
@@ -83,20 +86,19 @@ h1 {
 
 .logout {
   position: absolute;
-  right: 5px;
+  right: -10px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 div.logout button {
-  color: #5c7e82;
-  background-color: #39696d;
+  color: #6ab01c;
+  background-color: #f1f1f1;
   border: 0;
 }
 
 div.logout button:hover {
-  background-color: #78c623;
-  color: white;
+  color: #626262;
 }
 
 div.logout button i {

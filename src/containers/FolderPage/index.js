@@ -237,9 +237,8 @@ export default class FolderPage extends Component {
       <Footer>
         <Button
           disabled={this.state.selection.length === 0}
-          icon="fa fa-trash-o"
+          className="mdl2-delete"
         >
-          Delete
         </Button>
       </Footer>
     </div>);
@@ -266,17 +265,13 @@ export default class FolderPage extends Component {
     return (
     <div>
       <Header>{this.props.folder.entity.name}
-        <IconButton
-          className={commonStyles.headerButton}
-          icon="fa fa-file-o"
-          tooltipText="Add new media"
-        />
-        <IconButton
-          className={commonStyles.headerButton}
-          icon="fa fa-folder-open"
+        <Button
+          className="mdl2-document"
+        ></Button>
+        <Button
+          className="mdl2-new-folder"
           onClick={::this.addDefaultFolder}
-          tooltipText="Add new folder"
-        />
+        ></Button>
       </Header>
       { this.renderBreadcrumbs() }
       <div className={styles.column}>

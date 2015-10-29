@@ -42,3 +42,10 @@ a.importContainer {
     text-align: right;
     width: 150px;
 }
+
+.headerButton {
+    background-color: #ffffff;
+    color: grey;
+    position: relative;
+    top: 5px;
+}

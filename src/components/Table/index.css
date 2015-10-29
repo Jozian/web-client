@@ -1,14 +1,18 @@
 .table tr {
     height: 50px;
+
 }
 
 .table td {
-    padding-left: 8px
+    padding-left: 15px;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 15px;
+    color: #424242;
+    font-weight: 300;
 }
 
 .table .checkTd {
@@ -17,10 +21,9 @@
 }
 
 .tableHeader .checkTd :global(.headerCheckbox) div {
-    border: 3px solid #593c56;
     width: 19px;
     height: 19px;
-    background-color: white;
+    background-color: #f1f1f1;
 }
 
 .tableBody .checkTd div {
@@ -28,27 +31,16 @@
     height: 19px;
 }
 
-.tableBody tr {
-    border-left: 3px solid rgba(0,0,0,0);
-}
-
 .tableBody tr:hover {
-    border-left: 3px solid #583c58;
     background-color: #e2dce1 !important;
-}
-
-.tableBody tr:hover > td:first-of-type {
-    padding-left: 6px;
-}
-
-.tableBody > tr.tableBodyRow:nth-of-type(odd) {
-    background-color: #f6f6f6;
-    color: black;
 }
 
 .tableHeader {
     font-family: "FontAwesome";
-    color: #583c58;
+    color: #6ab01c;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .table *:before, .table *:after {
@@ -126,4 +118,5 @@
     left: 0;
     right: 0;
     overflow-y: auto;
+    overflow-x: hidden;
 }

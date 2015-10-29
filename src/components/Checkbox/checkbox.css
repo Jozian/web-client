@@ -1,9 +1,8 @@
 .checkboxWrapper .checked {
     display: inline-block;
-    border: 2px solid #cccccc;
     width: 19px;
     height: 19px;
-    background-color: white;
+    background-color: #f1f1f1;
 }
 
 .checkboxWrapper .checkbox {
@@ -12,10 +11,9 @@
 
 .checkboxWrapper .partChecked {
     display: inline-block;
-    border: 2px solid #cccccc;
     width: 19px;
     height: 19px;
-    background-color: white;
+    background-color: #f1f1f1;
 }
 
 .checkboxWrapper .partChecked:after {
@@ -29,7 +27,6 @@
     display: none;
     width: 21px;
     height: 21px;
-    margin-right: 5px;
 }
 
 .checkboxWrapper input[type="checkbox"]:checked + div:after {

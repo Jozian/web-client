@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import loading from 'decorators/loading';
+import cx from 'classnames';
+
 import Header from 'components/Header';
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
 import ActionButton from 'components/ActionButton';
+import ActionButtonForModal from 'components/ActionButtonForModal';
 import Footer from 'components/Footer';
+import WhiteFooter from 'components/WhiteFooter';
 import Table from 'components/Table/index.js';
 import LoadingSpinner from 'components/LoadingSpinner';
 import Modal from 'components/Modal';
 import * as actions from 'actions/users.js';
-import loading from 'decorators/loading';
-import { baseUrl } from '../../api/helper'
+import { baseUrl } from '../../api/helper';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
@@ -98,13 +102,13 @@ export default class UsersPage extends Component {
     columns: [
       {
         key: 'name',
+        text: 'Select all',
       }, {
         key: 'type',
-        icon: 'fa fa-user',
         text: 'User Type',
         style: {
-          width: '70px',
-          maxWidth: '70px',
+          width: '140px',
+          maxWidth: '140px',
         },
       },
     ],
@@ -159,7 +163,6 @@ export default class UsersPage extends Component {
   }
 
   usersTemplateLoading() {
-    debugger;
     this.props.loadTemplateImport();
   }
 
@@ -169,17 +172,17 @@ export default class UsersPage extends Component {
       title="Are you sure you want to delete selected items?"
       className={commonStyles.modal}
     >
-      <Footer>
-        <ActionButton
-          icon="fa fa-check"
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
           onClick={::this.deleteUsers}
           disabled={!this.state.selectedUsers.length}
           inProgress={this.props.pendingActions.deleteUsers}
         >
           Ok
-        </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideDeleteUsersPopup}>Cancel</Button>
-      </Footer>
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteUsersPopup}>Cancel</ActionButtonForModal>
+      </WhiteFooter>
     </Modal>);
   }
   renderImportUsersPopup() {
@@ -219,13 +222,11 @@ export default class UsersPage extends Component {
       { this.renderImportUsersPopup() }
       <Header>
         Users
-        <IconButton
-          className={commonStyles.headerButton}
-          icon="fa fa-plus"
-          tooltipText="Add new user"
+        <Button
+          className={cx(styles.headerButton, commonStyles.headerButton, 'mdl2-add')}
           handleClick={this.handleAddUserClick}
           onClick={::this.onAddClick}
-        />
+        ></Button>
       </Header>
       <LoadingSpinner loading={this.state.loading}>
         <Table
@@ -240,16 +241,14 @@ export default class UsersPage extends Component {
         <Footer>
           <Button
             disabled={!this.state.selectedUsers.length}
-            icon="fa fa-trash-o"
+            className="mdl2-delete"
             onClick={::this.showDeleteUsersPopup}
           >
-            Delete
           </Button>
           <Button
-            icon="fa fa-upload"
+            className="mdl2-import"
             onClick={::this.showImportUsersPopup}
           >
-            Import
           </Button>
         </Footer>
       </LoadingSpinner>

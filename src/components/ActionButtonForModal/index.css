@@ -1,14 +1,16 @@
 .button {
+    border-style: solid;
     background-clip: padding-box;
+    height: 40px;
+    width: 300px;
     padding: 4px 8px;
+    margin: 0 5px;
+    border-width: 0;
     font-size: 12pt;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.3636;
     color: white;
-    background-color: #6ab01c;
-    border: 0;
-    margin-left:10px;
-    outline: 0;
+    text-transform: uppercase;
 }
 
 .button i {
@@ -16,7 +18,7 @@
 }
 
 .button:disabled {
-    background-color: #6ab01c;
+    background-color: rgba(202, 202, 202, 0.4);
     border-color: rgba(0, 0, 0, 0.08);
     color: rgba(0, 0, 0, 0.4);
 }

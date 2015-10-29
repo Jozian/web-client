@@ -76,7 +76,7 @@ export default class EditFolderPage extends Component {
           <span className={styles.toolbarTitle}>Edit {this.state.currentFolderName}</span>
         </div>
 
-        <form >
+        <form>
           <label className={styles.folderNameLabel}>
             Name:
             <input
@@ -93,16 +93,14 @@ export default class EditFolderPage extends Component {
           <Footer>
             <Button
               disabled={!this.state.folder.name.length}
-              icon="fa"
+              className="mdl2-check-mark"
               onClick={::this.saveNewName}
               >
-              OK
             </Button>
             <Button
-              icon="fa"
+              className="mdl2-cancel"
               onClick={::this.cancelSave}
               >
-              Cancel
             </Button>
           </Footer>
         </form>
