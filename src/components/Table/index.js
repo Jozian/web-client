@@ -55,10 +55,12 @@ export default class Table extends Component {
     window.removeEventListener('resize', this.fixScrollHandler);
   }
 
-  onSelectAllCheckboxClick() {
-    this.setState({
+  async onSelectAllCheckboxClick() {
+    await this.setState({
       selection: this.state.selection.length ? [] : [...this.props.data],
     });
+
+    this.props.onSelectionChange(this.state.selection);
   }
 
   onColumnHeaderClick(value) {
