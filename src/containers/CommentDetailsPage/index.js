@@ -127,7 +127,6 @@ export default class CommentDetails extends Component {
   }
 
   async editCommentState(item) {
-    debugger;
     const editDataComment = {
       isEditCommentPopupOpen: true,
       id: item.data.id,
@@ -198,7 +197,6 @@ export default class CommentDetails extends Component {
   }
 
   async createNewComment() {
-    debugger;
     const newCommentData = {
       id: this.props.params.id,
       text: this.state.newCommentText,

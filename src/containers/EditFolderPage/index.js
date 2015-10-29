@@ -76,7 +76,7 @@ export default class EditFolderPage extends Component {
           <span className={styles.toolbarTitle}>Edit {this.state.currentFolderName}</span>
         </div>
 
-        <form >
+        <form>
           <label className={styles.folderNameLabel}>
             Name:
             <input
