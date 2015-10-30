@@ -13,3 +13,14 @@ export function getItem(id) {
 
   return fetch(apiUrl + '/' + id);
 }
+
+export function editMedia(id, body) {
+  if (!body.name || typeof body.name !== 'string') {
+    return Promise.reject('Invalid media name');
+  }
+
+  return fetch(apiUrl + '/' + id, {
+    method: 'put',
+    body: JSON.stringify(body),
+  });
+}
