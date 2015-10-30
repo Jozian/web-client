@@ -35,7 +35,7 @@
     margin-left: 5%;
     display: inline-block;
     width: 43%;
-    height: calc(100% - 235px);
+    height: calc(100vh - 235px);
     background-color: #ffffff;
 }
 .toolbar {
@@ -57,5 +57,5 @@
 
 .container {
     width: 100%;
-    height: calc(100% - 43px);
+    height: calc(100vh - 300px);
 }

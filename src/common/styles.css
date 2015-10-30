@@ -16,7 +16,7 @@ table.table {
 }
 
 .tableOverlay {
-  height: calc(100% - 200px);
+  height: calc(100vh - 200px);
   margin-left: 40px;
   margin-right: 40px;
 }

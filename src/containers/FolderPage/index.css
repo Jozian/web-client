@@ -2,14 +2,14 @@
   vertical-align: top;
   display: inline-block;
   width: 45%;
-  height: calc(100% - 225px);
+  height: calc(100vh - 225px);
   margin: 0 2.5%;
   background-color: #f6f6f6;
   position: relative;
 }
 
 .list {
-  height: calc(100% - 50px);
+  height: calc(100vh - 275px);
   width: 100%;
 }
 
