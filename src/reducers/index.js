@@ -45,6 +45,12 @@ export const folder = handleLoadingChain([
   types.FOLDER_ID_ERROR,
 ]);
 
+export const activeMedia = handleLoadingChain([
+  types.MEDIA_LOADING,
+  types.MEDIA_LOADED,
+  types.MEDIA_LOAD_ERROR,
+]);
+
 export const user = handleLoadingChain([
   types.USER_LOADING,
   types.USER_LOADED,
@@ -109,6 +115,10 @@ export const pendingActions = combineReducers({
   updateFolder: handlePendingChain(
     [types.FOLDER_UPDATING],
     [types.FOLDER_UPDATED, types.FOLDER_UPDATE_ERROR],
+  ),
+  updateMedia: handlePendingChain(
+    [types.MEDIA_UPDATING],
+    [types.MEDIA_LOADED, types.MEDIA_LOAD_ERROR],
   ),
 });
 
