@@ -168,7 +168,6 @@ export default class EditUserPage extends Component {
 
   renderTypesOptions() {
     return (
-<<<<<<< HEAD
       <Dropdown title="Type:"
                 value={this.state.user.type}
                 disabled={this.state.user.type === 'owner'}
