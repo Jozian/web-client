@@ -101,3 +101,12 @@ export const INVITED_USERS_UPDATE_ERROR = 'Invited users updating error';
 export const LOGOUT_USER = 'User logout';
 
 export const APPLICATION_ERROR = 'Did not get data';
+
+export const MEDIA_LOADING = 'Loading single media';
+export const MEDIA_LOADED = 'Loaded media';
+export const MEDIA_LOAD_ERROR = 'Error loading media';
+
+export const MEDIA_UPDATING = 'Updating media';
+export const MEDIA_UPDATED = 'Updated media';
+export const MEDIA_UPDATE_ERROR = 'Error update media';
+
