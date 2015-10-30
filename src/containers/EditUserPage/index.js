@@ -248,7 +248,7 @@ export default class EditUserPage extends Component {
   render() {
       return (
         <div className={styles.mainContainer}>
-          <Header>Edit user</Header>
+          <Header>Add user</Header>
           <div className={styles.wrapper}>
             <form className={styles.backgroundWhite}>
               <div className={styles.leftBlock}>
