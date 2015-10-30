@@ -1,0 +1,49 @@
+.mediaForm {
+    border: 1px solid #f1f1f1;
+    height: 100%;
+    padding: 30px;
+}
+
+.toolbarTitle {
+    color: #404041;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.label {
+     color: #404041;
+     display: block;
+     font-size: 14px;
+     font-weight: 400;
+     line-height: 17px;
+ }
+
+.inputName {
+    width: 392px;
+    height: 40px;
+    background-color: #eeeeee;
+    border: 0;
+}
+
+.descriptionArea {
+    width: 392px;
+    height: 70px;
+    background-color: #eeeeee;
+    border: 0;
+    line-height: 17px;
+}
+
+.typeLabel {
+    color:
+    #404041;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+}
+
+.typeName {
+    color: #7ab83a;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+}
