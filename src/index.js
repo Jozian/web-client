@@ -15,6 +15,7 @@ import MotdPage from 'containers/MotdPage';
 import store from 'store/configureStore';
 import CommentDetails from 'containers/CommentDetailsPage';
 import EditFolderPage from 'containers/EditFolderPage';
+import EditMediaPage from 'containers/EditMediaPage';
 
 const routes = (
 
@@ -27,6 +28,7 @@ const routes = (
     <Route name="libraries">
       <DefaultRoute handler={LibrariesPage} />
       <Route name="folder" path="/folder/:folderId/" handler={FolderPage}>
+        <Route name="mediaSelection" path="media/:itemId/" handler={EditMediaPage} />
         <Route name="folderSelection" path=":itemType/:itemId/" handler={EditFolderPage} />
       </Route>
 
