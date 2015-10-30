@@ -149,9 +149,8 @@ export default class FolderPage extends Component {
       }
       break;
     case 'media':
-      goTo('folderSelection', {
+      goTo('mediaSelection', {
         folderId: this.props.params.folderId,
-        itemType: 'media',
         itemId: item.data.id.toString(),
       });
       break;

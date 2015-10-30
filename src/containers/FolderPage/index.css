@@ -1,10 +1,10 @@
 .column {
   vertical-align: top;
   display: inline-block;
-  width: 43%;
-  height: calc(100vh - 225px);
-  margin: 0 0 0 5%;
-  background-color: #f6f6f6;
+  width: 45%;
+  height: calc(100% - 225px);
+  margin: 0 2.5%;
+  background-color: #ffffff;
   position: relative;
 }
 
@@ -15,7 +15,7 @@
 
 .listItem {
     width: 100%;
-    background-color: #f6f6f6;
+    background-color: #ffffff;
     padding: 5px;
     height: 80px;
 }
