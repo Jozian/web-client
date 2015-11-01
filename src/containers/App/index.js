@@ -19,7 +19,7 @@ export default class App extends Component {
 
   componentWillReceiveProps(props) {
     if (!props.user.token) {
-      window.location.reload();
+      window.location = '/getStarted.html';
     }
   }
 

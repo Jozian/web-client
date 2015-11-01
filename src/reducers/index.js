@@ -113,17 +113,18 @@ export const pendingActions = combineReducers({
 });
 
 export function currentUser(state, action) {
-
-  if (action.type === types.LOGOUT_USER) {
+  const user = JSON.parse(localStorage.getItem('MEDuser'));
+  const token = localStorage.getItem('MEDtoken');
+  if (action.type === types.LOGOUT_USER || !user || !token) {
     return {};
   }
 
   if (!state) {
-    const user = JSON.parse(localStorage.getItem('MEDuser'));
+
     if (!user) {
       throw new Error('Missing user in localStorage');
     }
-    const token = localStorage.getItem('MEDtoken');
+
 
     if (!token) {
       throw new Error('Missing token in localStorage');

@@ -47,7 +47,6 @@
     }
 
     window.addEventListener('hashchange', function (event) {
-      debugger;
       event.preventDefault();
       var currentHash = location.hash.substring(1);
       var mnuIdx = {
