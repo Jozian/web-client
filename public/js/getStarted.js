@@ -68,6 +68,7 @@
       var resetPasswordForm = document.getElementById('reset-password-form');
 
       resetPasswordForm.addEventListener('submit', function (event) {
+        event.preventDefault();
         var confirmErr = document.getElementById('confirm_err');
         var expiredErr = document.getElementById('expired-pass_err');
         if (event.target.password.value === event.target.confirmPassword.value) {
@@ -93,7 +94,6 @@
           confirmErr.classList.remove('hidden');
         }
 
-        event.preventDefault();
       });
     } else {
       window.location.hash = '#getStarted';
