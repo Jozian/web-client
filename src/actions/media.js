@@ -20,3 +20,13 @@ export function editMedia(id, data) {
     },
   };
 }
+
+export function uploadImage(id, imageData) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.PREV_IMAGE_UPLOADING, types.PREV_IMAGE_UPLOADED, types.PREV_IMAGE_ERROR],
+      promise: mediaApi.uploadPrevImage(id, imageData),
+    },
+  };
+}

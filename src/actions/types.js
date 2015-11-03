@@ -110,3 +110,7 @@ export const MEDIA_UPDATING = 'Updating media';
 export const MEDIA_UPDATED = 'Updated media';
 export const MEDIA_UPDATE_ERROR = 'Error update media';
 
+export const PREV_IMAGE_UPLOADING = 'Uploading preview image';
+export const PREV_IMAGE_UPLOADED = 'Preview image was uploaded';
+export const PREV_IMAGE_ERROR = 'Error uploaded preview image';
+

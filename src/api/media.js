@@ -1,6 +1,7 @@
 import fetch from './helper';
 
 const apiUrl = '/api/media';
+const mediaManagement = '/api/mediaManagement';
 
 export function getMediaList() {
   return fetch(apiUrl);
@@ -22,5 +23,17 @@ export function editMedia(id, body) {
   return fetch(apiUrl + '/' + id, {
     method: 'put',
     body: JSON.stringify(body),
+  });
+}
+
+export function uploadPrevImage(id, body) {
+  if (!body || !(body instanceof FormData)) {
+    return Promise.reject('Invalid body');
+  }
+
+  return fetch(mediaManagement + '/changeImage?media=' + id, {
+    method: 'post',
+    body: body,
+    responseType: 'text',
   });
 }

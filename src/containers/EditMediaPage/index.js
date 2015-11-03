@@ -11,7 +11,7 @@ import FormInput from 'components/Form/FormInput';
 import styles from './index.css';
 
 @connect(
-  (state) => ({activeMedia: state.activeMedia.entities}),
+  (state) => ({activeMedia: state.activeMedia.entities, pendingActions: state.pendingActions}),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
@@ -36,6 +36,7 @@ export default class EditMediaPage extends Component {
     this.state = {
       loading: true,
       activeMedia: {},
+      allPreview: [],
     };
   }
 
@@ -76,9 +77,51 @@ export default class EditMediaPage extends Component {
     this.props.loadMedia(this.props.params.itemId);
   }
 
+  getImages(itemId, number) {
+    const context = this;
+    const img = new Image();
+    img.src = '/preview/' + itemId + '-' + number + '.png';
+
+    img.onload = function (e) {
+      const resultArr = context.allPreview.push(img);
+      context.setState({
+        allPreview: resultArr,
+      });
+      getImages(itemId, number + 1);
+    };
+  }
+
+ async handlerUploadImage(e) {
+    /*this.setState({
+      selectedFileName: e.target.files[0].name,
+      uploadFileData: new FormData(e.target.form),
+    });*/
+    const formData = new FormData(e.target.form);
+
+    if (e.target.files[0].name) {
+     await this.props.uploadImage(this.props.params.itemId, formData);
+      this.setState({
+        uploadImage: true,
+      });
+    }
+  }
+
   setAllImages(id) {
     return (
-      <img src="/preview/library1.png" />
+      <div>
+        <img src={'/preview/library' + id + '.png'} />
+        {this.getImages(id, 1)}
+
+        <label className={styles.wrapLabel}>
+          <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadImage} />
+          <div className={styles.importContainer} type="button">Upload preview</div>
+        </label>
+
+        {this.state.allPreview.map(function(item) {
+
+        })}
+
+      </div>
     );
   }
 
@@ -123,7 +166,6 @@ export default class EditMediaPage extends Component {
                 {this.setAllImages(this.state.activeMedia.id)}
               </div>
 
-
               <Footer>
                 <Button
                   disabled={!this.state.activeMedia.name.length}
@@ -138,7 +180,6 @@ export default class EditMediaPage extends Component {
                 </Button>
               </Footer>
             </form>
-
           </div>
         </div>
     );
