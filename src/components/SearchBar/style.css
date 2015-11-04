@@ -18,7 +18,7 @@
     overflow-x: hidden;
     position: absolute;
     padding: 10px 20px 10px 15px;
-    background-color: #c0c0c0;
+    background-color: #f1f1f1;
     z-index: 1000;
 }
 
@@ -81,4 +81,21 @@
 .notFloat {
     float: none;
     display: block;
+}
+
+.listItem {
+    width: 350px;
+    height: 70px;
+    color: #404041;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 17px;
+    text-align: left;
+}
+
+.userItem {
+    color: #5c5c5c;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 30px;
 }

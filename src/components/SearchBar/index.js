@@ -44,8 +44,10 @@ export default class SearchBar extends Component {
   }
   userSelected(item) {
     this.context.router.transitionTo('editUser', {
-      id: item.data.id.toString(),
+      id: item.id.toString(),
     });
+
+    this.hideList();
   }
   _handleClick(e) {
     const searchTableElem = this.refs.searchList.getDOMNode();
@@ -65,11 +67,11 @@ export default class SearchBar extends Component {
 
   mediaSelected(item) {
     const routeParams = {
-      itemId: item.data.id.toString(),
+      itemId: item.id.toString(),
       itemType: 'media',
     };
-    if (!item.data.FolderId) {
-      routeParams.folderId = 'library' + item.data.LibraryId;
+    if (!item.FolderId) {
+      routeParams.folderId = 'library' + item.LibraryId;
     }
     this.context.router.transitionTo('folderSelection', routeParams);
     this.hideList();
@@ -109,37 +111,39 @@ export default class SearchBar extends Component {
     this.debounceFunction(value);
   }, 500);
 
-  listViewSearchUserItemRenderer = winjsReactRenderer((item) => {
-    return (
-      <div onClick={this.userSelected.bind(item, this)}>
-        {this.highlightCurrentSearch(item.data.name)}
-      </div>
-    );
-  });
-
-  listViewSearchMediaItemRenderer = winjsReactRenderer((item) => {
-    return (
-      <div class={styles.notFloat}>
-        {item.data.type}
-      </div>
-    );
-  });
   render() {
     return (
       <div className={styles.searchBar} ref="searchList">
         <input type="text" className={styles.input} onInput={(e) => {::this.inputHandler(e.target.value); }} />
 
         {this.state.showSearchList ?
-            <div className={cx(styles.list, 'searchList')}>
-              <ListView
-                itemDataSource={this.props.searchResult.entity.data.dataSource}
-                itemTemplate={this.listViewSearchUserItemRenderer}
-                layout={ {type: WinJS.UI.GridLayout} }
-                groupDataSource={ this.props.searchResult.entity.data.groups.dataSource}
-                groupHeaderTemplate={ this.listViewSearchMediaItemRenderer}
-                />
+          <div className={cx(styles.list, 'searchList')}>
+            <h3 className={styles.headerList}>Users</h3>
+            {this.props.searchResult.entities.users.length ?
+              <div>
+                {this.props.searchResult.entities.users.map( (item) => {
+                  return (
+                    <div className={styles.userItem} onClick={this.userSelected.bind(this, item)}>{item.name}</div>
+                  );
+                })}
+              </div> : 'NO RESULT'}
 
-            </div> : ''}
+            <h3 className={styles.headerList}>Media</h3>
+            {this.props.searchResult.entities.media.length ?
+              <div>
+                {this.props.searchResult.entities.media.map( (item) => {
+                  return (<div className={styles.listItem}>
+                    <div onClick={this.mediaSelected.bind(this, item)}>
+                      <PreviewImage className={styles.image} src={'http://medserver.apps.wookieelabs.com/preview/' + item.id + '.png'} />
+                      {item.name}
+                    </div>
+                  </div>);
+                })}
+              </div> : 'NO RESULT'}
+          </div> : ''}
+
+
+
       </div>
     );
   }
