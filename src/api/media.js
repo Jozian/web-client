@@ -37,3 +37,11 @@ export function uploadPrevImage(id, body) {
     responseType: 'text',
   });
 }
+
+export function changePrevImage(name, fileChange) {
+  if (!name || !fileChange) {
+    return Promise.reject('Invalid body');
+  }
+
+  return fetch(mediaManagement + '/copyImage?name=' + name + '&fileChange=' + fileChange);
+}
