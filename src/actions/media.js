@@ -30,3 +30,13 @@ export function uploadImage(id, imageData) {
     },
   };
 }
+
+export function changeImage(name, fileChange) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.PREV_CHANGING, types.PREV_CHANGED, types.PREV_CHANGE_ERROR],
+      promise: mediaApi.changePrevImage(name, fileChange),
+    },
+  };
+}

@@ -114,3 +114,7 @@ export const PREV_IMAGE_UPLOADING = 'Uploading preview image';
 export const PREV_IMAGE_UPLOADED = 'Preview image was uploaded';
 export const PREV_IMAGE_ERROR = 'Error uploaded preview image';
 
+export const PREV_CHANGING = 'Changing image preview';
+export const PREV_CHANGED = 'Changed image preview';
+export const PREV_CHANGE_ERROR = 'Error change image preview';
+
