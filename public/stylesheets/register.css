@@ -246,13 +246,13 @@ form#login-form a {
 .b_register-popup-text {
     width: 351px;
     margin: 0 auto;
-    padding: 20px 0 20px 0;
+    padding: 70px 0 20px 0;
 }
 
 .b-register-popup-button-ok {
     width: 351px;
     height: 36px;
-    margin: 20px auto 20px auto;
+    margin: 40px auto 20px auto;
     text-align: center;
     color: #fff;
     background-color: #6ab01c;
