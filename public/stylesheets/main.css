@@ -27,8 +27,8 @@ input[type="checkbox"] {
 }
 .b_start-footer__link {
     max-height: 50px;
-    margin-left: 6%;
-    margin-right: 6%;
+    margin-left: 3%;
+    margin-right: 3%;
     display: inline-block;
 }
 .b_start-footer__link a {
