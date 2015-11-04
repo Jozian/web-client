@@ -32,6 +32,7 @@ export default class EditMediaPage extends Component {
   constructor(props) {
     super(props);
     props.loadMedia(props.params.itemId);
+    this.getImages(props.params.itemId, 1);
 
     this.state = {
       loading: true,
@@ -41,6 +42,7 @@ export default class EditMediaPage extends Component {
   }
 
   componentWillReceiveProps(props) {
+
     this.setState({
       activeMedia: props.activeMedia,
       currentMediaName: props.activeMedia.name,
@@ -48,6 +50,7 @@ export default class EditMediaPage extends Component {
 
     if (props.params.itemId !== this.props.params.itemId) {
       props.loadMedia(props.params.itemId);
+      this.getImages(props.params.itemId, 1);
     }
   }
 
@@ -78,24 +81,17 @@ export default class EditMediaPage extends Component {
   }
 
   getImages(itemId, number) {
-    const context = this;
     const img = new Image();
     img.src = '/preview/' + itemId + '-' + number + '.png';
 
-    img.onload = function (e) {
-      const resultArr = context.allPreview.push(img);
-      context.setState({
-        allPreview: resultArr,
-      });
-      getImages(itemId, number + 1);
+    img.onload = (e) => {
+      this.state.allPreview.push({link: img.src, itemId: itemId, number: number});
+
+      this.getImages(itemId, number + 1);
     };
   }
 
  async handlerUploadImage(e) {
-    /*this.setState({
-      selectedFileName: e.target.files[0].name,
-      uploadFileData: new FormData(e.target.form),
-    });*/
     const formData = new FormData(e.target.form);
 
     if (e.target.files[0].name) {
@@ -106,19 +102,23 @@ export default class EditMediaPage extends Component {
     }
   }
 
+  async changeCurrentPreview (item) {
+    await this.props.changeImage(item.itemId + '-' + item.number + '.png', item.itemId + '.png');
+    this.props.loadMedia(this.props.params.itemId);
+  }
+
   setAllImages(id) {
     return (
       <div>
-        <img src={'/preview/library' + id + '.png'} />
-        {this.getImages(id, 1)}
+        <img className={styles.currentImage} src={'/preview/library' + id + '.png'} />
 
         <label className={styles.wrapLabel}>
           <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadImage} />
           <div className={styles.importContainer} type="button">Upload preview</div>
         </label>
 
-        {this.state.allPreview.map(function(item) {
-
+        {this.state.allPreview.map((item) => {
+          return <img className={styles.currentImage} src={item.link} onClick={this.changeCurrentPreview.bind(this, item)} />;
         })}
 
       </div>
