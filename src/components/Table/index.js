@@ -101,7 +101,7 @@ export default class Table extends Component {
   }
 
   getHeaderCheckboxState() {
-    if (this.state.selection.length === this.props.data.length) {
+    if (this.state.selection.length === this.props.data.length && this.state.selection.length) {
       return true;
     }
     return (this.state.selection.length > 0) ? partiallyChecked : false;
