@@ -58,6 +58,13 @@ export default class UsersPage extends Component {
       return;
     }
 
+    props.users.entities.map(u => {
+      if (u.type === 'owner') {
+        u.unselectable = true;
+      }
+      return u;
+    });
+
     this.setState({
       loading: props.users.loading,
       isDeleteUsersPopupOpen: false,
@@ -142,7 +149,7 @@ export default class UsersPage extends Component {
   }
 
   async deleteUsers() {
-    await this.props.deleteUsers(this.state.selectedUsers.map(u => u.id));
+    await this.props.deleteUsers(this.state.selectedUsers.filter(u => u.type !== 'owner').map(u => u.id));
     this.props.loadUsers();
   }
   async uploadFile(e) {
