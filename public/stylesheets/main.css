@@ -341,6 +341,7 @@ input[type="checkbox"] {
 .b_source_content-left-video {
     display: inline-block;
     width: 40% !important;
+    height: 100%;
     margin-right: 0 !important;
 }
 .b_start-header--title {
