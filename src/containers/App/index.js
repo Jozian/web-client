@@ -9,7 +9,7 @@ import NavBar from 'components/NavBar';
 import ToastManager from '../ToastManager';
 import WhiteFooter from 'components/WhiteFooter';
 import ActionButtonForModal from 'components/ActionButtonForModal';
-import SearchBar from 'components/SearchBar';
+import SearchBar from 'containers/SearchBar';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';

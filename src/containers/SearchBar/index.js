@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { debounce } from 'lodash';
 import cx from 'classnames';
+
 import PreviewImage from 'components/PreviewImage';
+import * as actionsSearch from 'actions/searchResult';
 
 import { listLayout } from 'common';
-import * as actions from 'actions/searchResult';
-
 import styles from './style.css';
 
 @connect(
   (state) => ({ searchResult: state.searchResult }),
-  (dispatch) => bindActionCreators(actions, dispatch)
+  (dispatch) => bindActionCreators(actionsSearch, dispatch)
 )
 export default class SearchBar extends Component {
 
@@ -42,7 +42,7 @@ export default class SearchBar extends Component {
   componentWillUnmount() {
     document.removeEventListener('click', this.handleClick);
   }
-  userSelected(item) {
+  async userSelected(item) {
     this.context.router.transitionTo('editUser', {
       id: item.id.toString(),
     });
@@ -65,7 +65,7 @@ export default class SearchBar extends Component {
     }
   }
 
-  mediaSelected(item) {
+  async mediaSelected(item) {
     const routeParams = {
       itemId: item.id.toString(),
       itemType: 'media',
@@ -73,7 +73,7 @@ export default class SearchBar extends Component {
     if (!item.FolderId) {
       routeParams.folderId = 'library' + item.LibraryId;
     }
-    this.context.router.transitionTo('folderSelection', routeParams);
+    await this.context.router.transitionTo('folderSelection', routeParams);
     this.hideList();
   }
 
