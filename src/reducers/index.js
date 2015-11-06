@@ -112,6 +112,17 @@ export const pendingActions = combineReducers({
   ),
 });
 
+export function errorApplication(state, action) {
+  if (action.type === types.APPLICATION_ERROR) {
+    if (state) {
+      state.error = true;
+    } else {
+      state = {error: true};
+    }
+  }
+  return state ? state : {};
+}
+
 export function currentUser(state, action) {
   const user = JSON.parse(localStorage.getItem('MEDuser'));
   const token = localStorage.getItem('MEDtoken');
@@ -124,7 +135,6 @@ export function currentUser(state, action) {
     if (!user) {
       throw new Error('Missing user in localStorage');
     }
-
 
     if (!token) {
       throw new Error('Missing token in localStorage');
