@@ -69,10 +69,9 @@ export default class SearchBar extends Component {
     const routeParams = {
       itemId: item.id.toString(),
       itemType: 'media',
+      folderId: item.LibraryId.toString(),
     };
-    if (!item.FolderId) {
-      routeParams.folderId = 'library' + item.LibraryId;
-    }
+
     await this.context.router.transitionTo('folderSelection', routeParams);
     this.hideList();
   }
