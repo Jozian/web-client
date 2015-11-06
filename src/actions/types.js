@@ -95,3 +95,5 @@ export const INVITED_USERS_UPDATED = 'Invited users updated';
 export const INVITED_USERS_UPDATE_ERROR = 'Invited users updating error';
 
 export const LOGOUT_USER = 'User logout';
+
+export const APPLICATION_ERROR = 'Did not get data';
