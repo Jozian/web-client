@@ -8,18 +8,19 @@
     height: 28px;
     background-color: #1a6265;
 }
+.formWrapper {
+    margin: 30px 0 30px 0;
+}
 a.importContainer {
     text-decoration: none;
     margin: 0 10px;
-    width: 85px;
+    width: 160px;
     cursor: default;
 }
 .importLabel {
     float: left;
     width: 13%;
-    text-align: right;
     color: grey;
-    margin-right: 20px;
     line-height: 25px;
 }
 .fileNameSpan {

@@ -198,27 +198,31 @@ export default class UsersPage extends Component {
       title="UPLOAD FILE"
       className={commonStyles.modal}
       >
-      <form onSubmit={::this.uploadFile} method="post" encType="multipart/form-data">
-        <lable className={styles.importLabel} >File:</lable>
-        <lable className={styles.wrapLabel}>
-          <input type="file" name="file" className={styles.inputFile}
-                 onChange={::this.handlerUploadFile} />
-          <div className={styles.importContainer} type="button">Upload template</div>
-          <a className={styles.importContainer} href={`${baseUrl}/api/userManagement/getImportFile?token=${this.props.currentUser.token}`}>Download</a>
-        </lable>
-        <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span>
-      </form>
-      <Footer>
-        <ActionButton
-          icon="fa fa-check"
+
+      <div className={styles.formWrapper}>
+        <form onSubmit={::this.uploadFile} method="post" encType="multipart/form-data">
+          <label className={styles.importLabel} >File:</label>
+          <label className={styles.wrapLabel}>
+            <input type="file" name="file" className={styles.inputFile}
+                   onChange={::this.handlerUploadFile} />
+            <div className={styles.importContainer} type="button">Upload file</div>
+            <a className={styles.importContainer} href={`${baseUrl}/api/userManagement/getImportFile?token=${this.props.currentUser.token}`}>Download template</a>
+
+          </label>
+          <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span>
+        </form>
+      </div>
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
           onClick={::this.uploadFile}
           disabled={!this.state.selectedFileName.length}
           inProgress={this.props.pendingActions.uploadUsers}
           >
           Ok
-        </ActionButton>
-        <Button icon="fa fa-ban" onClick={::this.hideImportUsersPopup}>Cancel</Button>
-      </Footer>
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideImportUsersPopup}>Cancel</ActionButtonForModal>
+      </WhiteFooter>
     </Modal>);
   }
 
