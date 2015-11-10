@@ -96,20 +96,6 @@ export default class EditFolderPage extends Component {
               onClick={::this.saveNewName}
               >
             </Button>
-            <Button
-              className="mdl2-cancel"
-              onClick={::this.cancelSave}
-              icon="fa"
-              onClick={::this.saveNewName}
-              >
-              OK
-            </Button>
-            <Button
-              icon="fa"
-              onClick={::this.cancelSave}
-              >
-              Cancel
-            </Button>
           </Footer>
         </form>
       </div>
