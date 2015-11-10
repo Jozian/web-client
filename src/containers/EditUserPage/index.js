@@ -12,7 +12,6 @@ import Footer from 'components/Footer';
 import * as actions from 'actions/users.js';
 import loading from 'decorators/loading';
 import validator from 'validator';
-import Footer from 'components/Footer';
 import WhiteFooter from 'components/WhiteFooter';
 import Modal from 'components/Modal';
 import ActionButtonForModal from 'components/ActionButtonForModal';
@@ -179,6 +178,7 @@ export default class EditUserPage extends Component {
           ).map((type) => (<option value={type.value}>{type.label}</option>))
         }
       </Dropdown>
+
     );
   }
 
@@ -231,9 +231,17 @@ export default class EditUserPage extends Component {
       let isValid = true;
       let key = field;
       if (field === 'email') {
-        [message, isValid] = ['wrong format', validator.isEmail(newValue)];
+        if (!newValue) {
+          [message, isValid] = ['wrong format', true];
+        } else {
+          [message, isValid] = ['wrong format', validator.isEmail(newValue)];
+        }
       } else if (field === 'phone') {
-        [message, isValid] = ['wrong format', validator.isMobilePhone(newValue, 'en-US')];
+        if (!newValue) {
+          [message, isValid] = ['wrong format', true];
+        } else {
+          [message, isValid] = ['wrong format', validator.isMobilePhone(newValue, 'en-US')];
+        }
       } else if (field === 'name' || field === 'login') {
         [message, isValid] = ['required', validator.isLength(newValue, 1)];
       } else if (field === 'confirm') {
@@ -364,11 +372,13 @@ export default class EditUserPage extends Component {
                     value: this.state.user.phone,
                     requestChange: this.getUserChange('phone'),
                   }}
-                  label="Send credentials in SMS"
-                  errorMessage={this.state.errors.phone}
-                  name="phone"
-                  placeholder="Your mobile phone"
-                   />
+                label="Send credentials on Email"
+                errorMessage={this.state.errors.email}
+                name="email"
+                placeholder="email@email.com"
+                checked={this.state.checked.email}
+                onBlur={::this.onBlur}
+                onCheckboxChange={this.check.bind(this, 'email')}/>
               </div>
             <p className={styles.note}>
               * user will be able to login both to website and mobile client with this credentials.
