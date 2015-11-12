@@ -16,10 +16,6 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('styles.css', {publicPath: '/static/'}),
-    new AssetsPlugin({
-      filename: 'assets.json',
-      path: __dirname + '/static',
-    }),
   ],
   resolve: {
     extensions: ['', '.js', '.jsx'],
