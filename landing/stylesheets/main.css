@@ -104,14 +104,14 @@ input[type="checkbox"] {
     background-color: #f2f2f2;
 }
 .b_screen-shot {
-    background-image: url(/public/images/screens.png);
+    background-image: url(/landing/images/screens.png);
     width: 969px;
     height: 522px;
     margin-left: 9%;
     margin-top: 40px;
 }
 .b_video {
-    background-image: url(/public/images/video.png);
+    background-image: url(/landing/images/video.png);
     height: 266px;
     width: 471px;
     margin-bottom: 15px;
@@ -168,7 +168,7 @@ input[type="checkbox"] {
     width: 43%;
 }
 .b_source_content__img {
-    background-image:  url(/public/images/panorama.png);
+    background-image:  url(/landing/images/panorama.png);
     height: 387px;
     width: calc(100% + 52px);
     left: -52px;

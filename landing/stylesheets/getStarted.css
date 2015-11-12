@@ -59,27 +59,27 @@
     width: 271px;
     height: 67px;
     margin-bottom: 10px;
-    background-image:  url(/public/images/download.png);
+    background-image:  url(/landing/images/download.png);
 }
 .download2-btn {
     width: 271px;
     height: 67px;
-    background-image:  url(/public/images/download2.png);
+    background-image:  url(/landing/images/download2.png);
 }
 .b_step-box {
     margin-left: 6%;
 }
 #step1 {
-    background-image:  url(/public/images/step1.png);
+    background-image:  url(/landing/images/step1.png);
 }
 #step2 {
-    background-image:  url(/public/images/step2.png);
+    background-image:  url(/landing/images/step2.png);
 }
 #step3 {
-    background-image:  url(/public/images/step3.png);
+    background-image:  url(/landing/images/step3.png);
 }
 #step4 {
-    background-image:  url(/public/images/step4.png);
+    background-image:  url(/landing/images/step4.png);
 }
 .b_img-box {
     width: 228px;

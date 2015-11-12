@@ -1,5 +1,8 @@
 (function() {
 
+  if (window.localStorage.getItem('MEDtoken') && window.localStorage.getItem('MEDuser')) {
+    window.location.href = '/admin';
+  }
   window.addEventListener('load', function() {
     var allIdElem = [];
     allIdElem.push(document.getElementById('getStarted'));
@@ -172,7 +175,7 @@
 
           setLocalStorageData('MEDtoken', response.token);
           setLocalStorageData('MEDuser', JSON.stringify(response.user));
-          window.location = '/';
+          window.location.href = '/admin';
         },
         error: function (err) {
           console.log(err.responseText);

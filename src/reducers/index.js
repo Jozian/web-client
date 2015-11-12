@@ -177,7 +177,7 @@ export function currentUser(state, action) {
     if (!user) {
       throw new Error('Missing user in localStorage');
     }
-    
+
     if (!token) {
       throw new Error('Missing token in localStorage');
     }
