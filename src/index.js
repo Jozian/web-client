@@ -16,27 +16,33 @@ import CommentDetails from 'containers/CommentDetailsPage';
 import EditFolderPage from 'containers/EditFolderPage';
 import EditMediaPage from 'containers/EditMediaPage';
 
+import { createHistory, useBasename } from 'history';
+
+const browserHistory = useBasename(createHistory)({
+  basename: '/admin',
+});
+
 const routes = (
-
-  <Route handler={App} path="/">
-    <Route name="users" >
-      <DefaultRoute handler={UsersPage} />
-      <Route name="editUser" path="edit/:id" handler={EditUserPage} />
-      <Route name="addUser" path="add" handler={EditUserPage} />
-    </Route>
-    <Route name="libraries">
-      <DefaultRoute handler={LibrariesPage} />
-      <Route name="folder" path="/folder/:folderId/" handler={FolderPage}>
-        <Route name="mediaSelection" path="media/:itemId/" handler={EditMediaPage} />
-        <Route name="folderSelection" path=":itemType/:itemId/" handler={EditFolderPage} />
+  <Route history={browserHistory}>
+    <Route handler={App} path="/admin">
+      <Route name="users" >
+        <DefaultRoute handler={UsersPage} />
+        <Route name="editUser" path="edit/:id" handler={EditUserPage} />
+        <Route name="addUser" path="add" handler={EditUserPage} />
       </Route>
+      <Route name="libraries">
+        <DefaultRoute handler={LibrariesPage} />
+        <Route name="folder" path="/folder/:folderId/" handler={FolderPage}>
+          <Route name="folderSelection" path=":itemType/:itemId/" handler={EditFolderPage} />
+        </Route>
 
+      </Route>
+      <Route name="statistics" handler={StatisticsPage} />
+      <Route name="comments" handler={CommentsPage} />
+      <Route name="comment" path="comments/:mediaName/:id/" handler={CommentDetails}/>
+      <Route name="motd" handler={MotdPage} />
+      <Redirect from="/admin" to="libraries" />
     </Route>
-    <Route name="statistics" handler={StatisticsPage} />
-    <Route name="comments" handler={CommentsPage} />
-    <Route name="comment" path="comments/:mediaName/:id/" handler={CommentDetails}/>
-    <Route name="motd" handler={MotdPage} />
-    <Redirect from="/" to="libraries" />
   </Route>
 );
 
