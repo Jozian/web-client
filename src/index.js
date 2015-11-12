@@ -19,12 +19,12 @@ import EditMediaPage from 'containers/EditMediaPage';
 import { createHistory, useBasename } from 'history';
 
 const browserHistory = useBasename(createHistory)({
-  basename: '/admin',
+  basename: '/admin/',
 });
 
 const routes = (
   <Route history={browserHistory}>
-    <Route handler={App} path="/admin">
+    <Route handler={App} path="/admin/">
       <Route name="users" >
         <DefaultRoute handler={UsersPage} />
         <Route name="editUser" path="edit/:id" handler={EditUserPage} />
@@ -41,7 +41,7 @@ const routes = (
       <Route name="comments" handler={CommentsPage} />
       <Route name="comment" path="comments/:mediaName/:id/" handler={CommentDetails}/>
       <Route name="motd" handler={MotdPage} />
-      <Redirect from="/admin" to="libraries" />
+      <Redirect from="/admin/" to="libraries" />
     </Route>
   </Route>
 );
