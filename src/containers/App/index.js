@@ -29,7 +29,7 @@ export default class App extends Component {
     }
 
     if (!props.user.token) {
-      window.location = '/getStarted.html';
+      window.location = '/index.html';
     }
   }
 
