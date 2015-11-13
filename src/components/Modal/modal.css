@@ -13,7 +13,7 @@
 
 .modalOverlay:global(.ReactModal__Overlay) {
   background-color: rgba(128, 128, 128, 0.5);
-  z-index: 2;
+  z-index: 350;
 }
 
 .title {
