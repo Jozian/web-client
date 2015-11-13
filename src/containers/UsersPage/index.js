@@ -195,21 +195,19 @@ export default class UsersPage extends Component {
   renderImportUsersPopup() {
     return (<Modal
       isOpen={this.state.isImportUsersPopupOpen}
-      title="UPLOAD FILE"
+      title="UPLOAD CSV FILE WITH ACCOUNTS"
       className={commonStyles.modal}
       >
 
       <div className={styles.formWrapper}>
         <form onSubmit={::this.uploadFile} method="post" encType="multipart/form-data">
-          <label className={styles.importLabel} >File:</label>
-          <label className={styles.wrapLabel}>
-            <input type="file" name="file" className={styles.inputFile}
-                   onChange={::this.handlerUploadFile} />
+          <div className={styles.wrapLabel}>
+            <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} />
             <div className={styles.importContainer} type="button">Upload file</div>
             <a className={styles.importContainer} href={`${baseUrl}/api/userManagement/getImportFile?token=${this.props.currentUser.token}`}>Download template</a>
+          </div>
+          <div className={styles.importLabel} >File: <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span></div>
 
-          </label>
-          <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span>
         </form>
       </div>
       <WhiteFooter>
