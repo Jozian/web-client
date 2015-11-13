@@ -77,9 +77,8 @@ class EditUserPage extends Component {
     });
   }
 
-  saveUserHandler() {
-    console.log(this.props.params.id, this.state.user);
-    this.props.editUser(this.props.params.id, this.state.user);
+  async saveUserHandler() {
+    await this.props.editUser(this.props.params.id, this.state.user);
     const { router } = this.context;
     router.transitionTo('users');
   }

@@ -1,0 +1,150 @@
+.b_source_content {
+    padding-bottom: 0;
+}
+.b_source_content__background {
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 5;
+}
+.b_source_content__text {
+    width: calc(100% - 300px);
+    display: inline-block;
+}
+
+.b_source_content__img {
+    margin-top: 30px;
+}
+.b_source_content__img--left {
+    float: left;
+    color: white;
+    margin-top: 60px;
+    font-size: 11pt;
+    width: 34%;
+    margin-left: calc(6% + 51px);
+    margin-right: 3%;
+    position: relative;
+    z-index: 10;
+}
+.b-main__link-active {
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+#log-reg-butt .b-main__link-active:before {
+    display: none !important;
+}
+.b-main__link-active:before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 18px;
+    right: -48%;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid #287074;
+}
+.b_source_content__img--left div {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 14pt;
+}
+.downloads-btn {
+    position: absolute;
+    bottom: -40px;
+    right: 200px;
+}
+.download-btn {
+    width: 271px;
+    height: 67px;
+    margin-bottom: 10px;
+    background-image:  url(/public/images/download.png);
+}
+.download2-btn {
+    width: 271px;
+    height: 67px;
+    background-image:  url(/public/images/download2.png);
+}
+.b_step-box {
+    margin-left: 6%;
+}
+#step1 {
+    background-image:  url(/public/images/step1.png);
+}
+#step2 {
+    background-image:  url(/public/images/step2.png);
+}
+#step3 {
+    background-image:  url(/public/images/step3.png);
+}
+#step4 {
+    background-image:  url(/public/images/step4.png);
+}
+.b_img-box {
+    width: 228px;
+    background-color: green;
+    margin-right: 13px;
+    height: 250px;
+    display: inline-block;
+}
+.b_source_content__img--right {
+    margin-top: 60px;
+    width: 34%;
+    margin-right: 5%;
+    float: right;
+    color: white;
+    font-size: 11pt;
+    position: relative;
+    z-index: 10;
+}
+.b_source_content__img--right div {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 14pt;
+}
+
+.b_forgot-password {
+    position: fixed;
+    top: 100px;
+    background-color: #fff;
+    z-index: 30;
+    width: 100%;
+    height: 400px;
+}
+
+.b_forgot-password-body {
+    margin: 0 auto;
+    padding: 20px 0px 20px 0px;
+    width: 470px;
+}
+
+.b_close-recovery-password {
+    border: 0 none;
+    width: 371px;
+    height: 36px;
+    color: #6ab01c;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 15px;
+}
+
+.b-forgot-password-body-title {
+    text-align: center;
+}
+
+.b-forgot-password-body-text {
+    width: 371px;
+    margin-left: 60px;
+}
+
+.b_label-for-input {
+    text-align: left;
+    color: #000;
+    font-weight: normal;
+}
+
+.b_start-footer-link:last-child {
+    border: none;
+}

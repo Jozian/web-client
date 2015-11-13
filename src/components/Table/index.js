@@ -101,10 +101,13 @@ export default class Table extends Component {
   }
 
   getHeaderCheckboxState() {
-    if (this.state.selection.length === this.props.data.length) {
+    const currentSelection = this.state.selection.filter(rowData => !rowData.unselectable);
+    const currentPropsData = this.props.data.filter(rowData => !rowData.unselectable);
+
+    if (currentSelection.length === currentPropsData.length && currentSelection.length) {
       return true;
     }
-    return (this.state.selection.length > 0) ? partiallyChecked : false;
+    return (currentSelection.length > 0) ? partiallyChecked : false;
   }
 
   fixScroll() {
@@ -123,7 +126,7 @@ export default class Table extends Component {
   }
 
   selectRow(row, data, event) {
-    const selection = [...this.state.selection];
+    let selection = [...this.state.selection];
     const index = selection.indexOf(row);
 
     if (index === -1) {
@@ -131,6 +134,8 @@ export default class Table extends Component {
     } else {
       selection.splice(index, 1);
     }
+
+    selection = selection.filter(rowData => !rowData.unselectable);
 
     this.props.onSelectionChange(selection);
     this.setState({ selection });
@@ -191,7 +196,7 @@ export default class Table extends Component {
   }
 
   renderCheckboxColumn(row) {
-    const isChecked = this.state.selection.indexOf(row) !== -1;
+    const isChecked = this.state.selection.indexOf(row) !== -1 && !row.unselectable;
 
     return (
       <td key="checkbox" className={styles.checkTd}>

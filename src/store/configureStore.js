@@ -3,6 +3,7 @@ import * as reducers from '../reducers';
 import createLogger from 'redux-logger';
 
 import apiMiddleware from '../middlewares/api';
+import errorApi from '../middlewares/errorApi';
 
 const logger = createLogger({
   level: 'info',
@@ -14,6 +15,7 @@ const reducer = combineReducers(reducers);
 const createFinalStore = compose(
   applyMiddleware(
     apiMiddleware,
+    errorApi,
     logger
   ),
   createStore
@@ -21,6 +23,7 @@ const createFinalStore = compose(
 
 const store = createFinalStore(reducer, {
   currentUser: null,
+  errorApplication: null,
   statistics: {
     loading: false,
     entities: {

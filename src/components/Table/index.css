@@ -36,7 +36,6 @@
 }
 
 .tableHeader {
-    font-family: "FontAwesome";
     color: #6ab01c;
     text-transform: uppercase;
     font-size: 14px;
@@ -51,7 +50,6 @@
 
 .checkTd {
     position: relative;
-    display: inline-block;
     height: 25px;
 }
 

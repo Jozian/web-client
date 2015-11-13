@@ -80,7 +80,7 @@ export default class StatisticsPage extends Component {
                 className={styles.buttonGreen}
                 disabled={isButtonDisabled}
                 onClick={::this.clickHandler}
-              >Upload</button>
+              >Apply</button>
 
             </div>
           </div>

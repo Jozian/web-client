@@ -164,7 +164,7 @@ export default class FolderPage extends Component {
     const items = await e.target.winControl.selection.getItems();
 
     this.setState({
-      selection: items.map( (item) => (item.data.id)),
+      selection: items.map( (item) => (item.data)),
     });
   }
   renderBreadcrumbs() {
@@ -276,7 +276,7 @@ export default class FolderPage extends Component {
       return;
     }
 
-    await this.props.deleteFolders(this.state.selection.map(l => ({id: l, type: 'folder'})));
+    await this.props.deleteFolders(this.state.selection.map(l => ({id: l.id, type: l.type})));
     this.hideDeleteFoldersPopup();
     this.setState({selection: []});
     this.context.router.transitionTo('folder', {

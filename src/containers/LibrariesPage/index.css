@@ -24,7 +24,7 @@
   height: 500px !important;
 }
 .inviteTable {
-  height: calc(100% - 112px);
+  height: 75%;
 }
 
 .buttonAdd {
