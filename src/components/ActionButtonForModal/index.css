@@ -11,6 +11,7 @@
     line-height: 1.3636;
     color: white;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .button i {

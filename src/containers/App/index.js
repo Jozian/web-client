@@ -24,10 +24,6 @@ export default class App extends Component {
   };
 
   componentWillReceiveProps(props) {
-    if (props.error) {
-
-    }
-
     if (!props.user.token) {
       window.location = '/index.html';
     }
@@ -57,17 +53,18 @@ export default class App extends Component {
   render() {
     return (<div>
       { this.renderErrorPopup() }
-      <div className={styles.topLine}>
-        <div className={styles.redLine}></div>
-        <div className={styles.greenLine}></div>
-        <div className={styles.blueLine}></div>
-        <div className={styles.yellowLine}></div>
-      </div>
+
       <ToastManager />
 
       <NavBar username={this.props.user.name} logout={this.props.logoutUser} />
       <SearchBar />
       <section className={styles.contenthost}>
+        <div className={styles.topLine}>
+          <div className={styles.redLine}></div>
+          <div className={styles.greenLine}></div>
+          <div className={styles.blueLine}></div>
+          <div className={styles.yellowLine}></div>
+        </div>
 
         <RouteHandler />
       </section>

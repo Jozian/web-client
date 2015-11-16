@@ -1,7 +1,6 @@
 .button {
     border-style: solid;
     background-clip: padding-box;
-    margin: 0;
     min-height: 40px;
     min-width: 100px;
     padding: 4px 8px;
@@ -14,6 +13,7 @@
     background-color: #78c623;
     border-color: #78c623;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .button i {
