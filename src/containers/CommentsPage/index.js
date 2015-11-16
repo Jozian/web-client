@@ -118,7 +118,6 @@ export default class CommentsPage extends Component {
   };
 
   renderJumpButton(_, rowData) {
-    debugger;
     return (<IconButton
       className={styles.rowButton}
       icon="fa fa-search"

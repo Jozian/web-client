@@ -7,6 +7,7 @@
     display: inline-block;
     height: 28px;
     background-color: #6ab01c;
+    cursor: pointer;
 }
 .formWrapper {
     margin: 30px 0 30px 0;
@@ -15,7 +16,7 @@ a.importContainer {
     text-decoration: none;
     margin: 0 0 0 10px;
     width: 48%;
-    cursor: default;
+    cursor: pointer;
 }
 .importLabel {
     float: left;
@@ -33,7 +34,7 @@ a.importContainer {
     position: relative;
 }
 .inputFile {
-    cursor: inherit;
+    cursor: pointer;
     display: block;
     min-height: 100%;
     min-width: 50%;
