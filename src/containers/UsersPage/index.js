@@ -6,8 +6,6 @@ import cx from 'classnames';
 
 import Header from 'components/Header';
 import Button from 'components/Button';
-import IconButton from 'components/IconButton';
-import ActionButton from 'components/ActionButton';
 import ActionButtonForModal from 'components/ActionButtonForModal';
 import Footer from 'components/Footer';
 import WhiteFooter from 'components/WhiteFooter';

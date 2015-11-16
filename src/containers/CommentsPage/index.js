@@ -58,8 +58,11 @@ export default class CommentsPage extends Component {
   }
 
   onJumpButtonClick(rowData) {
+    if (!rowData.FolderId) {
+      rowData.FolderId = rowData.LibraryId;
+    }
     this.context.router.transitionTo('folderSelection', {
-      folderId: rowData.folder.toString(),
+      folderId: rowData.FolderId.toString(),
       itemType: 'media',
       itemId: rowData.id.toString(),
     });
@@ -115,6 +118,7 @@ export default class CommentsPage extends Component {
   };
 
   renderJumpButton(_, rowData) {
+    debugger;
     return (<IconButton
       className={styles.rowButton}
       icon="fa fa-search"
