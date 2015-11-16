@@ -21,8 +21,6 @@
 
     var bodyElem = document.body;
 
-    var allElemMenu = document.querySelectorAll('.b_start-header-menu > li > a');
-
     var getLoginForm = document.getElementById('login-form');
     var getRegistrationForm = document.getElementById('register-form');
 
@@ -33,7 +31,13 @@
 
     var allElemMenu = document.querySelectorAll('.b_start-header-menu > li > a');
 
-    location.hash = '#getStarted';
+    var mnuIdx = {
+      getStarted: '0',
+      useCases: 1,
+      openSource: 2,
+      support: 3,
+      loginRegister: 4,
+    };
 
     function selectBlock(name, number) {
       for (var i = 0; i < allIdElem.length; i++) {
@@ -51,6 +55,7 @@
         return;
       }
 
+      debugger;
       allElemMenu[number].classList.add('b_start-header-menu--selected');
 
     }
@@ -58,16 +63,9 @@
     window.addEventListener('hashchange', function (event) {
       event.preventDefault();
       var currentHash = location.hash.substring(1);
-      var mnuIdx = {
-        getStarted: '0',
-        useCases: 1,
-        openSource: 2,
-        support: 3,
-        loginRegister: 4,
-      }[currentHash];
 
-      if (mnuIdx) {
-        selectBlock(currentHash, mnuIdx);
+      if (mnuIdx[currentHash]) {
+        selectBlock(currentHash, mnuIdx[currentHash]);
       }
     });
 
@@ -102,6 +100,11 @@
         }
 
       });
+    } else if (window.location.hash) {
+      var currentHash = window.location.hash.substr(1);
+      if (mnuIdx[currentHash]) {
+        selectBlock(currentHash, mnuIdx[currentHash]);
+      }
     } else {
       window.location.hash = '#getStarted';
     }
@@ -116,7 +119,6 @@
 
           complete: function (request) {
             closeModalWindow();
-            window.location.hash = '#getStarted';
           },
           error: function (err) {
             console.log(err);
@@ -140,7 +142,6 @@
           var buttonOkModal = document.querySelector('.b-register-popup-button-ok');
           buttonOkModal.addEventListener('click', function (e) {
             closeModalWindow();
-            window.location.hash = '#getStarted';
           });
           event.target.name.value = '';
           event.target.email.value = '';
