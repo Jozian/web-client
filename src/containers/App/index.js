@@ -9,7 +9,6 @@ import NavBar from 'components/NavBar';
 import ToastManager from '../ToastManager';
 import WhiteFooter from 'components/WhiteFooter';
 import ActionButtonForModal from 'components/ActionButtonForModal';
-import SearchBar from 'containers/SearchBar';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
@@ -57,7 +56,6 @@ export default class App extends Component {
       <ToastManager />
 
       <NavBar username={this.props.user.name} logout={this.props.logoutUser} />
-      <SearchBar />
       <section className={styles.contenthost}>
         <div className={styles.topLine}>
           <div className={styles.redLine}></div>

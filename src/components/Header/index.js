@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import SearchBar from 'containers/SearchBar';
+
 import styles from './index.css';
 
 export default class Header extends Component {
@@ -8,6 +11,7 @@ export default class Header extends Component {
     render() {
       return (
         <h1 className={styles.pageHeader}>
+          <SearchBar />
           { this.props.children }
         </h1>
       );

@@ -12,6 +12,7 @@
     line-height: 1.1429;
     letter-spacing: 0;
     width: 91%;
+    position: relative;
 }
 
 .pageHeader span {
