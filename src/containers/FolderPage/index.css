@@ -21,8 +21,8 @@
 }
 
 .folderIcon {
-  line-height: 60px;
-  font-size: 50px;
+  line-height: 60px !important;
+  font-size: 50px !important;
 }
 
 .name {

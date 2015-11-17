@@ -55,7 +55,6 @@
         return;
       }
 
-      debugger;
       allElemMenu[number].classList.add('b_start-header-menu--selected');
 
     }
