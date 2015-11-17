@@ -39,7 +39,7 @@ export default class NavBar extends Component {
       }
       <div className={styles.footer}>
         <span className={styles.username}>{this.props.username}</span>
-        <IconButton onClick={this.props.logout} icon="fa fa-power-off" className={styles.logout} />
+        <IconButton onClick={this.props.logout} icon="fa fa-power-off" className={styles.logout} tooltipText="Logout"/>
       </div>
     </nav>);
   }

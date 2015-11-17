@@ -394,6 +394,17 @@ export default class EditUserPage extends Component {
             </footer>
           </form>
         </div>
+
+        <Footer>
+          <Button className="mdl2-check-mark"
+                  onClick={::this.saveUserHandler}
+                  tooltipText="Save user"
+                   />
+          <Button className="mdl2-cancel"
+                  onClick={::this.cancelUserHandler}
+                  tooltipText="Cancel save user"
+                  />
+      </Footer>
       </div>);
   }
 }

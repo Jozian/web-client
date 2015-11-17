@@ -5,17 +5,18 @@
 }
 
 .iconButton .tooltip{
-  font-size: 18px;
+  font-size: 12px;
   position: absolute;
   bottom: 100%;
   left: 0;
   padding: 0 0 2px;
 }
 .iconButton .tooltipInner{
-  border: 1px solid #78c623;
+  border: 1px solid #626262;
   padding: 5px 10px;
   background: #fff;
   white-space: nowrap;
+  line-height: 15px;
 }
 .iconButton button {
   font-family: "Segoe MDL2 Assets";

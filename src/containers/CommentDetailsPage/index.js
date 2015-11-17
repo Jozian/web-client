@@ -376,7 +376,8 @@ export default class CommentDetails extends Component {
             disabled={this.state.selectionComments.length === 0}
             onClick={::this.showDeleteCommentsPopup}
             className="mdl2-delete"
-            role="Delete button">
+            role="Delete button"
+            tooltipText="Delete comments">
           </ActionButton>
         </Footer>
       </div>

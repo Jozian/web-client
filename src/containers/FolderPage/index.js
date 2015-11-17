@@ -241,6 +241,7 @@ export default class FolderPage extends Component {
           disabled={this.state.selection.length === 0}
           className="mdl2-delete"
           onClick={::this.openDeleteFoldersModal}
+          tooltipText="Remove element"
         >
         </Button>
       </Footer>
@@ -563,10 +564,12 @@ export default class FolderPage extends Component {
         <Button
           className="mdl2-document"
           onClick={::this.openNewMediaModal}
+          tooltipText="Add new document"
         ></Button>
         <Button
           className="mdl2-new-folder"
           onClick={::this.addDefaultFolder}
+          tooltipText="Add new folder"
         ></Button>
 
       </Header>

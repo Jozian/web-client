@@ -109,6 +109,7 @@ export default class StatisticsPage extends Component {
               className="mdl2-download"
               inProgress={this.props.pendingActions.statisticsExport}
               onClick={this.props.addToExport}
+              tooltipText="Export statistics"
             >
             </ActionButton>
         </Footer>

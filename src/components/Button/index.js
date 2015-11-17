@@ -10,6 +10,7 @@ export default class Button extends Component {
     disabled: PropTypes.bool,
     onClick: PropTypes.func,
     className: PropTypes.string,
+    tooltipText: PropTypes.string,
   };
 
   render() {
@@ -19,13 +20,17 @@ export default class Button extends Component {
       [this.props.className]: this.props.className !== null,
     });
     return (
-      <button type="button"
+      <div className={styles.bottonBody}>
+
+        <button type="button"
               className={classes}
               onClick={this.props.onClick}
               disabled={disabled}>
               {this.props.children}
               {this.props.text}
-      </button>
+        </button>
+        {this.props.tooltipText ? <div className={styles.tooltip}>{this.props.tooltipText}</div> : ''}
+      </div>
     );
   }
 }

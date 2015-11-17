@@ -232,6 +232,7 @@ export default class UsersPage extends Component {
           className={cx(styles.headerButton, commonStyles.headerButton, 'mdl2-add')}
           handleClick={this.handleAddUserClick}
           onClick={::this.onAddClick}
+          tooltipText="Add new user"
         ></Button>
       </Header>
       <LoadingSpinner loading={this.state.loading}>
@@ -249,11 +250,13 @@ export default class UsersPage extends Component {
             disabled={!this.state.selectedUsers.length}
             className="mdl2-delete"
             onClick={::this.showDeleteUsersPopup}
+            tooltipText="Delete user"
           >
           </Button>
           <Button
             className="mdl2-import"
             onClick={::this.showImportUsersPopup}
+            tooltipText="Import users"
           >
           </Button>
         </Footer>

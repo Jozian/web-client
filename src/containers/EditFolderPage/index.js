@@ -94,6 +94,14 @@ export default class EditFolderPage extends Component {
               disabled={!this.state.folder.name.length}
               className="mdl2-check-mark"
               onClick={::this.saveNewName}
+              tooltipText="Save new name"
+              >
+            </Button>
+            <Button
+              disabled={!this.state.folder.name.length}
+              className="mdl2-cancel"
+              onClick={::this.cancelSave}
+              tooltipText="Cancel editing"
               >
             </Button>
           </Footer>

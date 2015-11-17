@@ -355,6 +355,7 @@ class LibrariesPage extends Component {
         <Button
           className={cx(commonStyles.headerButton, styles.buttonAdd, "mdl2-add")}
           onClick={::this.openNewLibraryPopup}
+          tooltipText="Add library"
           ></Button>
       </Header>
       <Table
@@ -371,6 +372,7 @@ class LibrariesPage extends Component {
           disabled={!this.state.selectedLibraries.length}
           className="mdl2-delete"
           onClick={::this.openDeleteLibrariesPopup}
+          tooltipText="Remove library"
           >
 
         </Button>
@@ -378,6 +380,7 @@ class LibrariesPage extends Component {
           disabled={!this.state.selectedLibraries.length}
           className="mdl2-add-friend"
           onClick={::this.openInviteUsersPopup}
+          tooltipText="Invite users"
           >
         </Button>
       </Footer>

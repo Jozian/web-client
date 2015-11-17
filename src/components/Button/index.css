@@ -1,3 +1,22 @@
+.bottonBody {
+    display:inline-block;
+    position:relative;
+}
+.tooltip {
+    display: none;
+    font-size: 12px;
+}
+.button:hover + .tooltip {
+    position: absolute;
+    top: -20px;
+    display: inline-block;
+    border: 1px solid #626262;
+    white-space: nowrap;
+    padding: 5px;
+    background-color: #ffffff;
+    z-index: 300;
+    transform: translateX(-65%);
+}
 .button {
     background-clip: padding-box;
     padding: 4px 8px;

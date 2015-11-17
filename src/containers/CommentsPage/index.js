@@ -142,6 +142,7 @@ export default class CommentsPage extends Component {
               className="mdl2-download"
               inProgress={this.props.pendingActions.commentsExport}
               onClick={this.props.exportComments}
+              tooltipText="Export commentaries"
             >
             </ActionButton>
         </Footer>
