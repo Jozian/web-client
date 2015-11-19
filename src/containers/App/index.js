@@ -3,7 +3,7 @@ import { RouteHandler } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actions from '../../actions/apps';
+import * as actions from '../../actions/users';
 import Modal from 'components/Modal';
 import NavBar from 'components/NavBar';
 import ToastManager from '../ToastManager';
@@ -55,7 +55,7 @@ export default class App extends Component {
 
       <ToastManager />
 
-      <NavBar username={this.props.user.name} logout={this.props.logoutUser} />
+      <NavBar userType={this.props.user.type} username={this.props.user.name} logout={this.props.logoutUser} />
       <section className={styles.contenthost}>
         <div className={styles.topLine}>
           <div className={styles.redLine}></div>

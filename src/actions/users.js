@@ -86,3 +86,10 @@ export function loadTemplateImport() {
   };
 }
 
+export function logoutUser() {
+  return {
+    type: types.LOGOUT_USER,
+    promise: usersApi.userLogout(),
+  };
+}
+
