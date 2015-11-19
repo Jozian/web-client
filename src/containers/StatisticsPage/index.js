@@ -83,12 +83,15 @@ export default class StatisticsPage extends Component {
           <div className={style.toolbar} id="downloaded">
             <span className={style.toolbarTitle}>Most downloaded media</span>
           </div>
+
+          {this.props.topViews.length ? '' : <div>No data to display</div> }
           <ListView
             className={style.container}
             itemDataSource={this.props.topViews.dataSource}
             itemTemplate={this.listViewItemRenderer}
             onItemInvoked={::this.handleItemSelected}
             layout={ {type: WinJS.UI.ListLayout} }
+            tabIndex={this.props.topViews.length ? '0' : '-1' }
           />
         </div>
         <div className={style.listContainer}>
@@ -96,17 +99,20 @@ export default class StatisticsPage extends Component {
             <span className={style.toolbarTitle}>Most viewed media</span>
           </div>
 
+          {this.props.topDownloads.length ? '' : <div>No data to display</div> }
           <ListView
             className={style.container}
             itemDataSource={this.props.topDownloads.dataSource}
             itemTemplate={this.listViewItemRenderer}
             onItemInvoked={::this.handleItemSelected}
             layout={listLayout}
+            tabIndex={this.props.topDownloads.length ? '0' : '-1' }
           />
         </div>
         <Footer>
             <ActionButton
               className="mdl2-download"
+              disabled={!this.props.topDownloads.length && !this.props.topViews.length}
               inProgress={this.props.pendingActions.statisticsExport}
               onClick={this.props.addToExport}
               tooltipText="Export statistics"
