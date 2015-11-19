@@ -32,7 +32,7 @@ const routes = (
       </Route>
       <Route name="libraries">
         <DefaultRoute handler={LibrariesPage} />
-        <Route name="folder" path="/folder/:folderId/" handler={FolderPage}>
+        <Route name="folder" path={browserHistory.createPath('/folder/:folderId/')} handler={FolderPage}>
           <Route name="folderSelection" path=":itemType/:itemId/" handler={EditFolderPage} />
         </Route>
 
@@ -43,7 +43,6 @@ const routes = (
       <Route name="motd" handler={MotdPage} />
       <Redirect from="/admin/" to="libraries" />
     </Route>
-  </Route>
 );
 
 Modal.setAppElement(document.getElementById('root'));

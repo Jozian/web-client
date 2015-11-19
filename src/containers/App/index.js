@@ -35,15 +35,22 @@ export default class App extends Component {
   renderErrorPopup() {
     return (<Modal
       isOpen={this.props.error}
-      title="Unable to perform operation due to Internet connection problems or server issues."
+      title="Server error."
       className={commonStyles.modal}
       >
+      <div className={styles.popupText}>Unable to perform operation due to Internet connection problems or server issues. In case 'Refresh' button does not help, try logging out.</div>
       <WhiteFooter>
         <ActionButtonForModal
           className={commonStyles.saveButtonModal}
           onClick={::this.reloadPage}
           >
           Reload
+        </ActionButtonForModal>
+        <ActionButtonForModal
+          className={commonStyles.cancelButtonModal}
+          onClick={this.props.logoutUser}
+          >
+          Logging out
         </ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
