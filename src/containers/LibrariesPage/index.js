@@ -9,8 +9,6 @@ import DocumentTitle from 'components/DocumentTitle';
 import Header from 'components/Header';
 import Modal from 'components/Modal';
 import Table from 'components/Table';
-import IconButton from 'components/IconButton';
-import ActionButton from 'components/ActionButton';
 import ActionButtonForModal from 'components/ActionButtonForModal';
 import Button from 'components/Button';
 import Footer from 'components/Footer';
@@ -188,7 +186,7 @@ class LibrariesPage extends Component {
         className: styles.buttonEditLib,
       }, {
         key: 'folder',
-        text: 'Folder',
+        text: 'Folders',
         className: commonStyles.numberCell,
       }, {
         key: 'media',
@@ -374,7 +372,6 @@ class LibrariesPage extends Component {
           onClick={::this.openDeleteLibrariesPopup}
           tooltipText="Remove library"
           >
-
         </Button>
         <Button
           disabled={!this.state.selectedLibraries.length}
