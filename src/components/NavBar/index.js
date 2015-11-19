@@ -10,18 +10,29 @@ import logo from 'file!./assets/logo.png';
 export default class NavBar extends Component {
   static propTypes = {
     username: React.PropTypes.string.isRequired,
+    userType: React.PropTypes.string.isRequired,
     logout: React.PropTypes.func.isRequired,
   };
 
   getAvailableLinks() {
-    // TODO: implement operator check logic
-    return NavBar.links;
+    if (this.props.userType === 'admin') {
+      return NavBar.adminLinks;
+    } else {
+      return NavBar.operatorLinks;
+    }
   }
 
-  static links = [
+  static adminLinks = [
     {to: 'libraries', title: 'Libraries'},
     {to: 'users', title: 'Users'},
-    {to: 'comments', title: 'Comments'},
+    {to: 'comments', title: 'Commentaries'},
+    {to: 'motd', title: 'Message of the Day'},
+    {to: 'statistics', title: 'Statistics'},
+  ];
+
+  static operatorLinks = [
+    {to: 'libraries', title: 'Libraries'},
+    {to: 'comments', title: 'Commentaries'},
     {to: 'motd', title: 'Message of the Day'},
     {to: 'statistics', title: 'Statistics'},
   ];
