@@ -110,6 +110,7 @@
 
     forgotPassword.addEventListener('click', function (e) {
       openModalWindow(forgotPasswordTemplate, bodyElem);
+      document.querySelector('.b_error_msg--email-incorrect').classList.add('hidden');
       var forgotPasswordRecovery = document.getElementById('password-recovery-form');
       forgotPasswordRecovery.addEventListener('submit', function (e) {
         sendRequest({
@@ -120,6 +121,7 @@
             closeModalWindow();
           },
           error: function (err) {
+            document.querySelector('.b_error_msg--email-incorrect').classList.remove('hidden');
             console.log(err);
           },
         });

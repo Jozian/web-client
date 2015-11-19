@@ -57,6 +57,9 @@ header nav {
     margin: auto;
 
 }
+.b_error_msg--email-incorrect {
+    margin: 0;
+}
 #login_err {
     position: relative;
     right: 54px;
