@@ -13,12 +13,9 @@ export default class FormInput extends Component {
     name: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     type: React.PropTypes.string,
-<<<<<<< HEAD
-    errorMessage: React.PropTypes.string,
     onChange: React.PropTypes.func,
-=======
     errorMessage: React.PropTypes.array,
->>>>>>> fix bug with required and already taken
+    maxlength: React.PropTypes.string,
   };
 
   render() {
@@ -27,13 +24,8 @@ export default class FormInput extends Component {
       [styles.error]: this.props.errorMessage && this.props.errorMessage.length !== 0,
     });
     const ErrorMessage = (() => {
-<<<<<<< HEAD
       if (this.props.errorMessage && this.props.errorMessage.length !== 0) {
         return <span className={styles.errorMessage}>{this.props.errorMessage}</span>;
-=======
-      if (this.props.errorMessage.length !== 0) {
-        return <span className={styles.errorMessage}>{this.props.errorMessage.join(', ')}</span>;
->>>>>>> fix bug with required and already taken
       }
     }());
     return (
@@ -47,6 +39,7 @@ export default class FormInput extends Component {
                placeholder={this.props.placeholder}
                onBlur={this.props.onBlur}
                onChange={this.props.onChange}/>
+               maxLength={this.props.maxlength}/>
         {ErrorMessage}
       </div>
     );

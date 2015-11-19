@@ -11,6 +11,8 @@
 
 .editRow {
     padding: 5px 10px;
+    width: 300px;
+    display: inline-block;
 }
 .editLabel {
     padding-top: 5px;
