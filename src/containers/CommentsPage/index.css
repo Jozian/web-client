@@ -1,4 +1,6 @@
-
+.noComments {
+  margin-left: 5%;
+}
 .dateCell {
   max-width: 100px;
   width: 100px;

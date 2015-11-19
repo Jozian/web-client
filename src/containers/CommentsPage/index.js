@@ -93,12 +93,12 @@ export default class CommentsPage extends Component {
       },
       {
         key: 'like',
-        text: 'Like',
+        text: 'Likes',
         className: commonStyles.numberCell,
       },
       {
         key: 'unlike',
-        text: 'Unlike',
+        text: 'Dislakes',
         className: commonStyles.numberCell,
       },
 
@@ -130,16 +130,18 @@ export default class CommentsPage extends Component {
       <div>
         <DocumentTitle title="Commentaries" />
         <Header>Commentaries</Header>
-        <Table
+        {this.props.media.entities.length ? <Table
           overlayClassName={commonStyles.tableOverlay}
           className={cx(commonStyles.table, styles.table)}
           config={this.config}
           data={this.props.media.entities}
           onRowClick={::this.onRowClick}
-        />
+          /> : <div className={styles.noComments}>No commentaries yet.</div>}
+
         <Footer>
             <ActionButton
               className="mdl2-download"
+              disabled={!this.props.media.entities.length}
               inProgress={this.props.pendingActions.commentsExport}
               onClick={this.props.exportComments}
               tooltipText="Export commentaries"
