@@ -39,6 +39,10 @@
                         <input type="email" name="email" placeholder="Email" required autocomplete="on"/>
                     </div>
 
+                    <div class="b_error_msg b_error_msg--email-incorrect hidden" id="confirm_err">
+                        <span>Email is not correct.</span>
+                    </div>
+
                     <div class="control">
                         <input type="submit" value="Send" class="b_reg-btn">
                     </div>
@@ -62,7 +66,7 @@
                 <form id="reset-password-form" class="side-form" name="passwordRecovery" method="post" >
 
                     <div class="control">
-                        <input type="password" name="password" placeholder="password" required autocomplete="on"/>
+                        <input type="password" name="password" placeholder="Password" required autocomplete="on"/>
                     </div>
 
                     <div class="control">
@@ -414,18 +418,6 @@
                     and the choice is up to the user.
                     It is up to the administrator to decide the complexity and degree of involvement.
                 </div>
-                <div class="b_source_content__span">
-                    <div class="b_source_content__span__title">
-                        Content formats
-                    </div>
-                    The supported content formats include the following:
-
-                </div>
-                <div class="b_source_content__span">
-                    <div id="audio" class="b_content-btn"><i class="fa fa-volume-up"></i> <div class="b_btn-text"> Audio (.mp3)</div></div>
-                    <div id="video" class="b_content-btn"><i class="fa fa-play-circle-o"></i><div class="b_btn-text">Video (.mp4)</div></div>
-                    <div id="photos" class="b_content-btn"><i class="fa fa-picture-o"></i><div class="b_btn-text">Photos (.jpeg)</div></div>
-                </div>
             </div>
         </div>
         <div class="b_dark">
@@ -441,26 +433,7 @@
                     See how it looks. These screenshots show the steps of browsing for a media item and downloading it with a mobile device.
                 </div>
                 <img class="b_screen-shot" src="landing/images/screens.png" alt="Mobile application screenshots"/>
-                <div class="b_source_content__span">
-                    <div class="b_source_content__span__title">
-                        Videos
-                    </div>
-                    See how it looks. These screen shots show the steps of browsing for a media item and downloading it with a mobile device.
-                </div>
-                <div class="b_source_content-left-video b_source_content__span">
-                    <div class="b_source_content__span__title">
-                        Video 1
-                    </div>
-                    <iframe width="471" height="264" src="https://www.youtube.com/embed/8aJWFiNiW-I" frameborder="0" allowfullscreen></iframe>
-                    <div>What you can do with Microsoft Education Delivery: browsing and downloading content, viewing an image or a document, playing an audio file or a video.</div>
-                </div>
-                <div class="b_source_content-left-video b_source_content__span">
-                    <div class="b_source_content__span__title">
-                        Video 2
-                    </div>
-                    <iframe width="471" height="264" src="https://www.youtube.com/embed/8aJWFiNiW-I" frameborder="0" allowfullscreen></iframe>
-                    <div>Including more rarely used features: logging in with test credentials, browsing and searching for content, deleting content from a library, editing settings, removing a user, restoring factory settings.</div>
-                </div>
+
             </div>
         </div>
     </div>
