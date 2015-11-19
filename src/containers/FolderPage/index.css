@@ -63,6 +63,11 @@
 .breadcrumbs li a {
   text-decoration: none;
   color: inherit;
+  text-overflow: ellipsis;
+  max-width: 300px;
+  white-space: nowrap;
+  display: inline-block;
+  overflow: hidden;
 }
 
 .breadcrumbs li a:hover {
