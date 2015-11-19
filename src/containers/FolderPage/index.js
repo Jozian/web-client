@@ -179,10 +179,11 @@ export default class FolderPage extends Component {
       <li><Link to="libraries">Libraries</Link></li>
       {
         path.map((pathEntry) =>
-          (<li>
-            <Link to="folder" key={pathEntry.id} params={{folderId: pathEntry.id}}>
+          (<li className={styles.breadcrumbName}>
+            <Link className={styles.breadcrumbsLink} to="folder" key={pathEntry.id} params={{folderId: pathEntry.id}}>
               {pathEntry.title}
             </Link>
+            <span className={styles.breadcrumbsTooltip}>{pathEntry.title}</span>
           </li>)
         )
       }

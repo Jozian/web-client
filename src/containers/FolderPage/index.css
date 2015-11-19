@@ -52,7 +52,11 @@
 .breadcrumbs {
   list-style: none;
   height: 25px;
-    margin-left: 10px;
+  margin-left: 10px;
+}
+
+.breadcrumbName {
+  position: relative;
 }
 
 .breadcrumbs li {
@@ -77,15 +81,30 @@
 .breadcrumbs li:not(:first-child):before {
   content: '>';
   margin: 0 5px;
-
 }
 
 .folderNameLabel {
-    margin-left: 35px;
+  margin-left: 35px;
 }
 
 .folderNameInput {
-    width: 70%;
+  width: 70%;
+}
+
+.breadcrumbsTooltip {
+  display: none;
+}
+
+.breadcrumbsLink:hover + .breadcrumbsTooltip {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    display: inline-block;
+    border: 1px solid #626262;
+    white-space: nowrap;
+    padding: 5px;
+    background-color: #ffffff;
+    z-index: 300;
 }
 
 .textArea {
