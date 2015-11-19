@@ -122,17 +122,17 @@ export default class SearchBar extends Component {
               <div>
                 {this.props.searchResult.entities.users.map( (item) => {
                   return (
-                    <div className={styles.userItem} onClick={this.userSelected.bind(this, item)}>{item.name}</div>
+                    <div className={styles.userItem} onClick={this.userSelected.bind(this, item)} tabIndex="0">{item.name}</div>
                   );
                 })}
               </div> : 'NO RESULT'}
 
-            <h3 className={styles.headerList}>Media</h3>
+            <h3 className={styles.headerList} tabIndex="0">Media</h3>
             {this.props.searchResult.entities.media.length ?
               <div>
                 {this.props.searchResult.entities.media.map( (item) => {
                   return (<div className={styles.listItem}>
-                    <div onClick={this.mediaSelected.bind(this, item)}>
+                    <div onClick={this.mediaSelected.bind(this, item)} tabIndex="0">
                       <PreviewImage className={styles.image} src={'http://medserver.apps.wookieelabs.com/preview/' + item.id + '.png'} />
                       {item.name}
                     </div>
@@ -140,9 +140,6 @@ export default class SearchBar extends Component {
                 })}
               </div> : 'NO RESULT'}
           </div> : ''}
-
-
-
       </div>
     );
   }
