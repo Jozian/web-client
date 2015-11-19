@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import cx from 'classnames';
+import validator from 'validator';
 
 import Button from 'components/Button';
 import { isUnique } from 'api/users.js';
@@ -225,6 +226,11 @@ export default class EditUserPage extends Component {
 
   }
 
+  isMobilePhoneValidator(number) {
+    const clearString = number.replace(/[^1-9]/, '').length;
+    return !!(clearString > 5 && clearString < 19);
+  }
+
   getUserChange(field) {
     return function (newValue) {
       let message = '';
@@ -240,7 +246,7 @@ export default class EditUserPage extends Component {
         if (!newValue) {
           [message, isValid] = ['wrong format', true];
         } else {
-          [message, isValid] = ['wrong format', validator.isMobilePhone(newValue, 'en-US')];
+          [message, isValid] = ['wrong format', this.isMobilePhoneValidator(newValue)];
         }
       } else if (field === 'name' || field === 'login') {
         [message, isValid] = ['required', validator.isLength(newValue, 1)];
@@ -379,9 +385,10 @@ export default class EditUserPage extends Component {
                 checked={this.state.checked.email}
                 onBlur={::this.onBlur}
                 onCheckboxChange={this.check.bind(this, 'email')}/>
-              </div>
+            </div>
+
             <p className={styles.note}>
-              * user will be able to login both to website and mobile client with this credentials.
+              * user will be able to login both to website and mobile client with these credentials.
             </p>
 
             <footer className={styles.buttonsWrapper}>

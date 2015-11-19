@@ -45,13 +45,8 @@
 
 .leftBlock {
     display: inline-block;
-    width: 40%;
+    width: 80%;
     float:left;
 }
 
-.rightBlock {
-    margin-top: 57px;
-    display: inline-block;
-    width: 40%;
-}
 
