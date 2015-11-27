@@ -67,6 +67,10 @@ input[type="checkbox"] {
     font-size: 16px;
     font-weight: 600;
 }
+
+.b_source_content-list {
+    padding-left: 40px;
+}
 .b_dark, .b_dark .b_source_content {
     background-color: #737373;
 }
@@ -272,7 +276,7 @@ input[type="checkbox"] {
 }
 .b_start-header-menu li a {
     color: #505050;
-    padding: 14px 40px 20px 30px;
+    padding: 14px 30px 20px 30px;
 }
 .b_start-header-menu--selected {
     background-color: #5e8000;
@@ -377,9 +381,9 @@ nav {
 
 .b_source_content__list {
     font-size: 6pt;
-    position: relative;
-    top: -5px;
-    margin-right: 40px;
+    position: absolute;
+    top: 5px;
+    left: 0;
 }
 
 .b_start-header {

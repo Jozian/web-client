@@ -173,7 +173,6 @@ input[type="submit"], a {
     height: 40px;
     background-color: rgba(192, 192, 192, 0.2);
     line-height: 40px;
-    outline: 0 none;
     padding: 0 10px;
     margin: 0 58px 14px 0;
 }

@@ -36,7 +36,7 @@
                 <form id="password-recovery-form" class="side-form" name="passwordRecovery" method="post" >
 
                     <div class="control">
-                        <input type="email" name="email" placeholder="Email" required autocomplete="on"/>
+                        <input type="email" name="email" placeholder="Email" required autocomplete="on" tabindex="1" />
                     </div>
 
                     <div class="b_error_msg b_error_msg--email-incorrect hidden" id="confirm_err">
@@ -44,11 +44,11 @@
                     </div>
 
                     <div class="control">
-                        <input type="submit" value="Send" class="b_reg-btn">
+                        <input type="submit" value="Send" class="b_reg-btn" tabindex="2">
                     </div>
 
                     <div class="control">
-                        <div onClick="closePopup()" class="b_reg-btn b_close-recovery-password">CANCEL</div>
+                        <div onClick="closePopup()" class="b_reg-btn b_close-recovery-password" tabindex="3">CANCEL</div>
                     </div>
                 </form>
             </div>
@@ -66,11 +66,11 @@
                 <form id="reset-password-form" class="side-form" name="passwordRecovery" method="post" >
 
                     <div class="control">
-                        <input type="password" name="password" placeholder="Password" required autocomplete="on"/>
+                        <input type="password" name="password" placeholder="Password" required autocomplete="on" tabindex="1"/>
                     </div>
 
                     <div class="control">
-                        <input type="password" name="confirmPassword" placeholder="Confirm password" required autocomplete="on"/>
+                        <input type="password" name="confirmPassword" placeholder="Confirm password" required autocomplete="on" tabindex="2" />
                     </div>
 
                     <div class="b_error_msg hidden" id="confirm_err">
@@ -78,11 +78,11 @@
                     </div>
 
                     <div class="control">
-                        <input type="submit" value="Send" class="b_reg-btn">
+                        <input type="submit" value="Send" class="b_reg-btn" tabindex="3">
                     </div>
 
                     <div class="control">
-                        <div onClick="closePopup()" class="b_reg-btn b_close-recovery-password">CANCEL</div>
+                        <div onClick="closePopup()" class="b_reg-btn b_close-recovery-password" tabindex="4">CANCEL</div>
                     </div>
                 </form>
             </div>
@@ -98,7 +98,7 @@
                 If you have not received an email please check your Spam folder.
             </div>
 
-            <div class="b-register-popup-button-ok">OK</div>
+            <div onClick="closePopup()" class="b-register-popup-button-ok b_close-recovery-password" tabindex="1">OK</div>
         </div>
     </div>
 </script>
@@ -203,27 +203,27 @@
                 For the Microsoft Education Delivery solution to work, you need:
 
             </div>
-            <div class="b_source_content__span">
+            <div class="b_source_content__span b_source_content-list">
                 <i class="fa fa-circle b_source_content__list"></i>
                 The Microsoft Education Delivery software (free)
 
             </div>
-            <div class="b_source_content__span">
+            <div class="b_source_content__span b_source_content-list">
                 <i class="fa fa-circle b_source_content__list"></i>
                 Microsoft phone(s): the service runs on Windows Phone 8.1
 
             </div>
-            <div class="b_source_content__span">
+            <div class="b_source_content__span b_source_content-list">
                 <i class="fa fa-circle b_source_content__list"></i>
                 TV/projector and cable (if used for collective learning in a class room)
 
             </div>
-            <div class="b_source_content__span">
+            <div class="b_source_content__span b_source_content-list">
                 <i class="fa fa-circle b_source_content__list"></i>
                 Content: educational media files (some materials are available for free)
 
             </div>
-            <div class="b_source_content__span">
+            <div class="b_source_content__span b_source_content-list">
                 <i class="fa fa-circle b_source_content__list"></i>
                 Server: hosted cloud server or own server and server management
 
@@ -354,23 +354,23 @@
                 </div>
                 What's needed:
             </div>
-            <div class="b_source_content__span">
+            <div class="b_source_content__span b_source_content-list">
                 <i class="fa fa-circle b_source_content__list"></i>
                 the Microsoft Education Delivery software and concept provided by Microsoft (free)
             </div>
-            <div class="b_source_content__span">
+            <div class="b_source_content__span b_source_content-list">
                 <i class="fa fa-circle b_source_content__list"></i>
                 technical infrastructure (a mobile phone and a TV)
             </div>
-            <div class="b_source_content__span">
+            <div class="b_source_content__span b_source_content-list">
                 <i class="fa fa-circle b_source_content__list"></i>
                 teacher training (technical and professional development)
             </div>
-            <div class="b_source_content__span">
+            <div class="b_source_content__span b_source_content-list">
                 <i class="fa fa-circle b_source_content__list"></i>
                 multimedia content (educational material)
             </div>
-            <div class="b_source_content__span">
+            <div class="b_source_content__span b_source_content-list">
                 <i class="fa fa-circle b_source_content__list"></i>
                 a public organization like the Ministry of Education and/or a non-profit organization to provide the
                 educational content and training, and to draw these components together and to facilitate the
@@ -784,7 +784,7 @@
                 <input type="submit" value="Login"  class="b_login-btn">
             </div>
             <div class="control">
-                <a class="forgot-pass" id="forgot-pass">FORGOT PASSWORD</a>
+                <a class="forgot-pass" href="" id="forgot-pass">FORGOT PASSWORD</a>
             </div>
 
 

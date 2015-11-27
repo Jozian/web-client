@@ -109,6 +109,7 @@
     }
 
     forgotPassword.addEventListener('click', function (e) {
+      e.preventDefault();
       openModalWindow(forgotPasswordTemplate, bodyElem);
       document.querySelector('.b_error_msg--email-incorrect').classList.add('hidden');
       var forgotPasswordRecovery = document.getElementById('password-recovery-form');
@@ -140,10 +141,6 @@
         },
         complete: function (res) {
           openModalWindow(succesRegistrationTemplate, bodyElem);
-          var buttonOkModal = document.querySelector('.b-register-popup-button-ok');
-          buttonOkModal.addEventListener('click', function (e) {
-            closeModalWindow();
-          });
           event.target.name.value = '';
           event.target.email.value = '';
         },
@@ -197,6 +194,12 @@
       modalDiv.classList.add('b_open-modal-window');
       modalDiv.innerHTML = template;
       body.insertBefore(modalDiv, body.firstChild);
+      tabControl();
+      modalDiv.querySelector('.b_close-recovery-password').addEventListener('keyup', function(e) {
+        if (e.keyCode === 13) {
+          closeModalWindow();
+        }
+      });
     }
 
     function closeModalWindow() {
@@ -205,6 +208,25 @@
     }
 
     window.closePopup = closeModalWindow;
+
+    //tabindex
+    function tabControl() {
+      var tabArray = document.querySelector('.b_open-modal-window').querySelectorAll('*[tabindex]');
+      tabArray[0].focus();
+      document.addEventListener('keydown', function(e) {
+        if (e.keyCode === 9) {
+          var keyShift = e.shiftKey;
+          var currentElem = document.activeElement.getAttribute('tabindex');
+          if (!keyShift && tabArray.length.toString() === currentElem) {
+            tabArray[0].focus();
+            e.preventDefault();
+          } else if (keyShift && currentElem === '1') {
+            e.preventDefault();
+            tabArray[tabArray.length - 1].focus();
+          }
+        }
+      });
+    }
   });
 }());
 
