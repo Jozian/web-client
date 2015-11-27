@@ -23,3 +23,8 @@
     border-color: rgba(0, 0, 0, 0.08);
     color: rgba(0, 0, 0, 0.4);
 }
+
+.spinner {
+    color: #ffffff;
+    margin-left: 15px;
+}
