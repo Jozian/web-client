@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import cx from 'classnames';
 import validator from 'validator';
 
-import Button from 'components/Button';
+import ActionButton from 'components/ActionButton';
 import { isUnique } from 'api/users.js';
 import Dropdown from 'components/Dropdown';
 import FormInput from 'components/Form/FormInput';
@@ -20,9 +20,8 @@ import ActionButtonForModal from 'components/ActionButtonForModal';
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
 
-
 @connect(
-  (state) =>  ({user: state.user.entity, currentUser: state.currentUser }),
+  (state) => ({user: state.user.entity, currentUser: state.currentUser, loading: state.user.loading}),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
@@ -43,6 +42,9 @@ export default class EditUserPage extends Component {
 
   constructor(props) {
     super(props);
+    if (props.currentUser.type !== 'admin') {
+      window.location.href = '/admin/libraries';
+    }
     this.linkState = React.addons.LinkedStateMixin.linkState.bind(this);
     this.state = {
       loading: true,
@@ -107,8 +109,8 @@ export default class EditUserPage extends Component {
 
   async saveUserHandler() {
     const { router } = this.context;
-    let required = ['name', 'login', 'password'];
-    let newState = {
+    const required = ['name', 'login', 'password'];
+    const newState = {
       errors: this.state.errors,
     };
     if (this.props.params.id) {
@@ -173,7 +175,8 @@ export default class EditUserPage extends Component {
       <Dropdown title="Type:"
                 value={this.state.user.type}
                 disabled={this.state.user.type === 'owner'}
-                onChange={(e) => {this.change(e, 'type')}}>
+                onChange={(e) => {this.change(e, 'type')}}
+                role="Select user type">
         {
           (this.types || []).filter((type) => (this.state.user.type === 'owner' || type.value !== 'owner')
           ).map((type) => (<option value={type.value}>{type.label}</option>))
@@ -403,15 +406,18 @@ export default class EditUserPage extends Component {
         </div>
 
         <Footer>
-          <Button className="mdl2-check-mark"
-                  onClick={::this.saveUserHandler}
+          <ActionButton onClick={::this.saveUserHandler}
                   tooltipText="Save user"
+                  inProgress={this.props.loading}
+                  icon="mdl2-check-mark"
+                  role="Save user"
                    />
-          <Button className="mdl2-cancel"
+          <ActionButton icon="mdl2-cancel"
                   onClick={::this.cancelUserHandler}
                   tooltipText="Cancel save user"
+                  role="Cancel save user"
                   />
-      </Footer>
+        </Footer>
       </div>);
   }
 }
