@@ -84,7 +84,7 @@ export default class StatisticsPage extends Component {
             <span className={style.toolbarTitle}>Most downloaded media</span>
           </div>
 
-          {this.props.topViews.length ? '' : <div>No data to display</div> }
+          {this.props.topViews.length ? '' : <div className={style.noDataText}>No data to display</div> }
           <ListView
             className={style.container}
             itemDataSource={this.props.topViews.dataSource}
@@ -99,7 +99,7 @@ export default class StatisticsPage extends Component {
             <span className={style.toolbarTitle}>Most viewed media</span>
           </div>
 
-          {this.props.topDownloads.length ? '' : <div>No data to display</div> }
+          {this.props.topDownloads.length ? '' : <div className={style.noDataText}>No data to display</div> }
           <ListView
             className={style.container}
             itemDataSource={this.props.topDownloads.dataSource}
@@ -111,11 +111,12 @@ export default class StatisticsPage extends Component {
         </div>
         <Footer>
             <ActionButton
-              className="mdl2-download"
+              icon="mdl2-download"
               disabled={!this.props.topDownloads.length && !this.props.topViews.length}
               inProgress={this.props.pendingActions.statisticsExport}
               onClick={this.props.addToExport}
               tooltipText="Export statistics"
+              role="Export statistics"
             >
             </ActionButton>
         </Footer>
