@@ -33,7 +33,7 @@
 }
 
 .rowButton {
-  display: none;
+  display: inline-block;
 }
 
 .rowButton button {
