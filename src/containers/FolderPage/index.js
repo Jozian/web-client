@@ -180,10 +180,12 @@ export default class FolderPage extends Component {
       {
         path.map((pathEntry) =>
           (<li className={styles.breadcrumbName}>
-            <Link className={styles.breadcrumbsLink} to="folder" key={pathEntry.id} params={{folderId: pathEntry.id}}>
-              {pathEntry.title}
-            </Link>
-            <span className={styles.breadcrumbsTooltip}>{pathEntry.title}</span>
+            <span className={styles.spanWrapper}>
+              <Link className={styles.breadcrumbsLink} to="folder" key={pathEntry.id} params={{folderId: pathEntry.id}}>
+                {pathEntry.title}
+              </Link>
+              <span className={styles.breadcrumbsTooltip}>{pathEntry.title}</span>
+            </span>
           </li>)
         )
       }
@@ -243,6 +245,7 @@ export default class FolderPage extends Component {
           className="mdl2-delete"
           onClick={::this.openDeleteFoldersModal}
           tooltipText="Remove element"
+          role="Remove folders"
         >
         </Button>
       </Footer>
@@ -477,7 +480,6 @@ export default class FolderPage extends Component {
         <ActionButtonForModal className={commonStyles.cancelButtonModal}  onClick={::this.hideDeleteFoldersPopup}>Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
-
   }
 
   onChange(field, e) {
