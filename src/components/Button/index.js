@@ -11,6 +11,7 @@ export default class Button extends Component {
     onClick: PropTypes.func,
     className: PropTypes.string,
     tooltipText: PropTypes.string,
+    role: PropTypes.string,
   };
 
   render() {
@@ -21,11 +22,11 @@ export default class Button extends Component {
     });
     return (
       <div className={styles.bottonBody}>
-
         <button type="button"
               className={classes}
               onClick={this.props.onClick}
-              disabled={disabled}>
+              disabled={disabled}
+              role={this.props.role}>
               {this.props.children}
               {this.props.text}
         </button>

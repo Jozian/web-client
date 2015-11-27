@@ -318,10 +318,11 @@ export default class CommentDetails extends Component {
           onClick={::this.deleteComments}
           disabled={!this.state.selectionComments.length}
           inProgress={this.props.pendingActions.deleteComments}
+          role="Delete comment"
           >
           Ok
         </ActionButtonForModal>
-        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteCommentsPopup}>Cancel</ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteCommentsPopup} role="Cancel delete libraries">Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
   }

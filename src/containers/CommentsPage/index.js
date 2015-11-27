@@ -140,11 +140,12 @@ export default class CommentsPage extends Component {
 
         <Footer>
             <ActionButton
-              className="mdl2-download"
+              icon="mdl2-download"
               disabled={!this.props.media.entities.length}
               inProgress={this.props.pendingActions.commentsExport}
               onClick={this.props.exportComments}
               tooltipText="Export commentaries"
+              role="Export commenties libraries"
             >
             </ActionButton>
         </Footer>

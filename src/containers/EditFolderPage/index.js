@@ -111,6 +111,7 @@ export default class EditFolderPage extends Component {
               className="mdl2-check-mark"
               onClick={::this.saveNewName}
               tooltipText="Save new name"
+              role="Save new name"
               >
             </Button>
             <Button
@@ -118,6 +119,7 @@ export default class EditFolderPage extends Component {
               className="mdl2-cancel"
               onClick={::this.cancelSave}
               tooltipText="Cancel editing"
+              role="Cancel editing folder"
               >
             </Button>
           </Footer>

@@ -43,12 +43,14 @@ export default class App extends Component {
         <ActionButtonForModal
           className={commonStyles.saveButtonModal}
           onClick={::this.reloadPage}
+          role="Reload page"
           >
           Reload
         </ActionButtonForModal>
         <ActionButtonForModal
           className={commonStyles.cancelButtonModal}
           onClick={this.props.logoutUser}
+          role="Logging out"
           >
           Logging out
         </ActionButtonForModal>
@@ -62,7 +64,7 @@ export default class App extends Component {
 
       <ToastManager />
 
-      <NavBar userType={this.props.user.type} username={this.props.user.name} logout={this.props.logoutUser} />
+      <NavBar userType={this.props.user.type} username={this.props.user.name} logout={this.props.logoutUser} role="Logout button" />
       <section className={styles.contenthost}>
         <div className={styles.topLine}>
           <div className={styles.redLine}></div>

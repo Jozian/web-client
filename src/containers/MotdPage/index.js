@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import styles from './style.css';
 import Header from 'components/Header';
-import ActionButton from 'components/ActionButton';
 import * as actions from 'actions/motd.js';
 import loading from 'decorators/loading';
 
@@ -70,7 +69,8 @@ export default class StatisticsPage extends Component {
                       autoFocus
                       onChange={ (e) => { this.setState({ motd: e.target.value }); }}
                       placeholder="max. 230 characters"
-                      className={styles.textArea}>
+                      className={styles.textArea}
+                      role="Field for message of the day">
             </textarea>
           </div>
 
@@ -80,6 +80,7 @@ export default class StatisticsPage extends Component {
                 className={styles.buttonGreen}
                 disabled={isButtonDisabled}
                 onClick={::this.clickHandler}
+                role="Save message of the day"
               >Apply</button>
 
             </div>
