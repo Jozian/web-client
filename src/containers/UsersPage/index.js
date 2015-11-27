@@ -42,6 +42,9 @@ export default class UsersPage extends Component {
 
   constructor(props) {
     super(props);
+    if (props.currentUser.type !== 'admin') {
+      window.location.href = '/admin/libraries';
+    }
     props.loadUsers();
     this.state = {
       loading: true,
@@ -57,7 +60,7 @@ export default class UsersPage extends Component {
     }
 
     props.users.entities.map(u => {
-      if (u.type === 'owner') {
+      if (u.id === this.props.currentUser.id) {
         u.unselectable = true;
       }
       return u;
@@ -167,6 +170,12 @@ export default class UsersPage extends Component {
     });
   }
 
+  onUploadFile(e) {
+    if (e.keyCode.toString() === '13') {
+      React.findDOMNode(this.refs.fileInput).click();
+    }
+  }
+
   usersTemplateLoading() {
     this.props.loadTemplateImport();
   }
@@ -183,10 +192,11 @@ export default class UsersPage extends Component {
           onClick={::this.deleteUsers}
           disabled={!this.state.selectedUsers.length}
           inProgress={this.props.pendingActions.deleteUsers}
+          role="Delete libraries"
         >
           Ok
         </ActionButtonForModal>
-        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteUsersPopup}>Cancel</ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteUsersPopup} role="Cancel delete libraries">Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
   }
@@ -200,8 +210,8 @@ export default class UsersPage extends Component {
       <div className={styles.formWrapper}>
         <form onSubmit={::this.uploadFile} method="post" encType="multipart/form-data">
           <div className={styles.wrapLabel}>
-            <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} />
-            <div className={styles.importContainer} type="button">Upload file</div>
+            <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} ref="fileInput" />
+            <div className={styles.importContainer} tabIndex="0" onKeyDown={::this.onUploadFile}>Upload file</div>
             <a className={styles.importContainer} href={`${baseUrl}/api/userManagement/getImportFile?token=${this.props.currentUser.token}`}>Download template</a>
           </div>
           <div className={styles.importLabel} >File: <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span></div>
@@ -214,10 +224,11 @@ export default class UsersPage extends Component {
           onClick={::this.uploadFile}
           disabled={!this.state.selectedFileName.length}
           inProgress={this.props.pendingActions.uploadUsers}
+          role="Upload csv file for users import"
           >
           Ok
         </ActionButtonForModal>
-        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideImportUsersPopup}>Cancel</ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideImportUsersPopup} role="Close modal window">Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
   }
