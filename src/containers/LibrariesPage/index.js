@@ -118,13 +118,75 @@ class LibrariesPage extends Component {
     this.setState({isInviteUsersPopupOpen: false});
   }
 
+  renderEditLibrary(_, rowData) {
+    return (<button
+      className={cx(styles.editButton, 'mdl2-edit')}
+      tabIndex="0"
+      onClick={this.onJumpButtonClick.bind(this, rowData)}
+      ></button>);
+  }
+
+  onJumpButtonClick(rowData, e) {
+    e.stopPropagation();
+    this.setState({
+      editLibrary: {
+        id: rowData.id,
+        name: rowData.name,
+      },
+    });
+  }
+
+  renderName(_, rowData) {
+    if (!this.state.editLibrary || this.state.editLibrary.id !== rowData.id) {
+      return rowData.name;
+    } else {
+      return (
+        <div onClick={ (e) => e.stopPropagation() }>
+          <input type="text" value={this.state.editLibrary.name} role={`Edit library name ${rowData.name}`} autoFocus
+                 onChange={::this.onChangeLibraryName}/>
+          <Button
+            onClick={this.sendNewLibraryName.bind(this, rowData)}
+            >OK</Button>
+          <Button
+            onClick={::this.hideLibraryEdit}
+            >Cancel</Button>
+        </div>
+      );
+    }
+  }
+
+  onChangeLibraryName(e) {
+    this.setState({
+      editLibrary: {
+        id: this.state.editLibrary.id,
+        name: e.target.value,
+      },
+    });
+  }
+
+  async sendNewLibraryName(rowData) {
+    await this.props.renameLibrary({id: rowData.id, name: this.state.editLibrary.name });
+    this.props.loadLibraries();
+    this.hideLibraryEdit();
+  }
+
+  hideLibraryEdit() {
+    this.setState({
+      editLibrary: undefined,
+    });
+  }
+
   config = {
     columns: [
       {
         key: 'name',
         text: 'Select all',
-      },
-      {
+        renderer: ::this.renderName,
+      }, {
+        key: 'button',
+        renderer: ::this.renderEditLibrary,
+        className: styles.buttonEditLib,
+      }, {
         key: 'folder',
         text: 'Folder',
         className: commonStyles.numberCell,

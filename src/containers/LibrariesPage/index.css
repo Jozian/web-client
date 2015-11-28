@@ -33,3 +33,22 @@
   position: relative;
   top: 8px;
 }
+
+.buttonEditLib {
+  width: 30px;
+}
+
+.editButton {
+  display: inline-block;
+  color: #c1c1c1;
+  border: 0;
+  background-color: #ffffff;
+  width: 40px;
+  height:40px;
+  padding: 3px;
+}
+
+.editButton:focus, .editButton:hover {
+  color: #ffffff;
+  background-color: #6ab01c;
+}
