@@ -40,3 +40,13 @@ export function inviteUsers(body) {
     },
   };
 }
+
+export function renameLibrary(libraryData) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.LIBRARY_RENAMING, types.LIBRARY_RENAMED, types.LiBRARY_RENAME_ERROR],
+      promise: librariesApi.renameLibrary(libraryData),
+    },
+  };
+}

@@ -16,6 +16,10 @@ export const MEDIA_LIST_LOADING = 'Loading media list';
 export const MEDIA_LIST_LOADED = 'Media list loaded';
 export const MEDIA_LIST_LOAD_ERROR = 'Error loading media list';
 
+export const LIBRARY_RENAMING = 'Renaming library';
+export const LIBRARY_RENAMED = 'Renamed library';
+export const LiBRARY_RENAME_ERROR = 'Renamed library error';
+
 export const FOLDER_LOADING = 'Loading folder';
 export const FOLDER_LOADED = 'Folder loaded';
 export const FOLDER_LOAD_ERROR = 'Error loading folder';
