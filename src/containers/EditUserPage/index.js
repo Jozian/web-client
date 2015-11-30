@@ -8,16 +8,19 @@ import Dropdown from 'components/Dropdown';
 import FormInput from 'components/Form/FormInput';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
-import FormInputWithCheckbox from 'components/Form/FormInputWithCheckbox';
 import * as actions from 'actions/users.js';
 import loading from 'decorators/loading';
 import validator from 'validator';
 import Footer from 'components/Footer';
+import WhiteFooter from 'components/WhiteFooter';
+import Modal from 'components/Modal';
+import ActionButtonForModal from 'components/ActionButtonForModal';
 
 import styles from './index.css';
+import commonStyles from 'common/styles.css';
 
 @connect(
-  (state) =>  ({user: state.user.entity}),
+  (state) =>  ({user: state.user.entity, currentUser: state.currentUser }),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
@@ -123,8 +126,17 @@ export default class EditUserPage extends Component {
     }, this).value();
     if (!errorsSave.length) {
       if (this.props.params.id) {
-        await this.props.editUser(this.props.params.id, this.state.user);
-        router.transitionTo('users');
+        if (this.props.params.id === this.props.currentUser.id.toString() && this.state.user.type !== 'admin') {
+          let isAdminResult = await this.props.isLastAdmin();
+          if (isAdminResult.payload) {
+            this.setState({
+              isOpenLastAdminModal: true,
+            });
+          } else {
+            await this.props.editUser(this.props.params.id, this.state.user);
+            router.transitionTo('users');
+          }
+        }
       } else {
         await this.props.addUser(this.state.user);
         router.transitionTo('users');
@@ -245,9 +257,33 @@ export default class EditUserPage extends Component {
     });
   }
 
+  hideLastAdminPopup() {
+    this.setState({
+      isOpenLastAdminModal: false,
+    });
+  }
+
+  renderLastAdminModal() {
+    return (<Modal
+      isOpen={this.state.isOpenLastAdminModal}
+      title="This is the last account with Admin role. The role can not be changed since the control over instance will be lost."
+      className={styles.newLibraryModal}
+      >
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
+          onClick={::this.hideLastAdminPopup}
+          >
+          Ok
+        </ActionButtonForModal>
+      </WhiteFooter>
+    </Modal>);
+  }
+
   render() {
       return (
         <div className={styles.mainContainer}>
+          { this.renderLastAdminModal() }
           <Header>Add user</Header>
           <div className={styles.wrapper}>
             <form className={styles.backgroundWhite}>
