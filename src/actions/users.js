@@ -65,6 +65,15 @@ export function uploadUsers(formData) {
     },
   };
 }
+export function isLastAdmin() {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.USER_IS_LAST_ADMIN_LOADING, types.USER_IS_LAST_ADMIN_LOADED, types.USER_IS_LAST_ADMIN_ERROR],
+      promise: usersApi.isLastAdmin(),
+    },
+  };
+}
 
 export function loadTemplateImport() {
   return {
