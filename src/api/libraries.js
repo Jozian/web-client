@@ -2,7 +2,6 @@ import fetch from './helper';
 
 const apiUrl = '/api/libraries';
 const inviteUsersUrl = '/api/contentActions/inviteUsers';
-const librariesManagement = '/api/librariesManagement';
 
 export function getLibrariesList() {
   return fetch(apiUrl);
@@ -57,7 +56,7 @@ export function renameLibrary(body) {
     return Promise.reject('Invalid data');
   }
 
-  return fetch(librariesManagement + '/changeLibraryName', {
+  return fetch(apiUrl + '/changeLibraryName', {
     method: 'post',
     body: JSON.stringify(body),
   });
