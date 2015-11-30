@@ -99,3 +99,10 @@ export function loadUserTemplate() {
     saveAs(blob, 'medComments'  + new Date() + '.xlsx');
   });
 }
+
+export function isLastAdmin() {
+  return fetch(userManagementUrl + '/isLastAdmin', {
+    method:'post',
+  });
+}
+
