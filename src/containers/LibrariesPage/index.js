@@ -49,6 +49,7 @@ class LibrariesPage extends Component {
     this.state = {
       selectedLibraries: [],
       newLibraryName: '',
+      invitedUsers: [],
     };
     props.loadLibraries();
     props.loadUsers();
@@ -334,6 +335,7 @@ class LibrariesPage extends Component {
             className={commonStyles.saveButtonModal}
             onClick={::this.inviteUsers}
             inProgress={this.props.pendingActions.inviteUsers}
+            disabled={!this.state.invitedUsers.length}
             >
             Invite
           </ActionButtonForModal>
