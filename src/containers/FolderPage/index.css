@@ -59,6 +59,11 @@
   position: relative;
 }
 
+.breadcrumbName:before {
+  position: relative;
+  top: -3px;
+}
+
 .breadcrumbs li {
   display: inline;
   color: grey;
