@@ -115,7 +115,6 @@ export default class EditFolderPage extends Component {
               >
             </Button>
             <Button
-              disabled={!this.state.folder.name.length}
               className="mdl2-cancel"
               onClick={::this.cancelSave}
               tooltipText="Cancel editing"
