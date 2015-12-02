@@ -6,7 +6,9 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
   devtool: isProduction ? 'eval' : 'inline-source-maps',
-  entry: [
+  entry: isProduction ? [
+    './src/index',
+  ] : [
     './src/index',
     'webpack-hot-middleware/client',
   ],
