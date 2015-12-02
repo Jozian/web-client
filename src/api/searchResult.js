@@ -1,6 +1,6 @@
 import fetch from './helper';
 
-const apiUrl = '/api/searchManagement/search';
+const apiUrl = '/api/search';
 
 export function getSearchResult(searchString) {
   if (!searchString || typeof searchString !== 'string') {

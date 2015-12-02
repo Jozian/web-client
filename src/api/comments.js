@@ -2,7 +2,6 @@ import fetch from './helper';
 import {saveAs} from 'browser-filesaver';
 
 const apiUrl = '/api/comments';
-const exportUrl = '/api/commentsManagement/commentsExport';
 
 export function getList(mediaId) {
   if (!mediaId || typeof mediaId  !== 'string') {
@@ -13,7 +12,7 @@ export function getList(mediaId) {
 }
 
 export function exportComments() {
-  return fetch(exportUrl, {
+  return fetch(apiUrl + '/commentsExport', {
     responseType: 'arraybuffer',
   }).then((result) => {
     const blob = new Blob([result], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});

@@ -3,7 +3,6 @@ import {saveAs} from 'browser-filesaver';
 
 const apiUrl = '/api/users';
 const isUniqueUrl = '/api/userManagement/isUnique';
-const userManagementUrl = '/api/userManagement';
 
 export function getList() {
   return fetch(apiUrl);
@@ -67,7 +66,7 @@ export function uploadFile(body) {
     return Promise.reject('Invalid body');
   }
 
-  return fetch(userManagementUrl + '/userImport', {
+  return fetch(apiUrl + '/userImport', {
     method: 'post',
     body: body,
     responseType: 'text',
@@ -92,7 +91,7 @@ export function dontAskUser() {
 }
 
 export function loadUserTemplate() {
-  return fetch(userManagementUrl + '/getImportFile', {
+  return fetch(apiUrl + '/getImportFile', {
     method: 'get',
     responseType: 'arraybuffer',
   }).then((result) => {
