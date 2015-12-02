@@ -83,6 +83,7 @@ export default class UsersPage extends Component {
   }
 
   onListSelectionChange(selectedUsers) {
+    selectedUsers = selectedUsers.filter(u => u.id !== this.props.currentUser.id);
     this.setState({ selectedUsers });
   }
   onDelKeyDown(e) {
@@ -150,9 +151,10 @@ export default class UsersPage extends Component {
   }
 
   async deleteUsers() {
-    await this.props.deleteUsers(this.state.selectedUsers.filter(u => u.type !== 'owner').map(u => u.id));
+    await this.props.deleteUsers(this.state.selectedUsers.filter(u => u.id !== this.props.currentUser.id).map(u => u.id));
     this.props.loadUsers();
   }
+
   async uploadFile(e) {
     e.preventDefault();
     if (this.props.pendingActions.uploadUsers) {
@@ -192,11 +194,10 @@ export default class UsersPage extends Component {
           onClick={::this.deleteUsers}
           disabled={!this.state.selectedUsers.length}
           inProgress={this.props.pendingActions.deleteUsers}
-          role="Delete libraries"
         >
           Ok
         </ActionButtonForModal>
-        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteUsersPopup} role="Cancel delete libraries">Cancel</ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteUsersPopup}>Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
   }
@@ -224,11 +225,10 @@ export default class UsersPage extends Component {
           onClick={::this.uploadFile}
           disabled={!this.state.selectedFileName.length}
           inProgress={this.props.pendingActions.uploadUsers}
-          role="Upload csv file for users import"
           >
           Ok
         </ActionButtonForModal>
-        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideImportUsersPopup} role="Close modal window">Cancel</ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideImportUsersPopup}>Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
   }
