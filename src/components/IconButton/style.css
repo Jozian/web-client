@@ -30,5 +30,9 @@
   cursor: pointer;
 }
 .iconButton button :global .fa{
-    line-height: 35px;
+  line-height: 35px;
+}
+
+.hiddenSpan {
+  font-size: 0;
 }

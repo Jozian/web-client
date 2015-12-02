@@ -11,7 +11,7 @@ export default class IconButton extends Component {
     tooltipText: React.PropTypes.string,
     onClick: React.PropTypes.func,
     className: React.PropTypes.string,
-  }
+  };
 
 
   constructor(props) {
@@ -55,7 +55,9 @@ export default class IconButton extends Component {
           onBlur={::this.hideTooltip}
           className={styles.btn}
         >
+          <span className={styles.hiddenSpan}>{this.props.tooltipText}</span>
           <i className={this.props.icon}></i>
+
         </button>
         { tooltip }
       </div>
