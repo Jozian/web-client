@@ -245,7 +245,6 @@ export default class FolderPage extends Component {
           className="mdl2-delete"
           onClick={::this.openDeleteFoldersModal}
           tooltipText="Remove element"
-          role="Remove folders"
         >
         </Button>
       </Footer>

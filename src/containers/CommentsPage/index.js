@@ -57,7 +57,8 @@ export default class CommentsPage extends Component {
     });
   }
 
-  onJumpButtonClick(rowData) {
+  onJumpButtonClick(rowData, e) {
+    e.stopPropagation();
     if (!rowData.FolderId) {
       rowData.FolderId = rowData.LibraryId;
     }
@@ -122,6 +123,7 @@ export default class CommentsPage extends Component {
       className={styles.rowButton}
       icon="fa fa-search"
       onClick={this.onJumpButtonClick.bind(this, rowData)}
+      tooltipText={`Show library ${rowData.name}`}
     />);
   }
 
@@ -145,7 +147,6 @@ export default class CommentsPage extends Component {
               inProgress={this.props.pendingActions.commentsExport}
               onClick={this.props.exportComments}
               tooltipText="Export commentaries"
-              role="Export commenties libraries"
             >
             </ActionButton>
         </Footer>

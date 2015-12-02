@@ -58,6 +58,7 @@
     border-color: #78c623;
     width: 100%;
     height: 40px;
+    cursor: pointer;
 }
 
 .buttonGreen:disabled {

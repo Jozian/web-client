@@ -254,7 +254,6 @@ export default class CommentDetails extends Component {
             autoFocus
             value={this.state.newCommentText}
             onChange={::this.onCommentTextInputChange}
-            role="Text for new comment"
             />
         </label>
       </form>
@@ -264,11 +263,10 @@ export default class CommentDetails extends Component {
           onClick={::this.createNewComment}
           disabled={!this.state.newCommentText.length}
           inProgress={this.props.pendingActions.newComment}
-          role="OK button"
           >
           Send
         </ActionButtonForModal>
-        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideNewCommentPopup} role="Cancel button">Cancel</ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideNewCommentPopup}>Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
   }
@@ -289,7 +287,6 @@ export default class CommentDetails extends Component {
             autoFocus
             value={this.state.newCommentText}
             onChange={::this.onCommentTextInputChange}
-            role="Text for edit comment"
             />
         </label>
       </form>
@@ -298,11 +295,10 @@ export default class CommentDetails extends Component {
           className={commonStyles.saveButtonModal}
           onClick={::this.editComment}
           disabled={!this.state.newCommentText.length}
-          inProgress={this.props.pendingActions.newComment}
-          role="OK button">
+          inProgress={this.props.pendingActions.newComment}>
           Send
         </ActionButtonForModal>
-        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideEditCommentPopup} role="Cancel button">Cancel</ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideEditCommentPopup}>Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
   }
@@ -318,11 +314,10 @@ export default class CommentDetails extends Component {
           onClick={::this.deleteComments}
           disabled={!this.state.selectionComments.length}
           inProgress={this.props.pendingActions.deleteComments}
-          role="Delete comment"
           >
           Ok
         </ActionButtonForModal>
-        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteCommentsPopup} role="Cancel delete libraries">Cancel</ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideDeleteCommentsPopup}>Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
   }
@@ -358,8 +353,8 @@ export default class CommentDetails extends Component {
         <div className={style.commentsContent}>
 
           <div className={style.toolbar}>
-            <span className={style.title} role={ `Commentaries for media ${this.props.params.mediaName} `}>Commentaries</span>
-            <div className={style.toolbarBtn} onClick={::this.replyAll} onKeyUp={::this.replyAllEnter}  role="Replay all" >REPLY ALL</div>
+            <span className={style.title}>Commentaries</span>
+            <div className={style.toolbarBtn} onClick={::this.replyAll} onKeyUp={::this.replyAllEnter}>REPLY ALL</div>
           </div>
             <ListView
                 ref="folder"
@@ -377,7 +372,6 @@ export default class CommentDetails extends Component {
             disabled={this.state.selectionComments.length === 0}
             onClick={::this.showDeleteCommentsPopup}
             className="mdl2-delete"
-            role="Delete button"
             tooltipText="Delete comments">
           </ActionButton>
         </Footer>

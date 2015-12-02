@@ -175,8 +175,7 @@ export default class EditUserPage extends Component {
       <Dropdown title="Type:"
                 value={this.state.user.type}
                 disabled={this.state.user.type === 'owner'}
-                onChange={(e) => {this.change(e, 'type')}}
-                role="Select user type">
+                onChange={(e) => {this.change(e, 'type')}}>
         {
           (this.types || []).filter((type) => (this.state.user.type === 'owner' || type.value !== 'owner')
           ).map((type) => (<option value={type.value}>{type.label}</option>))
@@ -410,12 +409,10 @@ export default class EditUserPage extends Component {
                   tooltipText="Save user"
                   inProgress={this.props.loading}
                   icon="mdl2-check-mark"
-                  role="Save user"
                    />
           <ActionButton icon="mdl2-cancel"
                   onClick={::this.cancelUserHandler}
                   tooltipText="Cancel save user"
-                  role="Cancel save user"
                   />
         </Footer>
       </div>);

@@ -116,7 +116,6 @@ export default class StatisticsPage extends Component {
               inProgress={this.props.pendingActions.statisticsExport}
               onClick={this.props.addToExport}
               tooltipText="Export statistics"
-              role="Export statistics"
             >
             </ActionButton>
         </Footer>

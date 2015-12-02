@@ -9,8 +9,7 @@ export default class ActionButtonForModal extends Component {
     inProgress: React.PropTypes.bool,
     disabled: React.PropTypes.bool,
     children: React.PropTypes.node,
-    role: React.PropTypes.string,
-  }
+  };
 
   static defaultProps = {
     disabled: false,
@@ -20,7 +19,7 @@ export default class ActionButtonForModal extends Component {
     const disabled = this.props.disabled || this.props.inProgress;
     const className = this.props.inProgress ? 'fa fa-spin fa-cog' : '';
     return (
-      <Button {...this.props} disabled={disabled} role={this.props.role}>
+      <Button {...this.props} disabled={disabled} role="button">
         {this.props.children}
         <div className={cx(className, styles.spinner)}></div>
       </Button>

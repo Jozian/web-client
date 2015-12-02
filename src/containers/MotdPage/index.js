@@ -69,8 +69,7 @@ export default class StatisticsPage extends Component {
                       autoFocus
                       onChange={ (e) => { this.setState({ motd: e.target.value }); }}
                       placeholder="max. 230 characters"
-                      className={styles.textArea}
-                      role="Field for message of the day">
+                      className={styles.textArea}>
             </textarea>
           </div>
 
@@ -80,7 +79,6 @@ export default class StatisticsPage extends Component {
                 className={styles.buttonGreen}
                 disabled={isButtonDisabled}
                 onClick={::this.clickHandler}
-                role="Save message of the day"
               >Apply</button>
 
             </div>

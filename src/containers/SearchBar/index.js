@@ -117,22 +117,22 @@ export default class SearchBar extends Component {
 
         {this.state.showSearchList ?
           <div className={cx(styles.list, 'searchList')}>
-            <h3 className={styles.headerList}>Users</h3>
+            <h3 className={styles.headerList} role="listbox">Users</h3>
             {this.props.searchResult.entities.users.length ?
               <div>
                 {this.props.searchResult.entities.users.map( (item) => {
                   return (
-                    <div className={styles.userItem} onClick={this.userSelected.bind(this, item)} tabIndex="0">{item.name}</div>
+                    <div className={styles.userItem} onClick={this.userSelected.bind(this, item)} tabIndex="0" role="listitem">{item.name}</div>
                   );
                 })}
               </div> : 'NO RESULT'}
 
-            <h3 className={styles.headerList} tabIndex="0">Media</h3>
+            <h3 className={styles.headerList} role="listbox">Media</h3>
             {this.props.searchResult.entities.media.length ?
               <div>
                 {this.props.searchResult.entities.media.map( (item) => {
                   return (<div className={styles.listItem}>
-                    <div onClick={this.mediaSelected.bind(this, item)} tabIndex="0">
+                    <div onClick={this.mediaSelected.bind(this, item)} tabIndex="0" role="listitem">
                       <PreviewImage className={styles.image} src={'http://medserver.apps.wookieelabs.com/preview/' + item.id + '.png'} />
                       {item.name}
                     </div>

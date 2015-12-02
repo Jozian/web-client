@@ -100,7 +100,6 @@ export default class EditFolderPage extends Component {
               placeholder="i.e. English"
               value={this.state.folder.name}
               onChange={::this.onFolderNameInputChange}
-              role="Name for new folder"
               className={styles.folderNameInput}
               />
           </label>
@@ -111,14 +110,12 @@ export default class EditFolderPage extends Component {
               className="mdl2-check-mark"
               onClick={::this.saveNewName}
               tooltipText="Save new name"
-              role="Save new name"
               >
             </Button>
             <Button
               className="mdl2-cancel"
               onClick={::this.cancelSave}
               tooltipText="Cancel editing"
-              role="Cancel editing folder"
               >
             </Button>
           </Footer>
