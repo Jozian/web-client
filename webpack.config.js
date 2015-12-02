@@ -8,6 +8,7 @@ module.exports = {
   devtool: isProduction ? 'eval' : 'inline-source-maps',
   entry: [
     './src/index',
+    'webpack-hot-middleware/client',
   ],
   output: {
     path: path.join(__dirname, 'static'),
@@ -16,6 +17,9 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('styles.css', {publicPath: '/static/'}),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
   ],
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -38,5 +42,4 @@ module.exports = {
       loader: "file-loader",
     }],
   },
-
 };
