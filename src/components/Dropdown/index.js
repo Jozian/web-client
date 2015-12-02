@@ -4,11 +4,10 @@ import fontAwesome from 'font-awesome-webpack'; // eslint-disable-line no-unused
 
 export default class Dropdown extends Component {
     static propTypes = {
-        title: PropTypes.string,
-        onChange: PropTypes.func,
-        disabled: PropTypes.bool,
-        value: PropTypes.string,
-        role: PropTypes.string,
+      title: PropTypes.string,
+      onChange: PropTypes.func,
+      disabled: PropTypes.bool,
+      value: PropTypes.string,
     };
 
     render() {
@@ -19,7 +18,7 @@ export default class Dropdown extends Component {
                         disabled={this.props.disabled}
                         value={this.props.value}
                         onChange={this.props.onChange}
-                        role={this.props.role}
+                        role="listbox"
                         required>
                     {this.props.children}
                 </select>
