@@ -6,7 +6,7 @@
     display: none;
     font-size: 12px;
 }
-.button:hover + .tooltip {
+.button:hover + .tooltip, .button:focus + .tooltip {
     position: absolute;
     top: -20px;
     display: inline-block;
@@ -35,7 +35,11 @@
 }
 
 .button:disabled {
-    background-color: #6ab01c;
-    border-color: rgba(0, 0, 0, 0.08);
-    color: rgba(0, 0, 0, 0.4);
+  background-color: #6ab01c;
+  border-color: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.button .hideText {
+    font-size:0;
 }
