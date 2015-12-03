@@ -290,14 +290,14 @@ class LibrariesPage extends Component {
       className={styles.newLibraryModal}
       >
       <form onSubmit={::this.createNewLibrary}>
-        <label className>
+        <label>
           Name:
           <input
             type="text"
             placeholder="i.e. English"
-            autoFocus
             value={this.state.newLibraryName}
             onChange={::this.onLibraryNameInputChange}
+            autoFocus
             />
         </label>
       </form>

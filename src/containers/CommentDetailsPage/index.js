@@ -254,7 +254,7 @@ export default class CommentDetails extends Component {
             autoFocus
             value={this.state.newCommentText}
             onChange={::this.onCommentTextInputChange}
-            />
+            ></textarea>
         </label>
       </form>
       <WhiteFooter>
@@ -278,7 +278,7 @@ export default class CommentDetails extends Component {
       className={style.commentModal}
       >
       <form onSubmit={::this.editComment}>
-        <label >
+        <label>
           <div className={style.labelName}>Message:</div>
           <textarea
             className={style.textArea}
@@ -287,7 +287,7 @@ export default class CommentDetails extends Component {
             autoFocus
             value={this.state.newCommentText}
             onChange={::this.onCommentTextInputChange}
-            />
+            ></textarea>
         </label>
       </form>
       <WhiteFooter>

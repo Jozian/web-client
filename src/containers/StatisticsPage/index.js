@@ -3,6 +3,7 @@ import React, { Component } from 'react/addons';
 import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import cx from 'classname';
 
 import * as actions from 'actions/statistics.js';
 import Header from 'components/Header';
@@ -72,26 +73,34 @@ export default class StatisticsPage extends Component {
         />
         <div className={style.name}>{item.data.text}</div>
       </div>);
-  })
+  });
 
   render() {
+    const mostViewedClass = cx({
+      [style.container]: true,
+      [style.hiddenList]: this.props.topViews.length,
+    });
+
+    const mostDownloadedClass = cx({
+      [style.container]: true,
+      [style.hiddenList]: this.props.topDownloads.length,
+    });
     return (
       <div>
         <Header>Statistics</Header>
         <div style={{height: '100%'}}>
         <div className={style.listContainer}>
-          <div className={style.toolbar} id="downloaded">
+          <div className={style.toolbar} id="viewed">
             <span className={style.toolbarTitle}>Most downloaded media</span>
           </div>
 
           {this.props.topViews.length ? '' : <div className={style.noDataText}>No data to display</div> }
           <ListView
-            className={style.container}
+            className={mostViewedClass}
             itemDataSource={this.props.topViews.dataSource}
             itemTemplate={this.listViewItemRenderer}
             onItemInvoked={::this.handleItemSelected}
             layout={ {type: WinJS.UI.ListLayout} }
-            tabIndex={this.props.topViews.length ? '0' : '-1' }
           />
         </div>
         <div className={style.listContainer}>
@@ -101,12 +110,11 @@ export default class StatisticsPage extends Component {
 
           {this.props.topDownloads.length ? '' : <div className={style.noDataText}>No data to display</div> }
           <ListView
-            className={style.container}
+            className={mostDownloadedClass}
             itemDataSource={this.props.topDownloads.dataSource}
             itemTemplate={this.listViewItemRenderer}
             onItemInvoked={::this.handleItemSelected}
             layout={listLayout}
-            tabIndex={this.props.topDownloads.length ? '0' : '-1' }
           />
         </div>
         <Footer>

@@ -69,3 +69,7 @@
     position: relative;
     top: 3px;
 }
+
+.hiddenList {
+    opacity: 0 !important;
+}
