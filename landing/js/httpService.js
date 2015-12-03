@@ -11,7 +11,7 @@ window.sendRequest = (function() {
         xmlhttp = false;
       }
     }
-    if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+    if (!xmlhttp && typeof XMLHttpRequest !== 'undefined') {
       xmlhttp = new XMLHttpRequest();
     }
     return xmlhttp;
@@ -24,8 +24,9 @@ window.sendRequest = (function() {
     xmlhttp.setRequestHeader('Content-Type', 'application/json');
 
     xmlhttp.onreadystatechange = function () {
-      if (xmlhttp.readyState == 4) {
-        if (xmlhttp.status == 200 || xmlhttp.status == 201) {
+      if (xmlhttp.readyState === 4) {
+        if (xmlhttp.status >= 200 && xmlhttp.status < 300) {
+
           requestData.complete(xmlhttp.response);
         } else {
           requestData.error(xmlhttp);
