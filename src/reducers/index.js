@@ -7,7 +7,7 @@ import editUser from './editUser';
 import activeFolderReducer from './activeFolder';
 
 import activeCommentDetailReducer from './activeCommentDetail';
-import activeSearchResultReducer from './activeSerachResult';
+import activeSearchResultReducer from './activeSearchResult';
 
 export const pendingToasts = toastReducer;
 export const activeFolder = activeFolderReducer;
