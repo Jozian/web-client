@@ -162,6 +162,10 @@ input[type="submit"], a {
     text-transform: uppercase;
 }
 
+.hidden-form-label {
+    font-size: 0;
+}
+
 .box h1 {
     color: #696969;
     display: block;
