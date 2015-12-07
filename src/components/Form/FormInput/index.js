@@ -14,15 +14,16 @@ export default class FormInput extends Component {
     placeholder: React.PropTypes.string,
     type: React.PropTypes.string,
     errorMessage: React.PropTypes.string,
+    onChange: React.PropTypes.func,
   };
 
   render() {
     const classes = cx({
       [styles.editInput]: true,
-      [styles.error]: this.props.errorMessage.length !== 0,
+      [styles.error]: this.props.errorMessage && this.props.errorMessage.length !== 0,
     });
     const ErrorMessage = (() => {
-      if (this.props.errorMessage.length !== 0) {
+      if (this.props.errorMessage && this.props.errorMessage.length !== 0) {
         return <span className={styles.errorMessage}>{this.props.errorMessage}</span>;
       }
     }());
@@ -35,7 +36,8 @@ export default class FormInput extends Component {
                type={this.props.type}
                name={this.props.name}
                placeholder={this.props.placeholder}
-               onBlur={this.props.onBlur}/>
+               onBlur={this.props.onBlur}
+               onChange={this.props.onChange}/>
         {ErrorMessage}
       </div>
     );

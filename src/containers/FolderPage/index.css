@@ -82,3 +82,121 @@
 .folderNameInput {
     width: 70%;
 }
+
+.textArea {
+    border: 0;
+    letter-spacing: 0.02em;
+    margin: 5px 0px;
+    padding: 5px 10px;
+    width: 100%;
+    min-width: 64px;
+    height: 100px;
+    background-clip: border-box;
+    font-size: 11pt;
+    font-weight: 400;
+    line-height: 1.3636;
+    background-color: #f1f1f1;
+    color: #000000;
+    display: inline-block;
+}
+
+.wrapLabel {
+    position: relative;
+    width: 50%;
+    display: inline-block;
+}
+.inputFile {
+    cursor: pointer;
+    display: block;
+    min-height: 100%;
+    min-width: 50%;
+    border: 0;
+    opacity: 0;
+    position: absolute;
+    top: -12px;
+    left: 0;
+    text-align: right;
+    width: 150px;
+}
+.formWrapper {
+    margin: 30px 0 30px 0;
+}
+.importContainer {
+    width: 47%;
+    font-size: 11pt;
+    color: #ffffff;
+    line-height: 21pt;
+    text-align: center;
+    display: inline-block;
+    height: 28px;
+    background-color: #6ab01c;
+    cursor: pointer;
+}
+.importLabel {
+    float: left;
+    width: 100%;
+    height: 50px;
+    color: grey;
+    line-height: 25px;
+}
+.videoType {
+    display: inline-block;
+    width: 47%;
+    margin-right: 10px;
+    text-align: right;
+}
+.descriptionName {
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    width: 100%;
+    color: grey;
+    margin-right: 2%;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+}
+.inprogressLine {
+    background-color: #6ab01c;
+    width: 0;
+    height: 2px;
+    margin: 5px 0;
+}
+
+.mediaType {
+    color: #7ab83a;
+    width: 70px;
+    display: inline-block;
+}
+.popupBody {
+    height: 150px;
+}
+.customInput {
+    margin: 0;
+    padding: 0;
+}
+.editInput {
+    border: 0;
+    letter-spacing: 0.02em;
+    margin: 4px 0px;
+    width: 100%;
+    min-width: 64px;
+    min-height: 40px;
+    background-clip: border-box;
+    padding: 0 8px;
+    font-size: 11pt;
+    font-weight: 400;
+    line-height: 1.3636;
+    background-color: #f1f1f1;
+    color: #000000;
+    display: inline-block;
+}
+.editLabel {
+    padding-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    color: grey;
+    margin-right: 2%;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+}

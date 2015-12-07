@@ -15,14 +15,16 @@ import Button from 'components/Button';
 import PreviewImage from 'components/PreviewImage';
 import LoadingSpinner from 'components/LoadingSpinner';
 import Footer from 'components/Footer';
+import FormInput from 'components/Form/FormInput';
 import WhiteFooter from 'components/WhiteFooter';
 import { listLayout } from 'common';
+import Checkbox from '../../components/Checkbox';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
 
 @connect(
-  (state) => ({folder: state.activeFolder}),
+  (state) => ({folder: state.activeFolder, user: state.currentUser}),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
@@ -38,11 +40,11 @@ export default class FolderPage extends Component {
       itemId: React.PropTypes.string,
       itemType: React.PropTypes.string,
     }),
-  }
+  };
 
   static contextTypes = {
     router: React.PropTypes.func.isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -199,7 +201,6 @@ export default class FolderPage extends Component {
               autoFocus
               value={this.state.newFolderName}
               onChange={::this.onFolderNameInputChange}
-              role="Name for new folder"
               className={styles.folderNameInput}
               />
           </label>
@@ -270,6 +271,139 @@ export default class FolderPage extends Component {
     this.setState({isOpenDeleteFoldersModal: false});
   }
 
+  openNewMediaModal() {
+    this.setState({isOpenNewMediaModal: true});
+  }
+
+  openModalAfterMediaUpload() {
+    this.setState({isOpenModalAfterMediaUpload: true});
+  }
+
+  hideModalAfterMediaUpload() {
+    this.changeSetting();
+    this.setState({isOpenModalAfterMediaUpload: false});
+  }
+
+  changeSetting() {
+    if (this.state.showPopupAfterMediaLoading) {
+      this.props.setDontAsk();
+    }
+  }
+
+  hideNewMediaModal() {
+    this.setState({
+      isOpenNewMediaModal: false,
+      newMedia: {},
+      selectedFileName: '',
+      uploadFileData: undefined,
+      isTypeValid: false,
+      currentType: '',
+    });
+  }
+
+  errorHandler(evt) {
+    switch (evt.target.error.code) {
+    case evt.target.error.NOT_FOUND_ERR:
+      alert('File Not Found!');
+      break;
+    case evt.target.error.NOT_READABLE_ERR:
+      alert('File is not readable');
+      break;
+    case evt.target.error.ABORT_ERR:
+      break;
+    default:
+      alert('An error occurred reading this file.');
+    }
+  }
+
+  async handlerUploadFile(e) {
+
+    this.setState({
+      progress: '0%',
+    });
+
+    const reader = new FileReader();
+    reader.onerror = this.errorHandler;
+    reader.onprogress = (e) => {
+      if (e.lengthComputable) {
+        const percentLoaded = Math.round((e.loaded / e.total) * 100);
+        if (percentLoaded < 100) {
+          this.setState({
+            progress: percentLoaded + '%',
+          });
+        }
+      }
+    };
+
+    reader.onload = (e) => {
+      this.setState({
+        progress: '100%',
+      });
+    };
+
+    const isTypeValid = this.isValidType(e.target.files[0].type);
+    let currentType;
+    if (isTypeValid) {
+      currentType = this.getType(e.target.files[0].type);
+      this.setState({
+        selectedFileName: e.target.files[0].name,
+        uploadFileData: new FormData(e.target.form),
+        isTypeValid: isTypeValid,
+        currentType: currentType,
+      });
+      reader.readAsArrayBuffer(e.target.files[0]);
+    } else {
+      currentType = undefined;
+    }
+  }
+
+  isValidType(fileType) {
+    const type = fileType.toLowerCase();
+    if (type.search('image') !== -1 ) {
+      return true;
+    }
+    if (type.search('video') !== -1) {
+      return true;
+    }
+    if (type.search('text/plain') !== -1) {
+      return true;
+    }
+    return false;
+  }
+
+  getType(type) {
+    if (type.search('video') !== -1 ) {
+      return 'video';
+    }
+    if (type.search('image') !== -1) {
+      return 'image';
+    }
+    if (type.search('text') !== -1) {
+      return 'text';
+    }
+  }
+
+  onUploadFile(e) {
+    if (e.keyCode.toString() === '13') {
+      React.findDOMNode(this.refs.fileInput).click();
+    }
+  }
+
+  async addMedia() {
+    this.state.uploadFileData.append('FolderId', this.props.params.folderId);
+
+    for(const key in this.state.newMedia) {
+      this.state.uploadFileData.append(key, this.state.newMedia[key]);
+    }
+    await this.props.uploadMedia(this.state.uploadFileData);
+    this.hideNewMediaModal();
+    this.props.loadFoldersList(this.props.params.folderId);
+    
+    if (!this.props.user.hideInvitePopup) {
+      this.openModalAfterMediaUpload();
+    }
+  }
+
   async deleteFolders() {
     if (this.state.selection.length === 0) {
       return;
@@ -282,6 +416,46 @@ export default class FolderPage extends Component {
       folderId: this.props.params.folderId.toString(),
     });
     this.props.loadFoldersList(this.props.params.folderId);
+  }
+
+  onChangeCheckbox(e) {
+    this.setState({
+      showPopupAfterMediaLoading: !e.checked,
+    });
+  }
+
+  redirectToLibrary() {
+    window.location.href = '/libraries';
+    this.hideModalAfterMediaUpload();
+  }
+
+  renderModalAfterMediaUpload() {
+    return (<Modal
+      isOpen={this.state.isOpenModalAfterMediaUpload}
+      className={styles.newLibraryModal}
+      >
+      <div className={styles.popupBody}>
+        Media items should be shared with users before they can see them on mobile client.
+        You can do it on the 'Libraries' tab with the help of 'Invite Users' button. Do you want to do it now?
+
+        <Checkbox
+          tabIndex="0"
+          onChange={::this.onChangeCheckbox}
+          className="headerCheckbox"
+          checked={this.state.showPopupAfterMediaLoading}
+          />
+      </div>
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
+          onClick={::this.redirectToLibrary}
+          inProgress={this.props.pendingActions}
+          >
+          Ok
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal}  onClick={::this.hideModalAfterMediaUpload}>Cancel</ActionButtonForModal>
+      </WhiteFooter>
+    </Modal>);
   }
 
   renderDeleteFoldersModal() {
@@ -303,13 +477,89 @@ export default class FolderPage extends Component {
     </Modal>);
   }
 
+  onChange(field, e) {
+    this.setState({
+      newMedia: {
+        ...this.state.newMedia,
+      [field]: e.target.value,
+      },
+    });
+  }
+
+  renderAddMediaModal() {
+    return (
+      <Modal
+      isOpen={this.state.isOpenNewMediaModal}
+      title="New media"
+      className={styles.newLibraryModal}
+      >
+
+      <div>
+
+        <form>
+          <div className={styles.inprogressLine} style={{width: this.state.progress}}></div>
+          <label className={styles.editLabel} for="inputName">Name:</label>
+          <input
+            label="Media name"
+            name="name"
+            placeholder="Media name"
+            type="text"
+            maxlength="30"
+            id="inputName"
+            onChange={this.onChange.bind(this, 'name')}
+            className={styles.editInput} />
+
+          <div className={styles.wrapLabel}>
+            <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} ref="fileInput" />
+            <div className={styles.importContainer} tabIndex="0" onKeyDown={::this.onUploadFile}>Upload file</div>
+          </div>
+
+          <div className={styles.videoType}>Type: <div className={styles.mediaType}>{this.state.currentType}</div></div>
+
+          <label className={styles.descriptionName} for="descriptionField">Description:</label>
+            <textArea
+              type="text"
+              placeholder="i.e. English"
+              className={styles.textArea}
+              onChange={this.onChange.bind(this, 'description')}
+              id="descriptionField"
+              ></textArea>
+          <label className={styles.editLabel} for="externalLinks">External links:</label>
+          <input
+            label="External links"
+            name="links"
+            placeholder="External links"
+            type="text"
+            onChange={this.onChange.bind(this, 'links')}
+            className={styles.editInput}
+            id="externalLinks"/>
+        </form>
+      </div>
+
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
+          onClick={::this.addMedia}
+          inProgress={this.props.pendingActions}
+          disabled={!this.state.isTypeValid || !this.state.newMedia || !this.state.newMedia.name.length || this.state.progress !== '100%'}
+          >
+          Save
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal}  onClick={::this.hideNewMediaModal}>Cancel</ActionButtonForModal>
+      </WhiteFooter>
+    </Modal>);
+  }
+
   render() {
     return (
     <div>
       { this.renderDeleteFoldersModal() }
+      { this.renderAddMediaModal() }
+      { this.renderModalAfterMediaUpload() }
       <Header>{this.props.folder.entity.name}
         <Button
           className="mdl2-document"
+          onClick={::this.openNewMediaModal}
         ></Button>
         <Button
           className="mdl2-new-folder"
