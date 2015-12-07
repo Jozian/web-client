@@ -14,6 +14,7 @@ export default class Button extends Component {
   };
 
   render() {
+    debugger;
     const disabled = this.props.disabled ? 'disabled' : '';
     const classes = cx({
       [styles.button]: true,

@@ -402,7 +402,7 @@ export default class FolderPage extends Component {
     await this.props.uploadMedia(this.state.uploadFileData);
     this.hideNewMediaModal();
     this.props.loadFoldersList(this.props.params.folderId);
-    
+
     if (!this.props.user.hideInvitePopup) {
       this.openModalAfterMediaUpload();
     }
@@ -427,9 +427,10 @@ export default class FolderPage extends Component {
       showPopupAfterMediaLoading: !e.checked,
 
     });
+  }
 
   redirectToLibrary() {
-    window.location.href = '/libraries';
+    window.location.href = '/admin/libraries';
     this.hideModalAfterMediaUpload();
   }
 
@@ -558,7 +559,6 @@ export default class FolderPage extends Component {
   render() {
     return (
     <div>
-
       { this.renderDeleteFoldersModal() }
       { this.renderAddMediaModal() }
       { this.renderModalAfterMediaUpload() }
@@ -566,8 +566,7 @@ export default class FolderPage extends Component {
         <Button
           className="mdl2-document"
           onClick={::this.openNewMediaModal}
-          tooltipText="Add new document"
-        ></Button>
+          tooltipText="Add new media"></Button>
         <Button
           className="mdl2-new-folder"
           onClick={::this.addDefaultFolder}

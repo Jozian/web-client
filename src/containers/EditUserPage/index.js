@@ -12,7 +12,6 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import * as actions from 'actions/users.js';
 import loading from 'decorators/loading';
-import validator from 'validator';
 import WhiteFooter from 'components/WhiteFooter';
 import Modal from 'components/Modal';
 import ActionButtonForModal from 'components/ActionButtonForModal';
@@ -312,10 +311,19 @@ export default class EditUserPage extends Component {
   }
 
   render() {
+      const editUser = cx({
+        [styles.hideHeader]: true,
+        [styles.showHeader]: this.props.params.id,
+      });
+      const addUser = cx({
+        [styles.hideHeader]: true,
+        [styles.showHeader]: !this.props.params.id,
+      });
       return (
         <div className={styles.mainContainer}>
           { this.renderLastAdminModal() }
-          <Header>Add user</Header>
+          <div className={editUser}><Header>Edit user</Header></div>
+          <div className={addUser}><Header>Add User Account</Header></div>
           <div className={styles.wrapper}>
             <form className={styles.backgroundWhite}>
               <div className={styles.leftBlock}>
@@ -330,30 +338,8 @@ export default class EditUserPage extends Component {
                   placeholder="i.e. John Doe"
                   type="text"
                   errorMessage={this.state.errors.name}
-                  onBlur={::this.onBlur} />
-                <FormInput
-                  valueLink={{
-                  value: null,
-                  requestChange: this.getUserChange('password'),
-                }}
-                  label="Password"
-                  name="password"
-                  placeholder={null}
-                  type="password"
-                  errorMessage={this.state.errors.password} />
-                <FormInput
-                  valueLink={{
-                    value: this.state.user.email,
-                    requestChange: this.getUserChange('email'),
-                  }}
-                  label="Send credentials on Email"
-                  errorMessage={this.state.errors.email}
-                  name="email"
-                  placeholder="email@email.com"
-                  />
-              </div>
-
-              <div className={styles.rightBlock}>
+                  onBlur={::this.onBlur}
+                  maxlength="30"/>
                 <FormInput
                   valueLink={{
                 value: this.state.user.login,
@@ -364,8 +350,20 @@ export default class EditUserPage extends Component {
                   placeholder="i.e. johndoe"
                   type="text"
                   errorMessage={this.state.errors.login}
-                  onBlur={::this.onBlur} />
+                  onBlur={::this.onBlur}/>
                 <FormInput
+                  valueLink={{
+                  value: this.state.user.password,
+                  requestChange: this.getUserChange('password'),
+                }}
+                  key="password"
+                  label="Password"
+                  name="password"
+                  placeholder={null}
+                  type="password"
+                  errorMessage={this.state.errors.password}/>
+                <FormInput
+                  key="confirm"
                   valueLink={{
                   value: null,
                   requestChange: this.getUserChange('confirm'),
@@ -373,48 +371,49 @@ export default class EditUserPage extends Component {
                   label="Confirm password"
                   name="confirm"
                   type="password"
-                  errorMessage={this.state.errors.confirm} />
-
+                  errorMessage={this.state.errors.confirm}/>
                 <FormInput
                   valueLink={{
-                    value: this.state.user.phone,
-                    requestChange: this.getUserChange('phone'),
+                  value: this.state.user.phone,
+                  requestChange: this.getUserChange('phone'),
+                }}
+                  errorMessage={this.state.errors.phone}
+                  label="Send credentials in SMS:"
+                  name="phone"
+                  placeholder="Your mobile phone"
+                  checked={this.state.checked.phone}
+                  onCheckboxChange={this.check.bind(this, 'phone')}/>
+                <FormInput
+                  valueLink={{
+                    value: this.state.user.email,
+                    requestChange: this.getUserChange('email'),
                   }}
-                label="Send credentials on Email"
-                errorMessage={this.state.errors.email}
-                name="email"
-                placeholder="email@email.com"
-                checked={this.state.checked.email}
-                onBlur={::this.onBlur}
-                onCheckboxChange={this.check.bind(this, 'email')}/>
-            </div>
+                  label="Send credentials on Email"
+                  errorMessage={this.state.errors.email}
+                  name="email"
+                  placeholder="email@email.com"
+                  checked={this.state.checked.email}
+                  onBlur={::this.onBlur}
+                  onCheckboxChange={this.check.bind(this, 'email')}/>
+              </div>
 
-            <p className={styles.note}>
-              * user will be able to login both to website and mobile client with these credentials.
-            </p>
+              <p className={styles.note}>
+                * user will be able to login both to website and mobile client with these credentials.
+              </p>
+            </form>
 
-            <footer className={styles.buttonsWrapper}>
-              <Button className={styles.buttonStyle}
-                      onClick={::this.saveUserHandler}
-                      text="OK"/>
-              <Button className={styles.buttonStyle}
-                      onClick={::this.cancelUserHandler}
-                      text="Cancel"/>
-            </footer>
-          </form>
-        </div>
-
-        <Footer>
-          <ActionButton onClick={::this.saveUserHandler}
-                  tooltipText="Save user"
-                  inProgress={this.props.loading}
-                  icon="mdl2-check-mark"
-                   />
-          <ActionButton icon="mdl2-cancel"
-                  onClick={::this.cancelUserHandler}
-                  tooltipText="Cancel save user"
-                  />
-        </Footer>
+          </div>
+          <Footer>
+            <ActionButton onClick={::this.saveUserHandler}
+                          tooltipText="Save user"
+                          inProgress={this.props.loading}
+                          icon="mdl2-check-mark"
+              />
+            <ActionButton icon="mdl2-cancel"
+                          onClick={::this.cancelUserHandler}
+                          tooltipText="Cancel save user"
+              />
+          </Footer>
       </div>);
   }
 }

@@ -3,7 +3,7 @@ import React, { Component } from 'react/addons';
 import { ListView, reactRenderer as winjsReactRenderer } from 'react-winjs';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import cx from 'classname';
+import cx from 'classnames';
 
 import * as actions from 'actions/statistics.js';
 import Header from 'components/Header';

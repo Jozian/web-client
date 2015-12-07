@@ -38,7 +38,7 @@ export default class FormInput extends Component {
                name={this.props.name}
                placeholder={this.props.placeholder}
                onBlur={this.props.onBlur}
-               onChange={this.props.onChange}/>
+               onChange={this.props.onChange}
                maxLength={this.props.maxlength}/>
         {ErrorMessage}
       </div>
