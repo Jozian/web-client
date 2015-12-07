@@ -1,5 +1,6 @@
 import * as api from '../api/folders.js';
 import * as types from '../actions/types';
+import * as apiUsers from '../api/users.js';
 
 export function loadFoldersList(id) {
   return {
@@ -48,5 +49,22 @@ export function deleteFolders(data) {
       types: [types.FOLDER_DELETING, types.FOLDER_DELETED, types.FOLDER_DELETE_ERROR],
       promise: api.deleteFolders(data),
     },
+  };
+}
+
+export function uploadMedia(data) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.MEDIA_TO_FOLDER_ADDING, types.MEDIA_TO_FOLDER_ADDED, types.ADD_MEDIA_TO_FOLDER_ERROR],
+      promise: api.addMediaToFolder(data),
+    },
+  };
+}
+
+export function setDontAsk() {
+  return {
+    type: types.DONT_ASK_AGAIN,
+    promise: apiUsers.dontAskUser(),
   };
 }

@@ -36,6 +36,10 @@ export const FOLDER_UPDATING = 'Updating folder';
 export const FOLDER_UPDATED = 'Folder was updated';
 export const FOLDER_UPDATE_ERROR = 'Folder updating error';
 
+export const MEDIA_TO_FOLDER_ADDING = 'Adding new media to current folder';
+export const MEDIA_TO_FOLDER_ADDED = 'Added new media to current folder';
+export const ADD_MEDIA_TO_FOLDER_ERROR = 'Add new media error';
+
 export const USERS_LOADING = 'Loading users';
 export const USERS_LOADED = 'Users loaded';
 export const USERS_LOAD_ERROR = 'Error loading users';
@@ -117,4 +121,6 @@ export const PREV_IMAGE_ERROR = 'Error uploaded preview image';
 export const PREV_CHANGING = 'Changing image preview';
 export const PREV_CHANGED = 'Changed image preview';
 export const PREV_CHANGE_ERROR = 'Error change image preview';
+
+export const DONT_ASK_AGAIN = 'User said did not ask again';
 
