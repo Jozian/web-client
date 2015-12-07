@@ -83,3 +83,9 @@ export function userLogout() {
   return Promise.resolve('success');
 }
 
+export function dontAskUser() {
+  const userData = JSON.parse(localStorage.getItem('MEDuser'));
+  userData.hideInvitePopup = true;
+  localStorage.setItem('MEDuser', JSON.stringify(userData));
+}
+

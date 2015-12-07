@@ -1,6 +1,7 @@
 import fetch from './helper';
 
 const apiUrl = '/api/folders';
+const apiMedia = '/api/media';
 
 export function getFolderList(id) {
   if (!id || typeof id  !== 'string') {
@@ -52,5 +53,13 @@ export function deleteFolders(body) {
   return fetch('/api/contentActions/delete', {
     method: 'post',
     body: JSON.stringify(body),
+  });
+}
+
+export function addMediaToFolder(data) {
+  return fetch(apiMedia, {
+    method: 'post',
+    body: data,
+    responseType: 'text',
   });
 }
