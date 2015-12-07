@@ -85,7 +85,11 @@ export function userLogout() {
 
 export function dontAskUser() {
   const userData = JSON.parse(localStorage.getItem('MEDuser'));
-  userData.hideInvitePopup = true;
-  localStorage.setItem('MEDuser', JSON.stringify(userData));
+  if (!userData) {
+    Promise.reject('User does not found');
+  } else {
+    userData.hideInvitePopup = true;
+    localStorage.setItem('MEDuser', JSON.stringify(userData));
+  }
 }
 
