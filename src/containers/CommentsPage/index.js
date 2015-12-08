@@ -99,7 +99,7 @@ export default class CommentsPage extends Component {
       },
       {
         key: 'unlike',
-        text: 'Dislakes',
+        text: 'Dislikes',
         className: commonStyles.numberCell,
       },
 
