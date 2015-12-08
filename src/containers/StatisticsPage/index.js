@@ -70,7 +70,7 @@ export default class StatisticsPage extends Component {
         <PreviewImage
           className={style.image}
           src={item.data.picture}
-        />
+          />
         <div className={style.name}>{item.data.text}</div>
       </div>);
   });
@@ -78,55 +78,55 @@ export default class StatisticsPage extends Component {
   render() {
     const mostViewedClass = cx({
       [style.container]: true,
-      [style.hiddenList]: this.props.topViews.length,
+      [style.hiddenList]: !this.props.topViews.length,
     });
 
     const mostDownloadedClass = cx({
       [style.container]: true,
-      [style.hiddenList]: this.props.topDownloads.length,
+      [style.hiddenList]: !this.props.topDownloads.length,
     });
     return (
       <div>
         <Header>Statistics</Header>
         <div style={{height: '100%'}}>
-        <div className={style.listContainer}>
-          <div className={style.toolbar} id="viewed">
-            <span className={style.toolbarTitle}>Most downloaded media</span>
-          </div>
+          <div className={style.listContainer}>
+            <div className={style.toolbar} id="viewed">
+              <span className={style.toolbarTitle}>Most downloaded media</span>
+            </div>
 
-          {this.props.topViews.length ? '' : <div className={style.noDataText}>No data to display</div> }
-          <ListView
-            className={mostViewedClass}
-            itemDataSource={this.props.topViews.dataSource}
-            itemTemplate={this.listViewItemRenderer}
-            onItemInvoked={::this.handleItemSelected}
-            layout={ {type: WinJS.UI.ListLayout} }
-          />
-        </div>
-        <div className={style.listContainer}>
-          <div className={style.toolbar} id="downloaded">
-            <span className={style.toolbarTitle}>Most viewed media</span>
+            {this.props.topViews.length ? '' : <div className={style.noDataText}>No data to display</div> }
+            <ListView
+              className={mostViewedClass}
+              itemDataSource={this.props.topViews.dataSource}
+              itemTemplate={this.listViewItemRenderer}
+              onItemInvoked={::this.handleItemSelected}
+              layout={listLayout}
+              />
           </div>
+          <div className={style.listContainer}>
+            <div className={style.toolbar} id="downloaded">
+              <span className={style.toolbarTitle}>Most viewed media</span>
+            </div>
 
-          {this.props.topDownloads.length ? '' : <div className={style.noDataText}>No data to display</div> }
-          <ListView
-            className={mostDownloadedClass}
-            itemDataSource={this.props.topDownloads.dataSource}
-            itemTemplate={this.listViewItemRenderer}
-            onItemInvoked={::this.handleItemSelected}
-            layout={listLayout}
-          />
-        </div>
-        <Footer>
+            {this.props.topDownloads.length ? '' : <div className={style.noDataText}>No data to display</div> }
+            <ListView
+              className={mostDownloadedClass}
+              itemDataSource={this.props.topDownloads.dataSource}
+              itemTemplate={this.listViewItemRenderer}
+              onItemInvoked={::this.handleItemSelected}
+              layout={listLayout}
+              />
+          </div>
+          <Footer>
             <ActionButton
               icon="mdl2-download"
               disabled={!this.props.topDownloads.length && !this.props.topViews.length}
               inProgress={this.props.pendingActions.statisticsExport}
               onClick={this.props.addToExport}
               tooltipText="Export statistics"
-            >
+              >
             </ActionButton>
-        </Footer>
+          </Footer>
         </div>
       </div>
     );
