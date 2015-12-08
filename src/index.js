@@ -34,6 +34,7 @@ const routes = (
         <DefaultRoute handler={LibrariesPage} />
         <Route name="folder" path={browserHistory.createPath('/folder/:folderId/')} handler={FolderPage}>
           <Route name="folderSelection" path=":itemType/:itemId/" handler={EditFolderPage} />
+          <Route name="mediaSelection" path=":itemType/:itemId/media" handler={EditMediaPage} />
         </Route>
 
       </Route>
@@ -43,6 +44,7 @@ const routes = (
       <Route name="motd" handler={MotdPage} />
       <Redirect from="/admin/" to="libraries" />
     </Route>
+  </Route>
 );
 
 Modal.setAppElement(document.getElementById('root'));
