@@ -113,7 +113,8 @@ export default class SearchBar extends Component {
   render() {
     return (
       <div className={styles.searchBar} ref="searchList">
-        <input type="text" className={styles.input} onInput={(e) => {::this.inputHandler(e.target.value); }} />
+        <label htmlFor="searchElem" className={styles.hidden}>Search</label>
+        <input id="searchElem" type="text" className={styles.input} onInput={(e) => {::this.inputHandler(e.target.value); }} role="search"/>
 
         {this.state.showSearchList ?
           <div className={cx(styles.list, 'searchList')}>

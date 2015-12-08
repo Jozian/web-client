@@ -102,3 +102,9 @@
     font-weight: 400;
     line-height: 30px;
 }
+
+.hidden {
+    width: 0;
+    height: 0;
+    display: inline-block;
+}
