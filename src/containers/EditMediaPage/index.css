@@ -28,7 +28,7 @@
 
 .inputFile {
     cursor: inherit;
-    opacity: 0;
+    display: none;
     text-align: right;
     width: 100px;
 }
@@ -67,6 +67,11 @@
 }
 
 .currentImage {
-    width: 40px;
-    height: 40px;
+    width: 90px;
+    height: 70px;
+}
+
+.formBody {
+    height: 70%;
+    overflow-y: auto;
 }
