@@ -30,3 +30,7 @@
     text-overflow: ellipsis;
     display: block;
 }
+
+.editForm {
+    height: auto;
+}

@@ -88,7 +88,7 @@ export default class EditFolderPage extends Component {
 
   render() {
     return (
-      <div className={styles}>
+      <div className={styles.editForm}>
         <div className={styles.toolbar} id="downloaded">
           <span className={styles.toolbarTitle}>Edit {this.state.currentFolderName}</span>
         </div>
