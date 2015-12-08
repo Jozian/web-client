@@ -14,19 +14,21 @@ export default class Button extends Component {
   };
 
   render() {
-    debugger;
     const disabled = this.props.disabled ? 'disabled' : '';
     const classes = cx({
       [styles.button]: true,
       [this.props.className]: this.props.className !== null,
     });
+    const currentId = 'id' + Math.random();
     return (
       <div className={styles.bottonBody}>
+        <label className={styles.hidden} htmlFor={currentId}>{this.props.tooltipText}</label>
         <button type="button"
               className={classes}
               onClick={this.props.onClick}
               disabled={disabled}
-              role="button">
+              role="button"
+              id={currentId}>
               {this.props.children}
               {this.props.text}
         <span className={styles.hideText}>{this.props.tooltipText}</span></button>

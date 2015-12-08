@@ -13,7 +13,6 @@ export default class ActionButton extends Component {
     disabled: false,
     icon: null,
   };
-
   render() {
     const disabled = this.props.disabled || this.props.inProgress;
     const className = this.props.inProgress ? 'fa fa-spin fa-cog' : this.props.icon;

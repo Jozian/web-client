@@ -43,3 +43,7 @@
 .button .hideText {
     font-size:0;
 }
+
+.hidden {
+    font-size: 0;
+}
