@@ -41,12 +41,6 @@ export function addUser(body) {
   };
 }
 
-export function newUser() {
-  return {
-    type: types.NEW_USER_LOAD,
-  };
-};
-
 export function deleteUsers(ids) {
   return {
     type: types.CALL_API,
