@@ -1,7 +1,6 @@
 import fetch from './helper';
 
 const apiUrl = '/api/media';
-const mediaManagement = '/api/mediaManagement';
 
 export function getMediaList() {
   return fetch(apiUrl);
@@ -31,7 +30,7 @@ export function uploadPrevImage(id, body) {
     return Promise.reject('Invalid body');
   }
 
-  return fetch(mediaManagement + '/changeImage?media=' + id, {
+  return fetch(apiUrl + '/changeImage?media=' + id, {
     method: 'post',
     body: body,
     responseType: 'text',
@@ -43,5 +42,5 @@ export function changePrevImage(name, fileChange) {
     return Promise.reject('Invalid body');
   }
 
-  return fetch(mediaManagement + '/copyImage?name=' + name + '&fileChange=' + fileChange);
+  return fetch(apiUrl + '/copyImage?name=' + name + '&fileChange=' + fileChange);
 }

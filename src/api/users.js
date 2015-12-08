@@ -101,13 +101,13 @@ export function loadUserTemplate() {
 }
 
 export function isLastAdmin() {
-  return fetch(userManagementUrl + '/isLastAdmin', {
+  return fetch(apiUrl + '/isLastAdmin', {
     method:'post',
   });
 }
 
 export function loadUserTemplate() {
-  return fetch(userManagementUrl + '/getImportFile', {
+  return fetch(apiUrl + '/getImportFile', {
     method: 'get',
     responseType: 'arraybuffer',
   }).then((result) => {
