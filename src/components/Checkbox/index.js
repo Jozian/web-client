@@ -39,7 +39,7 @@ export default class Checkbox extends Component {
       <div
         tabIndex={this.props.tabIndex}
         onClick={(event) => event.stopPropagation()}
-        onKeyPress={onEnterPressed(::this.handleClick)}
+        onKeyDown={onEnterPressed(::this.handleClick)}
         className={wrapperClasses}
       >
         <label>
