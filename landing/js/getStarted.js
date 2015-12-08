@@ -11,7 +11,8 @@
     allIdElem.push(document.getElementById('support'));
 
     allIdElem.push(document.getElementById('loginRegister'));
-    var baseUrl = 'http://medserver.apps.wookieelabs.com';
+    //var baseUrl = 'http://medserver.apps.wookieelabs.com';
+    var baseUrl = 'http://192.168.88.129:3010';
 
     var forgotPasswordTemplate = document.getElementById('forgotPasswordTpl').innerHTML;
 

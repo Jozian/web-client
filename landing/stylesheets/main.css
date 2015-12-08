@@ -38,6 +38,7 @@ input[type="checkbox"] {
     display: inherit;
     margin: 25px 80px 0 0;
     float: right;
+    width: 850px;
 }
 .b_column-container {
     margin-left: 6%;
