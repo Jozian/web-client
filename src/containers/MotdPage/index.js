@@ -63,13 +63,14 @@ export default class StatisticsPage extends Component {
           </div>
 
           <div className={styles.fieldWrapper}>
-            <label className={styles.label}>New:</label>
+            <label className={styles.label} htmlFor="motdText">New:</label>
             <textarea value={this.state.motd}
                       ref="motd"
                       autoFocus
                       onChange={ (e) => { this.setState({ motd: e.target.value }); }}
                       placeholder="max. 230 characters"
-                      className={styles.textArea}>
+                      className={styles.textArea}
+                      id="motdText">
             </textarea>
           </div>
 
