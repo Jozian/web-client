@@ -69,6 +69,7 @@ export default class FolderPage extends Component {
       this.setState({selectOnLoad: true});
     }
     if (props.params.itemId) {
+      this.setState({selection: [props.params.itemId]});
       this.setState({selectOnLoad: true});
     }
   }
@@ -138,26 +139,28 @@ export default class FolderPage extends Component {
     const item = await event.detail.itemPromise;
     const activeItemId = this.props.params.itemId;
     const goTo = ::this.context.router.transitionTo;
+
     switch (item.data.type) {
-    case 'folder':
-      if (activeItemId === item.data.id.toString()) {
-        goTo('folder', {folderId: activeItemId});
-      } else {
-        goTo('folderSelection', {
+      case 'folder':
+        if (activeItemId === item.data.id.toString()) {
+          goTo('folder', {folderId: activeItemId});
+        } else {
+          goTo('folderSelection', {
+            folderId: this.props.params.folderId,
+            itemType: 'folder',
+            itemId: item.data.id.toString(),
+          });
+        }
+        break;
+      case 'media':
+        goTo('mediaSelection', {
           folderId: this.props.params.folderId,
-          itemType: 'folder',
+          itemType: 'media',
           itemId: item.data.id.toString(),
         });
-      }
-      break;
-    case 'media':
-      goTo('mediaSelection', {
-        folderId: this.props.params.folderId,
-        itemId: item.data.id.toString(),
-      });
-      break;
-    default:
-      throw new Error('Unsupported item type');
+        break;
+      default:
+        throw new Error('Unsupported item type');
     }
   }
 
@@ -238,7 +241,7 @@ export default class FolderPage extends Component {
         onItemInvoked={::this.handleItemSelected}
         onSelectionChanged={::this.handleSelectionChange}
         layout={listLayout}
-      />,
+      />
       <Footer>
         <Button
           disabled={this.state.selection.length === 0}
@@ -440,15 +443,10 @@ export default class FolderPage extends Component {
       className={styles.newLibraryModal}
       >
       <div className={styles.popupBody}>
-        Media items should be shared with users before they can see them on mobile client.
-        You can do it on the 'Libraries' tab with the help of 'Invite Users' button. Do you want to do it now?
+        <div>Media items should be shared with users before they can see them on mobile client.
+        You can do it on the 'Libraries' tab with the help of 'Invite Users' button. Do you want to do it now?</div>
 
-        <Checkbox
-          tabIndex="0"
-          onChange={::this.onChangeCheckbox}
-          className="headerCheckbox"
-          checked={this.state.showPopupAfterMediaLoading}
-          />
+        <input className={styles.inputDontAsk} onChange={::this.onChangeCheckbox} ref="input" type="checkbox" tabIndex="0"/> <span>Don't ask again.</span>
       </div>
       <WhiteFooter>
         <ActionButtonForModal
@@ -503,13 +501,13 @@ export default class FolderPage extends Component {
 
         <form>
           <div className={styles.inprogressLine} style={{width: this.state.progress}}></div>
-          <label className={styles.editLabel} for="inputName">Name:</label>
+          <label className={styles.editLabel} htmlFor="inputName">Name:</label>
           <input
             label="Media name"
             name="name"
             placeholder="Media name"
             type="text"
-            maxlength="30"
+            maxLength="30"
             id="inputName"
             onChange={this.onChange.bind(this, 'name')}
             className={styles.editInput} />
@@ -521,7 +519,7 @@ export default class FolderPage extends Component {
 
           <div className={styles.videoType}>Type: <div className={styles.mediaType}>{this.state.currentType}</div></div>
 
-          <label className={styles.descriptionName} for="descriptionField">Description:</label>
+          <label className={styles.descriptionName} htmlFor="descriptionField">Description:</label>
             <textArea
               type="text"
               placeholder="i.e. English"
@@ -529,7 +527,7 @@ export default class FolderPage extends Component {
               onChange={this.onChange.bind(this, 'description')}
               id="descriptionField"
               ></textArea>
-          <label className={styles.editLabel} for="externalLinks">External links:</label>
+          <label className={styles.editLabel} htmlFor="externalLinks">External links:</label>
           <input
             label="External links"
             name="links"

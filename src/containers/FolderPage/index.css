@@ -2,7 +2,7 @@
   vertical-align: top;
   display: inline-block;
   width: 45%;
-  height: calc(100% - 225px);
+  height: calc(100vh - 225px);
   margin: 0 2.5%;
   background-color: #ffffff;
   position: relative;
@@ -112,7 +112,6 @@
     z-index: 300;
 }
 
-<<<<<<< HEAD
 .textArea {
     border: 0;
     letter-spacing: 0.02em;
@@ -137,7 +136,6 @@
 }
 .inputFile {
     cursor: pointer;
-    display: block;
     min-height: 100%;
     min-width: 50%;
     border: 0;
@@ -207,7 +205,7 @@
 .editInput {
     border: 0;
     letter-spacing: 0.02em;
-    margin: 4px 0px;
+    margin: 4px 0 15px 0;
     width: 100%;
     min-width: 64px;
     min-height: 40px;
@@ -232,4 +230,14 @@
 }
 .spanWrapper {
     position: relative;
+}
+
+.inputDontAsk {
+    margin: 4px 0;
+    padding: 4px;
+    font-size: 11pt;
+    line-height: 20px;
+    width: 19px;
+    height: 19px;
+    background-color: #f1f1f1;
 }
