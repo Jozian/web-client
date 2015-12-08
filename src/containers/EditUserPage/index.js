@@ -4,20 +4,20 @@ import { bindActionCreators } from 'redux';
 import cx from 'classnames';
 import validator from 'validator';
 
+import Modal from 'components/Modal';
+import WhiteFooter from 'components/WhiteFooter';
 import ActionButton from 'components/ActionButton';
+import ActionButtonForModal from 'components/ActionButtonForModal';
 import { isUnique } from 'api/users.js';
 import Dropdown from 'components/Dropdown';
 import FormInput from 'components/Form/FormInput';
 import Header from 'components/Header';
-import Footer from 'components/Footer';
 import * as actions from 'actions/users.js';
 import loading from 'decorators/loading';
-import WhiteFooter from 'components/WhiteFooter';
-import Modal from 'components/Modal';
-import ActionButtonForModal from 'components/ActionButtonForModal';
+import Footer from 'components/Footer';
 
-import styles from './index.css';
 import commonStyles from 'common/styles.css';
+import styles from './index.css';
 
 @connect(
   (state) => ({user: state.user.entity, currentUser: state.currentUser, loading: state.user.loading}),
@@ -212,19 +212,6 @@ export default class EditUserPage extends Component {
       this.setUser(key, value);
       this.setErrors(key, errors);
     }
-
-    const newState = {
-      user: {
-        ...this.state.user,
-        [key]: value,
-      },
-      errors:{
-        ...this.state.errors,
-        [key]: errors,
-      }
-    };
-    this.setState(newState);
-
   }
 
   isMobilePhoneValidator(number) {
@@ -273,42 +260,42 @@ export default class EditUserPage extends Component {
     this.setState({
       user: {
         ...this.state.user,
-        [field]: value,
-      },
-    });
-  }
+      [field]: value,
+    },
+  });
+}
 
-  setErrors(field, errors) {
-    this.setState({
-      errors: {
-        ...this.state.errors,
-        [field]: errors,
-      },
-    });
-  }
+setErrors(field, errors) {
+  this.setState({
+    errors: {
+      ...this.state.errors,
+    [field]: errors,
+    },
+  });
+}
 
-  hideLastAdminPopup() {
-    this.setState({
-      isOpenLastAdminModal: false,
-    });
-  }
+hideLastAdminPopup() {
+  this.setState({
+    isOpenLastAdminModal: false,
+  });
+}
 
-  renderLastAdminModal() {
-    return (<Modal
-      isOpen={this.state.isOpenLastAdminModal}
-      title="This is the last account with Admin role. The role can not be changed since the control over instance will be lost."
-      className={styles.newLibraryModal}
-      >
-      <WhiteFooter>
-        <ActionButtonForModal
-          className={commonStyles.saveButtonModal}
-          onClick={::this.hideLastAdminPopup}
-          >
-          Ok
-        </ActionButtonForModal>
-      </WhiteFooter>
-    </Modal>);
-  }
+renderLastAdminModal() {
+  return (<Modal
+    isOpen={this.state.isOpenLastAdminModal}
+    title="This is the last account with Admin role. The role can not be changed since the control over instance will be lost."
+    className={styles.newLibraryModal}
+    >
+    <WhiteFooter>
+      <ActionButtonForModal
+        className={commonStyles.saveButtonModal}
+        onClick={::this.hideLastAdminPopup}
+        >
+        Ok
+      </ActionButtonForModal>
+    </WhiteFooter>
+  </Modal>);
+}
 
   render() {
       const editUser = cx({
@@ -339,7 +326,7 @@ export default class EditUserPage extends Component {
                   type="text"
                   errorMessage={this.state.errors.name}
                   onBlur={::this.onBlur}
-                  maxlength="30"/>
+                  maxLength="30"/>
                 <FormInput
                   valueLink={{
                 value: this.state.user.login,
