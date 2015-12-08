@@ -13,6 +13,7 @@ import Footer from 'components/Footer';
 import WhiteFooter from 'components/WhiteFooter';
 import Header from 'components/Header';
 import cx from 'classnames';
+import { onEnterPressed } from 'common';
 
 import style from './style.css';
 import commonStyles from 'common/styles.css';
@@ -354,7 +355,7 @@ export default class CommentDetails extends Component {
 
           <div className={style.toolbar}>
             <span className={style.title}>Commentaries</span>
-            <div className={style.toolbarBtn} onClick={::this.replyAll} onKeyUp={::this.replyAllEnter}>REPLY ALL</div>
+            <div className={style.toolbarBtn} onClick={::this.replyAll} onKeyDown={onEnterPressed(::this.replyAll)} tabIndex="0">REPLY ALL</div>
           </div>
             <ListView
                 ref="folder"
@@ -364,7 +365,6 @@ export default class CommentDetails extends Component {
                 onItemInvoked={::this.handleItemSelected}
                 onSelectionChanged={::this.handleSelectionChange}
                 layout={listLayout} />
-
         </div>
         <Footer>
 
