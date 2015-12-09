@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import loading from 'decorators/loading';
 import * as actions from 'actions/media';
+import * as folderActions from 'actions/folders';
 import Button from 'components/Button';
 import Footer from 'components/Footer';
 import FormInput from 'components/Form/FormInput';
@@ -13,7 +14,7 @@ import styles from './index.css';
 
 @connect(
   (state) => ({activeMedia: state.activeMedia.entities, pendingActions: state.pendingActions}),
-  (dispatch) => bindActionCreators(actions, dispatch)
+  (dispatch) => bindActionCreators(Object.assign({}, actions, folderActions), dispatch)
 )
 @loading(
   (state) => state.activeMedia.loading,
@@ -73,6 +74,7 @@ export default class EditMediaPage extends Component {
      links: this.state.activeMedia.links,
      description: this.state.activeMedia.description,
    });
+    this.props.loadFoldersList(this.props.params.folderId);
     this.props.loadMedia(this.props.params.itemId);
   }
 
