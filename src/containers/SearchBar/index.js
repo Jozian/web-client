@@ -7,6 +7,7 @@ import cx from 'classnames';
 
 import PreviewImage from 'components/PreviewImage';
 import * as actionsSearch from 'actions/searchResult';
+import { onEnterPressed } from 'common';
 
 import { listLayout } from 'common';
 import styles from './style.css';
@@ -66,6 +67,9 @@ export default class SearchBar extends Component {
   }
 
   async mediaSelected(item) {
+    if (item.FolderId) {
+      item.LibraryId = item.FolderId;
+    }
     const routeParams = {
       itemId: item.id.toString(),
       itemType: 'media',
@@ -123,7 +127,7 @@ export default class SearchBar extends Component {
               <div>
                 {this.props.searchResult.entities.users.map( (item) => {
                   return (
-                    <div className={styles.userItem} onClick={this.userSelected.bind(this, item)} tabIndex="0" role="listitem">{item.name}</div>
+                    <div className={styles.userItem} onClick={this.userSelected.bind(this, item)} onKeyDown={onEnterPressed(this.userSelected.bind(this, item))} tabIndex="0">{item.name}</div>
                   );
                 })}
               </div> : 'NO RESULT'}
@@ -133,7 +137,7 @@ export default class SearchBar extends Component {
               <div>
                 {this.props.searchResult.entities.media.map( (item) => {
                   return (<div className={styles.listItem}>
-                    <div onClick={this.mediaSelected.bind(this, item)} tabIndex="0" role="listitem">
+                    <div onClick={this.mediaSelected.bind(this, item)} tabIndex="0" onKeyDown={onEnterPressed(this.mediaSelected.bind(this, item))}>
                       <PreviewImage className={styles.image} src={'http://medserver.apps.wookieelabs.com/preview/' + item.id + '.png'} />
                       {item.name}
                     </div>
