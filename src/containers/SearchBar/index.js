@@ -72,7 +72,7 @@ export default class SearchBar extends Component {
       folderId: item.LibraryId.toString(),
     };
 
-    await this.context.router.transitionTo('folderSelection', routeParams);
+    await this.context.router.transitionTo('mediaSelection', routeParams);
     this.hideList();
   }
 
