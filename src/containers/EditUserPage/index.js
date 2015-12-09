@@ -129,7 +129,7 @@ export default class EditUserPage extends Component {
     }, this).value();
     if (!errorsSave.length) {
       if (this.props.params.id) {
-        if (this.props.params.id === this.props.currentUser.id.toString() && this.state.user.type !== 'admin') {
+        if (this.props.params.id === this.props.currentUser.id.toString()) {
           let isAdminResult = await this.props.isLastAdmin();
           if (isAdminResult.payload) {
             this.setState({
@@ -139,6 +139,9 @@ export default class EditUserPage extends Component {
             await this.props.editUser(this.props.params.id, this.state.user);
             router.transitionTo('users');
           }
+        } else {
+          await this.props.editUser(this.props.params.id, this.state.user);
+          router.transitionTo('users');
         }
       } else {
         await this.props.addUser(this.state.user);
