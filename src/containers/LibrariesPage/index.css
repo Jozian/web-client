@@ -53,3 +53,7 @@
   color: #ffffff;
   background-color: #6ab01c;
 }
+
+.hiddenLabel {
+  font-size: 0;
+}

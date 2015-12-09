@@ -118,11 +118,13 @@ class LibrariesPage extends Component {
   }
 
   renderEditLibrary(_, rowData) {
-    return (<button
+    const uniqueId = 'id' + Math.random();
+    return (<div><label className={styles.hiddenLabel} htmlFor={uniqueId}>{`Edit library ${rowData.name}`}</label><button
       className={cx(styles.editButton, 'mdl2-edit')}
       tabIndex="0"
+      id={uniqueId}
       onClick={this.onJumpButtonClick.bind(this, rowData)}
-      ></button>);
+      ></button></div>);
   }
 
   onJumpButtonClick(rowData, e) {
