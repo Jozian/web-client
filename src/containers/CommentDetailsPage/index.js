@@ -367,11 +367,10 @@ export default class CommentDetails extends Component {
                 layout={listLayout} />
         </div>
         <Footer>
-
           <ActionButton
             disabled={this.state.selectionComments.length === 0}
             onClick={::this.showDeleteCommentsPopup}
-            className="mdl2-delete"
+            icon="mdl2-delete"
             tooltipText="Delete comments">
           </ActionButton>
         </Footer>
