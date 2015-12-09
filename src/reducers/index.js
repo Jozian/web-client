@@ -83,12 +83,6 @@ export const usersTemplate  = handleLoadingChain([
   types.USERS_TEMPLATE_ERROR,
 ]);
 
-export const searchResultList = handleLoadingChain([
-  types.SEARCH_RESULT_UPLOADING,
-  types.SEARCH_RESULT_UPLOADED,
-  types.SEARCH_RESULT_ERROR,
-]);
-
 export const pendingActions = combineReducers({
   newLibrary: handlePendingChain(
     [types.LIBRARY_CREATING],
@@ -145,6 +139,10 @@ export const pendingActions = combineReducers({
   updateMedia: handlePendingChain(
     [types.MEDIA_UPDATING],
     [types.MEDIA_LOADED, types.MEDIA_LOAD_ERROR],
+  ),
+  addMedia: handlePendingChain(
+    [types.MEDIA_TO_FOLDER_ADDING],
+    [types.MEDIA_TO_FOLDER_ADDED, types.ADD_MEDIA_TO_FOLDER_ERROR],
   ),
 });
 

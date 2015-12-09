@@ -24,7 +24,7 @@ import styles from './index.css';
 import commonStyles from 'common/styles.css';
 
 @connect(
-  (state) => ({folder: state.activeFolder, user: state.currentUser}),
+  (state) => ({folder: state.activeFolder, user: state.currentUser, pendingActions: state.pendingActions}),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
@@ -452,7 +452,6 @@ export default class FolderPage extends Component {
         <ActionButtonForModal
           className={commonStyles.saveButtonModal}
           onClick={::this.redirectToLibrary}
-          inProgress={this.props.pendingActions}
           >
           Ok
         </ActionButtonForModal>
@@ -471,7 +470,6 @@ export default class FolderPage extends Component {
         <ActionButtonForModal
           className={commonStyles.saveButtonModal}
           onClick={::this.deleteFolders}
-          inProgress={this.props.pendingActions}
           >
           Ok
         </ActionButtonForModal>
@@ -543,7 +541,7 @@ export default class FolderPage extends Component {
         <ActionButtonForModal
           className={commonStyles.saveButtonModal}
           onClick={::this.addMedia}
-          inProgress={this.props.pendingActions}
+          inProgress={this.props.pendingActions.addMedia}
           disabled={!this.state.isTypeValid || !this.state.newMedia || !this.state.newMedia.name.length || this.state.progress !== '100%'}
           >
           Save
