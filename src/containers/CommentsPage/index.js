@@ -62,7 +62,7 @@ export default class CommentsPage extends Component {
     if (!rowData.FolderId) {
       rowData.FolderId = rowData.LibraryId;
     }
-    this.context.router.transitionTo('folderSelection', {
+    this.context.router.transitionTo('mediaSelection', {
       folderId: rowData.FolderId.toString(),
       itemType: 'media',
       itemId: rowData.id.toString(),
