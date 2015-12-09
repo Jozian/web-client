@@ -19,6 +19,7 @@ import FormInput from 'components/Form/FormInput';
 import WhiteFooter from 'components/WhiteFooter';
 import { listLayout } from 'common';
 import Checkbox from '../../components/Checkbox';
+import { onEnterPressed } from '../../common';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
@@ -100,7 +101,7 @@ export default class FolderPage extends Component {
       this.refs.folder.winControl.selection.clear();
     }
     if (e.keyCode === 46) {
-      this.handleDelete();
+      this.openDeleteFoldersModal();
     }
   }
 
@@ -446,7 +447,7 @@ export default class FolderPage extends Component {
         <div>Media items should be shared with users before they can see them on mobile client.
         You can do it on the 'Libraries' tab with the help of 'Invite Users' button. Do you want to do it now?</div>
 
-        <input className={styles.inputDontAsk} onChange={::this.onChangeCheckbox} ref="input" type="checkbox" tabIndex="0"/> <span>Don't ask again.</span>
+        <input className={styles.inputDontAsk} onChange={::this.onChangeCheckbox} onKeyDown={onEnterPressed(::this.onChangeCheckbox)} ref="input" type="checkbox" tabIndex="0"/> <span>Don't ask again.</span>
       </div>
       <WhiteFooter>
         <ActionButtonForModal
