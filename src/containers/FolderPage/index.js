@@ -395,8 +395,8 @@ export default class FolderPage extends Component {
     }
   }
 
-  onUploadFile() {
-    React.findDOMNode(this.refs.fileInput).click();
+  onUploadFile(e) {
+    this.refs.fileInput.getDOMNode().click();
   }
 
   async addMedia() {
@@ -439,6 +439,69 @@ export default class FolderPage extends Component {
     window.location.href = '/admin/libraries';
     this.hideModalAfterMediaUpload();
   }
+
+  renderAddMediaModal() {
+    return (
+      <Modal
+        isOpen={this.state.isOpenNewMediaModal}
+        title="New media"
+        className={styles.newLibraryModal}
+        >
+        <div>
+          <form>
+            <div className={styles.inprogressLine} style={{width: this.state.progress}}></div>
+            <label className={styles.editLabel} htmlFor="inputName">Name:</label>
+            <input
+              label="Media name"
+              name="name"
+              placeholder="Media name"
+              type="text"
+              maxLength="30"
+              id="inputName"
+              onChange={this.onChange.bind(this, 'name')}
+              className={styles.editInput} />
+
+            <div className={styles.wrapLabel}>
+              <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} ref="fileInput"  tabIndex="-1" />
+              <div className={styles.importContainer} tabIndex="0" onKeyDown={onEnterPressed(this.onUploadFile.bind(this))}>Upload file</div>
+            </div>
+
+            <div className={styles.videoType}>Type: <div className={styles.mediaType}>{this.state.currentType}</div></div>
+
+            <label className={styles.descriptionName} htmlFor="descriptionField">Description:</label>
+            <textArea
+              type="text"
+              placeholder="i.e. English"
+              className={styles.textArea}
+              onChange={this.onChange.bind(this, 'description')}
+              id="descriptionField"
+              ></textArea>
+            <label className={styles.editLabel} htmlFor="externalLinks">External links:</label>
+            <input
+              label="External links"
+              name="links"
+              placeholder="External links"
+              type="text"
+              onChange={this.onChange.bind(this, 'links')}
+              className={styles.editInput}
+              id="externalLinks"/>
+          </form>
+        </div>
+
+        <WhiteFooter>
+          <ActionButtonForModal
+            className={commonStyles.saveButtonModal}
+            onClick={::this.addMedia}
+            inProgress={this.props.pendingActions.addMedia}
+            disabled={!this.state.isTypeValid || !this.state.newMedia || !this.state.newMedia.name.length || this.state.progress !== '100%'}
+            >
+            Save
+          </ActionButtonForModal>
+          <ActionButtonForModal className={commonStyles.cancelButtonModal}  onClick={::this.hideNewMediaModal}>Cancel</ActionButtonForModal>
+        </WhiteFooter>
+      </Modal>);
+  }
+
 
   renderModalAfterMediaUpload() {
     return (<Modal
@@ -488,71 +551,6 @@ export default class FolderPage extends Component {
       [field]: e.target.value,
       },
     });
-  }
-
-  renderAddMediaModal() {
-    return (
-      <Modal
-      isOpen={this.state.isOpenNewMediaModal}
-      title="New media"
-      className={styles.newLibraryModal}
-      >
-
-      <div>
-
-        <form>
-          <div className={styles.inprogressLine} style={{width: this.state.progress}}></div>
-          <label className={styles.editLabel} htmlFor="inputName">Name:</label>
-          <input
-            label="Media name"
-            name="name"
-            placeholder="Media name"
-            type="text"
-            maxLength="30"
-            id="inputName"
-            onChange={this.onChange.bind(this, 'name')}
-            className={styles.editInput} />
-
-          <div className={styles.wrapLabel}>
-            <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} ref="fileInput" tabIndex="-1" />
-            <div className={styles.importContainer} tabIndex="0" onKeyDown={onEnterPressed(this.onUploadFile.bind(this))}>Upload file</div>
-          </div>
-
-          <div className={styles.videoType}>Type: <div className={styles.mediaType}>{this.state.currentType}</div></div>
-
-          <label className={styles.descriptionName} htmlFor="descriptionField">Description:</label>
-            <textArea
-              type="text"
-              placeholder="i.e. English"
-              className={styles.textArea}
-              onChange={this.onChange.bind(this, 'description')}
-              id="descriptionField"
-              ></textArea>
-          <label className={styles.editLabel} htmlFor="externalLinks">External links:</label>
-          <input
-            label="External links"
-            name="links"
-            placeholder="External links"
-            type="text"
-            onChange={this.onChange.bind(this, 'links')}
-            className={styles.editInput}
-            id="externalLinks"/>
-        </form>
-      </div>
-
-      <WhiteFooter>
-        <ActionButtonForModal
-          className={commonStyles.saveButtonModal}
-          onClick={::this.addMedia}
-          inProgress={this.props.pendingActions.addMedia}
-          disabled={!this.state.isTypeValid || !this.state.newMedia || !this.state.newMedia.name.length || this.state.progress !== '100%'}
-          >
-          Save
-        </ActionButtonForModal>
-        <ActionButtonForModal className={commonStyles.cancelButtonModal}  onClick={::this.hideNewMediaModal}>Cancel</ActionButtonForModal>
-      </WhiteFooter>
-    </Modal>);
-
   }
 
   render() {
