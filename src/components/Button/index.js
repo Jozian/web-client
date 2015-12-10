@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import styles from './index.css';
 import cx from 'classnames';
 import 'font-awesome-webpack';
+import { onEnterPressed } from '../../common';
 
 export default class Button extends Component {
   static propTypes = {
@@ -26,6 +27,7 @@ export default class Button extends Component {
         <button type="button"
               className={classes}
               onClick={this.props.onClick}
+              onKeyDown={onEnterPressed(this.props.onClick)}
               disabled={disabled}
               role="button"
               id={currentId}>
