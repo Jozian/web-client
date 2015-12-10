@@ -2,7 +2,7 @@ import * as types from 'actions/types';
 const defaultState = {
   loading: false,
   entity: {
-    data: new WinJS.Binding.List([]),
+    data: [],
   },
 };
 
@@ -23,7 +23,7 @@ export default function reducer(state = defaultState, action) {
       }
     });
     const newEntity = {...arraySort};
-    newEntity.data = new WinJS.Binding.List(arraySort);
+    newEntity.data = arraySort;
     return { ...state, loading: false, entity: newEntity, error: null };
   case types.COMMENTS_LOAD_ERROR:
     return { ...state, loading: false, error: action.payload };
