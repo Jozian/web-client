@@ -36,23 +36,6 @@ export default class EditFolderPage extends Component {
       loading: true,
       folder: {},
     };
-    this.handleKeyDown = ::this._handleKeyDown;
-  }
-
-  _handleKeyDown(e) {
-    const key = e.keyCode;
-    if (key === 13) {
-      e.preventDefault();
-      this.saveNewName();
-    }
-  }
-
-  componentWillMount() {
-    document.addEventListener('keydown', this.handleKeyDown);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillReceiveProps(props) {
