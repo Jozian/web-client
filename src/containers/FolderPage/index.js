@@ -103,6 +103,10 @@ export default class FolderPage extends Component {
     if (e.keyCode === 46) {
       this.openDeleteFoldersModal();
     }
+
+    if (e.keyCode === 13 && this.refs.inputAsk && this.refs.inputAsk.getDOMNode() === e.target) {
+      this.onChangeCheckbox(this.refs.inputAsk.getDOMNode());
+    }
   }
 
   folderItemRenderer = winjsReactRenderer((item) => {
@@ -391,10 +395,8 @@ export default class FolderPage extends Component {
     }
   }
 
-  onUploadFile(e) {
-    if (e.keyCode.toString() === '13') {
-      React.findDOMNode(this.refs.fileInput).click();
-    }
+  onUploadFile() {
+    React.findDOMNode(this.refs.fileInput).click();
   }
 
   async addMedia() {
@@ -427,9 +429,9 @@ export default class FolderPage extends Component {
   }
 
   onChangeCheckbox(e) {
+    e.checked = !e.checked;
     this.setState({
-      showPopupAfterMediaLoading: !e.checked,
-
+      showPopupAfterMediaLoading: e.checked,
     });
   }
 
@@ -447,7 +449,7 @@ export default class FolderPage extends Component {
         <div>Media items should be shared with users before they can see them on mobile client.
         You can do it on the 'Libraries' tab with the help of 'Invite Users' button. Do you want to do it now?</div>
 
-        <input className={styles.inputDontAsk} onChange={::this.onChangeCheckbox} onKeyDown={onEnterPressed(::this.onChangeCheckbox)} ref="input" type="checkbox" tabIndex="0"/> <span>Don't ask again.</span>
+        <input ref="inputAsk" className={styles.inputDontAsk} onClick={::this.onChangeCheckbox} type="checkbox" tabIndex="0"/> <div className={styles.dontAskLabel}>Don't ask again.</div>
       </div>
       <WhiteFooter>
         <ActionButtonForModal
@@ -512,8 +514,8 @@ export default class FolderPage extends Component {
             className={styles.editInput} />
 
           <div className={styles.wrapLabel}>
-            <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} ref="fileInput" />
-            <div className={styles.importContainer} tabIndex="0" onKeyDown={::this.onUploadFile}>Upload file</div>
+            <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} ref="fileInput" tabIndex="-1" />
+            <div className={styles.importContainer} tabIndex="0" onKeyDown={onEnterPressed(this.onUploadFile.bind(this))}>Upload file</div>
           </div>
 
           <div className={styles.videoType}>Type: <div className={styles.mediaType}>{this.state.currentType}</div></div>
