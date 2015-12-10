@@ -89,6 +89,9 @@ export default class EditUserPage extends Component {
         },
       });
     }
+    if (props.params.id !== this.props.params.id) {
+      props.loadUser(props.params.id);
+    }
   }
 
   composeErrorMessages(key, message, condition) {
