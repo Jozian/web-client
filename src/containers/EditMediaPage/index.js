@@ -9,6 +9,7 @@ import Button from 'components/Button';
 import Footer from 'components/Footer';
 import FormInput from 'components/Form/FormInput';
 import { baseUrl } from '../../api/helper';
+import { onEnterPressed } from '../../common';
 
 import styles from './index.css';
 
@@ -44,10 +45,12 @@ export default class EditMediaPage extends Component {
   }
 
   componentWillReceiveProps(props) {
-    this.setState({
-      activeMedia: props.activeMedia,
-      currentMediaName: props.activeMedia.name,
-    });
+    if(props.activeMedia && props.activeMedia.name) {
+      this.setState({
+        activeMedia: props.activeMedia,
+        currentMediaName: props.activeMedia.name,
+      });
+    }
 
     if (props.params.itemId !== this.props.params.itemId) {
       props.loadMedia(props.params.itemId);
@@ -80,7 +83,7 @@ export default class EditMediaPage extends Component {
 
   getImages(itemId, number) {
     const img = new Image();
-    img.src = '/preview/' + itemId + '-' + number + '.png';
+    img.src = baseUrl + '//preview/' + itemId + '-' + number + '.png';
 
     img.onload = (e) => {
       this.state.allPreview.push({link: img.src, itemId: itemId, number: number});
@@ -172,7 +175,7 @@ export default class EditMediaPage extends Component {
                 /><br />
 
               <div>
-                {this.setAllImages(this.state.activeMedia.id)}
+                {this.state.activeMedia.id ? this.setAllImages(this.state.activeMedia.id) : ''}
               </div>
 
               <Footer>
