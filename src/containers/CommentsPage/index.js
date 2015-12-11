@@ -60,7 +60,7 @@ export default class CommentsPage extends Component {
   onJumpButtonClick(rowData, e) {
     e.stopPropagation();
     if (!rowData.FolderId) {
-      rowData.FolderId = rowData.LibraryId;
+      rowData.FolderId = 'library' + rowData.LibraryId;
     }
     this.context.router.transitionTo('mediaSelection', {
       folderId: rowData.FolderId.toString(),
