@@ -14,6 +14,7 @@ import Button from 'components/Button';
 import Footer from 'components/Footer';
 import WhiteFooter from 'components/WhiteFooter';
 import loading from 'decorators/loading';
+import { wrapLongString } from '../../common';
 
 import commonStyles from 'common/styles.css';
 import styles from './index.css';
@@ -139,7 +140,7 @@ class LibrariesPage extends Component {
 
   renderName(_, rowData) {
     if (!this.state.editLibrary || this.state.editLibrary.id !== rowData.id) {
-      return rowData.name;
+      return wrapLongString(rowData.name);
     } else {
       return (
         <div onClick={ (e) => e.stopPropagation() }>
