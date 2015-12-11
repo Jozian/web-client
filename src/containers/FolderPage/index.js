@@ -480,8 +480,10 @@ export default class FolderPage extends Component {
               className={styles.editInput} />
 
             <div className={styles.wrapLabel}>
-              <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} ref="fileInput"  tabIndex="-1" />
-              <div className={styles.importContainer} tabIndex="0" onKeyDown={onEnterPressed(this.onUploadFile.bind(this))}>Upload file</div>
+              <label className={styles.importContainer} tabIndex="-1">
+                <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} ref="fileInput" tabIndex="0"/>
+                Upload file
+              </label>
             </div>
 
             <div className={styles.videoType}>Type: <div className={styles.mediaType}>{this.state.currentType}</div></div>

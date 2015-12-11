@@ -9,7 +9,6 @@ import Button from 'components/Button';
 import Footer from 'components/Footer';
 import FormInput from 'components/Form/FormInput';
 import { baseUrl } from '../../api/helper';
-import { onEnterPressed } from '../../common';
 
 import styles from './index.css';
 
@@ -93,38 +92,19 @@ export default class EditMediaPage extends Component {
   }
 
  async handlerUploadImage(e) {
-    const formData = new FormData(e.target.form);
+   const formData = new FormData(e.target.form);
 
-    if (e.target.files[0].name) {
-     await this.props.uploadImage(this.props.params.itemId, formData);
-      this.setState({
-        uploadImage: true,
-      });
-    }
-  }
+   if (e.target.files[0].name) {
+    await this.props.uploadImage(this.props.params.itemId, formData);
+    this.setState({
+      uploadImage: true,
+    });
+   }
+ }
 
   async changeCurrentPreview (item) {
     await this.props.changeImage(item.itemId + '-' + item.number + '.png', item.itemId + '.png');
     this.props.loadMedia(this.props.params.itemId);
-  }
-
-  onUploadFile(e) {
-    const element = this.refs.fileInputEditMedia.getDOMNode();
-    let event;
-
-    if (document.createEvent) {
-      event = document.createEvent('HTMLEvents');
-      event.initEvent('click', true, true);
-    } else {
-      event = document.createEventObject();
-      event.eventType = 'click';
-    }
-    event.eventName = 'click';
-    if (document.createEvent) {
-      element.dispatchEvent(event);
-    } else {
-      element.fireEvent('on' + event.eventType, event);
-    }
   }
 
   setAllImages(id) {
@@ -132,10 +112,12 @@ export default class EditMediaPage extends Component {
       <div>
         <img className={styles.currentImage} src={`${baseUrl}//preview/${id}.png`} />
 
-        <label className={styles.wrapLabel}>
-          <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadImage} ref="fileInputEditMedia" />
-          <div className={styles.importContainer} role="button" tabIndex="0" onKeyDown={::this.onUploadFile}>Upload preview</div>
-        </label>
+        <div className={styles.wrapLabel}>
+          <input type="file" name="file" className={styles.inputFile} id="inputFileImageUpload" onChange={::this.handlerUploadImage} ref="fileInputEditMedia" tabIndex="0" />
+          <label className={styles.importContainer} htmlFor="inputFileImageUpload">
+            Upload preview
+          </label>
+        </div>
 
         {this.state.allPreview.map((item) => {
           return <img className={styles.currentImage} src={item.link} onClick={this.changeCurrentPreview.bind(this, item)} />;
