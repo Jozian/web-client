@@ -38,10 +38,12 @@ export default class SearchBar extends Component {
   }
   componentWillMount() {
     document.addEventListener('click', this.handleClick);
+    document.addEventListener('keydown', this.handleClick);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.handleClick);
+    document.removeEventListener('keydown', this.handleClick);
   }
   async userSelected(item) {
     this.context.router.transitionTo('editUser', {
