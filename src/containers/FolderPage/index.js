@@ -396,7 +396,25 @@ export default class FolderPage extends Component {
   }
 
   onUploadFile(e) {
-    this.refs.fileInput.getDOMNode().click();
+   const element = this.refs.fileInput.getDOMNode();
+
+    let event;
+
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent('click', true, true);
+    } else {
+      event = document.createEventObject();
+      event.eventType = 'click';
+    }
+
+    event.eventName = 'click';
+
+    if (document.createEvent) {
+      element.dispatchEvent(event);
+    } else {
+      element.fireEvent('on' + event.eventType, event);
+    }
   }
 
   async addMedia() {
