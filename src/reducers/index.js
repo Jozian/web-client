@@ -144,6 +144,10 @@ export const pendingActions = combineReducers({
     [types.MEDIA_TO_FOLDER_ADDING],
     [types.MEDIA_TO_FOLDER_ADDED, types.ADD_MEDIA_TO_FOLDER_ERROR],
   ),
+  changeMediaPreview: handlePendingChain(
+    [types.PREV_IMAGE_UPLOADING],
+    [types.PREV_IMAGE_UPLOADED, types.PREV_IMAGE_ERROR],
+  ),
 });
 
 export function errorApplication(state, action) {

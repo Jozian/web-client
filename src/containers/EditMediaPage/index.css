@@ -92,3 +92,13 @@
 .wrapLabel {
     position: relative;
 }
+
+.hiddenUpload {
+    opacity: 0;
+}
+
+.showUpload {
+    position: absolute;
+    top: 4px;
+    left: 10px;
+}

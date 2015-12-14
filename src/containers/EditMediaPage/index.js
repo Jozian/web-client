@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 
 import loading from 'decorators/loading';
 import * as actions from 'actions/media';
@@ -102,21 +103,33 @@ export default class EditMediaPage extends Component {
    }
  }
 
-  async changeCurrentPreview (item) {
+  async changeCurrentPreview(item) {
     await this.props.changeImage(item.itemId + '-' + item.number + '.png', item.itemId + '.png');
     this.props.loadMedia(this.props.params.itemId);
   }
 
   setAllImages(id) {
+    const classesSpin = cx({
+      'fa': true,
+      'fa-spin': true,
+      'fa-cog': true,
+      [styles.hiddenUpload]: !this.props.pendingActions.changeMediaPreview,
+      [styles.showUpload]: this.props.pendingActions.changeMediaPreview,
+    });
+    const classesUploadButton = cx({
+      [styles.importContainer]: true,
+      [styles.hiddenUpload]: this.props.pendingActions.changeMediaPreview,
+    });
     return (
       <div>
         <img className={styles.currentImage} src={`${baseUrl}//preview/${id}.png`} />
 
         <div className={styles.wrapLabel}>
           <input type="file" name="file" className={styles.inputFile} id="inputFileImageUpload" onChange={::this.handlerUploadImage} ref="fileInputEditMedia" tabIndex="0" />
-          <label className={styles.importContainer} htmlFor="inputFileImageUpload">
+          <label className={classesUploadButton} htmlFor="inputFileImageUpload">
             Upload preview
           </label>
+          <div className={classesSpin}></div>
         </div>
 
         {this.state.allPreview.map((item) => {
