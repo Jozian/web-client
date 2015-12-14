@@ -70,6 +70,8 @@ export default class SearchBar extends Component {
   async mediaSelected(item) {
     if (item.FolderId) {
       item.LibraryId = item.FolderId;
+    } else {
+      item.LibraryId = 'library' + item.LibraryId;
     }
     const routeParams = {
       itemId: item.id.toString(),
@@ -101,6 +103,9 @@ export default class SearchBar extends Component {
   }
 
   async debounceFunction(value) {
+    this.setState({
+      showSearchList: false,
+    });
     await this.props.loadSearchResult(value);
     this.setState({
       showSearchList: true,
