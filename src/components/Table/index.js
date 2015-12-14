@@ -98,9 +98,6 @@ export default class Table extends Component {
     if (event.which === 40 && event.target.nextSibling) { /* DOWN */
       event.target.nextSibling.focus();
     }
-    if (event.which === 13) {
-      this.props.onRowClick(row);
-    }
   }
 
   getHeaderCheckboxState() {
@@ -246,7 +243,7 @@ export default class Table extends Component {
           tabIndex="0"
           className={styles.tableBodyRow}
           onClick={onRowClick}
-          onKeyDown={this.onRowKeyDown.bind(this, rowData)}
+          onKeyDown={onEnterPressed(onRowClick)}
         >
           {row}
         </tr>);
