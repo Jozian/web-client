@@ -14,6 +14,8 @@ function returnPart(number, string, newString) {
 
   if (string.length > currentNumber + 40) {
     return returnPart(number + 1, string, newString);
+  } else if (number === 4) {
+    return newString + '...';
   } else {
     return newString;
   }
