@@ -148,7 +148,7 @@
     outline: 0;
 }
 .inputFile:focus + .importContainer {
-    outline: 1px solid blue;
+    outline: 1px solid rgb(0, 120, 215);
 }
 .formWrapper {
     margin: 30px 0 30px 0;
