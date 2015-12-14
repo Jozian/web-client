@@ -9,7 +9,6 @@ import PreviewImage from 'components/PreviewImage';
 import * as actionsSearch from 'actions/searchResult';
 import { onEnterPressed } from 'common';
 
-import { listLayout } from 'common';
 import styles from './style.css';
 
 @connect(

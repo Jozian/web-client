@@ -8,7 +8,6 @@ import * as actions from 'actions/media';
 import * as folderActions from 'actions/folders';
 import Button from 'components/Button';
 import Footer from 'components/Footer';
-import FormInput from 'components/Form/FormInput';
 import { baseUrl } from '../../api/helper';
 
 import styles from './index.css';
@@ -125,7 +124,7 @@ export default class EditMediaPage extends Component {
         <img className={styles.currentImage} src={`${baseUrl}//preview/${id}.png`} />
 
         <div className={styles.wrapLabel}>
-          <input type="file" name="file" className={styles.inputFile} id="inputFileImageUpload" onChange={::this.handlerUploadImage} ref="fileInputEditMedia" tabIndex="0" />
+          <input type="file" name="file" title="Add new image for media" className={styles.inputFile} id="inputFileImageUpload" onChange={::this.handlerUploadImage} ref="fileInputEditMedia" tabIndex="0" />
           <label className={classesUploadButton} htmlFor="inputFileImageUpload">
             Upload preview
           </label>

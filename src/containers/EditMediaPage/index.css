@@ -38,7 +38,7 @@
 }
 
 .inputFile:focus + .importContainer {
-    outline: 2px solid blue;
+    outline: 2px solid #0078d7;
 }
 
 .importContainer {

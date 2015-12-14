@@ -15,7 +15,6 @@ import Button from 'components/Button';
 import PreviewImage from 'components/PreviewImage';
 import LoadingSpinner from 'components/LoadingSpinner';
 import Footer from 'components/Footer';
-import FormInput from 'components/Form/FormInput';
 import WhiteFooter from 'components/WhiteFooter';
 import { listLayout } from 'common';
 import Checkbox from '../../components/Checkbox';
@@ -138,7 +137,7 @@ export default class FolderPage extends Component {
       ? renderFolderItem
       : renderMediaItem
     )(item.data);
-  })
+  });
 
   async handleItemSelected(event) {
     const item = await event.detail.itemPromise;
@@ -395,28 +394,6 @@ export default class FolderPage extends Component {
     }
   }
 
-  onUploadFile(e) {
-   const element = this.refs.fileInput.getDOMNode();
-
-    let event;
-
-    if (document.createEvent) {
-      event = document.createEvent('HTMLEvents');
-      event.initEvent('click', true, true);
-    } else {
-      event = document.createEventObject();
-      event.eventType = 'click';
-    }
-
-    event.eventName = 'click';
-
-    if (document.createEvent) {
-      element.dispatchEvent(event);
-    } else {
-      element.fireEvent('on' + event.eventType, event);
-    }
-  }
-
   async addMedia() {
     this.state.uploadFileData.append('FolderId', this.props.params.folderId);
 
@@ -480,7 +457,7 @@ export default class FolderPage extends Component {
               className={styles.editInput} />
 
             <div className={styles.wrapLabel}>
-              <input type="file" name="file" className={styles.inputFile} id="addMediaLabel" onChange={::this.handlerUploadFile} ref="fileInput" tabIndex="0"/>
+              <input type="file" name="file" title="upload media file" className={styles.inputFile} id="addMediaLabel" onChange={::this.handlerUploadFile} ref="fileInput" tabIndex="0"/>
               <label className={styles.importContainer} tabIndex="-1" htmlFor="addMediaLabel">
                 Upload file
               </label>
