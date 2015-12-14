@@ -146,6 +146,9 @@
     text-align: right;
     width: 150px;
 }
+.inputFile:focus + .importContainer {
+    outline: 2px solid blue;
+}
 .formWrapper {
     margin: 30px 0 30px 0;
 }

@@ -19,7 +19,7 @@ import FormInput from 'components/Form/FormInput';
 import WhiteFooter from 'components/WhiteFooter';
 import { listLayout } from 'common';
 import Checkbox from '../../components/Checkbox';
-import { onEnterPressed } from '../../common';
+import { wrapLongString } from '../../common';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
@@ -192,7 +192,7 @@ export default class FolderPage extends Component {
               <Link className={styles.breadcrumbsLink} to="folder" key={pathEntry.id} params={{folderId: pathEntry.id}}>
                 {pathEntry.title}
               </Link>
-              <span className={styles.breadcrumbsTooltip}>{pathEntry.title}</span>
+              <span className={styles.breadcrumbsTooltip}>{wrapLongString(pathEntry.title)}</span>
             </span>
           </li>)
         )
@@ -480,8 +480,8 @@ export default class FolderPage extends Component {
               className={styles.editInput} />
 
             <div className={styles.wrapLabel}>
-              <label className={styles.importContainer} tabIndex="-1">
-                <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} ref="fileInput" tabIndex="0"/>
+              <input type="file" name="file" className={styles.inputFile} id="addMediaLabel" onChange={::this.handlerUploadFile} ref="fileInput" tabIndex="0"/>
+              <label className={styles.importContainer} tabIndex="-1" htmlFor="addMediaLabel">
                 Upload file
               </label>
             </div>
