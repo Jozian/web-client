@@ -12,7 +12,7 @@ import StatisticsPage from 'containers/StatisticsPage';
 import CommentsPage from 'containers/CommentsPage';
 import MotdPage from 'containers/MotdPage';
 import store from 'store/configureStore';
-import CommentDetails from 'containers/CommentDetailsPage';
+import CommentDetailsPage from 'containers/CommentDetailsPage';
 import EditFolderPage from 'containers/EditFolderPage';
 import EditMediaPage from 'containers/EditMediaPage';
 
@@ -36,11 +36,10 @@ const routes = (
           <Route name="folderSelection" path=":itemType/:itemId/" handler={EditFolderPage} />
           <Route name="mediaSelection" path=":itemType/:itemId/media" handler={EditMediaPage} />
         </Route>
-
       </Route>
       <Route name="statistics" handler={StatisticsPage} />
       <Route name="comments" handler={CommentsPage} />
-      <Route name="comment" path="comments/:mediaName/:id/" handler={CommentDetails}/>
+      <Route name="comment" path="comments/:mediaName/:id/" handler={CommentDetailsPage}/>
       <Route name="motd" handler={MotdPage} />
       <Redirect from="/admin/" to="libraries" />
     </Route>
