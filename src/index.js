@@ -13,7 +13,6 @@ import CommentsPage from 'containers/CommentsPage';
 import MotdPage from 'containers/MotdPage';
 import store from 'store/configureStore';
 import CommentDetailsPage from 'containers/CommentDetailsPage';
-import EditFolderPage from 'containers/EditFolderPage';
 import EditMediaPage from 'containers/EditMediaPage';
 
 import { createHistory, useBasename } from 'history';

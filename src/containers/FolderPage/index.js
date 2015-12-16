@@ -102,7 +102,7 @@ export default class FolderPage extends Component {
     if (e.keyCode === 27 ) {
       this.refs.folder.winControl.selection.clear();
     }
-    if (e.keyCode === 46) {
+    if (e.keyCode === 46 && !this.state.isOpenNewMediaModal && !this.state.isOpenEditFolderModal) {
       this.openDeleteFoldersModal();
     }
 
@@ -149,7 +149,7 @@ export default class FolderPage extends Component {
           />
         </div>
         <div className={styles.name}>{folder.name}</div>
-        <button className={cx("fa fa-pencil win-interactive", styles.editFolderButton)} onClick={this.openEditFolderModal.bind(this, folder)} onKeyDown={onEnterPressed(this.openEditFolderModal.bind(this, folder))} tabIndex="0"></button>
+        <button title={`Edit folder ${folder.name}`} className={cx("fa fa-pencil win-interactive", styles.editFolderButton)} onClick={this.openEditFolderModal.bind(this, folder)} onKeyDown={onEnterPressed(this.openEditFolderModal.bind(this, folder))} tabIndex="0"></button>
       </div>
     );
 
