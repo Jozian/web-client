@@ -17,8 +17,8 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import Footer from 'components/Footer';
 import WhiteFooter from 'components/WhiteFooter';
 import { listLayout } from 'common';
-import Checkbox from '../../components/Checkbox';
 import { wrapLongString } from '../../common';
+import { onEnterPressed } from '../../common';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
@@ -53,6 +53,9 @@ export default class FolderPage extends Component {
     this.state = {
       selection: [],
       selectOnLoad: true,
+      folder: {
+        name: '',
+      },
     };
   }
 
@@ -108,6 +111,22 @@ export default class FolderPage extends Component {
     }
   }
 
+  openEditFolderModal(folder, e) {
+    this.setState({
+      folder: {id: folder.id, name: folder.name},
+      newFolderName: folder.name,
+      isOpenEditFolderModal: true,
+    });
+    clearTimeout(window.timer);
+    e.stopPropagation();
+  }
+
+  hideEditFolderModal() {
+    this.setState({
+      isOpenEditFolderModal: false,
+    });
+  }
+
   folderItemRenderer = winjsReactRenderer((item) => {
     const renderMediaItem = (media) => (
       <div className={styles.listItem}>
@@ -130,6 +149,7 @@ export default class FolderPage extends Component {
           />
         </div>
         <div className={styles.name}>{folder.name}</div>
+        <button className={cx("fa fa-pencil win-interactive", styles.editFolderButton)} onClick={this.openEditFolderModal.bind(this, folder)} onKeyDown={onEnterPressed(this.openEditFolderModal.bind(this, folder))} tabIndex="0"></button>
       </div>
     );
 
@@ -141,31 +161,33 @@ export default class FolderPage extends Component {
 
   async handleItemSelected(event) {
     const item = await event.detail.itemPromise;
-    const activeItemId = this.props.params.itemId;
-    const goTo = ::this.context.router.transitionTo;
+    window.timer = setTimeout(() => {
+      const activeItemId = this.props.params.itemId;
+      const goTo = ::this.context.router.transitionTo;
 
-    switch (item.data.type) {
-      case 'folder':
-        if (activeItemId === item.data.id.toString()) {
-          goTo('folder', {folderId: activeItemId});
-        } else {
-          goTo('folderSelection', {
+      switch (item.data.type) {
+        case 'folder':
+          if (activeItemId === item.data.id.toString()) {
+            goTo('folder', {folderId: activeItemId});
+          } else {
+            goTo('folderSelection', {
+              folderId: this.props.params.folderId,
+              itemType: 'folder',
+              itemId: item.data.id.toString(),
+            });
+          }
+          break;
+        case 'media':
+          goTo('mediaSelection', {
             folderId: this.props.params.folderId,
-            itemType: 'folder',
+            itemType: 'media',
             itemId: item.data.id.toString(),
           });
-        }
-        break;
-      case 'media':
-        goTo('mediaSelection', {
-          folderId: this.props.params.folderId,
-          itemType: 'media',
-          itemId: item.data.id.toString(),
-        });
-        break;
-      default:
-        throw new Error('Unsupported item type');
-    }
+          break;
+        default:
+          throw new Error('Unsupported item type');
+      }
+    }, 0);
   }
 
   async handleSelectionChange(e) {
@@ -199,28 +221,50 @@ export default class FolderPage extends Component {
     </ul>);
   }
 
+  onFolderNameInputChange(e) {
+    this.setState({
+      newFolderName: e.target.value,
+    });
+  }
+
+  async updateFolder() {
+    await this.props.updateFolder({id: this.state.folder.id.toString(), name: this.state.newFolderName});
+    this.hideEditFolderModal();
+    this.props.loadFoldersList(this.props.params.folderId);
+  }
+
   renderEditFolder() {
     return (
-      <div className={styles.column}>
-        <form onSubmit={::this.updateFolder}>
-          <label className={styles.folderNameLabel}>
-            Name:
+      <Modal
+        isOpen={this.state.isOpenEditFolderModal}
+        title="New media"
+        className={styles.editFolderModal}
+        >
+
+          <form onSubmit={::this.updateFolder}>
+            <label className={styles.editLabel} htmlFor="inputNewName">New folder name:</label>
             <input
+              label="New folder name"
+              name="name"
+              placeholder="Media name"
               type="text"
-              placeholder="i.e. English"
-              autoFocus
+              id="inputNewName"
               value={this.state.newFolderName}
               onChange={::this.onFolderNameInputChange}
-              className={styles.folderNameInput}
-              />
-          </label>
-        </form>
+              className={styles.editInput} />
+          </form>
 
-          <Footer>
-            <Button icon="fa fa-save">Save</Button>
-          </Footer>
-      </div>
-    );
+          <WhiteFooter>
+            <ActionButtonForModal
+              className={commonStyles.saveButtonModal}
+              onClick={::this.updateFolder}
+              >
+              Save
+            </ActionButtonForModal>
+            <ActionButtonForModal className={commonStyles.cancelButtonModal}  onClick={::this.hideEditFolderModal}>Cancel</ActionButtonForModal>
+          </WhiteFooter>
+
+      </Modal>);
   }
 
   renderEditMedia() {
@@ -555,6 +599,7 @@ export default class FolderPage extends Component {
     <div>
       { this.renderDeleteFoldersModal() }
       { this.renderAddMediaModal() }
+      { this.renderEditFolder() }
       { this.renderModalAfterMediaUpload() }
       <Header>{this.props.folder.entity.name}
         <Button

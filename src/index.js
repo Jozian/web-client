@@ -33,7 +33,7 @@ const routes = (
       <Route name="libraries">
         <DefaultRoute handler={LibrariesPage} />
         <Route name="folder" path={browserHistory.createPath('/folder/:folderId/')} handler={FolderPage}>
-          <Route name="folderSelection" path=":itemType/:itemId/" handler={EditFolderPage} />
+          <Route name="folderSelection" path=":itemType/:itemId/" />
           <Route name="mediaSelection" path=":itemType/:itemId/media" handler={EditMediaPage} />
         </Route>
       </Route>

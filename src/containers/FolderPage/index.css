@@ -89,7 +89,7 @@
 }
 
 .folderNameLabel {
-  margin-left: 35px;
+  width: 100%;
 }
 
 .folderNameInput {
@@ -251,4 +251,25 @@
     float: left;
     display: inline-block;
     margin: 7px 10px 10px 7px;
+}
+
+div.editFolderModal {
+    height: 300px;
+}
+
+.editFolderButton {
+    color: #f1f1f1;
+    background-color: #ffffff;
+    border: 0;
+    position: absolute;
+    top: 25px;
+    right: 10px;
+}
+
+.editFolderButton:focus {
+    color: #5d415e;
+}
+
+.listItem:hover .editFolderButton {
+    color: #5d415e;
 }
