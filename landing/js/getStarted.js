@@ -160,7 +160,8 @@
     }, true);
 
     getLoginForm.addEventListener('submit', function (event) {
-
+      console.log('request sent');
+      console.log(event);
       sendRequest({
         method: 'POST',
         url: baseUrl + '/api/auth/desktopLogin',
