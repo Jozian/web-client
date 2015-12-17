@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import Button from 'components/Button';
+import cx from 'classnames';
+
+import styles from './index.css';
 
 export default class ActionButton extends Component {
   static propTypes = {
@@ -17,7 +20,7 @@ export default class ActionButton extends Component {
     const disabled = this.props.disabled || this.props.inProgress;
     const className = this.props.inProgress ? 'fa fa-spin fa-cog' : this.props.icon;
     return (
-      <Button {...this.props} disabled={disabled} className={className} role="button">
+      <Button {...this.props} disabled={disabled} className={cx(className, styles.spinner)} role="button">
         {this.props.children}
       </Button>
     );

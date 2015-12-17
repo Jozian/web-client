@@ -21,7 +21,13 @@
 }
 
 .button:disabled {
-    background-color: rgba(202, 202, 202, 0.4);
+    background-color: rgba(202, 202, 202, 0);
     border-color: rgba(0, 0, 0, 0.08);
     color: rgba(0, 0, 0, 0.4);
+}
+
+.spinner {
+    color: #ffffff;
+    margin-left: 15px;
+    font-size: 25px;
 }
