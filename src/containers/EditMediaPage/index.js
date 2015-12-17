@@ -71,11 +71,11 @@ export default class EditMediaPage extends Component {
   }
 
   async saveNewMedia() {
-   await this.props.editMedia(this.state.activeMedia.id, {
-     name: this.state.activeMedia.name,
-     links: this.state.activeMedia.links,
-     description: this.state.activeMedia.description,
-   });
+    await this.props.editMedia(this.state.activeMedia.id, {
+       name: this.state.activeMedia.name,
+       links: this.state.activeMedia.links,
+       description: this.state.activeMedia.description,
+    });
     this.props.loadFoldersList(this.props.params.folderId);
     this.props.loadMedia(this.props.params.itemId);
   }
@@ -96,15 +96,18 @@ export default class EditMediaPage extends Component {
 
    if (e.target.files[0].name) {
     await this.props.uploadImage(this.props.params.itemId, formData);
-    this.setState({
-      uploadImage: true,
-    });
+     this.setState({
+       currentImageTime: new Date().getTime(),
+     });
    }
  }
 
   async changeCurrentPreview(item) {
     await this.props.changeImage(item.itemId + '-' + item.number + '.png', item.itemId + '.png');
     this.props.loadMedia(this.props.params.itemId);
+    this.setState({
+      currentImageTime: new Date().getTime(),
+    });
   }
 
   setAllImages(id) {
@@ -121,7 +124,7 @@ export default class EditMediaPage extends Component {
     });
     return (
       <div>
-        <img className={styles.currentImage} src={`${baseUrl}//preview/${id}.png`} />
+        <img className={styles.currentImage} src={`${baseUrl}//preview/${id}.png?time=${this.state.currentImageTime}`} />
 
         <div className={styles.wrapLabel}>
           <input type="file" name="file" title="Add new image for media" className={styles.inputFile} id="inputFileImageUpload" onChange={::this.handlerUploadImage} ref="fileInputEditMedia" tabIndex="0" />
