@@ -165,7 +165,7 @@ export function clientError(state = {}, action) {
   if (action.type === types.CLIENT_ERROR) {
     return {hasError: true, errorStatus: action.status};
   }
-  if (action.type === types.HIDE_CLIENT_ERROR) {
+  if (action.type === types.HIDE_CLIENT_ERROR || action.type === types.LOGOUT_USER) {
     return {hasError: false};
   }
   return state;
