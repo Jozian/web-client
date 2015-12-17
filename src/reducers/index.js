@@ -161,6 +161,16 @@ export function errorApplication(state, action) {
   return state ? state : {};
 }
 
+export function clientError(state = {}, action) {
+  if (action.type === types.CLIENT_ERROR) {
+    return {hasError: true, errorStatus: action.status};
+  }
+  if (action.type === types.HIDE_CLIENT_ERROR) {
+    return {hasError: false};
+  }
+  return state;
+}
+
 export function currentUser(state, action) {
   const user = JSON.parse(localStorage.getItem('MEDuser'));
   const token = localStorage.getItem('MEDtoken');
