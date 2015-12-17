@@ -3,7 +3,7 @@
   if (window.localStorage.getItem('MEDtoken') && window.localStorage.getItem('MEDuser')) {
     window.location.href = '/admin/';
   }
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     var allIdElem = [];
     allIdElem.push(document.getElementById('getStarted'));
     allIdElem.push(document.getElementById('useCases'));
