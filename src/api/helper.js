@@ -33,6 +33,9 @@ export default function fetch(url, options = {}) {
   if (!(options.body instanceof FormData)) {
     customHeaders.headers['Content-Type'] = options.contentType || 'application/json';
   }
+  if (options.body instanceof FormData) {
+    customHeaders.headers['Origin'] = false;
+  }
 
   let totalUrl = baseUrl + url;
   if (!options.method || options.method.toUpperCase() === 'GET') {
