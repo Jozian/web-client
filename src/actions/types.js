@@ -128,6 +128,10 @@ export const LOGOUT_USER = 'User logout';
 
 export const APPLICATION_ERROR = 'Did not get data';
 
+export const CLIENT_ERROR = 'Client error';
+
+export const HIDE_CLIENT_ERROR = 'Hide client error';
+
 export const MEDIA_LOADING = 'Loading single media';
 export const MEDIA_LOADED = 'Loaded media';
 export const MEDIA_LOAD_ERROR = 'Error loading media';
