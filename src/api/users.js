@@ -90,16 +90,6 @@ export function dontAskUser() {
   }
 }
 
-export function loadUserTemplate() {
-  return fetch(apiUrl + '/getImportFile', {
-    method: 'get',
-    responseType: 'arraybuffer',
-  }).then((result) => {
-    const blob = new Blob([result], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-    saveAs(blob, 'medComments'  + new Date() + '.xlsx');
-  });
-}
-
 export function isLastAdmin() {
   return fetch(apiUrl + '/isLastAdmin', {
     method:'post',
