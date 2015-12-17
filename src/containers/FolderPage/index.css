@@ -32,7 +32,7 @@
     line-height: 60px;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 300px;
+    max-width: calc(100% - 125px);
     text-overflow: ellipsis;
 }
 
