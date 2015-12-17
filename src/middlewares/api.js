@@ -32,6 +32,7 @@ export default store => next => action => {
     error => nextIfHaveAction({
       type: failureType,
       payload: error,
+      errorStatus: error.response.status,
       error: error.message || 'Something bad happened',
     })
   );
