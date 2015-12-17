@@ -43,7 +43,7 @@ export default class App extends Component {
         openClientError: true,
         errorClientText: 'The server was not able to find the data you have provided. Perhaps this particular data is outdated. After you press the button below, you can continue working with the application.',
       });
-    } else if (props.clientError.hasError && props.clientError.errorStatus === 400) {
+    } else if (props.clientError.hasError && props.clientError.errorStatus > 400) {
       this.setState({
         openClientError: true,
         errorClientText: 'The server was not able to process the data you have provided. After you click the button below, you an try again with different data.',
