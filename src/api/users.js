@@ -90,12 +90,6 @@ export function dontAskUser() {
   }
 }
 
-export function isLastAdmin() {
-  return fetch(apiUrl + '/isLastAdmin', {
-    method:'post',
-  });
-}
-
 export function loadUserTemplate() {
   return fetch(apiUrl + '/getImportFile', {
     method: 'get',
