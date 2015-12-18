@@ -6,7 +6,7 @@ export default store => next => action => {
     store.dispatch({
       type: APPLICATION_ERROR,
     });
-  } else if (action.error && action.errorStatus >= 400 && action.errorStatus < 500) {
+  } else if (action.error && action.errorStatus >= 400 && action.errorStatus === 403) {
     store.dispatch({
       type: CLIENT_ERROR,
       status: action.errorStatus,

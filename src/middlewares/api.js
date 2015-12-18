@@ -29,11 +29,12 @@ export default store => next => action => {
       payload: response,
       type: successType,
     }),
-    error => nextIfHaveAction({
-      type: failureType,
-      payload: error,
-      errorStatus: error.response.status,
-      error: error.message || 'Something bad happened',
+    error => error.response.json().then((errorMsg) => {
+      nextIfHaveAction({
+        type: failureType,
+        errorStatus: error.response.status,
+        error: errorMsg || error.messages || 'Something bad happened',
+      });
     })
   );
 };
