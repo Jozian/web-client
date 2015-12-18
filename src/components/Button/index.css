@@ -1,7 +1,6 @@
 .bottonBody {
     display:inline-block;
     position:relative;
-    vertical-align: middle;
 }
 .tooltip {
     display: none;
