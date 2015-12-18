@@ -20,7 +20,7 @@ import commonStyles from 'common/styles.css';
 import styles from './index.css';
 
 @connect(
-  (state) => ({user: state.user.entity, currentUser: state.currentUser, loading: state.user.loading}),
+  (state) => ({user: state.user.entity, currentUser: state.currentUser, loading: state.user.loading, userError: state.user.error }),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
@@ -132,19 +132,12 @@ export default class EditUserPage extends Component {
     }, this).value();
     if (!errorsSave.length) {
       if (this.props.params.id) {
-        if (this.props.params.id === this.props.currentUser.id.toString()) {
-          let isAdminResult = await this.props.isLastAdmin();
-          if (isAdminResult.payload) {
-            this.setState({
-              isOpenLastAdminModal: true,
-            });
-          } else {
-            await this.props.editUser(this.props.params.id, this.state.user);
-            router.transitionTo('users');
-          }
-        } else {
-          await this.props.editUser(this.props.params.id, this.state.user);
-          router.transitionTo('users');
+        await this.props.editUser(this.props.params.id, this.state.user);
+
+        if (this.props.userError === 'You are last admin') {
+          this.setState({
+            isOpenLastAdminModal: true,
+          });
         }
       } else {
         await this.props.addUser(this.state.user);
