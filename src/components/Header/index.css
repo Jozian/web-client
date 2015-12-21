@@ -22,5 +22,6 @@
     max-width: 45%;
     overflow: hidden;
     text-overflow: ellipsis;
+    vertical-align: bottom;
     font-size: 38px;
 }
