@@ -26,6 +26,10 @@
     height: 60px;
     line-height: 60px;
     vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: calc(100% - 180px);
+    text-overflow: ellipsis;
 }
 .container :global(.win-itembox) {
     height: 80px;
