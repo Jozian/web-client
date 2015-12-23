@@ -109,7 +109,8 @@ export default class EditUserPage extends Component {
     return errors;
   }
 
-  async saveUserHandler() {
+  async saveUserHandler(e) {
+    e.preventDefault();
     const { router } = this.context;
     const required = ['name', 'login', 'password'];
     const newState = {
@@ -138,6 +139,8 @@ export default class EditUserPage extends Component {
           this.setState({
             isOpenLastAdminModal: true,
           });
+        } else {
+          router.transitionTo('users');
         }
       } else {
         await this.props.addUser(this.state.user);
@@ -311,7 +314,7 @@ renderLastAdminModal() {
           <div className={editUser}><Header>Edit user</Header></div>
           <div className={addUser}><Header>Add User Account</Header></div>
           <div className={styles.wrapper}>
-            <form className={styles.backgroundWhite}>
+            <form className={styles.backgroundWhite} onSubmit={::this.saveUserHandler}>
               <div className={styles.leftBlock}>
                 { this.renderTypesOptions() }
                 <FormInput
@@ -386,6 +389,8 @@ renderLastAdminModal() {
               <p className={styles.note}>
                 * user will be able to login both to website and mobile client with these credentials.
               </p>
+
+              <input className={styles.hideSubmit} type="submit" />
             </form>
 
           </div>

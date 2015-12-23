@@ -49,4 +49,6 @@
     float:left;
 }
 
-
+.hideSubmit {
+    display: none;
+}
