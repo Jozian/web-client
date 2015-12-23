@@ -78,6 +78,12 @@ const store = createFinalStore(reducer, {
       users: [],
     },
   },
+  activeComment: {
+    loading: false,
+    entity: {
+      data: new WinJS.Binding.List([]),
+    },
+  },
 });
 
 export default store;
