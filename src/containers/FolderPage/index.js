@@ -17,8 +17,8 @@ import LoadingSpinner from 'components/LoadingSpinner';
 import Footer from 'components/Footer';
 import WhiteFooter from 'components/WhiteFooter';
 import { listLayout } from 'common';
-import { wrapLongString } from '../../common';
 import { onEnterPressed } from '../../common';
+import { isInputField } from '../../common';
 
 import styles from './index.css';
 import commonStyles from 'common/styles.css';
@@ -94,6 +94,13 @@ export default class FolderPage extends Component {
   }
 
   _handleKeyDown(e) {
+    if (e.keyCode === 13 && this.refs.inputAsk && this.refs.inputAsk.getDOMNode() === e.target) {
+      this.onChangeCheckbox(this.refs.inputAsk.getDOMNode());
+    }
+    if (this.state.isOpenNewMediaModal || this.state.isOpenEditFolderModal
+      || this.state.isOpenDeleteFoldersModal || isInputField(e)) {
+      return;
+    }
     const key = String.fromCharCode(e.keyCode);
     if (key === 'A' && e.ctrlKey) {
       e.preventDefault();
@@ -102,12 +109,8 @@ export default class FolderPage extends Component {
     if (e.keyCode === 27 ) {
       this.refs.folder.winControl.selection.clear();
     }
-    if (e.keyCode === 46 && !this.state.isOpenNewMediaModal && !this.state.isOpenEditFolderModal) {
+    if (e.keyCode === 46) {
       this.openDeleteFoldersModal();
-    }
-
-    if (e.keyCode === 13 && this.refs.inputAsk && this.refs.inputAsk.getDOMNode() === e.target) {
-      this.onChangeCheckbox(this.refs.inputAsk.getDOMNode());
     }
   }
 
@@ -213,7 +216,7 @@ export default class FolderPage extends Component {
               <Link className={styles.breadcrumbsLink} to="folder" key={pathEntry.id} params={{folderId: pathEntry.id}}>
                 {pathEntry.title}
               </Link>
-              <span className={styles.breadcrumbsTooltip}>{wrapLongString(pathEntry.title)}</span>
+              <span className={styles.breadcrumbsTooltip}>{pathEntry.title}</span>
             </span>
           </li>)
         )
@@ -441,7 +444,7 @@ export default class FolderPage extends Component {
   async addMedia() {
     this.state.uploadFileData.append('FolderId', this.props.params.folderId);
 
-    for(const key in this.state.newMedia) {
+    for (const key in this.state.newMedia) {
       this.state.uploadFileData.append(key, this.state.newMedia[key]);
     }
     await this.props.uploadMedia(this.state.uploadFileData);
@@ -487,7 +490,7 @@ export default class FolderPage extends Component {
         className={styles.newLibraryModal}
         >
         <div>
-          <form>
+          <form className={styles.addMediaForm}>
             <div className={styles.inprogressLine} style={{width: this.state.progress}}></div>
             <label className={styles.editLabel} htmlFor="inputName">Name:</label>
             <input
