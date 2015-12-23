@@ -111,3 +111,10 @@
     height: 0;
     display: inline-block;
 }
+
+.noResult {
+    color: #5c5c5c;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 30px;
+}

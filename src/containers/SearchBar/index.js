@@ -136,7 +136,7 @@ export default class SearchBar extends Component {
                     <div className={styles.userItem} onClick={this.userSelected.bind(this, item)} onKeyDown={onEnterPressed(this.userSelected.bind(this, item))} tabIndex="0">{item.name}</div>
                   );
                 })}
-              </div> : 'NO RESULT'}
+              </div> : <div className={styles.noResult}>NO RESULT</div>}
 
             <h3 className={styles.headerList} role="listbox">Media</h3>
             {this.props.searchResult.entities.media.length ?
@@ -149,7 +149,7 @@ export default class SearchBar extends Component {
                     </div>
                   </div>);
                 })}
-              </div> : 'NO RESULT'}
+              </div> : <div className={styles.noResult}>NO RESULT</div>}
           </div> : ''}
       </div>
     );
