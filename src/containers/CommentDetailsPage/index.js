@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as actions from '../../actions/media-comments';
+import { listLayout } from 'common';
 import Modal from 'components/Modal';
 import loading from 'decorators/loading';
 import ActionButton from 'components/ActionButton';
@@ -12,14 +13,15 @@ import Footer from 'components/Footer';
 import WhiteFooter from 'components/WhiteFooter';
 import Header from 'components/Header';
 import cx from 'classnames';
-import { onEnterPressed } from '../../common';
+import { onEnterPressed } from '../../common/index.js';
+import { isInputField } from '../../common/index.js';
 
 import style from './style.css';
 import commonStyles from 'common/styles.css';
 
 @connect(
-    (state) => ({comments: state.activeComment, user: state.currentUser, pendingActions: state.pendingActions}),
-    (dispatch) => bindActionCreators(actions, dispatch)
+  (state) => ({comments: state.activeComment, user: state.currentUser, pendingActions: state.pendingActions}),
+  (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
   (state) => state.comments.loading,
@@ -73,6 +75,12 @@ export default class CommentDetails extends Component {
     });
   }
 
+  replyAllEnter(e) {
+    if (e.keyCode === 13) {
+      this.replyAll();
+    }
+  }
+
   componentWillMount() {
     document.addEventListener('keydown', this.handleKeyDown);
   }
@@ -81,18 +89,26 @@ export default class CommentDetails extends Component {
     document.removeEventListener('keydown', this.handleKeyDown);
   }
 
+  componentDidUpdate() {
+    if (this.state.selectItem && this.state.selectOnLoad) {
+      this.refs.folder.winControl.selection.set(this.state.selectItem);
+      setImmediate(() => this.refs.folder.winControl.ensureVisible(this.state.selectItem));
+      this.setState({selectOnLoad: false});
+    }
+  }
+
   _handleKeyDown(e) {
+    if(isInputField(e) ||  this.state.isNewCommentPopupOpen
+      || this.state.isEditCommentPopupOpen || this.state.isDeleteCommentsPopupOpen) {
+      return;
+    }
     const key = String.fromCharCode(e.keyCode);
     if (key === 'A' && e.ctrlKey) {
       e.preventDefault();
-      this.setState({
-        selectionComments: this.props.comments.entity.data.map( (item) => (item.id)),
-      });
+      this.refs.folder.winControl.selection.selectAll();
     }
     if (e.keyCode === 27 ) {
-      this.setState({
-        selectionComments: [],
-      });
+      this.refs.folder.winControl.selection.clear();
     }
     if (e.keyCode === 46) {
       this.deleteComments();
@@ -103,27 +119,39 @@ export default class CommentDetails extends Component {
     this.setState({
       id: this.props.params.id,
       isNewCommentPopupOpen: true,
-      parentId: item.id,
+      parentId: item.data.id,
       modalWindow: {
-        title: `To ${ item.author }`,
+        title: `To ${ item.data.author }`,
       },
     });
+  }
+
+  replyToCommentEnterState(item, event) {
+    if (event.keyCode === 13) {
+      this.replyToCommentState(item);
+    }
   }
 
   async editCommentState(item) {
     const editDataComment = {
       isEditCommentPopupOpen: true,
-      id: item.id,
-      newCommentText: item.text,
+      id: item.data.id,
+      newCommentText: item.data.text,
       replay: 'Edit',
       modalWindow: {
         title: 'Edit',
       },
     };
-    if (item.parentId) {
-      editDataComment.parentId = item.parentId;
+    if (item.data.parentId) {
+      editDataComment.parentId = item.data.parentId;
     }
     this.setState(editDataComment);
+  }
+
+  editCommentEnterState (item, event) {
+    if (event.keyCode === 13) {
+      this.editCommentState(item);
+    }
   }
 
   async editComment(item) {
@@ -166,9 +194,11 @@ export default class CommentDetails extends Component {
     this.props.loadComments(this.props.params.id);
   }
 
-  async handleItemSelected(item) {
+  async handleItemSelected(event) {
+    const item = await event.detail.itemPromise;
     this.setState({
-      selectionComments: [item.id],
+      selectItem: item,
+      selectOnLoad: true,
     });
   }
 
@@ -220,9 +250,9 @@ export default class CommentDetails extends Component {
         isOpen={this.state.isNewCommentPopupOpen}
         title={this.state.modalWindow.title}
         className={style.commentModal}>
-      <form onSubmit={::this.createNewComment}>
-        <label>
-          <div className={style.labelName}>Message:</div>
+        <form onSubmit={::this.createNewComment}>
+          <label>
+            <div className={style.labelName}>Message:</div>
           <textarea
             className={style.textArea}
             type="text"
@@ -230,21 +260,23 @@ export default class CommentDetails extends Component {
             autoFocus
             value={this.state.newCommentText}
             onChange={::this.onCommentTextInputChange}
-            ></textarea>
-        </label>
-      </form>
-      <WhiteFooter>
-        <ActionButtonForModal
-          className={commonStyles.saveButtonModal}
-          onClick={::this.createNewComment}
-          disabled={!this.state.newCommentText.length}
-          inProgress={this.props.pendingActions.newComment}
-          >
-          Send
-        </ActionButtonForModal>
-        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideNewCommentPopup}>Cancel</ActionButtonForModal>
-      </WhiteFooter>
-    </Modal>);
+            role="Text for new comment"
+            />
+          </label>
+        </form>
+        <WhiteFooter>
+          <ActionButtonForModal
+            className={commonStyles.saveButtonModal}
+            onClick={::this.createNewComment}
+            disabled={!this.state.newCommentText.length}
+            inProgress={this.props.pendingActions.newComment}
+            role="OK button"
+            >
+            Send
+          </ActionButtonForModal>
+          <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideNewCommentPopup} role="Cancel button">Cancel</ActionButtonForModal>
+        </WhiteFooter>
+      </Modal>);
   }
 
   renderEditComments() {
@@ -254,7 +286,7 @@ export default class CommentDetails extends Component {
       className={style.commentModal}
       >
       <form onSubmit={::this.editComment}>
-        <label>
+        <label >
           <div className={style.labelName}>Message:</div>
           <textarea
             className={style.textArea}
@@ -263,7 +295,8 @@ export default class CommentDetails extends Component {
             autoFocus
             value={this.state.newCommentText}
             onChange={::this.onCommentTextInputChange}
-            ></textarea>
+            role="Text for edit comment"
+            />
         </label>
       </form>
       <WhiteFooter>
@@ -271,10 +304,11 @@ export default class CommentDetails extends Component {
           className={commonStyles.saveButtonModal}
           onClick={::this.editComment}
           disabled={!this.state.newCommentText.length}
-          inProgress={this.props.pendingActions.newComment}>
+          inProgress={this.props.pendingActions.newComment}
+          role="OK button">
           Send
         </ActionButtonForModal>
-        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideEditCommentPopup}>Cancel</ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideEditCommentPopup} role="Cancel button">Cancel</ActionButtonForModal>
       </WhiteFooter>
     </Modal>);
   }
@@ -298,6 +332,24 @@ export default class CommentDetails extends Component {
     </Modal>);
   }
 
+  listViewItemRenderer = winjsReactRenderer((item) => {
+    const classes = cx({
+      [style.itemText]: true,
+      [style.level3]: item.data.parentId,
+    });
+
+    return (
+      <div className={style.tplItem}>
+        <div className={classes}>
+          <h3 className={style.author}>{item.data.author}</h3>
+          <h6 className={style.text}>{item.data.text}</h6>
+        </div>
+        { (!item.data.parentId  && item.data.author !== this.props.user.name) ? <button className={cx(style.replay, 'win-interactive')} onClick={this.replyToCommentState.bind(this, item)} onKeyDown={onEnterPressed(this.replyToCommentEnterState.bind(this, item))}>reply</button> : '' }
+
+        { (item.data.author === this.props.user.name) ? <button className={cx(style.replay, 'win-interactive')} onClick={this.editCommentState.bind(this, item)} onKeyDown={onEnterPressed(this.editCommentEnterState.bind(this, item))}>edit</button> : '' }
+      </div>
+    );
+  });
   render() {
     return (
       <div className={style.commentBlock}>
@@ -311,40 +363,26 @@ export default class CommentDetails extends Component {
         <div className={style.commentsContent}>
 
           <div className={style.toolbar}>
-            <span className={style.title}>Commentaries</span>
-            <div className={style.toolbarBtn} onClick={::this.replyAll} onKeyDown={onEnterPressed(::this.replyAll)} tabIndex="0">REPLY ALL</div>
+            <span className={style.title} role={ `Commentaries for media ${this.props.params.mediaName} `}>Commentaries</span>
+            <div className={style.toolbarBtn} onClick={::this.replyAll} onKeyDown={onEnterPressed(::this.replyAllEnter)}  tabIndex="0">REPLY ALL</div>
           </div>
+          <ListView
+            ref="folder"
+            className={style.list}
+            itemDataSource={this.props.comments.entity.data.dataSource}
+            itemTemplate={this.listViewItemRenderer}
+            onItemInvoked={::this.handleItemSelected}
+            onSelectionChanged={::this.handleSelectionChange}
+            layout={listLayout} />
 
-          <div className={style.list}>{this.props.comments.entity.data.map( (item) => {
-            const classes = cx({
-              [style.itemText]: true,
-              [style.level3]: item.parentId,
-            });
-
-            const classForItem = cx({
-              [style.tplItem]: true,
-              [style.selectable]: this.state.selectionComments.indexOf(item.id) !== -1,
-            });
-
-            return (
-              <div className={classForItem} onClick={this.handleItemSelected.bind(this, item)} onKeyDown={onEnterPressed(this.handleItemSelected.bind(this, item))} tabIndex="0">
-                <div className={classes}>
-                  <h3 className={style.author}>{item.author}</h3>
-                  <h6 className={style.text}>{item.text}</h6>
-                </div>
-                { (!item.parentId  && item.author !== this.props.user.name) ? <button className={style.replay} onClick={this.replyToCommentState.bind(this, item)} onKeyUp={onEnterPressed(this.replyToCommentState.bind(this, item))}>reply</button> : '' }
-
-                { (item.author === this.props.user.name) ? <button className={style.replay} onClick={this.editCommentState.bind(this, item)} onKeyUp={onEnterPressed(this.editCommentState.bind(this, item))}>edit</button> : '' }
-              </div>
-            );
-          })}</div>
         </div>
         <Footer>
+
           <ActionButton
             disabled={this.state.selectionComments.length === 0}
             onClick={::this.showDeleteCommentsPopup}
             icon="mdl2-delete"
-            tooltipText="Delete comments">
+            tooltipText="Delete button">
           </ActionButton>
         </Footer>
       </div>
