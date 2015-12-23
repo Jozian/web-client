@@ -24,6 +24,7 @@
 .wrapper {
     background-color: #ffffff;
     width: 80%;
+    max-width: 770px;
     padding-top: 10px;
     margin-left: 5%;
     position: relative;
