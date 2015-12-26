@@ -4,6 +4,7 @@
     height: calc(100vw - 201px);
     margin: 1.25% 1.25% 1.25% 5%;
     background-color: #ffffff;
+    overflow: hidden;
 }
 
 .list {
@@ -70,7 +71,7 @@
     background-color: #ffffff;
     padding: 5px;
     overflow: hidden;
-    height: 55px !important;
+    height: 100%;
 }
 
 .bodyBox {
@@ -118,7 +119,6 @@
     font-weight: 400;
     line-height: 1.6667;
     margin: 0;
-    width: 800px;
     height: 60%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -144,7 +144,19 @@
     color: grey;
 }
 
-.commentBlock :global(.win-container) {
-    height: 55px;
+.commentBlock :global(.win-listview .win-horizontal .win-itemscontainer-padder) {
+    height: 0;
     transform: none !important;
+}
+
+.commentBlock :global(.win-listview .win-cellspanninggridlayout .win-container.win-laidout) {
+    width: 95% !important;
+}
+
+.commentBlock :global(.win-laidout) {
+    width: calc(95vw - 250px) !important;
+}
+
+.commentBlock :global(.win-listview > .win-viewport.win-horizontal) {
+    overflow: hidden !important;
 }

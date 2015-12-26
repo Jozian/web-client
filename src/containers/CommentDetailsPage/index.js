@@ -154,6 +154,21 @@ export default class CommentDetails extends Component {
     }
   }
 
+  groupInfo() {
+    return {
+      enableCellSpanning: true,
+      cellWidth: 100,
+      cellHeight: 80,
+    };
+  }
+
+  itemInfo(dataId) {
+    const elemData = this.props.comments.entity.data.getItem(dataId).data;
+    const calcData = (Math.ceil(elemData.text.length / 80) * 12) + 55;
+    const size = { width: 100, height: calcData};
+    return size;
+  }
+
   async editComment(item) {
     const editData = {
       id: this.state.id,
@@ -350,7 +365,8 @@ export default class CommentDetails extends Component {
       </div>
     );
   });
-  render() {
+
+    render() {
     return (
       <div className={style.commentBlock}>
         { this.renderDeleteLibrariesPopup() }
@@ -373,7 +389,7 @@ export default class CommentDetails extends Component {
             itemTemplate={this.listViewItemRenderer}
             onItemInvoked={::this.handleItemSelected}
             onSelectionChanged={::this.handleSelectionChange}
-            layout={listLayout} />
+            layout={{groupInfo: ::this.groupInfo, itemInfo: ::this.itemInfo, type: WinJS.UI.CellSpanningLayout }} />
 
         </div>
         <Footer>
