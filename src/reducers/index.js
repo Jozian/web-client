@@ -163,7 +163,7 @@ export function errorApplication(state, action) {
 
 export function clientError(state = {}, action) {
   if (action.type === types.CLIENT_ERROR) {
-    return {hasError: true, errorStatus: action.status};
+    return {hasError: true, errorStatus: action.status, errorMsg: action.errorMsg};
   }
   if (action.type === types.HIDE_CLIENT_ERROR || action.type === types.LOGOUT_USER) {
     return {hasError: false};
