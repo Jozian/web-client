@@ -36,7 +36,7 @@ export default class App extends Component {
       window.location = '/index.html';
     }
 
-    if (props.clientError.hasError && props.clientError.errorStatus === 403) {
+    if (props.clientError.hasError && props.clientError.errorStatus === 403 && props.clientError.errorMsg === 'Access denied') {
       props.logoutUser();
     } else if (props.clientError.hasError && props.clientError.errorStatus === 404) {
       this.setState({

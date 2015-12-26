@@ -33,7 +33,7 @@ export default store => next => action => {
       nextIfHaveAction({
         type: failureType,
         errorStatus: error.response.status,
-        error: errorMsg || error.messages || 'Something bad happened',
+        error: errorMsg.message || error.message || 'Something bad happened',
       });
     })
   );
