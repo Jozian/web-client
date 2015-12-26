@@ -140,7 +140,11 @@ export default class EditUserPage extends Component {
             isOpenLastAdminModal: true,
           });
         } else {
-          router.transitionTo('users');
+          if (this.props.currentUser.id.toString() === this.props.params.id && this.state.user.type !== 'admin') {
+            this.props.logoutUser();
+          } else {
+            router.transitionTo('users');
+          }
         }
       } else {
         await this.props.addUser(this.state.user);
@@ -314,8 +318,7 @@ renderLastAdminModal() {
           <div className={editUser}><Header>Edit user</Header></div>
           <div className={addUser}><Header>Add User Account</Header></div>
           <div className={styles.wrapper}>
-            <form className={styles.backgroundWhite} onSubmit={::this.saveUserHandler}>
-              <div className={styles.leftBlock}>
+            <form className={styles.backgroundWhite} id="userEditForm" onSubmit={::this.saveUserHandler}>
                 { this.renderTypesOptions() }
                 <FormInput
                   valueLink={{
@@ -384,13 +387,11 @@ renderLastAdminModal() {
                   checked={this.state.checked.email}
                   onBlur={::this.onBlur}
                   onCheckboxChange={this.check.bind(this, 'email')}/>
-              </div>
 
               <p className={styles.note}>
                 * user will be able to login both to website and mobile client with these credentials.
               </p>
 
-              <input className={styles.hideSubmit} type="submit" />
             </form>
 
           </div>
@@ -398,6 +399,8 @@ renderLastAdminModal() {
             <ActionButton onClick={::this.saveUserHandler}
                           tooltipText="Save user"
                           inProgress={this.props.loading}
+                          type="submit"
+                          form="userEditForm"
                           icon="mdl2-check-mark"
               />
             <ActionButton icon="mdl2-cancel"
