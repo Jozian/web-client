@@ -10,6 +10,8 @@ export default class ActionButton extends Component {
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string,
     children: React.PropTypes.node,
+    form: React.PropTypes.string,
+    type: React.PropTypes.string,
   };
 
   static defaultProps = {
@@ -20,7 +22,7 @@ export default class ActionButton extends Component {
     const disabled = this.props.disabled || this.props.inProgress;
     const className = this.props.inProgress ? 'fa fa-spin fa-cog' : this.props.icon;
     return (
-      <Button {...this.props} disabled={disabled} className={cx(className, styles.spinner)} role="button">
+      <Button {...this.props} disabled={disabled} className={cx(className, styles.spinner)} role="button" type={this.props.type} form={this.props.form}>
         {this.props.children}
       </Button>
     );

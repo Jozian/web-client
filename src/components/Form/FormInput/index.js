@@ -31,16 +31,18 @@ export default class FormInput extends Component {
     return (
       <div className={styles.editRow}>
         <label className={styles.editLabel}>
-          {this.props.label}</label>
-        <input className={classes}
-               valueLink={this.props.valueLink}
-               type={this.props.type}
-               name={this.props.name}
-               placeholder={this.props.placeholder}
-               onBlur={this.props.onBlur}
-               onChange={this.props.onChange}
-               maxLength={this.props.maxlength}/>
+          {this.props.label}
+          <input className={classes}
+                 valueLink={this.props.valueLink}
+                 type={this.props.type}
+                 name={this.props.name}
+                 placeholder={this.props.placeholder}
+                 onBlur={this.props.onBlur}
+                 onChange={this.props.onChange}
+                 maxLength={this.props.maxlength}/>
+        </label>
         {ErrorMessage}
+
       </div>
     );
   }

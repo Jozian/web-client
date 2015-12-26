@@ -23,7 +23,8 @@ export default class Button extends Component {
     return (
       <div className={styles.bottonBody}>
         <label className={styles.hidden} htmlFor={currentId}>{this.props.tooltipText}</label>
-        <button type="button"
+        <button type={this.props.type || "button"}
+                form={this.props.form}
               className={classes}
               onClick={this.props.onClick}
               disabled={disabled}
