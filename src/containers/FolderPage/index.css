@@ -120,7 +120,7 @@
     padding: 5px 10px;
     width: 100%;
     min-width: 64px;
-    height: 100px;
+    height: 70px;
     background-clip: border-box;
     font-size: 11pt;
     font-weight: 400;
@@ -173,14 +173,12 @@
     line-height: 25px;
 }
 .videoType {
-    display: inline-block;
     width: 47%;
     margin-right: 10px;
     text-align: right;
 }
 .descriptionName {
     padding: 5px 10px 5px 0;
-    margin-bottom: 5px;
     width: 100%;
     color: grey;
     margin-right: 2%;
@@ -282,4 +280,8 @@ div.editFolderModal {
 .addMediaForm {
     max-height: calc(100vh - 200px);
     overflow-y: auto;
+}
+
+.marginBottomForArea {
+    margin-bottom: 20px;
 }

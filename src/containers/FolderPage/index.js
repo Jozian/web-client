@@ -521,14 +521,14 @@ export default class FolderPage extends Component {
               id="descriptionField"
               ></textArea>
             <label className={styles.editLabel} htmlFor="externalLinks">External links:</label>
-            <input
+            <textArea
               label="External links"
               name="links"
               placeholder="External links"
               type="text"
               onChange={this.onChange.bind(this, 'links')}
-              className={styles.editInput}
-              id="externalLinks"/>
+              className={cx(styles.textArea, styles.marginBottomForArea)}
+              id="externalLinks"></textArea>
           </form>
         </div>
 
