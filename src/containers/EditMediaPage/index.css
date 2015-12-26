@@ -29,6 +29,7 @@
     height: 40px;
     background-color: #eeeeee;
     border: 0;
+    display: block;
 }
 
 .inputFile {

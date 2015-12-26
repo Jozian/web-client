@@ -70,7 +70,8 @@ export default class EditMediaPage extends Component {
     });
   }
 
-  async saveNewMedia() {
+  async saveNewMedia(e) {
+    e.preventDefault();
     await this.props.editMedia(this.state.activeMedia.id, {
        name: this.state.activeMedia.name,
        links: this.state.activeMedia.links,
@@ -149,7 +150,7 @@ export default class EditMediaPage extends Component {
           <span className={styles.toolbarTitle} onClick={::this.cancelSave}>{this.state.currentMediaName}</span>
         </div>
           <div className={styles.mediaForm}>
-            <form className={styles.formBody}>
+            <form className={styles.formBody} onSubmit={::this.saveNewMedia}>
               <label className={styles.label} htmlFor="inputMediaField">Name</label>
               <input
                 className={styles.inputName}
@@ -175,14 +176,14 @@ export default class EditMediaPage extends Component {
                 ></textarea><br />
 
               <label className={styles.label} htmlFor="mediaExternalLinks">External links</label>
-              <input
+              <textArea
                 id="mediaExternalLinks"
-                className={styles.inputName}
+                className={styles.descriptionArea}
                 name="links"
-                placeholder="links"
+                placeholder="http://"
                 value={this.state.activeMedia.links}
                 onChange={this.onMediaInputChange.bind(this, 'links')}
-                /><br />
+                ></textArea><br />
 
               <div>
                 {this.state.activeMedia.id ? this.setAllImages(this.state.activeMedia.id) : ''}
