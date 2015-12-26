@@ -1,7 +1,7 @@
 .motd {
     background-color: #ffffff;
     width: 320px;
-    margin-left: 55px;
+    margin-left: 5%;
     padding-top: 30px;
     padding-bottom: 30px;
 }
@@ -33,6 +33,7 @@
     font-size: 15px;
     font-weight: 300;
     color: #505050;
+    word-break: break-all;
 }
 .textArea {
     padding: 4px 8px;
