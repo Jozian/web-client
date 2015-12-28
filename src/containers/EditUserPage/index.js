@@ -20,7 +20,7 @@ import commonStyles from 'common/styles.css';
 import styles from './index.css';
 
 @connect(
-  (state) => ({user: state.user.entity, currentUser: state.currentUser, loading: state.user.loading, userError: state.user.error }),
+  (state) => ({user: state.user.entity, currentUser: state.currentUser, loading: state.user.loading, userError: state.clientError }),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
@@ -135,7 +135,7 @@ export default class EditUserPage extends Component {
       if (this.props.params.id) {
         await this.props.editUser(this.props.params.id, this.state.user);
 
-        if (this.props.userError === 'You are last admin') {
+        if (this.props.userError && this.props.userError.errorMsg === 'You are last admin') {
           this.setState({
             isOpenLastAdminModal: true,
           });
@@ -222,7 +222,11 @@ export default class EditUserPage extends Component {
 
   isMobilePhoneValidator(number) {
     const clearString = number.replace(/[^1-9]/, '').length;
-    return !!(clearString > 5 && clearString < 19);
+    if (clearString > 5 && clearString < 19 && /^\+[1-9]{1}[0-9]{3,14}$/.test(number)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getUserChange(field) {
@@ -284,6 +288,7 @@ hideLastAdminPopup() {
   this.setState({
     isOpenLastAdminModal: false,
   });
+  this.context.router.transitionTo('users');
 }
 
 renderLastAdminModal() {
@@ -322,9 +327,9 @@ renderLastAdminModal() {
                 { this.renderTypesOptions() }
                 <FormInput
                   valueLink={{
-                value: this.state.user.name,
-                requestChange: this.getUserChange('name'),
-              }}
+                    value: this.state.user.name,
+                    requestChange: this.getUserChange('name'),
+                  }}
                   label="User name"
                   name="name"
                   placeholder="i.e. John Doe"
@@ -334,9 +339,9 @@ renderLastAdminModal() {
                   maxLength="30"/>
                 <FormInput
                   valueLink={{
-                value: this.state.user.login,
-                requestChange: this.getUserChange('login'),
-              }}
+                    value: this.state.user.login,
+                    requestChange: this.getUserChange('login'),
+                  }}
                   label="Login"
                   name="login"
                   placeholder="i.e. johndoe"
@@ -345,9 +350,9 @@ renderLastAdminModal() {
                   onBlur={::this.onBlur}/>
                 <FormInput
                   valueLink={{
-                  value: this.state.user.password,
-                  requestChange: this.getUserChange('password'),
-                }}
+                    value: this.state.user.password,
+                    requestChange: this.getUserChange('password'),
+                  }}
                   key="password"
                   label="Password"
                   name="password"
@@ -357,18 +362,18 @@ renderLastAdminModal() {
                 <FormInput
                   key="confirm"
                   valueLink={{
-                  value: null,
-                  requestChange: this.getUserChange('confirm'),
-                }}
+                    value: null,
+                    requestChange: this.getUserChange('confirm'),
+                  }}
                   label="Confirm password"
                   name="confirm"
                   type="password"
                   errorMessage={this.state.errors.confirm}/>
                 <FormInput
                   valueLink={{
-                  value: this.state.user.phone,
-                  requestChange: this.getUserChange('phone'),
-                }}
+                    value: this.state.user.phone,
+                    requestChange: this.getUserChange('phone'),
+                  }}
                   errorMessage={this.state.errors.phone}
                   label="Send credentials in SMS:"
                   name="phone"
