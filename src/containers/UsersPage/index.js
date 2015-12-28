@@ -213,7 +213,7 @@ export default class UsersPage extends Component {
           <div className={styles.wrapLabel}>
             <input type="file" name="file" className={styles.inputFile} onChange={::this.handlerUploadFile} ref="fileInput" />
             <div className={styles.importContainer} tabIndex="0" onKeyDown={::this.onUploadFile}>Upload file</div>
-            <a className={styles.importContainer} href={`${baseUrl}/api/userManagement/getImportFile?token=${this.props.currentUser.token}`}>Download template</a>
+            <a className={styles.importContainer} href={`${baseUrl}/api/users/getImportFile?token=${this.props.currentUser.token}`}>Download template</a>
           </div>
           <div className={styles.importLabel} >File: <span className={styles.fileNameSpan}>{this.state.selectedFileName}</span></div>
 
