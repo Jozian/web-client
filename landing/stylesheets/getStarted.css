@@ -55,6 +55,10 @@
     bottom: -40px;
     right: 200px;
 }
+
+.downloads-btn--hidden {
+    font-size: 0;
+}
 .download-btn {
     width: 271px;
     height: 67px;
