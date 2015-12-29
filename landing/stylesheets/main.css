@@ -265,6 +265,7 @@ input[type="checkbox"] {
     margin: 10px 0 0 15px;
 }
 .b_start-header-menu {
+    width: calc(71% - 81px);
     margin: 0;
     padding-left: 5px;
     display: inline-block;
@@ -285,7 +286,17 @@ input[type="checkbox"] {
     color: #ffffff !important;
 }
 .b_start-header-menu-login {
-    margin-left: 80px;
+    margin-left: 60px;
+}
+@media (max-width: 1200px) {
+    .b_start-header-menu-login {
+        margin-left: 0;
+    }
+}
+@media (max-width: 1130px) {
+    .b_start-header-menu li a {
+        padding: 14px 18px 20px 18px;
+    }
 }
 .b_start-header--content {
     float: right;
