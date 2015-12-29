@@ -152,6 +152,9 @@ export default class UsersPage extends Component {
 
   async deleteUsers() {
     await this.props.deleteUsers(this.state.selectedUsers.filter(u => u.id !== this.props.currentUser.id).map(u => u.id));
+    this.setState({
+      selectedUsers: [],
+    });
     this.props.loadUsers();
   }
 
