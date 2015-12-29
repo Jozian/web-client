@@ -309,111 +309,111 @@ renderLastAdminModal() {
 }
 
   render() {
-      const editUser = cx({
-        [styles.hideHeader]: true,
-        [styles.showHeader]: this.props.params.id,
-      });
-      const addUser = cx({
-        [styles.hideHeader]: true,
-        [styles.showHeader]: !this.props.params.id,
-      });
-      return (
-        <div className={styles.mainContainer}>
-          { this.renderLastAdminModal() }
-          <div className={editUser}><Header>Edit user</Header></div>
-          <div className={addUser}><Header>Add User Account</Header></div>
-          <div className={styles.wrapper}>
-            <form className={styles.backgroundWhite} id="userEditForm" onSubmit={::this.saveUserHandler}>
-                { this.renderTypesOptions() }
-                <FormInput
-                  valueLink={{
-                    value: this.state.user.name,
-                    requestChange: this.getUserChange('name'),
-                  }}
-                  label="User name"
-                  name="name"
-                  placeholder="i.e. John Doe"
-                  type="text"
-                  errorMessage={this.state.errors.name}
-                  onBlur={::this.onBlur}
-                  maxLength="30"/>
-                <FormInput
-                  valueLink={{
-                    value: this.state.user.login,
-                    requestChange: this.getUserChange('login'),
-                  }}
-                  label="Login"
-                  name="login"
-                  placeholder="i.e. johndoe"
-                  type="text"
-                  errorMessage={this.state.errors.login}
-                  onBlur={::this.onBlur}/>
-                <FormInput
-                  valueLink={{
-                    value: this.state.user.password,
-                    requestChange: this.getUserChange('password'),
-                  }}
-                  key="password"
-                  label="Password"
-                  name="password"
-                  placeholder={null}
-                  type="password"
-                  errorMessage={this.state.errors.password}/>
-                <FormInput
-                  key="confirm"
-                  valueLink={{
-                    value: null,
-                    requestChange: this.getUserChange('confirm'),
-                  }}
-                  label="Confirm password"
-                  name="confirm"
-                  type="password"
-                  errorMessage={this.state.errors.confirm}/>
-                <FormInput
-                  valueLink={{
-                    value: this.state.user.phone,
-                    requestChange: this.getUserChange('phone'),
-                  }}
-                  errorMessage={this.state.errors.phone}
-                  label="Send credentials in SMS:"
-                  name="phone"
-                  placeholder="Your mobile phone"
-                  checked={this.state.checked.phone}
-                  onCheckboxChange={this.check.bind(this, 'phone')}/>
-                <FormInput
-                  valueLink={{
-                    value: this.state.user.email,
-                    requestChange: this.getUserChange('email'),
-                  }}
-                  label="Send credentials on Email"
-                  errorMessage={this.state.errors.email}
-                  name="email"
-                  placeholder="email@email.com"
-                  checked={this.state.checked.email}
-                  onBlur={::this.onBlur}
-                  onCheckboxChange={this.check.bind(this, 'email')}/>
+    const editUser = cx({
+      [styles.hideHeader]: true,
+      [styles.showHeader]: this.props.params.id,
+    });
+    const addUser = cx({
+      [styles.hideHeader]: true,
+      [styles.showHeader]: !this.props.params.id,
+    });
+    return (
+      <div className={styles.mainContainer}>
+        { this.renderLastAdminModal() }
+        <div className={editUser}><Header>Edit user</Header></div>
+        <div className={addUser}><Header>Add User Account</Header></div>
+        <div className={styles.wrapper}>
+          <form className={styles.backgroundWhite} id="userEditForm" onSubmit={::this.saveUserHandler}>
+              { this.renderTypesOptions() }
+              <FormInput
+                valueLink={{
+                  value: this.state.user.name,
+                  requestChange: this.getUserChange('name'),
+                }}
+                label="User name"
+                name="name"
+                placeholder="i.e. John Doe"
+                type="text"
+                errorMessage={this.state.errors.name}
+                onBlur={::this.onBlur}
+                maxLength="30"/>
+              <FormInput
+                valueLink={{
+                  value: this.state.user.login,
+                  requestChange: this.getUserChange('login'),
+                }}
+                label="Login"
+                name="login"
+                placeholder="i.e. johndoe"
+                type="text"
+                errorMessage={this.state.errors.login}
+                onBlur={::this.onBlur}/>
+              <FormInput
+                valueLink={{
+                  value: this.state.user.password,
+                  requestChange: this.getUserChange('password'),
+                }}
+                key="password"
+                label="Password"
+                name="password"
+                placeholder={null}
+                type="password"
+                errorMessage={this.state.errors.password}/>
+              <FormInput
+                key="confirm"
+                valueLink={{
+                  value: null,
+                  requestChange: this.getUserChange('confirm'),
+                }}
+                label="Confirm password"
+                name="confirm"
+                type="password"
+                errorMessage={this.state.errors.confirm}/>
+              <FormInput
+                valueLink={{
+                  value: this.state.user.phone,
+                  requestChange: this.getUserChange('phone'),
+                }}
+                errorMessage={this.state.errors.phone}
+                label="Send credentials in SMS:"
+                name="phone"
+                placeholder="Your mobile phone"
+                checked={this.state.checked.phone}
+                onCheckboxChange={this.check.bind(this, 'phone')}/>
+              <FormInput
+                valueLink={{
+                  value: this.state.user.email,
+                  requestChange: this.getUserChange('email'),
+                }}
+                label="Send credentials on Email"
+                errorMessage={this.state.errors.email}
+                name="email"
+                placeholder="email@email.com"
+                checked={this.state.checked.email}
+                onBlur={::this.onBlur}
+                onCheckboxChange={this.check.bind(this, 'email')}/>
 
-              <p className={styles.note}>
-                * user will be able to login both to website and mobile client with these credentials.
-              </p>
+            <p className={styles.note}>
+              * user will be able to login both to website and mobile client with these credentials.
+            </p>
 
-            </form>
+          </form>
 
-          </div>
-          <Footer>
-            <ActionButton onClick={::this.saveUserHandler}
-                          tooltipText="Save user"
-                          inProgress={this.props.loading}
-                          type="submit"
-                          form="userEditForm"
-                          icon="mdl2-check-mark"
-              />
-            <ActionButton icon="mdl2-cancel"
-                          onClick={::this.cancelUserHandler}
-                          tooltipText="Cancel save user"
-              />
-          </Footer>
-      </div>);
+        </div>
+        <Footer>
+          <ActionButton onClick={::this.saveUserHandler}
+                        tooltipText="Save user"
+                        inProgress={this.props.loading}
+                        type="submit"
+                        form="userEditForm"
+                        icon="mdl2-check-mark"
+            />
+          <ActionButton icon="mdl2-cancel"
+                        onClick={::this.cancelUserHandler}
+                        tooltipText="Cancel save user"
+            />
+        </Footer>
+    </div>);
   }
 }
 
