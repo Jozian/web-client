@@ -43,6 +43,11 @@ export default class App extends Component {
         openClientError: true,
         errorClientText: 'The server was not able to find the data you have provided. Perhaps this particular data is outdated. After you press the button below, you can continue working with the application.',
       });
+    } else if (props.clientError.hasError && props.clientError.errorStatus === 400 && props.clientError.errorMsg === 'It is not current type') {
+      this.setState({
+        openClientError: true,
+        errorClientText: 'It is not correct type for media file. Please, close this popup and choose new file.',
+      });
     } else if (props.clientError.hasError && props.clientError.errorStatus === 400) {
       this.setState({
         openClientError: true,
