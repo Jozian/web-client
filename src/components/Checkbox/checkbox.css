@@ -45,3 +45,7 @@
     color: grey;
     display: inline-block;
 }
+
+.hideLabel {
+    font-size: 0;
+}

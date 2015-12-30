@@ -35,6 +35,7 @@ export default class Checkbox extends Component {
       [styles.checked]: checked !== partiallyChecked,
       [styles.partChecked]: checked === partiallyChecked,
     });
+    const currentId = Math.random();
     return (
       <div
         tabIndex={this.props.tabIndex}
@@ -42,10 +43,10 @@ export default class Checkbox extends Component {
         onKeyDown={onEnterPressed(::this.handleClick)}
         className={wrapperClasses}
       >
+        <label htmlFor={currentId} className={styles.hideLabel}>{`Checkbox for ${this.props.title}`}</label>
         <label>
-          <input onChange={::this.handleClick} ref="input" type="checkbox" checked={!!checked} disabled={disabled}/>
+          <input role="checkbox" id={currentId} onChange={::this.handleClick} ref="input" type="checkbox" checked={!!checked} disabled={disabled}/>
           <div className={checkboxClasses}></div>
-          <span className={styles.title}>{this.props.title}</span>
         </label>
       </div>
     );
