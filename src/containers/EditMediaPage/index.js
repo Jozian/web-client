@@ -54,6 +54,9 @@ export default class EditMediaPage extends Component {
     if (props.params.itemId !== this.props.params.itemId) {
       props.loadMedia(props.params.itemId);
       this.getImages(props.params.itemId, 1);
+      this.setState({
+        imageError: '',
+      });
     }
   }
 
@@ -94,11 +97,18 @@ export default class EditMediaPage extends Component {
 
  async handlerUploadImage(e) {
    const formData = new FormData(e.target.form);
+   if(e.target.files[0].type.indexOf('png') === -1 ) {
+     this.setState({
+       imageError: 'You try to upload incorrect image. Please, use png image',
+     });
+     return;
+   }
 
    if (e.target.files[0].name) {
-    await this.props.uploadImage(this.props.params.itemId, formData);
+     await this.props.uploadImage(this.props.params.itemId, formData);
      this.setState({
        currentImageTime: new Date().getTime(),
+       imageError: '',
      });
    }
  }
@@ -108,6 +118,7 @@ export default class EditMediaPage extends Component {
     this.props.loadMedia(this.props.params.itemId);
     this.setState({
       currentImageTime: new Date().getTime(),
+      imageError: '',
     });
   }
 
@@ -132,6 +143,7 @@ export default class EditMediaPage extends Component {
           <label className={classesUploadButton} htmlFor="inputFileImageUpload">
             Upload preview
           </label>
+          <div className={styles.imageError}>{this.state.imageError}</div>
           <div className={classesSpin}></div>
         </div>
 
