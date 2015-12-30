@@ -189,6 +189,7 @@ export default class Table extends Component {
           onChange={::this.onSelectAllCheckboxClick}
           checked={::this.getHeaderCheckboxState()}
           className="headerCheckbox"
+          title="Select all"
           />
       </td>
     );
@@ -200,7 +201,7 @@ export default class Table extends Component {
     return (
       <td key="checkbox" className={styles.checkTd}>
         <Checkbox tabIndex="0"
-                  onChange={this.selectRow.bind(this, row)} checked={isChecked}/>
+                  onChange={this.selectRow.bind(this, row)} checked={isChecked} title={row.name} />
       </td>
     );
   }
