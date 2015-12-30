@@ -124,7 +124,7 @@ export default class SearchBar extends Component {
     return (
       <div className={styles.searchBar} ref="searchList">
         <label htmlFor="searchElem" className={styles.hidden}>Search</label>
-        <input title="Search" id="searchElem" type="search" placeholder="Search users and media" area-label="search users and media" className={styles.input} onInput={(e) => {::this.inputHandler(e.target.value); }} role="search"/>
+        <input id="searchElem" type="search" placeholder="Search users and media" className={styles.input} onInput={(e) => {::this.inputHandler(e.target.value); }} />
 
         {this.state.showSearchList ?
           <div className={cx(styles.list, 'searchList')}>
