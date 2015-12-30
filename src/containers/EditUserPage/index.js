@@ -183,7 +183,7 @@ export default class EditUserPage extends Component {
                 onChange={(e) => {this.change(e, 'type')}}>
         {
           (this.types || []).filter((type) => (this.state.user.type === 'owner' || type.value !== 'owner')
-          ).map((type) => (<option value={type.value}>{type.label}</option>))
+          ).map((type) => (<option value={type.value} title={type.label}>{type.label}</option>))
         }
       </Dropdown>
 
@@ -222,7 +222,7 @@ export default class EditUserPage extends Component {
 
   isMobilePhoneValidator(number) {
     const clearString = number.replace(/[^1-9]/, '').length;
-    if (clearString > 5 && clearString < 19 && /^\+[1-9]{1}[0-9]{3,14}$/.test(number)) {
+    if (clearString > 5 && clearString < 19 && /^\+?[1-9]{1}[0-9]{3,14}$/.test(number)) {
       return true;
     } else {
       return false;
