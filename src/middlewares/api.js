@@ -32,8 +32,8 @@ export default store => next => action => {
     error => error.response.json().then((errorMsg) => {
       nextIfHaveAction({
         type: failureType,
-        errorStatus: error.response.status,
-        error: errorMsg.message || error.message || 'Something bad happened',
+        status: error.response.status,
+        errorMsg: errorMsg.message || 'Something bad happened',
       });
     })
   );

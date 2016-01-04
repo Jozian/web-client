@@ -150,20 +150,9 @@ export const pendingActions = combineReducers({
   ),
 });
 
-export function errorApplication(state, action) {
-  if (action.type === types.APPLICATION_ERROR) {
-    if (state) {
-      state.error = true;
-    } else {
-      state = {error: true};
-    }
-  }
-  return state ? state : {};
-}
-
 export function clientError(state = {}, action) {
   if (action.type === types.CLIENT_ERROR) {
-    return {hasError: true, errorStatus: action.status, errorMsg: action.errorMsg};
+    return {hasError: true, errorStatus: action.statusError, errorMsg: action.errorMsg};
   }
   if (action.type === types.HIDE_CLIENT_ERROR || action.type === types.LOGOUT_USER) {
     return {hasError: false};

@@ -16,7 +16,7 @@ export default function reducer(state = defaultState, action) {
     return {... state, loading: false, error: null};
   case types.USER_EDIT_ERROR:
   case types.USER_CREATE_ERROR:
-    return { ...state, loading: false, error: action.error.message };
+    return { ...state, loading: false, error: action.errorMsg };
   case types.NEW_USER_LOAD:
     return { ...state, loading: false, entity: {}, isNew: true, error: null };
   default:

@@ -23,7 +23,6 @@ const createFinalStore = compose(
 
 const store = createFinalStore(reducer, {
   currentUser: null,
-  errorApplication: null,
   clientError: {},
   statistics: {
     loading: false,
