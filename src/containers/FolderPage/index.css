@@ -164,6 +164,8 @@
     height: 28px;
     background-color: #6ab01c;
     cursor: pointer;
+    margin-right: 10px;
+    float: left;
 }
 .importLabel {
     float: left;
@@ -174,7 +176,11 @@
 }
 .videoType {
     width: 47%;
-    margin-right: 10px;
+    padding: 5px 10px 5px 0;
+    color: grey;
+    margin-right: 2%;
+    font-size: 14px;
+    font-weight: bold;
 }
 .descriptionName {
     padding: 5px 10px 5px 0;
@@ -195,6 +201,12 @@
 .mediaType {
     color: #7ab83a;
     width: 70px;
+    display: inline-block;
+}
+
+.mediaTypeError {
+    color: red;
+    width: 120px;
     display: inline-block;
 }
 .popupBody {
@@ -283,4 +295,9 @@ div.editFolderModal {
 
 .marginBottomForArea {
     margin-bottom: 20px;
+}
+
+.errorUploadMedia {
+    color: red;
+    width: 340px;
 }

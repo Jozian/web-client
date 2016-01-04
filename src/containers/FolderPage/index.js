@@ -24,7 +24,7 @@ import styles from './index.css';
 import commonStyles from 'common/styles.css';
 
 @connect(
-  (state) => ({folder: state.activeFolder, user: state.currentUser, pendingActions: state.pendingActions}),
+  (state) => ({folder: state.activeFolder, user: state.currentUser, pendingActions: state.pendingActions, clientError: state.clientError}),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
 @loading(
@@ -356,6 +356,8 @@ export default class FolderPage extends Component {
       uploadFileData: undefined,
       isTypeValid: false,
       currentType: '',
+      progress: '0%',
+      showErrorCreateMedia: false,
     });
   }
 
@@ -378,6 +380,7 @@ export default class FolderPage extends Component {
 
     this.setState({
       progress: '0%',
+      showErrorCreateMedia: false,
     });
 
     const reader = new FileReader();
@@ -411,7 +414,9 @@ export default class FolderPage extends Component {
       });
       reader.readAsArrayBuffer(e.target.files[0]);
     } else {
-      currentType = undefined;
+      this.setState({
+        currentType: 'Invalid file type.',
+      });
     }
   }
 
@@ -447,12 +452,17 @@ export default class FolderPage extends Component {
     for (const key in this.state.newMedia) {
       this.state.uploadFileData.append(key, this.state.newMedia[key]);
     }
-    await this.props.uploadMedia(this.state.uploadFileData);
-    this.hideNewMediaModal();
-    this.props.loadFoldersList(this.props.params.folderId);
+    const resMediaUpload = await this.props.uploadMedia(this.state.uploadFileData);
 
-    if (!this.props.user.hideInvitePopup) {
-      this.openModalAfterMediaUpload();
+    if (resMediaUpload) {
+      this.hideNewMediaModal();
+      this.props.loadFoldersList(this.props.params.folderId);
+
+      if (!this.props.user.hideInvitePopup) {
+        this.openModalAfterMediaUpload();
+      }
+    } else {
+      this.hideNewMediaModal();
     }
   }
 
@@ -508,9 +518,10 @@ export default class FolderPage extends Component {
               <label className={styles.importContainer} tabIndex="-1" htmlFor="addMediaLabel">
                 Upload file
               </label>
+              <div className={styles.errorUploadMedia}>{this.state.showErrorCreateMedia ? 'File upload error, please retry.' : ''}</div>
             </div>
 
-            <div className={styles.videoType}>Type: <div className={styles.mediaType}>{this.state.currentType}</div></div>
+            <div className={styles.videoType}>Type: {this.state.currentType === 'Invalid file type.' ? <div className={styles.mediaTypeError}>{this.state.currentType}</div> : <div className={styles.mediaType}>{this.state.currentType}</div>}</div>
 
             <label className={styles.descriptionName} htmlFor="descriptionField">Description:</label>
             <textArea
@@ -556,7 +567,7 @@ export default class FolderPage extends Component {
         <div>Media items should be shared with users before they can see them on mobile client.
         You can do it on the 'Libraries' tab with the help of 'Invite Users' button. Do you want to do it now?</div>
 
-        <input ref="inputAsk" className={styles.inputDontAsk} onClick={::this.onChangeCheckbox} type="checkbox" tabIndex="0"/> <div className={styles.dontAskLabel}>Don't ask again.</div>
+        <input ref="inputAsk" id="labelDontAsk" role="checkbox" className={styles.inputDontAsk} onClick={::this.onChangeCheckbox} type="checkbox" tabIndex="0"/> <label htmlFor="labelDontAsk" className={styles.dontAskLabel}>Don't ask again.</label>
       </div>
       <WhiteFooter>
         <ActionButtonForModal
