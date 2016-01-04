@@ -15,7 +15,7 @@ import styles from './index.css';
 import commonStyles from 'common/styles.css';
 
 @connect(
-  (state) => ({user: state.currentUser, error: state.errorApplication.error, clientError: state.clientError}),
+  (state) => ({user: state.currentUser, clientError: state.clientError}),
   (dispatch) => bindActionCreators(Object.assign({}, actions, appActions), dispatch)
 )
 export default class App extends Component {
@@ -53,6 +53,10 @@ export default class App extends Component {
         openClientError: true,
         errorClientText: 'The server was not able to process the data you have provided. After you click the button below, you an try again with different data.',
       });
+    } else if (props.clientError.hasError && props.clientError.errorStatus >= 500) {
+      this.setState({
+        openServerError: true,
+      });
     }
   }
 
@@ -88,7 +92,7 @@ export default class App extends Component {
 
   renderErrorPopup() {
     return (<Modal
-      isOpen={this.props.error}
+      isOpen={this.state.openServerError}
       title="Server error."
       className={commonStyles.modal}
       >
