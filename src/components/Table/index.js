@@ -24,6 +24,7 @@ export default class Table extends Component {
     onSelectionChange: () => {},
     onRowClick: () => {},
     initSelection: [],
+    isFilter: false,
   }
 
   constructor(props) {
@@ -43,7 +44,7 @@ export default class Table extends Component {
     window.addEventListener('resize', this.fixScrollHandler);
   }
   componentWillReceiveProps(newProps) {
-    if (newProps.data.length !== this.props.data.length) {
+    if (newProps.data.length !== this.props.data.length && !newProps.isFilter) {
       this.setState({selection: []});
     }
   }
@@ -259,22 +260,22 @@ export default class Table extends Component {
 
     const headerColumns = this.renderHeaderColumns();
     return (
-        <div className={cx(styles.wrap, this.props.overlayClassName)}>
-          <div>
-            <table className={cx(styles.table, this.props.className)}>
-              <thead className={styles.tableHeader}>
-              <tr key="header">{[headerCheckboxColumn, ...headerColumns]}</tr>
-              </thead>
-            </table>
-          </div>
-          <div ref="bodyContainer" className={styles.wrapTBody}>
-            <table ref="table" className={cx(styles.table, this.props.className)}>
-              <tbody className={styles.tableBody}>
-              { this.renderRows() }
-              </tbody>
-            </table>
-          </div>
+      <div className={cx(styles.wrap, this.props.overlayClassName)}>
+        <div>
+          <table className={cx(styles.table, this.props.className)}>
+            <thead className={styles.tableHeader}>
+            <tr key="header">{[headerCheckboxColumn, ...headerColumns]}</tr>
+            </thead>
+          </table>
         </div>
+        <div ref="bodyContainer" className={styles.wrapTBody}>
+          <table ref="table" className={cx(styles.table, this.props.className)}>
+            <tbody className={styles.tableBody}>
+            { this.renderRows() }
+            </tbody>
+          </table>
+        </div>
+      </div>
     );
   }
 }

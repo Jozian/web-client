@@ -60,3 +60,15 @@
 .hiddenLabel {
   font-size: 0;
 }
+
+.filterUsersInvite {
+  height: 30px;
+  width: 250px;
+  margin-left: 15px;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  border: 0;
+  font-size: 15px;
+  color: #424242;
+  font-weight: 300;
+}

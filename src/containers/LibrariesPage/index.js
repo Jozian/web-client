@@ -111,7 +111,10 @@ class LibrariesPage extends Component {
 
   openInviteUsersPopup() {
     this.getInvitedUsers();
-    this.setState({isInviteUsersPopupOpen: true});
+    this.setState({
+      isInviteUsersPopupOpen: true,
+      filterUsers: this.props.users.entities,
+    });
   }
   hideInviteUsersPopup() {
     this.setState({isInviteUsersPopupOpen: false});
@@ -243,6 +246,21 @@ class LibrariesPage extends Component {
     ;
   }
 
+  onChangeSearch(e) {
+    const searchString = e.target.value;
+    let filterUsers;
+    if(e.target.value) {
+      filterUsers = this.props.users.entities.filter(user => user.name.indexOf(searchString) !== -1);
+    } else {
+      filterUsers = this.props.users.entities;
+    }
+
+    this.setState({
+      filterUsers: filterUsers,
+      isFilter: true,
+    });
+  }
+
   async inviteUsers(event) {
     event.preventDefault();
     if (this.props.pendingActions.inviteUsers) {
@@ -323,14 +341,16 @@ class LibrariesPage extends Component {
         title="Invite Users"
         className={styles.inviteUsersModal}
         >
+      <input type="text" placeholder="Search" className={styles.filterUsersInvite} onChange={::this.onChangeSearch} />
         <Table
           overlayClassName={styles.inviteTable}
           className={commonStyles.table}
           ref="table"
           config={this.configInviteUsers}
-          data={this.props.users.entities}
+          data={this.state.filterUsers}
           onSelectionChange={::this.onSelectInvitedUser}
           initSelection={this.state.alreadyInvited}
+          isFilter={this.state.isFilter}
           />
         <WhiteFooter>
           <ActionButtonForModal
