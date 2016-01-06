@@ -394,7 +394,7 @@ renderLastAdminModal() {
                 onCheckboxChange={this.check.bind(this, 'email')}/>
 
             <p className={styles.note}>
-              * user will be able to login both to website and mobile client with these credentials.
+              * The user will be able to log in both to the website and the client with these credentials.
             </p>
 
           </form>
