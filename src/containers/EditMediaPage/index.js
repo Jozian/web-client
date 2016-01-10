@@ -7,6 +7,7 @@ import loading from 'decorators/loading';
 import * as actions from 'actions/media';
 import * as folderActions from 'actions/folders';
 import Button from 'components/Button';
+import ActionButton from 'components/ActionButton';
 import Footer from 'components/Footer';
 import { baseUrl } from '../../api/helper';
 
@@ -162,7 +163,7 @@ export default class EditMediaPage extends Component {
           <span className={styles.toolbarTitle} onClick={::this.cancelSave}>{this.state.currentMediaName}</span>
         </div>
           <div className={styles.mediaForm}>
-            <form className={styles.formBody} onSubmit={::this.saveNewMedia}>
+            <form className={styles.formBody} id="mediaEditForm" onSubmit={::this.saveNewMedia}>
               <label className={styles.label} htmlFor="inputMediaField">Name</label>
               <input
                 className={styles.inputName}
@@ -202,19 +203,18 @@ export default class EditMediaPage extends Component {
               </div>
 
               <Footer>
-                <Button
-                  disabled={!this.state.activeMedia.name.length}
-                  className="mdl2-check-mark"
-                  onClick={::this.saveNewMedia}
-                  tooltipText="Save media"
-                  >
-                </Button>
-                <Button
-                  className="mdl2-cancel"
+                <ActionButton onClick={::this.saveNewMedia}
+                              tooltipText="Save media"
+                              inProgress={this.props.pendingActions.editMedia}
+                              type="submit"
+                              form="mediaEditForm"
+                              icon="mdl2-check-mark"
+                  />
+                <ActionButton
+                  icon="mdl2-cancel"
                   onClick={::this.cancelSave}
                   tooltipText="Cancel save media"
-                  >
-                </Button>
+                  />
               </Footer>
             </form>
           </div>

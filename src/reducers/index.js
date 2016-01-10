@@ -88,6 +88,14 @@ export const pendingActions = combineReducers({
     [types.LIBRARY_CREATING],
     [types.LIBRARY_CREATED, types.LIBRARY_CREATION_ERROR],
   ),
+  editLibraryName: handlePendingChain(
+    [types.LIBRARY_RENAMING],
+    [types.LIBRARY_RENAMED, types.LiBRARY_RENAME_ERROR],
+  ),
+  editMedia: handlePendingChain(
+    [types.MEDIA_UPDATING],
+    [types.MEDIA_UPDATED, types.MEDIA_UPDATE_ERROR],
+  ),
   deleteLibraries: handlePendingChain(
     [types.LIBRARIES_DELETING],
     [types.LIBRARIES_DELETED, types.LIBRARIES_DELETED],
@@ -95,6 +103,10 @@ export const pendingActions = combineReducers({
   newComment: handlePendingChain(
     [types.COMMENT_CREATING],
     [types.COMMENT_CREATED, types.COMMENT_CREATING_ERROR],
+  ),
+  editComment: handlePendingChain(
+    [types.COMMENT_UPDATING],
+    [types.COMMENT_UPDATED, types.COMMENT_UPDATE_ERROR],
   ),
   updateComments: handlePendingChain(
     [types.COMMENTS_UPDATING],
