@@ -160,8 +160,7 @@
     }, true);
 
     getLoginForm.addEventListener('submit', function (event) {
-      console.log('request sent');
-      console.log(event);
+      event.preventDefault();
       sendRequest({
         method: 'POST',
         url: baseUrl + '/api/auth/desktopLogin',
@@ -182,8 +181,6 @@
           loginErr.classList.remove('hidden');
         },
       });
-
-      event.preventDefault();
     });
 
     getLoginForm.addEventListener('blur', function () {
