@@ -1,6 +1,8 @@
 @font-face {
     font-family:'Segoe MDL2 Assets';
-    src: url('fonts/segmdl2.ttf');
+    src: url('fonts/segmdl2.eot') format('embedded-opentype');
+    src: url('fonts/segmdl2.eot?#iefix') format('embedded-opentype'), url('fonts/segmdl2.woff') format('woff'), url('fonts/segmdl2.ttf') format('truetype');
+
 }
 
 [class^="mdl2-"], [class*="mdl2-"] {
