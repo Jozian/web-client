@@ -301,3 +301,7 @@ div.editFolderModal {
     color: red;
     width: 340px;
 }
+
+.hideLabel {
+    font-size: 0;
+}

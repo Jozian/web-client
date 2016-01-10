@@ -240,12 +240,12 @@ export default class FolderPage extends Component {
     return (
       <Modal
         isOpen={this.state.isOpenEditFolderModal}
-        title="New media"
+        title="New folder name"
         className={styles.editFolderModal}
         >
 
           <form onSubmit={::this.updateFolder}>
-            <label className={styles.editLabel} htmlFor="inputNewName">New folder name:</label>
+            <label className={styles.hideLabel} htmlFor="inputNewName">New folder name:</label>
             <input
               label="New folder name"
               name="name"
