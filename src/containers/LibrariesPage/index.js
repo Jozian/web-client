@@ -150,6 +150,7 @@ class LibrariesPage extends Component {
                  onChange={::this.onChangeLibraryName}/>
           <Button
             onClick={this.sendNewLibraryName.bind(this, rowData)}
+            disabled={this.props.pendingActions.editLibraryName}
             >OK</Button>
           <Button
             onClick={::this.hideLibraryEdit}
