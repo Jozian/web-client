@@ -1,7 +1,7 @@
 .commentsContent {
     display: inline-block;
     width: 90%;
-    height: calc(100vw - 201px);
+    height: calc(100vh - 201px);
     margin: 1.25% 1.25% 1.25% 5%;
     background-color: #ffffff;
     overflow: hidden;

@@ -164,8 +164,9 @@ export default class CommentDetails extends Component {
 
   itemInfo(dataId) {
     const elemData = this.props.comments.entity.data.getItem(dataId).data;
-    const calcData = (Math.ceil(elemData.text.length / 80) * 12) + 55;
-    const size = { width: 100, height: calcData};
+    const calcData = (Math.ceil(elemData.text.length / 80) * 20) + 55;
+    const size = { width: 900, height: calcData};
+    console.log(size);
     return size;
   }
 
@@ -319,7 +320,7 @@ export default class CommentDetails extends Component {
           className={commonStyles.saveButtonModal}
           onClick={::this.editComment}
           disabled={!this.state.newCommentText.length}
-          inProgress={this.props.pendingActions.newComment}
+          inProgress={this.props.pendingActions.newComment || this.props.pendingActions.editComment}
           role="OK button">
           Send
         </ActionButtonForModal>
