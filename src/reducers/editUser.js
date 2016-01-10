@@ -1,4 +1,5 @@
 import * as types from 'actions/types';
+import WinJS from 'winjs';
 const defaultState = {
   loading: false,
   entity: {
