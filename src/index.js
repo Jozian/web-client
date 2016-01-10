@@ -1,3 +1,4 @@
+import 'babel-core/polyfill';
 import React from 'react';
 import Router, {Route, DefaultRoute, Redirect} from 'react-router';
 import { Provider } from 'react-redux';
