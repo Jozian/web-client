@@ -120,9 +120,7 @@
     line-height: 1.6667;
     margin: 0;
     height: 60%;
-    overflow-y: auto;
-    overflow-x: hidden;
-
+    overflow: hidden;
 }
 
 .textArea {
@@ -149,14 +147,27 @@
     transform: none !important;
 }
 
-.commentBlock :global(.win-listview .win-cellspanninggridlayout .win-container.win-laidout) {
-    width: 95% !important;
+.list :global(.win-single-itemsblock) {
+    width: 100% !important;
+}
+
+.commentBlock :global(.win-itemscontainer) {
+    width: 100% !important;
+    height: calc(100% - 10px) !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.commentBlock :global(.win-backdrop) {
+    height:0 !important;
 }
 
 .commentBlock :global(.win-laidout) {
-    width: calc(95vw - 250px) !important;
+    width: calc(100% - 5px) !important;
 }
 
-.commentBlock :global(.win-listview > .win-viewport.win-horizontal) {
-    overflow: hidden !important;
+.testDiv {
+    word-break: break-all;
+    position: absolute;
+    left: 10000px;
 }

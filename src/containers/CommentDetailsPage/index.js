@@ -91,8 +91,8 @@ export default class CommentDetails extends Component {
 
   componentDidUpdate() {
     if (this.state.selectItem && this.state.selectOnLoad) {
-      this.refs.folder.winControl.selection.set(this.state.selectItem);
-      setImmediate(() => this.refs.folder.winControl.ensureVisible(this.state.selectItem));
+      this.refs.comments.winControl.selection.set(this.state.selectItem);
+      setImmediate(() => this.refs.comments.winControl.ensureVisible(this.state.selectItem));
       this.setState({selectOnLoad: false});
     }
   }
@@ -105,10 +105,10 @@ export default class CommentDetails extends Component {
     const key = String.fromCharCode(e.keyCode);
     if (key === 'A' && e.ctrlKey) {
       e.preventDefault();
-      this.refs.folder.winControl.selection.selectAll();
+      this.refs.comments.winControl.selection.selectAll();
     }
     if (e.keyCode === 27 ) {
-      this.refs.folder.winControl.selection.clear();
+      this.refs.comments.winControl.selection.clear();
     }
     if (e.keyCode === 46) {
       this.deleteComments();
@@ -164,10 +164,17 @@ export default class CommentDetails extends Component {
 
   itemInfo(dataId) {
     const elemData = this.props.comments.entity.data.getItem(dataId).data;
-    const calcData = (Math.ceil(elemData.text.length / 80) * 20) + 55;
-    const size = { width: 900, height: calcData};
-    console.log(size);
-    return size;
+    /* 110 is right margin for content */
+    const elemWidth = this.refs.comments.getDOMNode().offsetWidth - 110;
+    const testElem = document.createElement('div');
+    testElem.innerHTML = elemData.text;
+    document.body.insertBefore(testElem, document.body.firstChild);
+    testElem.style.width = elemWidth + 'px';
+    testElem.classList.add(style.testDiv);
+    /* total item height = number of cells * base cell height + win-container top margin + win-container bottom margin  */
+    const heightBody = Math.ceil(testElem.offsetHeight * 1.4 + 10) + 5 + 5;
+    document.body.removeChild(testElem);
+    return {width: 900, height: heightBody};
   }
 
   async editComment(item) {
@@ -384,7 +391,7 @@ export default class CommentDetails extends Component {
             <div className={style.toolbarBtn} onClick={::this.replyAll} onKeyDown={onEnterPressed(::this.replyAllEnter)}  tabIndex="0">REPLY ALL</div>
           </div>
           <ListView
-            ref="folder"
+            ref="comments"
             className={style.list}
             itemDataSource={this.props.comments.entity.data.dataSource}
             itemTemplate={this.listViewItemRenderer}
