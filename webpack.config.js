@@ -2,15 +2,16 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 module.exports = {
-  devtool: isProduction ? 'eval' : 'inline-source-maps',
-  entry: isProduction ? [
-    './src/index',
-  ] : [
+  devtool: isDevelopment ? 'inline-source-maps' : 'eval',
+  watchDelay: 300,
+  entry: isDevelopment ? [
     './src/index',
     'webpack-hot-middleware/client',
+  ] : [
+    './src/index',
   ],
   output: {
     path: path.join(__dirname, 'static'),
@@ -30,7 +31,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      loaders: ['react-hot', 'babel'],
+      loaders: isDevelopment ? ['react-hot', 'babel'] : ['babel'],
       include: path.join(__dirname, 'src'),
     }, {
       test: /\.css$/,

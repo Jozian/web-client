@@ -3,7 +3,7 @@
   "version": "2.0.0-alpha",
   "description": "Microsoft Education Delivery frontend",
   "scripts": {
-    "start": "webpack ./src/index.js && NODE_ENV=production node server.js",
+    "start": "webpack ./src/index.js && node server.js",
     "lint": "eslint src"
   },
   "repository": {

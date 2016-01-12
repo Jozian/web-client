@@ -56,3 +56,4 @@ Router.run(routes, Router.HistoryLocation, (Handler, routerState) => {
       </Provider>
     </div>, document.getElementById('root'));
 });
+
