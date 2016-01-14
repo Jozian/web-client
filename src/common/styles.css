@@ -17,8 +17,8 @@ table.table {
 
 .tableOverlay {
   height: calc(100vh - 200px);
-  margin-left: calc(5% - 15px);
-  margin-right: calc(5% - 15px);
+  margin-left: 25px;
+  margin-right: 25px;
 }
 
 input {
