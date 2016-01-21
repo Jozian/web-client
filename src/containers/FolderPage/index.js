@@ -7,6 +7,7 @@ import { RouteHandler } from 'react-router';
 import cx from 'classnames';
 
 import loading from 'decorators/loading';
+import wrapper from 'decorators/listManager';
 import Modal from 'components/Modal';
 import ActionButtonForModal from 'components/ActionButtonForModal';
 import * as actions from 'actions/folders';
@@ -24,9 +25,10 @@ import styles from './index.css';
 import commonStyles from 'common/styles.css';
 
 @connect(
-  (state) => ({folder: state.activeFolder, user: state.currentUser, pendingActions: state.pendingActions, clientError: state.clientError}),
+  (state) => ({folder: state.activeFolder, folderList: state.activeFolder.entity.data, user: state.currentUser, pendingActions: state.pendingActions, clientError: state.clientError, imageUploaded: state.changeMediaImage}),
   (dispatch) => bindActionCreators(actions, dispatch)
 )
+@wrapper(['folderList'])
 @loading(
   (state) => state.folder.loading,
   { isLoadingByDefault: true }
@@ -135,7 +137,7 @@ export default class FolderPage extends Component {
       <div className={styles.listItem}>
         <PreviewImage
           className={styles.image}
-          src={media.picture}
+          src={`${media.picture}?timestamp=${media.timeStamp}`}
           />
         <div className={styles.name}>{media.name}</div>
       </div>
@@ -287,7 +289,7 @@ export default class FolderPage extends Component {
         key="folder"
         ref="folder"
         className={styles.list}
-        itemDataSource={this.props.folder.entity.data.dataSource}
+        itemDataSource={this.props.folderList.dataSource}
         itemTemplate={this.folderItemRenderer}
         onItemInvoked={::this.handleItemSelected}
         onSelectionChanged={::this.handleSelectionChange}

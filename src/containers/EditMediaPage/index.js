@@ -98,7 +98,7 @@ export default class EditMediaPage extends Component {
 
  async handlerUploadImage(e) {
    const formData = new FormData(e.target.form);
-   if(e.target.files[0].type.indexOf('png') === -1 ) {
+   if(e.target.files[0].type.indexOf('png') === -1) {
      this.setState({
        imageError: 'You try to upload incorrect image. Please, use png image',
      });
