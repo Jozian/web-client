@@ -282,3 +282,10 @@ form#login-form a {
     right: 31px !important;
 }
 
+.b_link--privacy {
+    margin-right: 110px;
+}
+
+.b_link--color {
+    color: #6ab01c;
+}
