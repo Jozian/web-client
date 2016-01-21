@@ -39,6 +39,7 @@
     "koa-webpack-hot-middleware": "^1.0.1"
   },
   "dependencies": {
+    "adiff": "^0.2.13",
     "animate.css": "^3.4.0",
     "browser-filesaver": "^1.1.0",
     "classnames": "^2.1.3",
