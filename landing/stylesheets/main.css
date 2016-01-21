@@ -27,8 +27,8 @@ input[type="checkbox"] {
 }
 .b_start-footer__link {
     max-height: 50px;
-    margin-left: 3%;
-    margin-right: 3%;
+    margin-left: 2%;
+    margin-right: 2%;
     display: inline-block;
 }
 .b_start-footer__link a {
@@ -38,7 +38,7 @@ input[type="checkbox"] {
     display: inherit;
     margin: 25px 80px 0 0;
     float: right;
-    width: 850px;
+    width: 730px;
 }
 .b_column-container {
     margin-left: 6%;
