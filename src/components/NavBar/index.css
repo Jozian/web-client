@@ -3,7 +3,7 @@
   float: left;
   display: inline;
   width: 250px;
-  height: 100%;
+  height: calc(100% - 40px);
   background-color: #f1f1f1;
 }
 

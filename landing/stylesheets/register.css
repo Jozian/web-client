@@ -124,7 +124,6 @@ input[type="submit"], a {
 }
 
 .box {
-    position: absolute;
     width: 50%;
     height: 80%;
 }

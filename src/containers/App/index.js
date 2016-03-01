@@ -115,6 +115,7 @@ export default class App extends Component {
   }
 
   render() {
+    const urlMenu = `${window.location.origin}/index.html`;
     return (<div>
       { this.renderErrorPopup() }
       { this.renderClientErrorPopup() }
@@ -131,6 +132,19 @@ export default class App extends Component {
         </div>
 
         <RouteHandler />
+        <footer className={styles.footer}>
+          <div className={styles.copyright}>
+            &#169;  2016 Microsoft Corporation. All rights reserved.
+          </div>
+          <div className={styles.bottomMenu}>
+              <a className={styles.footerLink} href={`${urlMenu}#getStarted`}>Get Started</a>
+              <a className={styles.footerLink} href={`${urlMenu}#useCases`}>Use Cases</a>
+              <a className={styles.footerLink} href={`${urlMenu}#openSource`}>Open Source</a>
+              <a className={styles.footerLink} href={`${urlMenu}#support`}>Support</a>
+              <a className={styles.footerLink} href="http://go.microsoft.com/fwlink/?LinkID=206977">Terms of Use</a>
+              <a className={styles.footerLink} href="http://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>
+          </div>
+        </footer>
       </section>
     </div>);
   }

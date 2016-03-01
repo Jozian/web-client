@@ -1,8 +1,5 @@
 (function() {
 
-  if (window.localStorage.getItem('MEDtoken') && window.localStorage.getItem('MEDuser')) {
-    window.location.href = '/admin/';
-  }
   window.addEventListener('DOMContentLoaded', function() {
     var allIdElem = [];
     allIdElem.push(document.getElementById('getStarted'));
@@ -47,7 +44,6 @@
       for (var j = 0; j < allElemMenu.length; j++) {
         allElemMenu[j].classList.remove('b_start-header-menu--selected');
       }
-      
       document.getElementById(name).style.display = 'block';
       window.scrollTo(0, 0);
 
@@ -56,12 +52,15 @@
       }
 
       allElemMenu[number].classList.add('b_start-header-menu--selected');
-
     }
 
     window.addEventListener('hashchange', function (event) {
       event.preventDefault();
       var currentHash = location.hash.substring(1);
+      if (currentHash === 'loginRegister' && window.localStorage.getItem('MEDtoken')
+        && window.localStorage.getItem('MEDuser')) {
+        window.location.href = '/admin/';
+      }
 
       if (mnuIdx[currentHash]) {
         selectBlock(currentHash, mnuIdx[currentHash]);
