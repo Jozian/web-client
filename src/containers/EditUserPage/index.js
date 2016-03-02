@@ -396,6 +396,9 @@ renderLastAdminModal() {
             <p className={styles.note}>
               * The user will be able to log in both to the website and the client with these credentials.
             </p>
+            <p className={styles.note}>
+              ** This user provided consent to provide their personal data to Microsoft.
+            </p>
 
           </form>
 
