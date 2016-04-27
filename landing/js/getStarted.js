@@ -2,6 +2,18 @@
 
   window.addEventListener('DOMContentLoaded', function() {
     var allIdElem = [];
+
+    if (window.location.hash.search('token') !== -1) {
+      const tokenArr = window.location.hash.split('&');
+      const token = tokenArr[0].substr(tokenArr[0].search('token') + 6, tokenArr[0].length - 2);
+      const user = tokenArr[1].substr(5);
+
+      setLocalStorageData('MEDtoken', token);
+      setLocalStorageData('MEDuser', user);
+      window.location.href = '/admin/';
+
+    }
+
     allIdElem.push(document.getElementById('getStarted'));
     allIdElem.push(document.getElementById('useCases'));
     allIdElem.push(document.getElementById('openSource'));
