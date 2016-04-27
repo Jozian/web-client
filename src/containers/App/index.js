@@ -33,7 +33,7 @@ export default class App extends Component {
 
   componentWillReceiveProps(props) {
     if (!props.user.token) {
-      window.location = '/index.html';
+      window.location = '/';
     }
 
     if (props.clientError.hasError && props.clientError.errorStatus === 403 && props.clientError.errorMsg === 'Access denied') {
