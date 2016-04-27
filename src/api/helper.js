@@ -3,7 +3,7 @@ import store from '../store/configureStore';
 import {stringify} from 'querystring';
 
 // FIXME: ENV BASED BUILD
-export const baseUrl = 'http://medserver.apps.wookieelabs.com';
+export const baseUrl = 'http://www.microsofteducationdelivery.net';
 
 function getAuthHeader() {
   return 'Bearer ' + (store.getState().currentUser ? store.getState().currentUser.token : '');

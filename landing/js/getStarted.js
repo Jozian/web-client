@@ -20,7 +20,7 @@
     allIdElem.push(document.getElementById('support'));
 
     allIdElem.push(document.getElementById('loginRegister'));
-    var baseUrl = 'http://medserver.apps.wookieelabs.com';
+    var baseUrl = 'https://www.microsofteducationdelivery.net';
 
     var forgotPasswordTemplate = document.getElementById('forgotPasswordTpl').innerHTML;
 

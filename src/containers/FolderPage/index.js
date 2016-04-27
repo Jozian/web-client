@@ -490,7 +490,7 @@ export default class FolderPage extends Component {
   }
 
   redirectToLibrary() {
-    window.location.href = '/admin/libraries';
+    this.context.router.transitionTo('libraries');
     this.hideModalAfterMediaUpload();
   }
 
