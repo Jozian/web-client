@@ -196,8 +196,7 @@ input[type="submit"], a {
 }
 
 form.side-form {
-    height: 465px;
-    margin: 38px 0px 0 58px;
+    margin: 38px 0 15px 58px;
     padding: 0;
 }
 
@@ -212,6 +211,19 @@ form#register-form input {
 
 form#login-form input {
     margin-right: 110px;
+}
+.live-id-href {
+    border: 0 none;
+    width: 371px;
+    height: 51px;
+    color: #6ab01c;
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 21px;
+    border: 1px solid #6ab01c;
+    margin-right: 110px;
+    line-height: 51px;
 }
 
 form#login-form a {
