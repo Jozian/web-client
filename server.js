@@ -1,10 +1,11 @@
 const koa = require('koa');
 const serve = require('koa-static');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const envirovment = process.env.NODE_ENV || 'production';
 const router = require('koa-router')();
 const fs = require('co-fs');
 const webpack = require('webpack');
+const clientId = process.env.CLIENT_ID || '0';
 
 const app = koa();
 app.use(serve('.'));
@@ -22,8 +23,12 @@ if (envirovment === 'development') {
 }
 
 router.get('/', function* landing() {
-  this.body = yield fs.readFile('./index.html', 'utf8');
+  const clientIdTpl = '${clientID}';
+  const bodyHtml = yield fs.readFile('./main.html', 'utf8');
+
+  this.body = bodyHtml.replace(clientIdTpl, clientId);
 });
+
 router.get('/admin/*', function* admin() {
   this.body = yield fs.readFile('./admin.html', 'utf8');
 });
