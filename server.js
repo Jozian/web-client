@@ -22,6 +22,17 @@ if (envirovment === 'development') {
   }));
 }
 
+/*router.get('/liveIdAuth', function* () {
+  var response = this.request.query;
+
+  console.log(setLocalStorageData);
+
+  setLocalStorageData('MEDtoken', response.token);
+  setLocalStorageData('MEDuser', response.user);
+
+  this.body = yield fs.readFile('./admin.html', 'utf8');
+});*/
+
 router.get('/', function* landing() {
   const clientIdTpl = '${clientID}';
   const bodyHtml = yield fs.readFile('./main.html', 'utf8');
