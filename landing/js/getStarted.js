@@ -159,6 +159,8 @@
           registerErr.classList.remove('hidden');
           if (err.statusText === 'Conflict') {
             console.log('Conflict');
+          } else {
+            console.log('error');
           }
         },
       });
