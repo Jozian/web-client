@@ -15,7 +15,6 @@ const wrapper = (lists) => (WrappedComponent) => {
 
     componentWillReceiveProps(newProps) {
       const newState = {};
-      console.time('doing shit');
       lists.forEach(key => {
         const data = this.props[key];
         const list = this.state[key];
@@ -49,7 +48,6 @@ const wrapper = (lists) => (WrappedComponent) => {
         }
       });
 
-      console.timeEnd('doing shit');
       if (Object.keys(newState)) {
         this.setState(newState);
       }
