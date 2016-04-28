@@ -144,7 +144,7 @@ export default class SearchBar extends Component {
                 {this.props.searchResult.entities.media.map( (item) => {
                   return (<div className={styles.listItem}>
                     <div onClick={this.mediaSelected.bind(this, item)} tabIndex="0" onKeyDown={onEnterPressed(this.mediaSelected.bind(this, item))}>
-                      <PreviewImage className={styles.image} src={'http://medserver.apps.wookieelabs.com/preview/' + item.id + '.png'} />
+                      <PreviewImage className={styles.image} src={item.picture} />
                       <div className={styles.mediaName}>{item.name}</div>
                     </div>
                   </div>);

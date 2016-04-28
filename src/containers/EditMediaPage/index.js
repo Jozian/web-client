@@ -10,15 +10,16 @@ import Button from 'components/Button';
 import ActionButton from 'components/ActionButton';
 import Footer from 'components/Footer';
 import { baseUrl } from '../../api/helper';
+import PreviewImage from 'components/PreviewImage';
 
 import styles from './index.css';
 
 @connect(
-  (state) => ({activeMedia: state.activeMedia.entities, pendingActions: state.pendingActions}),
+  (state) => ({activeMedia: state.activeMedia.entities, loadingMedia: state.activeMedia.loading, pendingActions: state.pendingActions}),
   (dispatch) => bindActionCreators(Object.assign({}, actions, folderActions), dispatch)
 )
 @loading(
-  (state) => state.activeMedia.loading,
+  (state) => state.loadingMedia.loading,
   { isLoadingByDefault: true }
 )
 export default class EditMediaPage extends Component {
@@ -115,6 +116,7 @@ export default class EditMediaPage extends Component {
  }
 
   async changeCurrentPreview(item) {
+    debugger;
     await this.props.changeImage(item.itemId + '-' + item.number + '.png', item.itemId + '.png');
     this.props.loadMedia(this.props.params.itemId);
     this.setState({
@@ -137,8 +139,10 @@ export default class EditMediaPage extends Component {
     });
     return (
       <div>
-        <img className={styles.currentImage} src={`${baseUrl}//preview/${id}.png?time=${this.state.currentImageTime}`} />
-
+        <PreviewImage
+          className={styles.currentImage}
+          src={`${this.state.activeMedia.picture}?timestamp=${this.state.currentImageTime}`}
+          />
         <div className={styles.wrapLabel}>
           <input type="file" name="file" title="Add new image for media" className={styles.inputFile} id="inputFileImageUpload" onChange={::this.handlerUploadImage} ref="fileInputEditMedia" tabIndex="0" />
           <label className={classesUploadButton} htmlFor="inputFileImageUpload">
