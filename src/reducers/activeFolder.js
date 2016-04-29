@@ -26,7 +26,7 @@ export default function reducer(state = defaultState, action) {
     return { ...state, loading: false, error: action.payload };
   case types.PREV_IMAGE_UPLOADED:
     const newEntityAfterImageUpdate = {};
-    const indexItem = state.entity.data.findIndex((item) => item.id === action.payload);
+    const indexItem = state.entity.data.findIndex((item) => item.id.toString() === action.payload);
     const changeItem = {...state.entity.data[indexItem], timeStamp: new Date().getTime().toString()};
     if (indexItem !== -1) {
       newEntityAfterImageUpdate.data = [...state.entity.data.slice(0, indexItem),
