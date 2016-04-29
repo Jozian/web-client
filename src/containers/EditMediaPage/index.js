@@ -116,7 +116,6 @@ export default class EditMediaPage extends Component {
  }
 
   async changeCurrentPreview(item) {
-    debugger;
     await this.props.changeImage(item.itemId + '-' + item.number + '.png', item.itemId + '.png');
     this.props.loadMedia(this.props.params.itemId);
     this.setState({
