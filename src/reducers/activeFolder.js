@@ -26,15 +26,18 @@ export default function reducer(state = defaultState, action) {
     return { ...state, loading: false, error: action.payload };
   case types.PREV_IMAGE_UPLOADED:
     const newEntityAfterImageUpdate = {};
-    const indexItem = state.entity.data.findIndex((item) => `//preview/${item.id}.png` === action.payload);
+    const indexItem = state.entity.data.findIndex((item) => item.id === action.payload);
     const changeItem = {...state.entity.data[indexItem], timeStamp: new Date().getTime().toString()};
-
-    newEntityAfterImageUpdate.data = [...state.entity.data.slice(0, indexItem),
-      changeItem,
-      ...state.entity.data.slice(indexItem + 1)];
-    newEntityAfterImageUpdate.name = state.entity.name;
-    newEntityAfterImageUpdate.path = [...state.entity.path];
-    return { ...state, loading: false, entity: newEntityAfterImageUpdate, error: null };
+    if (indexItem !== -1) {
+      newEntityAfterImageUpdate.data = [...state.entity.data.slice(0, indexItem),
+        changeItem,
+        ...state.entity.data.slice(indexItem + 1)];
+      newEntityAfterImageUpdate.name = state.entity.name;
+      newEntityAfterImageUpdate.path = [...state.entity.path];
+      return { ...state, loading: false, entity: newEntityAfterImageUpdate, error: null };
+    } else {
+      return state;
+    }
   default:
     return state;
   }
