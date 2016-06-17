@@ -179,6 +179,10 @@ export function currentUser(state, action) {
     return {};
   }
 
+  if (action.type === types.DONT_ASK_AGAIN) {
+    return {...state, hideInvitePopup: true};
+  }
+
   if (!state) {
 
     if (!user) {
@@ -194,3 +198,4 @@ export function currentUser(state, action) {
 
   return state;
 }
+
