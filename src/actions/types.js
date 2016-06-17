@@ -150,3 +150,11 @@ export const PREV_CHANGE_ERROR = 'Error change image preview';
 
 export const DONT_ASK_AGAIN = 'User said did not ask again';
 
+export const SHARE_SAVING = 'Saving share data';
+export const SHAVE_SAVED = 'Saved share data';
+export const SHARE_SAVE_ERROR = 'Save share data error';
+
+export const REJECT_INVITE_SAVING = 'Reject invite saving';
+export const REJECT_INVITE_SAVED = 'Reject invite saved';
+export const REJECT_INVITE_ERROR = 'Reject invite error';
+

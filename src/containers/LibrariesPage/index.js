@@ -20,7 +20,10 @@ import styles from './index.css';
 
 @connect(
   (state) => ({
-    libraries: state.libraries, users: state.users, pendingActions: state.pendingActions,
+    libraries: state.libraries,
+    users: state.users,
+    currentUser: state.currentUser,
+    pendingActions: state.pendingActions,
   }),
   (dispatch) => bindActionCreators({...actions, loadUsers}, dispatch)
 )
@@ -38,11 +41,12 @@ class LibrariesPage extends Component {
     createLibrary: React.PropTypes.func.isRequired,
     deleteLibraries: React.PropTypes.func.isRequired,
     inviteUsers: React.PropTypes.func.isRequired,
-  }
+    currentUser: React.PropTypes.object.isRequired,
+  };
 
   static contextTypes = {
     router: React.PropTypes.func.isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -50,6 +54,7 @@ class LibrariesPage extends Component {
       selectedLibraries: [],
       newLibraryName: '',
       invitedUsers: [],
+      shareEmails: [],
     };
     props.loadLibraries();
     props.loadUsers();
@@ -120,13 +125,59 @@ class LibrariesPage extends Component {
     this.setState({isInviteUsersPopupOpen: false});
   }
 
+  openShareLibraryPopup(id, event) {
+    event.stopPropagation();
+    this.setState({
+      isShareLibrariesPopupOpen: true,
+      isShareId: id,
+    });
+  }
+
+  hideShareLibraryPopup() {
+    this.setState({
+      isShareLibrariesPopupOpen: false,
+      shareEmails: [],
+    });
+  }
+
   renderEditLibrary(_, rowData) {
+    if (rowData.companyId !== this.props.currentUser.CompanyId) {
+      return;
+    }
     const uniqueId = 'id' + Math.random();
     return (<div><label className={styles.hiddenLabel} htmlFor={uniqueId}>{`Edit library ${rowData.name}`}</label><button
       className={cx(styles.editButton, 'mdl2-edit')}
       tabIndex="0"
       id={uniqueId}
       onClick={this.onJumpButtonClick.bind(this, rowData)}
+      ></button></div>);
+  }
+
+  async rejectInvite(libraryId, companyId, event) {
+    event.stopPropagation();
+    await this.props.rejectInvite(libraryId, companyId);
+    this.props.loadLibraries();
+  }
+
+  renderShareButton(_, rowData) {
+    if (rowData.isShare) {
+      return (<div>
+        <label className={styles.hiddenLabel}>Share this library</label><button
+        className={cx(styles.editButton, 'mdl2-cancel')}
+        tabIndex="0"
+        onClick={this.rejectInvite.bind(this, rowData.id, this.props.currentUser.CompanyId)}
+        ></button>
+      </div>);
+    }
+
+    if (rowData.companyId !== this.props.currentUser.CompanyId) {
+      return;
+    }
+
+    return (<div><label className={styles.hiddenLabel}>Share this library</label><button
+      className={cx(styles.editButton, 'mdl2-share')}
+      tabIndex="0"
+      onClick={this.openShareLibraryPopup.bind(this, rowData.id)}
       ></button></div>);
   }
 
@@ -190,6 +241,10 @@ class LibrariesPage extends Component {
       }, {
         key: 'button',
         renderer: ::this.renderEditLibrary,
+        className: styles.buttonEditLib,
+      }, {
+        key: 'button',
+        renderer: ::this.renderShareButton,
         className: styles.buttonEditLib,
       }, {
         key: 'folder',
@@ -367,12 +422,59 @@ class LibrariesPage extends Component {
       </Modal>);
   }
 
+  addNewShareEmail() {
+    const newValue = this.refs.shareLibrariesInput.getDOMNode().value;
+    if (!newValue) {
+      return;
+    }
+    this.setState({
+      shareEmails: [...this.state.shareEmails, newValue],
+    });
+    this.refs.shareLibrariesInput.getDOMNode().value = '';
+  }
+
+  async shareUsers() {
+    if (this.state.shareEmails.length) {
+      await this.props.shareSave(this.state.isShareId, this.state.shareEmails);
+      this.hideShareLibraryPopup();
+      this.props.loadLibraries();
+    }
+  }
+
+  renderShareLibrariesPopup() {
+    return (<Modal
+      isOpen={this.state.isShareLibrariesPopupOpen}
+      title="Share libraries"
+      className={styles.shareLibrariesModal}
+      >
+      <div className={styles.shareLibrariesContent}>
+        <ul className={styles.shareLibrariesList}>
+          {this.state.shareEmails.map(item => <li>{item}</li>)}
+        </ul>
+        <input placeholder="email" className={styles.inputEmail} ref="shareLibrariesInput" type="email" />
+        <button className={styles.addShareEmail} onClick={::this.addNewShareEmail}>Add</button>
+      </div>
+      <WhiteFooter>
+        <ActionButtonForModal
+          className={commonStyles.saveButtonModal}
+          onClick={::this.shareUsers}
+          inProgress={this.props.pendingActions.inviteUsers}
+          disabled={!this.state.shareEmails.length}
+          >
+          Invite
+        </ActionButtonForModal>
+        <ActionButtonForModal className={commonStyles.cancelButtonModal} onClick={::this.hideShareLibraryPopup}>Cancel</ActionButtonForModal>
+      </WhiteFooter>
+    </Modal>);
+  }
+
   render() {
     return (<div onKeyDown={::this.onDelKeyDown}>
       <DocumentTitle title="Libraries" />
       { this.renderNewLibraryPopup() }
       { this.renderDeleteLibrariesPopup() }
       { this.renderInviteUsersPopup() }
+      { this.renderShareLibrariesPopup() }
       <Header>
         Libraries
         <Button

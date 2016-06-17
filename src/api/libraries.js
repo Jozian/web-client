@@ -61,3 +61,25 @@ export function renameLibrary(body) {
     body: JSON.stringify(body),
   });
 }
+
+export function shareEmails(libraryId, emails) {
+  if (!libraryId || !emails.length) {
+    return Promise.reject('Invalid data share');
+  }
+
+  return fetch(apiUrl + '/shareLibrary', {
+    method: 'post',
+    body: JSON.stringify({
+      emails,
+      libraryId,
+    }),
+  });
+}
+
+export function rejectInvite(libraryId, companyId) {
+  if (!libraryId || !companyId) {
+    return Promise.reject('Invalid data for allow invite');
+  }
+
+  return fetch(apiUrl + `/rejectInvite?lib=${libraryId}&company=${companyId}`);
+}

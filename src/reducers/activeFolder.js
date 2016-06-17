@@ -21,6 +21,7 @@ export default function reducer(state = defaultState, action) {
     });
     newEntity.name = action.payload.name;
     newEntity.path = action.payload.path;
+    newEntity.companyId = action.payload.companyId;
     return { ...state, loading: false, entity: newEntity, error: null };
   case types.FOLDER_LOAD_ERROR:
     return { ...state, loading: false, error: action.payload };

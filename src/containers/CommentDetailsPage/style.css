@@ -143,6 +143,9 @@
     margin:0  10px 15px 0;
     color: grey;
 }
+.commentBlock {
+    min-height: 300px;
+}
 
 .commentBlock :global(.win-listview .win-horizontal .win-itemscontainer-padder) {
     height: 0;

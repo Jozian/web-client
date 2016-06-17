@@ -82,7 +82,7 @@ export default class FolderPage extends Component {
   componentDidUpdate() {
     if (this.props.params.itemId && this.state.selectOnLoad) {
       this.props.folder.entity.data.forEach((data, index) => {
-        if (data.id.toString() === this.props.params.itemId && data.type === this.props.params.itemType) {
+        if (data.id && data.id.toString() === this.props.params.itemId && data.type === this.props.params.itemType) {
           this.refs.folder.winControl.selection.set(index);
           setImmediate(() => this.refs.folder.winControl.ensureVisible(index));
           this.setState({selectOnLoad: false});
@@ -154,7 +154,14 @@ export default class FolderPage extends Component {
           />
         </div>
         <div className={styles.name}>{folder.name}</div>
-        <button title={`Edit folder ${folder.name}`} className={cx("fa fa-pencil win-interactive", styles.editFolderButton)} onClick={this.openEditFolderModal.bind(this, folder)} onKeyDown={onEnterPressed(this.openEditFolderModal.bind(this, folder))} tabIndex="0"></button>
+        <button
+          disabled={this.props.user.CompanyId !== this.props.folder.entity.companyId}
+          title={`Edit folder ${folder.name}`}
+          className={cx("fa fa-pencil win-interactive", styles.editFolderButton)}
+          onClick={this.openEditFolderModal.bind(this, folder)}
+          onKeyDown={onEnterPressed(this.openEditFolderModal.bind(this, folder))}
+          tabIndex="0"
+        ></button>
       </div>
     );
 
@@ -169,6 +176,11 @@ export default class FolderPage extends Component {
     window.timer = setTimeout(() => {
       const activeItemId = this.props.params.itemId;
       const goTo = ::this.context.router.transitionTo;
+
+      if (item.data.type === 'media' &&
+        this.props.user.CompanyId !== this.props.folder.entity.companyId) {
+        return;
+      }
 
       switch (item.data.type) {
         case 'folder':
@@ -297,7 +309,8 @@ export default class FolderPage extends Component {
       />
       <Footer>
         <Button
-          disabled={this.state.selection.length === 0}
+          disabled={this.state.selection.length === 0 ||
+           this.props.user.CompanyId !== this.props.folder.entity.companyId}
           className="mdl2-delete"
           onClick={::this.openDeleteFoldersModal}
           tooltipText="Remove element"
@@ -619,10 +632,12 @@ export default class FolderPage extends Component {
       { this.renderModalAfterMediaUpload() }
       <Header>{this.props.folder.entity.name}
         <Button
+          disabled={this.props.user.CompanyId !== this.props.folder.entity.companyId}
           className="mdl2-document"
           onClick={::this.openNewMediaModal}
           tooltipText="Add new media"></Button>
         <Button
+          disabled={this.props.user.CompanyId !== this.props.folder.entity.companyId}
           className="mdl2-new-folder"
           onClick={::this.addDefaultFolder}
           tooltipText="Add new folder"

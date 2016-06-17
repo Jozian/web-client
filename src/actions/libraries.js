@@ -50,3 +50,33 @@ export function renameLibrary(libraryData) {
     },
   };
 }
+
+export function shareSave(libraryId, emails) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.SHARE_SAVING, types.SHAVE_SAVED, types.SHARE_SAVE_ERROR],
+      promise: librariesApi.shareEmails(libraryId, emails),
+    },
+  };
+}
+
+export function allowShare(libraryId, companyId) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.ALLOW_INVITE_SAVING, types.ALLOW_INVITE_SAVED, types.ALLOW_INVITE_ERROR],
+      promise: librariesApi.allowInvite(libraryId, companyId),
+    },
+  };
+}
+
+export function rejectInvite(libraryId, companyId) {
+  return {
+    type: types.CALL_API,
+    payload: {
+      types: [types.REJECT_INVITE_SAVING, types.REJECT_INVITE_SAVED, types.REJECT_INVITE_ERROR],
+      promise: librariesApi.rejectInvite(libraryId, companyId),
+    },
+  };
+}
