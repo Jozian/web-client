@@ -175,7 +175,7 @@ export function clientError(state = {}, action) {
 export function currentUser(state, action) {
   const user = JSON.parse(localStorage.getItem('MEDuser'));
   const token = localStorage.getItem('MEDtoken');
-  if (action.type === types.LOGOUT_USER || !user || !token) {
+  if (action.type === types.LOGOUT_USER || !user || !token || !user.CompanyId) {
     return {};
   }
 
@@ -198,4 +198,3 @@ export function currentUser(state, action) {
 
   return state;
 }
-
