@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'Segoe UI';
-    src:url('http://i.s-microsoft.com/fonts/Segoe-UI/Cyrillic/Normal/latest.eot');
-    src:url('http://i.s-microsoft.com/fonts/Segoe-UI/Cyrillic/Normal/latest.eot?#iefix') format('embedded-opentype'),
-    url('http://i.s-microsoft.com/fonts/Segoe-UI/Cyrillic/Normal/latest.woff') format('woff'),
-    url('http://i.s-microsoft.com/fonts/Segoe-UI/Cyrillic/Normal/latest.ttf') format('truetype'),
-    url('http://i.s-microsoft.com/fonts/Segoe-UI/Cyrillic/Normal/latest.svg#web') format('svg');
+    src:url('//i.s-microsoft.com/fonts/Segoe-UI/Cyrillic/Normal/latest.eot');
+    src:url('//i.s-microsoft.com/fonts/Segoe-UI/Cyrillic/Normal/latest.eot?#iefix') format('embedded-opentype'),
+    url('//i.s-microsoft.com/fonts/Segoe-UI/Cyrillic/Normal/latest.woff') format('woff'),
+    url('//i.s-microsoft.com/fonts/Segoe-UI/Cyrillic/Normal/latest.ttf') format('truetype'),
+    url('//i.s-microsoft.com/fonts/Segoe-UI/Cyrillic/Normal/latest.svg#web') format('svg');
     font-weight: normal;
     font-style: normal;
 }
