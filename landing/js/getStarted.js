@@ -11,7 +11,6 @@
       setLocalStorageData('MEDtoken', token);
       setLocalStorageData('MEDuser', user);
       window.location.href = '/admin/';
-
     }
 
     allIdElem.push(document.getElementById('getStarted'));
@@ -69,8 +68,9 @@
     window.addEventListener('hashchange', function (event) {
       event.preventDefault();
       var currentHash = location.hash.substring(1);
+      var currentStoreUser = window.localStorage.getItem('MEDuser');
       if (currentHash === 'loginRegister' && window.localStorage.getItem('MEDtoken')
-        && window.localStorage.getItem('MEDuser')) {
+        && currentStoreUser && currentStoreUser.CompanyId) {
         window.location.href = '/admin/';
       }
 
@@ -79,7 +79,7 @@
       }
     });
 
-    if (window.location.hash.indexOf('#token') !== -1) {
+    if (window.location.hash.indexOf('#passwordRecovery') !== -1) {
       openModalWindow(resetPasswordTemplate, bodyElem);
 
       var resetPasswordForm = document.getElementById('reset-password-form');
@@ -240,4 +240,3 @@
     }
   });
 }());
-
