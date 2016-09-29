@@ -11,6 +11,8 @@ const clientId = process.env.CLIENT_ID || '0';
 const https = require('https');
 const app = koa();
 app.use(mount('/api', $proxy(process.env.SERVER_ENDPOINT || 'http://localhost:3000/api')));
+app.use(mount('/content', $proxy(process.env.SERVER_ENDPOINT || 'http://localhost:3000/content')));
+app.use(mount('/preview', $proxy(process.env.SERVER_ENDPOINT || 'http://localhost:3000/preview')));
 app.use(serve('.'));
 
 if (envirovment === 'development') {
