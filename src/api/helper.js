@@ -2,8 +2,7 @@ import isomorphicFetch from 'isomorphic-fetch';
 import store from '../store/configureStore';
 import {stringify} from 'querystring';
 
-// FIXME: ENV BASED BUILD
-export const baseUrl = 'https://www.microsofteducationdelivery.net';
+export const baseUrl = '';
 
 function getAuthHeader() {
   return 'Bearer ' + (store.getState().currentUser ? store.getState().currentUser.token : '');

@@ -19,7 +19,7 @@
     allIdElem.push(document.getElementById('support'));
 
     allIdElem.push(document.getElementById('loginRegister'));
-    var baseUrl = 'https://www.microsofteducationdelivery.net';
+    var baseUrl = '';
 
     var forgotPasswordTemplate = document.getElementById('forgotPasswordTpl').innerHTML;
 

@@ -1,13 +1,16 @@
 const koa = require('koa');
 const serve = require('koa-static');
+const mount = require('koa-mount');
 const port = process.env.PORT || 3001;
 const envirovment = process.env.NODE_ENV || 'production';
 const router = require('koa-router')();
 const fs = require('co-fs');
+const $proxy = require('koa-http-proxy');
 const webpack = require('webpack');
 const clientId = process.env.CLIENT_ID || '0';
-
+const https = require('https');
 const app = koa();
+app.use(mount('/api', $proxy(process.env.SERVER_ENDPOINT || 'http://localhost:3000/api')));
 app.use(serve('.'));
 
 if (envirovment === 'development') {
@@ -44,7 +47,18 @@ router.get('/admin/*', function* admin() {
   this.body = yield fs.readFile('./admin.html', 'utf8');
 });
 app.use(router.routes()).use(router.allowedMethods());
-app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
-});
+
+if (process.env.USE_HTTPS) {
+  const options = {
+    pfx: require('fs').readFileSync('./med.pfx'),
+    passphrase: process.env.HTTPS_PASSPHRASE
+  };
+  require('https').createServer(options, app.callback()).listen(port, () => {
+    console.log(`Server started in https mode on ${port}`);
+  }); 
+} else {
+  app.listen(port, () => {
+   console.log(`Server started on port ${port}`);
+  });
+}
 
